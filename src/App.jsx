@@ -3,74 +3,106 @@ import axios from "axios";
 import { ExternalLink, RefreshCw, Search, Filter } from "lucide-react";
 
 /**
- * DESIGN GOAL
- * - Professional briefing/dashboard (light background, clear sections)
- * - Non-technical friendly: simple lists + “Brief” boxes
- * - Source always shown
- * - Filters: search, priority, time window
- * - AI Incident Database in its own section (pulled via /api/aiid)
+ * AIHM Intelligence Monitor — aligned to AIHM Horizon Scanning plan
+ * - Focus: emerging risks + weak signals + capability milestones + mitigations + incidents
+ * - Non-technical friendly: clear sections, simple filters, transparent rules-based triage
  *
  * ASSUMPTIONS
- * - You already have Vercel serverless endpoints:
- *    - /api/gnews  (safe server-side fetch to GNews with key stored in Vercel env)
- *    - /api/aiid   (AIID titles+dates+links endpoint we discussed)
+ * - /api/gnews  (server-side proxy to news API)
+ * - /api/aiid   (AIID titles+dates+links proxy)
  */
 
-// ---------- Quick config: sections + queries ----------
+// ---------- Sections + queries (aligned to HS plan intent) ----------
 const SECTIONS = [
   {
-    key: "uk_regulation",
-    title: "UK Regulation & Online Safety",
-    subtitle: "UK policy, enforcement, regulator activity, and platform accountability.",
-    tone: "maroon",
-    type: "gnews",
-    query:
-      '"Online Safety Act" OR "Ofcom" OR "UK AI regulation" OR "deepfake" OR "nudify" OR "AI child safety" OR "synthetic media" UK',
-  },
-  {
-    key: "child_safety",
-    title: "Child Safety & Exploitation",
-    subtitle: "CSAM risk, nudification, sextortion, grooming, safeguarding signals.",
-    tone: "red",
-    type: "gnews",
-    query:
-      '"nudify app" OR "AI-generated child abuse" OR "CSAM" OR "sextortion" OR "deepfake child" OR "AI grooming"',
-  },
-  {
-    key: "fraud_impersonation",
-    title: "Fraud, Scams & Impersonation",
-    subtitle: "Voice cloning, CEO scams, synthetic identity, payment fraud patterns.",
-    tone: "red",
-    type: "gnews",
-    query:
-      '"voice cloning" OR "CEO scam" OR "deepfake fraud" OR "AI scam" OR "impersonation" OR "synthetic audio fraud"',
-  },
-  {
-    key: "cybercrime",
-    title: "Cybercrime & Security Misuse",
-    subtitle: "Phishing automation, malware development, AI-enabled intrusion patterns.",
-    tone: "red",
-    type: "gnews",
-    query:
-      '"AI-enabled malware" OR "automated phishing" OR "LLM phishing" OR "AI cyberattack" OR "AI ransomware"',
-  },
-  {
-    key: "bias_rights",
-    title: "Bias, Discrimination & Rights Impacts",
-    subtitle: "Algorithmic discrimination, biometric risk, public sector decision-making harms.",
-    tone: "red",
-    type: "gnews",
-    query:
-      '"algorithmic discrimination" OR "AI bias" OR "facial recognition bias" OR "automated decision unfair" OR "bias lawsuit"',
-  },
-  {
-    key: "capabilities",
-    title: "Horizon: Capability & Release Signals",
-    subtitle: "Model releases, agent tooling, red teaming, evaluation and governance movement.",
+    key: "capability_milestones",
+    title: "Horizon: Capability Milestones & Releases",
+    subtitle:
+      "Model/system cards, weight releases, agent tooling, ‘milestone’ capability signals.",
     tone: "blue",
     type: "gnews",
     query:
-      '"model release" OR "GPT" OR "Claude" OR "Gemini" OR "Llama" OR "agents" OR "agentic" OR "red teaming" OR "model evaluation"',
+      '"model card" OR "system card" OR "weights release" OR "open weights" OR "frontier model" OR "agentic" OR "tool use" OR "autonomous agent" OR "model evaluation" OR "red teaming" OR "jailbreak" OR "prompt injection" OR GPT OR Claude OR Gemini OR Llama OR Grok',
+  },
+  {
+    key: "safety_eval_mitigations",
+    title: "Safety, Evaluation & Mitigations",
+    subtitle:
+      "Detection/provenance, watermarking, content credentials, safeguards, evaluation movement.",
+    tone: "blue",
+    type: "gnews",
+    query:
+      '"deepfake detection" OR "synthetic media detection" OR provenance OR watermarking OR C2PA OR "content credentials" OR "forensic detection" OR "liveness detection" OR "age verification" OR "safety evaluation" OR "model evaluation" OR "red team" OR "risk assessment" OR "content moderation"',
+  },
+  {
+    key: "uk_policy_enforcement",
+    title: "UK Policy, Regulation & Enforcement",
+    subtitle:
+      "Online Safety Act/Ofcom, enforcement actions, UK legal/policy developments and accountability.",
+    tone: "maroon",
+    type: "gnews",
+    query:
+      '"Online Safety Act" OR Ofcom OR "codes of practice" OR "risk assessment" OR "illegal content" OR "safety duties" OR "platform accountability" OR "UK AI regulation" OR "deepfake" OR "synthetic media" UK',
+  },
+  {
+    key: "csea_ibsa",
+    title: "CSEA & Image‑Based Sexual Abuse (IBSA)",
+    subtitle:
+      "CSAM/CSEA, nudification, sextortion, grooming, non-consensual intimate imagery, safeguarding signals.",
+    tone: "red",
+    type: "gnews",
+    query:
+      'CSAM OR CSEA OR "child sexual abuse" OR "synthetic CSAM" OR "AI-generated abuse" OR nudify OR nudification OR sextortion OR grooming OR "image-based abuse" OR "non-consensual intimate" OR "deepfake pornography"',
+  },
+  {
+    key: "fraud_identity",
+    title: "Fraud, Impersonation & Identity Integrity",
+    subtitle:
+      "Voice cloning, scams, synthetic identity, KYC/AML pressure, account takeover and payments fraud.",
+    tone: "red",
+    type: "gnews",
+    query:
+      '"voice cloning" OR "deepfake fraud" OR impersonation OR "CEO fraud" OR "business email compromise" OR BEC OR "account takeover" OR "synthetic identity" OR "identity verification" OR KYC OR AML OR "payment fraud" OR "authorized push payment" OR vishing OR "romance scam"',
+  },
+  {
+    key: "cyber_illicit_enablement",
+    title: "Cybercrime & Illicit Enablement",
+    subtitle:
+      "Phishing automation, malware/ransomware enablement, intrusion patterns, illicit tooling and markets.",
+    tone: "red",
+    type: "gnews",
+    query:
+      '"AI phishing" OR "LLM phishing" OR phishing OR "automated phishing" OR malware OR ransomware OR "malware-as-a-service" OR "initial access broker" OR "credential stuffing" OR "prompt injection" OR "jailbreak marketplace"',
+  },
+  {
+    key: "ns_extremism",
+    title: "National Security: Terrorism & Extremism Misuse",
+    subtitle:
+      "Violent extremism misuse, incitement, operational guidance risks, propaganda and recruitment signals.",
+    tone: "red",
+    type: "gnews",
+    query:
+      'terror* OR extrem* OR "violent extremist" OR radicalis* OR "attack planning" OR incitement OR propaganda AND (AI OR deepfake OR "synthetic media" OR chatbot OR LLM)',
+  },
+  {
+    key: "border_docs_biometrics",
+    title: "Border / Document & Biometric Integrity",
+    subtitle:
+      "Document fraud, biometric spoofing, face morphing, liveness bypass, identity proofing pressures.",
+    tone: "red",
+    type: "gnews",
+    query:
+      '"document fraud" OR "forged passport" OR "counterfeit documents" OR "visa fraud" OR "identity proofing" OR "biometric spoofing" OR "face morphing" OR "liveness detection" OR "liveness bypass" AND (AI OR deepfake OR synthetic)',
+  },
+  {
+    key: "watchdogs_research_gov",
+    title: "Watchdogs, Research & Govt Signals",
+    subtitle:
+      "AI safety monitors, academic and think‑tank outputs, and emerging tech/government signal sources.",
+    tone: "maroon",
+    type: "gnews",
+    query:
+      'AISI OR "AI Safety Institute" OR CETaS OR "Ada Lovelace Institute" OR IWF OR "Internet Watch Foundation" OR "Oxford Internet Institute" OR "Oxford Institute for Ethics in AI" OR "GO-Science" OR "Government Office for Science" OR NSSIF OR "NSSIF Insights" OR NCA OR RICU OR "future crime" OR UCL',
   },
 ];
 
@@ -90,36 +122,160 @@ const DATE_WINDOWS = [
   { label: "All time", days: null },
 ];
 
+// Optional “focus” filter: simple tags that help triage quickly
+const FOCUS_OPTIONS = [
+  { label: "All", value: "All" },
+  { label: "Capability milestone", value: "capability" },
+  { label: "Enforcement / action", value: "enforcement" },
+  { label: "Platform / ecosystem", value: "platform" },
+  { label: "Research / watchdog", value: "research" },
+  { label: "Incident", value: "incident" },
+];
+
 const HIGH_TERMS = [
+  // CSEA / IBSA
   "csam",
-  "child",
+  "csea",
+  "child sexual",
+  "synthetic csam",
+  "nudify",
+  "nudification",
   "sextortion",
-  "extortion",
-  "blackmail",
+  "grooming",
+  "non-consensual intimate",
+  // Cyber / fraud severity
   "ransomware",
-  "fraud",
-  "scam",
-  "impersonat",
-  "terror",
-  "extrem",
-  "weapon",
-  "violent",
+  "malware-as-a-service",
+  "initial access broker",
+  "account takeover",
+  "business email compromise",
+  "bec",
+  "authorized push payment",
+  // NS
+  "violent extremist",
+  "attack planning",
+  // Border / identity integrity
+  "document fraud",
+  "biometric spoof",
+  "liveness bypass",
+  "face morph",
+  // “So what” enforcement/action signals
+  "ofcom investigation",
+  "fine",
+  "fined",
+  "prosecution",
+  "charged",
+  "arrested",
+  "sentenced",
 ];
 
 const MED_TERMS = [
+  // Misuse techniques / emerging harms
   "deepfake",
+  "synthetic media",
+  "voice cloning",
+  "impersonation",
   "phishing",
   "malware",
-  "identity",
+  "identity verification",
+  "kyc",
+  "aml",
   "biometric",
+  "facial recognition",
   "doxx",
+  "data leak",
+  "breach",
   "bias",
   "discriminat",
-  "leak",
+  "automated decision",
+  // Capability / safety movement
+  "agentic",
+  "tool use",
+  "model card",
+  "system card",
+  "weights release",
+  "open weights",
+  "red team",
+  "evaluation",
+  "jailbreak",
+  "prompt injection",
+  // Mitigations
+  "watermark",
+  "provenance",
+  "c2pa",
+  "content credentials",
+  "deepfake detection",
+  "liveness detection",
+  "age verification",
 ];
 
-function computePriority(title, description) {
-  const t = `${title || ""} ${description || ""}`.toLowerCase();
+// Tags: simple, transparent
+function computeTags(title, description, source) {
+  const t = `${title || ""} ${description || ""} ${source || ""}`.toLowerCase();
+  const tags = [];
+
+  const isCapability =
+    t.includes("model card") ||
+    t.includes("system card") ||
+    t.includes("weights release") ||
+    t.includes("open weights") ||
+    t.includes("agentic") ||
+    t.includes("tool use") ||
+    t.includes("autonomous agent") ||
+    t.includes("frontier model");
+
+  const isEnforcement =
+    t.includes("ofcom") ||
+    t.includes("investigation") ||
+    t.includes("fine") ||
+    t.includes("fined") ||
+    t.includes("charged") ||
+    t.includes("arrested") ||
+    t.includes("sentenced") ||
+    t.includes("prosecution") ||
+    t.includes("ban") ||
+    t.includes("shutdown");
+
+  const isPlatform =
+    t.includes("platform") ||
+    t.includes("telegram") ||
+    t.includes("discord") ||
+    t.includes("app store") ||
+    t.includes("marketplace") ||
+    t.includes("open-source") ||
+    t.includes("model weights");
+
+  const isResearch =
+    t.includes("a i s i") ||
+    t.includes("ai safety institute") ||
+    t.includes("cetas") ||
+    t.includes("ada lovelace") ||
+    t.includes("oxford internet institute") ||
+    t.includes("internet watch foundation") ||
+    t.includes("paper") ||
+    t.includes("preprint") ||
+    t.includes("study") ||
+    t.includes("report");
+
+  const isIncident =
+    t.includes("incident") ||
+    t.includes("breach") ||
+    t.includes("harm") ||
+    t.includes("victim") ||
+    t.includes("case") ||
+    t.includes("lawsuit");
+
+  if (isCapability) tags.push({ label: "Capability milestone", key: "capability" });
+  if (isEnforcement) tags.push({ label: "Enforcement/action", key: "enforcement" });
+  if (isPlatform) tags.push({ label: "Platform/ecosystem", key: "platform" });
+  if (isResearch) tags.push({ label: "Research/watchdog", key: "research" });
+  if (isIncident) tags.push({ label: "Incident", key: "incident" });
+
+  return tags;
+}
+
+function computePriority(title, description, source) {
+  const t = `${title || ""} ${description || ""} ${source || ""}`.toLowerCase();
   if (HIGH_TERMS.some((w) => t.includes(w))) return "High";
   if (MED_TERMS.some((w) => t.includes(w))) return "Medium";
   return "Low";
@@ -161,7 +317,6 @@ function toneStyles(tone) {
       border: "border-blue-200",
     };
   }
-  // default “harms red”
   return {
     bar: "bg-red-700",
     pill: "bg-red-50 text-red-800 border-red-200",
@@ -169,7 +324,7 @@ function toneStyles(tone) {
   };
 }
 
-// ---------- A simple “brief” box ----------
+// ---------- Brief box ----------
 function BriefBox({ tone = "maroon", text }) {
   const s = toneStyles(tone);
   return (
@@ -182,9 +337,10 @@ function BriefBox({ tone = "maroon", text }) {
   );
 }
 
-// ---------- Single list item row ----------
+// ---------- Article row ----------
 function ArticleRow({ item }) {
-  const priority = item.priority || computePriority(item.title, item.description);
+  const priority = item.priority || computePriority(item.title, item.description, item.source);
+  const tags = item.tags || [];
   const priorityPill =
     priority === "High"
       ? "bg-red-100 text-red-800 border-red-200"
@@ -216,9 +372,21 @@ function ArticleRow({ item }) {
             >
               {priority} priority
             </span>
+
+            {tags.slice(0, 3).map((t) => (
+              <span
+                key={t.key}
+                className="inline-flex items-center px-2 py-0.5 rounded-full border text-[11px] bg-white text-slate-700 border-slate-200"
+                title="Rules-based signal tag"
+              >
+                {t.label}
+              </span>
+            ))}
+
             <span className="inline-flex items-center px-2 py-0.5 rounded-full border text-[11px] bg-white text-slate-700 border-slate-200">
               Source: {item.source || item.sourceName || "Unknown"}
             </span>
+
             <span className="text-[11px] text-slate-500">Date: {fmtDate(item.publishedAt)}</span>
           </div>
         </div>
@@ -236,7 +404,7 @@ function ArticleRow({ item }) {
   );
 }
 
-// ---------- A “section” styled like your briefing screenshot ----------
+// ---------- Section block ----------
 function SectionBlock({ title, subtitle, tone, brief, items, emptyText }) {
   const s = toneStyles(tone);
 
@@ -251,19 +419,19 @@ function SectionBlock({ title, subtitle, tone, brief, items, emptyText }) {
       </div>
 
       <div className="mt-4 grid grid-cols-1 lg:grid-cols-12 gap-4">
-        {/* Left: brief */}
         <div className="lg:col-span-4">
           <BriefBox tone={tone} text={brief} />
         </div>
 
-        {/* Right: list */}
         <div className="lg:col-span-8">
           <div className="rounded-lg border border-slate-200 bg-white">
             <ul className="px-4">
               {items.length === 0 ? (
                 <li className="py-4 text-sm text-slate-500">{emptyText}</li>
               ) : (
-                items.map((it, idx) => <ArticleRow key={`${it.url || it.id || "x"}-${idx}`} item={it} />)
+                items.map((it, idx) => (
+                  <ArticleRow key={`${it.url || it.id || "x"}-${idx}`} item={it} />
+                ))
               )}
             </ul>
           </div>
@@ -283,35 +451,42 @@ export default function App() {
   const [priority, setPriority] = useState("All"); // All | High | Medium | Low
   const [windowOpt, setWindowOpt] = useState(DATE_WINDOWS[1]); // 30 days default
   const [maxPerSection, setMaxPerSection] = useState(6);
+  const [focus, setFocus] = useState("All"); // optional signal focus
 
   // Data store
-  const [data, setData] = useState({}); // sectionKey -> items[]
-  const [aiid, setAiid] = useState([]); // AIID updates
+  const [data, setData] = useState({});
+  const [aiid, setAiid] = useState([]);
   const [loading, setLoading] = useState(false);
   const [note, setNote] = useState("");
 
   const today = useMemo(() => new Date().toISOString().split("T")[0], []);
 
-  // Local filter pipeline applied to any list
   const applyFilters = useCallback(
     (items) => {
       let out = [...(items || [])];
 
-      // Normalize fields
-      out = out.map((it) => ({
-        ...it,
-        source: it.source?.name || it.source || it.sourceName || "Unknown",
-        publishedAt: it.publishedAt || it.date || null,
-        priority: it.priority || computePriority(it.title, it.description),
-      }));
+      // Normalize fields + compute priority + tags
+      out = out.map((it) => {
+        const source = it.source?.name || it.source || it.sourceName || "Unknown";
+        const publishedAt = it.publishedAt || it.date || null;
+        const priorityVal = it.priority || computePriority(it.title, it.description, source);
+        const tags = it.tags || computeTags(it.title, it.description, source);
 
-      // Window filter
+        return { ...it, source, publishedAt, priority: priorityVal, tags };
+      });
+
+      // Window
       out = out.filter((it) => withinWindow(it.publishedAt, windowOpt.days));
 
-      // Priority filter
+      // Priority
       if (priority !== "All") out = out.filter((it) => it.priority === priority);
 
-      // Search filter
+      // Focus tag
+      if (focus !== "All") {
+        out = out.filter((it) => (it.tags || []).some((t) => t.key === focus));
+      }
+
+      // Search
       const q = search.trim().toLowerCase();
       if (q) {
         out = out.filter((it) => {
@@ -320,16 +495,26 @@ export default function App() {
         });
       }
 
-      // Sort newest first
+      // Newest first
       out.sort((a, b) => {
         const da = toDate(a.publishedAt)?.getTime() || 0;
         const db = toDate(b.publishedAt)?.getTime() || 0;
         return db - da;
       });
 
+      // Dedupe by URL (helps reduce repeats across sections)
+      const seen = new Set();
+      out = out.filter((it) => {
+        const u = it.url || "";
+        if (!u) return true;
+        if (seen.has(u)) return false;
+        seen.add(u);
+        return true;
+      });
+
       return out.slice(0, maxPerSection);
     },
-    [maxPerSection, priority, search, windowOpt.days]
+    [focus, maxPerSection, priority, search, windowOpt.days]
   );
 
   const runScan = useCallback(async () => {
@@ -337,13 +522,15 @@ export default function App() {
     setNote("");
 
     try {
-      // Fetch all GNews sections in parallel (through your safe /api/gnews proxy)
       const gnewsSections = SECTIONS.filter((s) => s.type === "gnews");
 
       const results = await Promise.all(
         gnewsSections.map(async (sec) => {
           const r = await axios.get(
-            `/api/gnews?q=${encodeURIComponent(sec.query)}&lang=en&max=${Math.max(10, maxPerSection)}`
+            `/api/gnews?q=${encodeURIComponent(sec.query)}&lang=en&max=${Math.max(
+              12,
+              maxPerSection * 2
+            )}`
           );
 
           const articles = Array.isArray(r?.data?.articles) ? r.data.articles : [];
@@ -364,11 +551,10 @@ export default function App() {
       const next = {};
       for (const [key, items] of results) next[key] = items;
 
-      // Fetch AIID updates separately (dedicated section)
-      // This relies on your /api/aiid returning { articles: [...] } with title/date/url.
+      // AIID updates
       let aiidItems = [];
       try {
-        const r = await axios.get(`/api/aiid?limit=${Math.max(10, maxPerSection)}`);
+        const r = await axios.get(`/api/aiid?limit=${Math.max(12, maxPerSection * 2)}`);
         aiidItems = Array.isArray(r?.data?.articles) ? r.data.articles : [];
       } catch {
         aiidItems = [];
@@ -377,11 +563,8 @@ export default function App() {
       setData(next);
       setAiid(aiidItems);
 
-      // Friendly note if AIID empty
       if (!aiidItems.length) {
-        setNote(
-          "AIID feed returned no items (it may be temporarily unavailable or the endpoint isn't set up yet)."
-        );
+        setNote("AIID feed returned no items (it may be temporarily unavailable or the endpoint isn't set up yet).");
       }
     } catch (e) {
       setNote("Live feed unavailable (rate limit, network, or missing API route).");
@@ -390,17 +573,19 @@ export default function App() {
     }
   }, [maxPerSection]);
 
-  // Initial scan once
+  // initial scan
   useEffect(() => {
     runScan();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Build the “brief” strings per section (simple, honest, non-AI)
+  // Brief strings
   const briefs = useMemo(() => {
     const make = (items) => {
       const filtered = applyFilters(items);
-      if (!filtered.length) return "No items matched current filters. Try widening the time window or clearing search.";
+      if (!filtered.length)
+        return "No items matched current filters. Try widening the time window, setting Focus to All, or clearing search.";
+
       const counts = filtered.reduce(
         (acc, it) => {
           acc[it.priority] = (acc[it.priority] || 0) + 1;
@@ -408,15 +593,26 @@ export default function App() {
         },
         { High: 0, Medium: 0, Low: 0 }
       );
-      return `Showing ${filtered.length} items. High priority: ${counts.High}, Medium: ${counts.Medium}, Low: ${counts.Low}.`;
+
+      const tagCounts = filtered.reduce((acc, it) => {
+        (it.tags || []).forEach((t) => {
+          acc[t.key] = (acc[t.key] || 0) + 1;
+        });
+        return acc;
+      }, {});
+
+      const topTag = Object.entries(tagCounts).sort((a, b) => b[1] - a[1])[0];
+      const topTagText = topTag ? ` Most common signal: ${topTag[0]} (${topTag[1]}).` : "";
+
+      return `Showing ${filtered.length} items. High: ${counts.High}, Medium: ${counts.Medium}, Low: ${counts.Low}.${topTagText}`;
     };
+
     const out = {};
     for (const s of SECTIONS) out[s.key] = make(data[s.key] || []);
     out[AIID_SECTION.key] = make(aiid || []);
     return out;
   }, [aiid, applyFilters, data]);
 
-  // Compute the filtered lists for rendering (per section)
   const view = useMemo(() => {
     const out = {};
     for (const s of SECTIONS) out[s.key] = applyFilters(data[s.key] || []);
@@ -427,29 +623,28 @@ export default function App() {
   return (
     <div className="min-h-screen bg-white text-slate-900">
       <div className="max-w-6xl mx-auto px-6 py-10">
-        {/* HEADER (briefing style) */}
         <header className="rounded-xl overflow-hidden shadow-sm border border-slate-200">
           <div className="bg-[#7a1f3d] px-6 py-6 text-white">
             <div className="text-2xl sm:text-3xl font-serif font-bold tracking-tight">
               AIHM Intelligence Monitor
             </div>
-            <div className="mt-1 text-sm opacity-90">
-              Daily brief · {today}
-            </div>
+            <div className="mt-1 text-sm opacity-90">Daily brief · {today}</div>
           </div>
 
-          {/* Controls */}
           <div className="bg-white px-6 py-4 border-t border-slate-200">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 items-end">
               {/* Search */}
-              <div className="lg:col-span-5">
+              <div className="lg:col-span-4">
                 <label className="text-xs font-semibold text-slate-600">Search</label>
                 <div className="mt-1 relative">
-                  <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                  <Search
+                    size={16}
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                  />
                   <input
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    placeholder='e.g., "voice cloning", "CSAM", "fraud", "Ofcom"'
+                    placeholder='e.g., "nudify", "model card", "Ofcom", "liveness bypass"'
                     className="w-full rounded-lg border border-slate-200 bg-white pl-9 pr-3 py-2 text-sm"
                   />
                 </div>
@@ -461,13 +656,16 @@ export default function App() {
                 <select
                   value={windowOpt.label}
                   onChange={(e) => {
-                    const sel = DATE_WINDOWS.find((d) => d.label === e.target.value) || DATE_WINDOWS[1];
+                    const sel =
+                      DATE_WINDOWS.find((d) => d.label === e.target.value) || DATE_WINDOWS[1];
                     setWindowOpt(sel);
                   }}
                   className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm"
                 >
                   {DATE_WINDOWS.map((d) => (
-                    <option key={d.label} value={d.label}>{d.label}</option>
+                    <option key={d.label} value={d.label}>
+                      {d.label}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -487,7 +685,23 @@ export default function App() {
                 </select>
               </div>
 
-              {/* Max items */}
+              {/* Focus */}
+              <div className="lg:col-span-2">
+                <label className="text-xs font-semibold text-slate-600">Focus</label>
+                <select
+                  value={focus}
+                  onChange={(e) => setFocus(e.target.value)}
+                  className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm"
+                >
+                  {FOCUS_OPTIONS.map((f) => (
+                    <option key={f.value} value={f.value}>
+                      {f.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Items */}
               <div className="lg:col-span-1">
                 <label className="text-xs font-semibold text-slate-600">Items</label>
                 <select
@@ -496,19 +710,21 @@ export default function App() {
                   className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm"
                 >
                   {[4, 6, 8, 10, 12].map((n) => (
-                    <option key={n} value={n}>{n}</option>
+                    <option key={n} value={n}>
+                      {n}
+                    </option>
                   ))}
                 </select>
               </div>
 
               {/* Run scan */}
-              <div className="lg:col-span-2 flex gap-2 justify-end">
+              <div className="lg:col-span-1 flex gap-2 justify-end">
                 <button
                   onClick={runScan}
                   className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-900 text-white hover:bg-slate-800 transition w-full justify-center"
                 >
                   <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
-                  {loading ? "Scanning…" : "Run scan"}
+                  {loading ? "Scanning…" : "Scan"}
                 </button>
               </div>
             </div>
@@ -522,7 +738,7 @@ export default function App() {
           </div>
         </header>
 
-        {/* SECTIONS (briefing style) */}
+        {/* Sections */}
         {SECTIONS.map((s) => (
           <SectionBlock
             key={s.key}
@@ -535,7 +751,7 @@ export default function App() {
           />
         ))}
 
-        {/* AIID DEDICATED SECTION */}
+        {/* AIID dedicated section */}
         <SectionBlock
           title={AIID_SECTION.title}
           subtitle={AIID_SECTION.subtitle}
@@ -545,11 +761,10 @@ export default function App() {
           emptyText="No AIID items loaded yet. If /api/aiid isn't set up, add it and redeploy."
         />
 
-        {/* FOOTER HELP TEXT */}
         <div className="mt-10 text-xs text-slate-500">
-          Tip: This monitor applies <span className="font-semibold">simple keyword-based priority</span> (High/Medium/Low)
-          to help triage quickly. Adjust terms in App.jsx if you want different prioritisation.
-          Sources are shown on every item.
+          Tip: This monitor uses transparent, rules-based triage: <span className="font-semibold">Priority</span>{" "}
+          (High/Medium/Low) + <span className="font-semibold">Signal tags</span> (capability/enforcement/platform/research/incident).
+          Adjust keywords in App.jsx to tune what your team considers “urgent”.
         </div>
       </div>
     </div>
