@@ -1,250 +1,249 @@
-// src/App.jsx
-import React, { useEffect, useState, useCallback } from 'react';
-import axios from 'axios';
-import { ExternalLink, RefreshCw, ShieldAlert, Cpu } from 'lucide-react';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { ShieldAlert, Cpu, ExternalLink, RefreshCw } from "lucide-react";
 
-/**
- * Category -> Query config.
- * These are only used IF you later add /api/gnews (a Vercel serverless function).
- */
-const HARM_CATEGORIES = {
-  'Fraud & Scams': '"deepfake scam" OR "AI voice cloning fraud" OR "AI phishing"',
-  'Cybercrime': '"ai cyberattack" OR "automated phishing" OR "llm malware"',
-  'Identity Theft': '"ai identity theft" OR "synthetic identity" OR "biometric fraud"',
-  'Bias & Rights': '"AI bias" OR "algorithmic discrimination" OR "facial recognition bias"',
+/* -----------------------------
+   SIMPLE STRUCTURE
+------------------------------ */
+
+const TABS = ["Harms", "Capabilities"];
+
+const SUBCATEGORIES = {
+  Harms: [
+    "Manipulative Media",
+    "Fraud & Scams",
+    "Cybercrime",
+    "Privacy & Identity",
+    "Bias & Rights",
+    "Safety Incidents (AIID)"
+  ],
+  Capabilities: [
+    "Model Releases",
+    "Policy & Law",
+    "Agents & Tools"
+  ]
 };
 
-const TECH_CATEGORIES = {
-  'Model Releases': '"LLM release" OR "GPT-5" OR "Claude 4" OR "Gemini AI"',
-  'Policy & Law': '"AI regulation" OR "AI Act" OR "government AI policy"',
-  'Innovation': '"AI breakthrough" OR "robotics update" OR "multimodal model"',
-  'Agentic AI': '"AI agents" OR "autonomous AI" OR "agentic workflows"',
+/* -----------------------------
+   SEARCH QUERIES (GNews)
+------------------------------ */
+
+const GNEWS_QUERIES = {
+  "Manipulative Media":
+    '"deepfake" OR "voice cloning" OR "synthetic media"',
+  "Fraud & Scams":
+    '"AI scam" OR "deepfake fraud" OR "voice cloning fraud"',
+  Cybercrime:
+    '"AI cyberattack" OR "AI malware" OR "automated phishing"',
+  "Privacy & Identity":
+    '"synthetic identity" OR "biometric fraud"',
+  "Bias & Rights":
+    '"algorithmic bias" OR "AI discrimination"',
+  "Model Releases":
+    '"GPT" OR "Claude" OR "Gemini" OR "LLM release"',
+  "Policy & Law":
+    '"AI regulation" OR "AI Act"',
+  "Agents & Tools":
+    '"AI agents" OR "agentic AI"'
 };
 
-/**
- * Dummy items so the demo always shows content (even with no backend).
- */
+/* -----------------------------
+   FALLBACK DATA (DEMO SAFE)
+------------------------------ */
+
 const DUMMY_ITEMS = [
   {
-    title: 'Synthetic audio used in executive impersonation case',
-    description: 'Investigators reported voice simulation used to authorise a transfer.',
-    url: '#',
-    image: '',
-    publishedAt: '2026-02-03T09:00:00Z',
-    source: { name: 'Demo Source' },
-    category: 'Fraud & Scams',
-    type: 'harm',
+    title: "Synthetic voice used in executive impersonation scam",
+    description: "Audio deepfake reportedly used to authorise a transfer.",
+    source: "Demo Source",
+    date: "2026‑02‑03",
+    url: "#",
+    type: "Harms",
+    category: "Fraud & Scams"
   },
   {
-    title: 'Adaptive malware variants spotted using automated tooling',
-    description: 'Rapid iteration patterns consistent with automation observed in the wild.',
-    url: '#',
-    image: '',
-    publishedAt: '2026-02-02T12:00:00Z',
-    source: { name: 'Demo Source' },
-    category: 'Cybercrime',
-    type: 'harm',
+    title: "AI‑enabled malware shows rapid mutation patterns",
+    description: "Researchers observe automated iteration techniques.",
+    source: "Demo Source",
+    date: "2026‑02‑02",
+    url: "#",
+    type: "Harms",
+    category: "Cybercrime"
   },
   {
-    title: 'New agent tooling announced by a major lab',
-    description: 'Release focuses on safe orchestration and evaluation hooks.',
-    url: '#',
-    image: '',
-    publishedAt: '2026-02-01T17:30:00Z',
-    source: { name: 'Demo Source' },
-    category: 'Agentic AI',
-    type: 'tech',
+    title: "AI Incident Database records autonomous system failure",
+    description: "Incident logged involving unsafe automated decision‑making.",
+    source: "AI Incident Database",
+    date: "2026‑02‑01",
+    url: "#",
+    type: "Harms",
+    category: "Safety Incidents (AIID)"
   },
   {
-    title: 'Regulator signals upcoming guidance on frontier model evaluations',
-    description: 'Consultation aims to align capability trials with risk management.',
-    url: '#',
-    image: '',
-    publishedAt: '2026-02-03T14:00:00Z',
-    source: { name: 'Demo Source' },
-    category: 'Policy & Law',
-    type: 'tech',
-  },
+    title: "New agent framework released with safety constraints",
+    description: "Tooling supports evaluation‑driven agent orchestration.",
+    source: "Demo Source",
+    date: "2026‑02‑03",
+    url: "#",
+    type: "Capabilities",
+    category: "Agents & Tools"
+  }
 ];
 
-/**
- * Small presentational card for an article.
- */
-function NewsCard({ article }) {
-  const when = article.publishedAt ? new Date(article.publishedAt) : null;
-  const whenText = when ? when.toLocaleDateString() : '—';
-  const tone =
-    article.type === 'harm'
-      ? { badge: 'bg-red-500/20 text-red-400', border: 'border-red-900/50 hover:border-red-500' }
-      : { badge: 'bg-blue-500/20 text-blue-400', border: 'border-blue-900/50 hover:border-blue-500' };
+/* -----------------------------
+   CARD COMPONENT
+------------------------------ */
 
+function Card({ item }) {
   return (
-    <div className={`p-4 rounded-lg border bg-slate-900 transition-all hover:scale-[1.01] ${tone.border}`}>
-      <div className="flex justify-between items-start mb-2">
-        <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded ${tone.badge}`}>
-          {article.category}
-        </span>
-        <span className="text-slate-500 text-[10px]">{whenText}</span>
+    <div className="border border-slate-800 bg-slate-900 rounded-lg p-4">
+      <div className="flex justify-between text-xs text-slate-400 mb-2">
+        <span>{item.source}</span>
+        <span>{item.date}</span>
       </div>
-      <h3 className="font-bold text-slate-100 text-sm leading-tight mb-2 line-clamp-2">
-        {article.title}
+      <h3 className="font-semibold text-slate-100 mb-2">
+        {item.title}
       </h3>
-      <p className="text-slate-400 text-xs line-clamp-2 mb-3">
-        {article.description}
+      <p className="text-slate-400 text-sm mb-3">
+        {item.description}
       </p>
       <a
-        href={article.url || '#'}
+        href={item.url}
         target="_blank"
         rel="noreferrer"
-        className="flex items-center gap-1 text-[10px] font-bold text-slate-300 hover:text-white"
+        className="text-xs text-blue-400 hover:underline flex items-center gap-1"
       >
-        READ SOURCE <ExternalLink size={12} />
+        Read source <ExternalLink size={12} />
       </a>
     </div>
   );
 }
 
-/**
- * Main App.
- */
+/* -----------------------------
+   MAIN APP
+------------------------------ */
+
 export default function App() {
-  const [harmNews, setHarmNews] = useState([]);
-  const [techNews, setTechNews] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [tab, setTab] = useState("Harms");
+  const [subcategory, setSubcategory] = useState(
+    SUBCATEGORIES.Harms[0]
+  );
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  // Normalize upstream response shape to our card needs.
-  const normalize = (arr, type) =>
-    (Array.isArray(arr) ? arr : []).map((a) => ({
-      title: a.title ?? '',
-      description: a.description ?? '',
-      url: a.url ?? '#',
-      image: a.image ?? '',
-      publishedAt: a.publishedAt ?? '',
-      source: { name: a?.source?.name ?? 'Unknown' },
-      category: a.category ?? '',
-      type,
-    }));
-
-  const fetchNews = useCallback(async () => {
+  async function loadData() {
     setLoading(true);
-    setError('');
-
-    // Build parallel requests to a serverless endpoint (safe). If /api/gnews isn't present,
-    // these will error and we fall back to dummy data below.
-    const harmPromises = Object.entries(HARM_CATEGORIES).map(async ([label, query]) => {
-      try {
-        const r = await axios.get(`/api/gnews?q=${encodeURIComponent(query)}&lang=en&max=3`);
-        const items = (r?.data?.articles || []).map((a) => ({ ...a, category: label, type: 'harm' }));
-        return items;
-      } catch {
-        return [];
-      }
-    });
-
-    const techPromises = Object.entries(TECH_CATEGORIES).map(async ([label, query]) => {
-      try {
-        const r = await axios.get(`/api/gnews?q=${encodeURIComponent(query)}&lang=en&max=3`);
-        const items = (r?.data?.articles || []).map((a) => ({ ...a, category: label, type: 'tech' }));
-        return items;
-      } catch {
-        return [];
-      }
-    });
 
     try {
-      const allHarms = (await Promise.all(harmPromises)).flat();
-      const allTech = (await Promise.all(techPromises)).flat();
+      // AI Incident Database uses its own endpoint
+      if (subcategory === "Safety Incidents (AIID)") {
+        const r = await axios.get("/api/aiid");
+        setItems(r.data.articles || []);
+        setLoading(false);
+        return;
+      }
 
-      // Fallback to local dummy items if upstream is empty (rate limit, no function, etc.)
-      const harms = allHarms.length ? normalize(allHarms, 'harm') : DUMMY_ITEMS.filter((i) => i.type === 'harm');
-      const tech = allTech.length ? normalize(allTech, 'tech') : DUMMY_ITEMS.filter((i) => i.type === 'tech');
+      // Everything else uses GNews
+      const query = GNEWS_QUERIES[subcategory];
+      const r = await axios.get(
+        `/api/gnews?q=${encodeURIComponent(query)}&lang=en&max=6`
+      );
 
-      harms.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-      tech.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+      const mapped =
+        r.data.articles?.map(a => ({
+          title: a.title,
+          description: a.description,
+          source: a.source?.name || "Unknown",
+          date: a.publishedAt?.split("T")[0],
+          url: a.url,
+          type: tab,
+          category: subcategory
+        })) || [];
 
-      setHarmNews(harms);
-      setTechNews(tech);
-    } catch (e) {
-      setError('Feed temporarily unavailable — showing placeholders.');
-      setHarmNews(DUMMY_ITEMS.filter((i) => i.type === 'harm'));
-      setTechNews(DUMMY_ITEMS.filter((i) => i.type === 'tech'));
-    } finally {
-      setLoading(false);
+      setItems(mapped.length ? mapped : DUMMY_ITEMS.filter(
+        d => d.type === tab && d.category === subcategory
+      ));
+    } catch {
+      // Always fall back to demo data
+      setItems(
+        DUMMY_ITEMS.filter(
+          d => d.type === tab && d.category === subcategory
+        )
+      );
     }
-  }, []);
+
+    setLoading(false);
+  }
 
   useEffect(() => {
-    fetchNews();
-  }, [fetchNews]);
+    loadData();
+  }, [tab, subcategory]);
 
   return (
-    <div className="min-h-screen bg-black text-slate-200 p-6 font-sans">
-      {/* HEADER */}
-      <header className="flex justify-between items-center mb-8 pb-6 border-b border-slate-800">
+    <div className="min-h-screen bg-black text-slate-200 p-6">
+      {/* Header */}
+      <header className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-3xl font-black tracking-tighter text-white">
-            AIHM‑HS <span className="text-red-600">01</span>
+          <h1 className="text-2xl font-bold">
+            AI Horizon Scanning
           </h1>
-          <p className="text-slate-500 text-xs uppercase tracking-widest">
-            AI Harm Monitoring & Horizon Scanning
+          <p className="text-xs text-slate-400">
+            Harms & capabilities monitoring
           </p>
         </div>
         <button
-          onClick={fetchNews}
-          className="p-2 hover:bg-slate-800 rounded-full transition-colors"
-          aria-label="Refresh"
+          onClick={loadData}
+          className="p-2 rounded hover:bg-slate-800"
         >
-          <RefreshCw size={20} className={loading ? 'animate-spin' : ''} />
+          <RefreshCw size={18} className={loading ? "animate-spin" : ""} />
         </button>
       </header>
 
-      {/* Error banner (non-blocking) */}
-      {error && (
-        <div className="mb-6 text-xs px-3 py-2 rounded bg-yellow-500/10 text-yellow-300 border border-yellow-700/40">
-          {error}
-        </div>
-      )}
+      {/* Tabs */}
+      <div className="flex gap-2 mb-4">
+        {TABS.map(t => (
+          <button
+            key={t}
+            onClick={() => {
+              setTab(t);
+              setSubcategory(SUBCATEGORIES[t][0]);
+            }}
+            className={`px-3 py-1 rounded text-sm ${
+              tab === t
+                ? "bg-slate-800 text-white"
+                : "text-slate-400 hover:text-white"
+            }`}
+          >
+            {t}
+          </button>
+        ))}
+      </div>
 
+      {/* Subcategories */}
+      <div className="flex gap-2 flex-wrap mb-6">
+        {SUBCATEGORIES[tab].map(sc => (
+          <button
+            key={sc}
+            onClick={() => setSubcategory(sc)}
+            className={`px-2 py-1 rounded text-xs border ${
+              sc === subcategory
+                ? "border-slate-500 text-white"
+                : "border-slate-800 text-slate-400"
+            }`}
+          >
+            {sc}
+          </button>
+        ))}
+      </div>
+
+      {/* Content */}
       {loading ? (
-        <div className="flex justify-center items-center h-64">
-          <div className="animate-pulse text-slate-500 font-bold uppercase tracking-widest text-sm">
-            Initializing Scan...
-          </div>
-        </div>
+        <div className="text-slate-500">Loading…</div>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* COLUMN 1: HARMS */}
-          <div className="space-y-6">
-            <div className="flex items-center gap-3 border-l-4 border-red-600 pl-4 py-1">
-              <ShieldAlert className="text-red-500" />
-              <h2 className="text-xl font-bold">Harms & Incidents</h2>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {harmNews.length === 0 ? (
-                <p className="text-slate-500 text-sm">No items yet.</p>
-              ) : (
-                harmNews.map((article, i) => <NewsCard key={article.url || i} article={article} />)
-              )}
-            </div>
-          </div>
-
-          {/* COLUMN 2: CAPABILITIES / TECH */}
-          <div className="space-y-6">
-            <div className="flex items-center gap-3 border-l-4 border-blue-600 pl-4 py-1">
-              <Cpu className="text-blue-500" />
-              <h2 className="text-xl font-bold">Capabilities & Releases</h2>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {techNews.length === 0 ? (
-                <p className="text-slate-500 text-sm">No items yet.</p>
-              ) : (
-                techNews.map((article, i) => <NewsCard key={article.url || i} article={article} />)
-              )}
-            </div>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {items.map((item, i) => (
+            <Card key={i} item={item} />
+          ))}
         </div>
       )}
     </div>
