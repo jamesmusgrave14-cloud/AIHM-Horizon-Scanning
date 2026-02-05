@@ -1,4 +1,3 @@
-// api/rss.js
 import Parser from "rss-parser";
 
 const parser = new Parser({
@@ -22,34 +21,30 @@ export default {
       const url = new URL(request.url);
       const limit = Math.min(parseInt(url.searchParams.get("limit") || "50", 10) || 50, 200);
 
-      // Support: ?url=... (repeatable) OR ?urls=a,b,c
-      const urls = [];
-      const direct = url.searchParams.getAll("url");
-      if (direct?.length) urls.push(...direct);
-      const csv = (url.searchParams.get("urls") || "").trim();
-      if (csv) urls.push(...csv.split(",").map((s) => s.trim()).filter(Boolean));
+      // multiple feeds: /api/rss?url=FEED1&url=FEED2
+      const urls = url.searchParams.getAll("url").map((s) => s.trim()).filter(Boolean);
 
       if (!urls.length) {
         return new Response(JSON.stringify({ articles: [], meta: { ok: true, empty: true } }), { status: 200, headers });
       }
 
-      // In-memory cache
+      // in-memory cache (best-effort)
       globalThis.__AIHM_RSS_CACHE = globalThis.__AIHM_RSS_CACHE || new Map();
       const cache = globalThis.__AIHM_RSS_CACHE;
       const ttlMs = 10 * 60 * 1000;
-
       const now = Date.now();
+
       const all = [];
 
       for (const feedUrl of urls) {
-        const k = `${feedUrl}::${limit}`;
-        const hit = cache.get(k);
+        const cacheKey = `${feedUrl}::${limit}`;
+        const hit = cache.get(cacheKey);
         if (hit && now - hit.t < ttlMs) {
           all.push(...hit.v);
           continue;
         }
 
-        const resp = await fetch(feedUrl, { method: "GET" });
+        const resp = await fetch(feedUrl);
         const text = await resp.text();
         const feed = await parser.parseString(text);
 
@@ -61,22 +56,29 @@ export default {
           source: feed.title || feedUrl,
         })).filter((x) => x.url);
 
-        cache.set(k, { t: now, v: items });
+        cache.set(cacheKey, { t: now, v: items });
         all.push(...items);
       }
 
-      // Merge + sort newest first
+      // merge + sort newest first
       const seen = new Set();
       const merged = [];
-      for (const a of all.sort((x, y) => (Date.parse(y.publishedAt) || 0) - (Date.parse(x.publishedAt) || 0))) {
-        if (seen.has(a.url)) continue;
-        seen.add(a.url);
-        merged.push(a);
-      }
+      all.sort((a, b) => (Date.parse(b.publishedAt) || 0) - (Date.parse(a.publishedAt) || 0))
+        .forEach((a) => {
+          if (seen.has(a.url)) return;
+          seen.add(a.url);
+          merged.push(a);
+        });
 
-      return new Response(JSON.stringify({ articles: merged.slice(0, limit), meta: { ok: true, feeds: urls.length } }), { status: 200, headers });
+      return new Response(JSON.stringify({ articles: merged.slice(0, limit), meta: { ok: true, feeds: urls.length } }), {
+        status: 200,
+        headers,
+      });
     } catch (e) {
-      return new Response(JSON.stringify({ articles: [], error: String(e?.message || e) }), { status: 200, headers });
+      return new Response(JSON.stringify({ articles: [], meta: { ok: false, error: String(e?.message || e) } }), {
+        status: 200,
+        headers,
+      });
     }
   },
 };
