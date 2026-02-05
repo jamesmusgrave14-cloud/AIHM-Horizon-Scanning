@@ -610,7 +610,7 @@ export default function App() {
           <div className="bg-teal-700 px-6 py-6 text-white">
             <div className="flex items-start justify-between gap-6">
               <div>
-                <div className="text-2xl sm:text-3xl font-serif font-bold tracking-tight">AIHM Intelligence Monitor</div>
+                <div className="text-2xl sm:text-3xl font-serif font-bold tracking-tight">AIHM Horizon Scanning</div>
                 <div className="mt-1 text-sm opacity-90">Daily brief · {today}</div>
                 <div className="mt-2 text-xs opacity-80">Last scan: {lastScan ? fmtDate(lastScan) : "—"}</div>
               </div>
