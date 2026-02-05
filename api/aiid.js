@@ -1,127 +1,211 @@
 // api/aiid.js
-// Vercel Serverless Function: returns AIID updates with titles + dates + links.
-// No API key required.
+import tar from "tar-stream";
+import unbzip2Stream from "unbzip2-stream";
+import { parse as csvParse } from "csv-parse/sync";
 
 export default async function handler(req, res) {
+  // Cache at the edge/CDN to avoid repeatedly pulling a ~90MB snapshot
+  res.setHeader("Cache-Control", "s-maxage=21600, stale-while-revalidate=86400"); // 6h fresh, 24h stale
+
+  const limit = Math.min(parseInt(req.query.limit || "20", 10) || 20, 100);
+
   try {
-    const limit = Math.min(parseInt(req.query.limit || "12", 10), 25);
+    // 1) Discover latest snapshot tarball from the snapshots index
+    const snapshotsIndexUrl = "https://incidentdatabase.ai/research/snapshots/";
+    const html = await (await fetch(snapshotsIndexUrl)).text();
 
-    // 1) Pull an index page that lists incidents (public AIID summary)
-    // Source: AIID incident summary/list view exists publicly. [2](https://incidentdatabase.ai/entities/tencent/)
-    const indexUrl = "https://incidentdatabase.ai/summaries/incidents/";
+    // Find newest backup filename in the HTML (e.g., backup-20260119100813.tar.bz2)
+    // We take the first match (page lists newest first per the visible ordering).
+    const match = html.match(/backup-\d{14}\.tar\.bz2/);
+    if (!match) {
+      return res.status(200).json({
+        articles: [],
+        meta: { ok: false, reason: "no_snapshot_links_found", source: snapshotsIndexUrl },
+      });
+    }
 
-    const indexResp = await fetch(indexUrl, {
-      headers: { "User-Agent": "aihm-hs/1.0 (demo)" },
+    const backupName = match[0];
+
+    // The snapshots page provides a "Download" link per backup. In practice the tarball is served
+    // from the same origin; we can attempt direct fetch by appending to /research/snapshots/.
+    // If AIID ever changes this, the meta.reason below will help debugging.
+    const backupUrl = `${snapshotsIndexUrl}${encodeURIComponent(backupName)}`;
+
+    // 2) Stream download -> bunzip -> tar extract
+    const resp = await fetch(backupUrl);
+    if (!resp.ok || !resp.body) {
+      return res.status(200).json({
+        articles: [],
+        meta: { ok: false, reason: "snapshot_fetch_failed", status: resp.status, backupUrl },
+      });
+    }
+
+    // Extractor
+    const extract = tar.extract();
+
+    let incidentsPayload = null; // will hold parsed array of incidents-ish objects
+    let incidentsFormat = null; // "json" | "jsonl" | "csv"
+    let found = false;
+
+    // Helper: choose likely incidents file inside archive
+    const looksLikeIncidentsFile = (name) => {
+      const n = (name || "").toLowerCase();
+      // AIID backups can vary; be permissive.
+      return (
+        n.includes("incident") &&
+        (n.endsWith(".json") || n.endsWith(".jsonl") || n.endsWith(".csv")) &&
+        // avoid obvious non-data docs
+        !n.includes("readme") &&
+        !n.includes("schema")
+      );
+    };
+
+    extract.on("entry", (header, stream, next) => {
+      const name = header?.name || "";
+      if (found || !looksLikeIncidentsFile(name)) {
+        stream.resume();
+        return next();
+      }
+
+      // Collect this entry (but cap memory just in case)
+      const chunks = [];
+      let size = 0;
+      const MAX_BYTES = 20 * 1024 * 1024; // 20MB cap for the extracted file; adjust if needed
+
+      stream.on("data", (c) => {
+        size += c.length;
+        if (size <= MAX_BYTES) chunks.push(c);
+      });
+
+      stream.on("end", () => {
+        try {
+          const buf = Buffer.concat(chunks);
+          const text = buf.toString("utf8");
+
+          if (name.toLowerCase().endsWith(".jsonl")) {
+            incidentsFormat = "jsonl";
+            incidentsPayload = text
+              .split("\n")
+              .map((l) => l.trim())
+              .filter(Boolean)
+              .map((l) => JSON.parse(l));
+          } else if (name.toLowerCase().endsWith(".csv")) {
+            incidentsFormat = "csv";
+            incidentsPayload = csvParse(text, {
+              columns: true,
+              skip_empty_lines: true,
+            });
+          } else {
+            incidentsFormat = "json";
+            incidentsPayload = JSON.parse(text);
+          }
+
+          found = true;
+        } catch (e) {
+          // If parsing failed, continue scanning other entries
+          incidentsPayload = null;
+          incidentsFormat = null;
+          found = false;
+        }
+
+        next();
+      });
+
+      stream.on("error", () => next());
     });
 
-    if (!indexResp.ok) {
-      const text = await indexResp.text().catch(() => "");
-      return res.status(indexResp.status).json({
-        error: "AIID index fetch failed",
-        detail: text,
+    const pipeline = resp.body
+      .pipeThrough(new TransformStream({
+        transform(chunk, controller) { controller.enqueue(chunk); }
+      })); // keep Web Streams happy in some runtimes
+
+    // Node stream interop: convert WebStream to Node stream if needed
+    // Vercel Node runtime supports Response.body as a web stream; unbzip2 expects Node streams.
+    // Use Readable.fromWeb when available.
+    const { Readable } = await import("node:stream");
+    const nodeReadable = Readable.fromWeb(pipeline);
+
+    await new Promise((resolve, reject) => {
+      nodeReadable
+        .pipe(unbzip2Stream())
+        .pipe(extract)
+        .on("finish", resolve)
+        .on("error", reject);
+    });
+
+    if (!Array.isArray(incidentsPayload)) {
+      return res.status(200).json({
+        articles: [],
+        meta: {
+          ok: false,
+          reason: "incidents_not_found_or_not_array",
+          backupUrl,
+          incidentsFormat,
+        },
       });
     }
 
-    const indexHtml = await indexResp.text();
+    // 3) Normalise into {title, date/publishedAt, url}
+    // Field names vary; we pick best-effort candidates.
+    const normalised = incidentsPayload
+      .map((it) => {
+        const id =
+          it.incident_id ??
+          it.incidentId ??
+          it._id ??
+          it.id ??
+          null;
 
-    // 2) Extract incident IDs from /cite/<id> links
-    const ids = [];
-    const re = /\/cite\/(\d{1,6})/g;
-    let m;
-    while ((m = re.exec(indexHtml)) !== null) {
-      const id = m[1];
-      if (!ids.includes(id)) ids.push(id);
-      if (ids.length >= limit) break;
-    }
+        const title =
+          it.title ??
+          it.incident_title ??
+          it.name ??
+          `Incident ${id ?? ""}`.trim();
 
-    // If we can’t find any IDs, return empty cleanly
-    if (ids.length === 0) {
-      res.setHeader("Cache-Control", "s-maxage=600, stale-while-revalidate=1800");
-      return res.status(200).json({ articles: [] });
-    }
+        const date =
+          it.date ??
+          it.incident_date ??
+          it.incidentDate ??
+          it.publishedAt ??
+          it.published_date ??
+          null;
 
-    // 3) Fetch each cite page and parse title + incident date.
-    // Cite pages show incident title and incident date. [1](https://answers.netlify.com/t/can-not-access-graphql-functions-endpoint/28897)
-    async function fetchCite(id) {
-      const citeUrl = `https://incidentdatabase.ai/cite/${id}`;
+        const url = id ? `https://incidentdatabase.ai/cite/${id}` : "https://incidentdatabase.ai/";
 
-      const r = await fetch(citeUrl, {
-        headers: { "User-Agent": "aihm-hs/1.0 (demo)" },
-      });
-
-      if (!r.ok) {
         return {
           id,
-          title: `AIID incident ${id}`,
-          url: citeUrl,
-          publishedAt: null,
-          source: "AI Incident Database",
-          description: "Unable to fetch incident page.",
+          title,
+          date,
+          publishedAt: date,
+          url,
+          sourceName: "AI Incident Database (snapshot)",
+          source: "AI Incident Database (snapshot)",
         };
-      }
+      })
+      .filter((x) => x.title);
 
-      const html = await r.text();
-
-      // Title: try <title> tag first
-      let title = null;
-      const titleMatch = html.match(/<title>\s*([^<]+)\s*<\/title>/i);
-      if (titleMatch?.[1]) {
-        title = titleMatch[1].trim();
-        // Often the <title> contains “Incident 1069: …”
-        // Keep it as-is for clarity.
-      }
-
-      // Incident date: look for "Incident Date" followed by YYYY-MM-DD
-      let date = null;
-      const dateMatch = html.match(/Incident Date\s*([0-9]{4}-[0-9]{2}-[0-9]{2})/i);
-      if (dateMatch?.[1]) date = dateMatch[1];
-
-      // Fallback: any ISO date in proximity can still be useful
-      if (!date) {
-        const iso = html.match(/([0-9]{4}-[0-9]{2}-[0-9]{2})/);
-        if (iso?.[1]) date = iso[1];
-      }
-
-      // Clean title if missing
-      if (!title) title = `AIID incident ${id}`;
-
-      return {
-        id,
-        title,
-        url: citeUrl,
-        publishedAt: date ? `${date}T00:00:00Z` : null,
-        source: "AI Incident Database",
-        description: "Open the AIID entry for details and linked reports.",
-      };
-    }
-
-    // Simple concurrency limiter (avoid hammering AIID)
-    async function mapLimit(arr, concurrency, fn) {
-      const out = [];
-      let i = 0;
-      const workers = new Array(concurrency).fill(0).map(async () => {
-        while (i < arr.length) {
-          const idx = i++;
-          out[idx] = await fn(arr[idx]);
-        }
-      });
-      await Promise.all(workers);
-      return out;
-    }
-
-    const articles = await mapLimit(ids, 6, fetchCite);
-
-    // Sort newest first when date exists
-    articles.sort((a, b) => {
-      const da = a.publishedAt ? new Date(a.publishedAt).getTime() : 0;
-      const db = b.publishedAt ? new Date(b.publishedAt).getTime() : 0;
-      return db - da;
+    // 4) Sort newest-first (best effort; unknown dates go last)
+    normalised.sort((a, b) => {
+      const da = a.publishedAt ? Date.parse(a.publishedAt) : 0;
+      const db = b.publishedAt ? Date.parse(b.publishedAt) : 0;
+      return (db || 0) - (da || 0);
     });
 
-    // Cache at edge
-    res.setHeader("Cache-Control", "s-maxage=900, stale-while-revalidate=3600");
-    return res.status(200).json({ articles });
+    return res.status(200).json({
+      articles: normalised.slice(0, limit),
+      meta: {
+        ok: true,
+        source: "AIID weekly snapshots",
+        snapshotsIndexUrl,
+        backupUrl,
+        incidentsFormat,
+        totalParsed: normalised.length,
+      },
+    });
   } catch (e) {
-    return res.status(500).json({ error: "AIID function error", detail: String(e) });
+    return res.status(200).json({
+      articles: [],
+      meta: { ok: false, reason: "exception", message: String(e?.message || e) },
+    });
   }
 }
