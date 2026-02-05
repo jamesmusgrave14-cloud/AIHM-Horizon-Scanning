@@ -4,7 +4,6 @@ import {
   ExternalLink,
   RefreshCw,
   Search,
-  Filter,
   Download,
   Pin,
   PinOff,
@@ -20,14 +19,12 @@ import {
 } from "lucide-react";
 
 /**
- * AIHM Intelligence Monitor — stable build + interactive UI
- * - Fixes empty sections by building /api/gnews params with URLSearchParams (no &amp; bugs)
- * - White background, cleaner visual hierarchy
- * - Sidebar toggles, per-section refresh, pin/hide, export, density switch
- * - AIID removed as a dependency (optional toggle kept but OFF by default)
+ * AIHM Intelligence Monitor — GNews-only (AIID removed)
+ * - Fixes empty sections by building /api/gnews params with URLSearchParams
+ * - White background, improved layout and hierarchy
+ * - Interactive tools: sidebar toggles, per-section refresh, pin/hide, export, density switch
  */
 
-// ----------------------------- Sections -----------------------------
 const SECTIONS = [
   {
     key: "capability_milestones",
@@ -103,7 +100,6 @@ const SECTIONS = [
   },
 ];
 
-// ----------------------------- Filters -----------------------------
 const DATE_WINDOWS = [
   { label: "7 days", days: 7 },
   { label: "30 days", days: 30 },
@@ -115,9 +111,7 @@ const FOCUS_OPTIONS = [
   { label: "All", value: "All" },
   { label: "Capability milestone", value: "capability" },
   { label: "Enforcement / action", value: "enforcement" },
-  { label: "Platform / ecosystem", value: "platform" },
   { label: "Research / watchdog", value: "research" },
-  { label: "Incident", value: "incident" },
 ];
 
 const HIGH_TERMS = [
@@ -129,20 +123,16 @@ const HIGH_TERMS = [
   "nudification",
   "sextortion",
   "grooming",
-  "non-consensual intimate",
   "ransomware",
   "malware-as-a-service",
-  "initial access broker",
   "account takeover",
   "business email compromise",
   "bec",
-  "authorized push payment",
   "violent extremist",
   "attack planning",
   "document fraud",
   "biometric spoof",
   "liveness bypass",
-  "face morph",
   "ofcom investigation",
   "prosecution",
   "charged",
@@ -160,14 +150,6 @@ const MED_TERMS = [
   "identity verification",
   "kyc",
   "aml",
-  "biometric",
-  "facial recognition",
-  "doxx",
-  "data leak",
-  "breach",
-  "bias",
-  "discriminat",
-  "automated decision",
   "agentic",
   "tool use",
   "model card",
@@ -191,11 +173,13 @@ function toDate(d) {
   const dt = d ? new Date(d) : null;
   return dt && !Number.isNaN(dt.getTime()) ? dt : null;
 }
+
 function fmtDate(iso) {
   const dt = toDate(iso);
   if (!dt) return "—";
   return dt.toISOString().slice(0, 10);
 }
+
 function withinWindow(iso, days) {
   if (!days) return true;
   const dt = toDate(iso);
@@ -204,15 +188,18 @@ function withinWindow(iso, days) {
   cutoff.setDate(cutoff.getDate() - days);
   return dt >= cutoff;
 }
+
 function computePriority(title, description, source) {
   const t = `${title || ""} ${description || ""} ${source || ""}`.toLowerCase();
   if (HIGH_TERMS.some((w) => t.includes(w))) return "High";
   if (MED_TERMS.some((w) => t.includes(w))) return "Medium";
   return "Low";
 }
+
 function computeTags(title, description, source) {
   const t = `${title || ""} ${description || ""} ${source || ""}`.toLowerCase();
   const tags = [];
+
   const isCapability =
     t.includes("model card") ||
     t.includes("system card") ||
@@ -222,6 +209,7 @@ function computeTags(title, description, source) {
     t.includes("tool use") ||
     t.includes("autonomous agent") ||
     t.includes("frontier model");
+
   const isEnforcement =
     t.includes("ofcom") ||
     t.includes("investigation") ||
@@ -231,8 +219,8 @@ function computeTags(title, description, source) {
     t.includes("arrested") ||
     t.includes("sentenced") ||
     t.includes("prosecution") ||
-    t.includes("ban") ||
-    t.includes("shutdown");
+    t.includes("ban");
+
   const isResearch =
     t.includes("ai safety institute") ||
     t.includes("a i s i") ||
@@ -244,18 +232,20 @@ function computeTags(title, description, source) {
     t.includes("preprint") ||
     t.includes("study") ||
     t.includes("report");
+
   if (isCapability) tags.push({ label: "Capability", key: "capability" });
   if (isEnforcement) tags.push({ label: "Enforcement", key: "enforcement" });
   if (isResearch) tags.push({ label: "Research", key: "research" });
+
   return tags;
 }
 
-// ----------------------------- UI Helpers -----------------------------
 function toneStyles(tone) {
   if (tone === "maroon") return { bar: "bg-[#7a1f3d]", ring: "ring-[#7a1f3d]/10" };
   if (tone === "blue") return { bar: "bg-blue-700", ring: "ring-blue-700/10" };
   return { bar: "bg-red-700", ring: "ring-red-700/10" };
 }
+
 function Pill({ children }) {
   return (
     <span className="inline-flex items-center px-2 py-0.5 rounded-full border text-[11px] bg-white text-slate-700 border-slate-200">
@@ -263,6 +253,7 @@ function Pill({ children }) {
     </span>
   );
 }
+
 function PriorityPill({ value }) {
   const cls =
     value === "High"
@@ -270,8 +261,13 @@ function PriorityPill({ value }) {
       : value === "Medium"
       ? "bg-amber-100 text-amber-900 border-amber-200"
       : "bg-emerald-100 text-emerald-900 border-emerald-200";
-  return <span className={`inline-flex items-center px-2 py-0.5 rounded-full border text-[11px] ${cls}`}>{value} priority</span>;
+  return (
+    <span className={`inline-flex items-center px-2 py-0.5 rounded-full border text-[11px] ${cls}`}>
+      {value} priority
+    </span>
+  );
 }
+
 function SkeletonRow() {
   return (
     <li className="py-3 border-b border-slate-200 last:border-b-0">
@@ -289,7 +285,6 @@ function SkeletonRow() {
   );
 }
 
-// ----------------------------- Main -----------------------------
 export default function App() {
   const [search, setSearch] = useState("");
   const [priority, setPriority] = useState("All");
@@ -301,16 +296,8 @@ export default function App() {
   const [fallbackBroad, setFallbackBroad] = useState(true);
   const [viewMode, setViewMode] = useState("comfortable"); // comfortable | compact
 
-  const [enabled, setEnabled] = useState(() => {
-    const obj = {};
-    for (const s of SECTIONS) obj[s.key] = true;
-    return obj;
-  });
-  const [collapsed, setCollapsed] = useState(() => {
-    const obj = {};
-    for (const s of SECTIONS) obj[s.key] = false;
-    return obj;
-  });
+  const [enabled, setEnabled] = useState(() => Object.fromEntries(SECTIONS.map((s) => [s.key, true])));
+  const [collapsed, setCollapsed] = useState(() => Object.fromEntries(SECTIONS.map((s) => [s.key, false])));
 
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
@@ -325,6 +312,30 @@ export default function App() {
   const today = useMemo(() => new Date().toISOString().split("T")[0], []);
   const listClass = viewMode === "compact" ? "py-2" : "py-3";
 
+  const sectionRefs = useRef({});
+  const scrollToSection = (key) => {
+    const el = sectionRefs.current[key];
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const togglePin = (id) => {
+    setPinned((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const toggleHide = (id) => {
+    setHidden((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
   const applyFilters = useCallback(
     (items) => {
       let out = [...(items || [])];
@@ -333,9 +344,9 @@ export default function App() {
         .map((it) => {
           const source = it.source?.name || it.source || it.sourceName || "Unknown";
           const publishedAt = it.publishedAt || it.date || null;
-          const priorityVal = it.priority || computePriority(it.title, it.description, source);
+          const p = it.priority || computePriority(it.title, it.description, source);
           const tags = it.tags || computeTags(it.title, it.description, source);
-          return { ...it, source, publishedAt, priority: priorityVal, tags };
+          return { ...it, source, publishedAt, priority: p, tags };
         })
         .filter((it) => withinWindow(it.publishedAt, windowOpt.days));
 
@@ -352,11 +363,7 @@ export default function App() {
 
       out = out.filter((it) => !hidden.has(it.url || it.id || ""));
 
-      out.sort((a, b) => {
-        const da = toDate(a.publishedAt)?.getTime() || 0;
-        const db = toDate(b.publishedAt)?.getTime() || 0;
-        return db - da;
-      });
+      out.sort((a, b) => (toDate(b.publishedAt)?.getTime() || 0) - (toDate(a.publishedAt)?.getTime() || 0));
 
       const seen = new Set();
       out = out.filter((it) => {
@@ -389,16 +396,10 @@ export default function App() {
       );
       return `Showing ${filtered.length}. High: ${counts.High}, Medium: ${counts.Medium}, Low: ${counts.Low}.`;
     };
-    const out = {};
-    for (const s of SECTIONS) out[s.key] = make(data[s.key] || []);
-    return out;
+    return Object.fromEntries(SECTIONS.map((s) => [s.key, make(data[s.key] || [])]));
   }, [applyFilters, data]);
 
-  const view = useMemo(() => {
-    const out = {};
-    for (const s of SECTIONS) out[s.key] = applyFilters(data[s.key] || []);
-    return out;
-  }, [applyFilters, data]);
+  const view = useMemo(() => Object.fromEntries(SECTIONS.map((s) => [s.key, applyFilters(data[s.key] || [])])), [applyFilters, data]);
 
   const fetchGnewsSection = useCallback(
     async (sec) => {
@@ -427,7 +428,6 @@ export default function App() {
           title: a.title ?? "",
           description: a.description ?? "",
           url: a.url ?? "#",
-          image: a.image ?? "",
           publishedAt: a.publishedAt ?? "",
           source: a?.source?.name || a?.source || "Unknown",
         }));
@@ -451,7 +451,6 @@ export default function App() {
     try {
       const enabledSections = SECTIONS.filter((s) => enabled[s.key]);
       await Promise.all(enabledSections.map((sec) => fetchGnewsSection(sec)));
-
       setLastScan(started.toISOString());
       setNote(`Scan complete. Sections scanned: ${enabledSections.length}.`);
     } catch {
@@ -465,29 +464,6 @@ export default function App() {
     runScan();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const sectionRefs = useRef({});
-  const scrollToSection = (key) => {
-    const el = sectionRefs.current[key];
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
-  const togglePin = (id) => {
-    setPinned((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  };
-  const toggleHide = (id) => {
-    setHidden((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  };
 
   const exportCSV = () => {
     const rows = [];
@@ -524,23 +500,15 @@ export default function App() {
           <div className="bg-[#7a1f3d] px-6 py-6 text-white">
             <div className="flex items-start justify-between gap-6">
               <div>
-                <div className="text-2xl sm:text-3xl font-serif font-bold tracking-tight">
-                  AIHM Intelligence Monitor
-                </div>
+                <div className="text-2xl sm:text-3xl font-serif font-bold tracking-tight">AIHM Intelligence Monitor</div>
                 <div className="mt-1 text-sm opacity-90">Daily brief · {today}</div>
                 <div className="mt-2 text-xs opacity-80">Last scan: {lastScan ? fmtDate(lastScan) : "—"}</div>
               </div>
               <div className="hidden md:flex items-center gap-2">
-                <button
-                  onClick={exportCSV}
-                  className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-white/10 hover:bg-white/15 border border-white/20 text-sm"
-                >
+                <button onClick={exportCSV} className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-white/10 hover:bg-white/15 border border-white/20 text-sm">
                   <Download size={16} /> Export
                 </button>
-                <button
-                  onClick={runScan}
-                  className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-white text-[#7a1f3d] hover:bg-white/95 font-semibold text-sm"
-                >
+                <button onClick={runScan} className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-white text-[#7a1f3d] hover:bg-white/95 font-semibold text-sm">
                   <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
                   {loading ? "Scanning…" : "Scan"}
                 </button>
@@ -567,10 +535,7 @@ export default function App() {
                 <label className="text-xs font-semibold text-slate-600">Time window</label>
                 <select
                   value={windowOpt.label}
-                  onChange={(e) => {
-                    const sel = DATE_WINDOWS.find((d) => d.label === e.target.value) || DATE_WINDOWS[1];
-                    setWindowOpt(sel);
-                  }}
+                  onChange={(e) => setWindowOpt(DATE_WINDOWS.find((d) => d.label === e.target.value) || DATE_WINDOWS[1])}
                   className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#7a1f3d]/15"
                 >
                   {DATE_WINDOWS.map((d) => (
@@ -661,7 +626,6 @@ export default function App() {
           </div>
         </div>
 
-        {/* Sidebar + content */}
         <div className="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
           <aside className="lg:col-span-3">
             <div className="sticky top-6 space-y-3">
@@ -670,6 +634,7 @@ export default function App() {
                   <div className="text-sm font-semibold text-slate-800">Sections</div>
                   <Pill>{SECTIONS.length}</Pill>
                 </div>
+
                 <div className="mt-3 space-y-2">
                   {SECTIONS.map((s) => (
                     <div key={s.key} className="flex items-center justify-between gap-2">
@@ -755,3 +720,126 @@ export default function App() {
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => fetchGnewsSection(s)}
+                          className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs"
+                          disabled={!enabled[s.key]}
+                        >
+                          <RefreshCw size={14} className={isLoading ? "animate-spin" : ""} />
+                          Refresh
+                        </button>
+
+                        <button
+                          onClick={() => setCollapsed((m) => ({ ...m, [s.key]: !m[s.key] }))}
+                          className="p-2 rounded-lg border border-slate-200 hover:bg-slate-50"
+                        >
+                          {collapsed[s.key] ? <ChevronRight size={16} /> : <ChevronDown size={16} />}
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="mt-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
+                      <div className="text-[11px] uppercase tracking-wider font-semibold text-slate-500">
+                        Brief (rules-based)
+                      </div>
+                      <div className="mt-1 text-sm text-slate-700">{briefs[s.key]}</div>
+                    </div>
+
+                    {err ? (
+                      <div className="mt-3 inline-flex items-center gap-2 text-xs text-amber-800 bg-amber-50 border border-amber-200 px-3 py-2 rounded-lg">
+                        <AlertCircle size={14} />
+                        {err}
+                      </div>
+                    ) : null}
+                  </div>
+
+                  {collapsed[s.key] ? null : (
+                    <div className="px-5 py-4">
+                      {!enabled[s.key] ? (
+                        <div className="text-sm text-slate-500">This section is disabled.</div>
+                      ) : (
+                        <ul className="divide-y divide-slate-200">
+                          {isLoading ? (
+                            <>
+                              <SkeletonRow />
+                              <SkeletonRow />
+                              <SkeletonRow />
+                            </>
+                          ) : items.length === 0 ? (
+                            <li className="py-3 text-sm text-slate-500">No items loaded for this section.</li>
+                          ) : (
+                            items.map((it, idx) => {
+                              const id = it.url || it.id || `${s.key}-${idx}`;
+                              const pr = it.priority || computePriority(it.title, it.description, it.source);
+                              const tags = it.tags || computeTags(it.title, it.description, it.source);
+                              const compact = viewMode === "compact";
+
+                              return (
+                                <li key={id} className={listClass}>
+                                  <div className="flex items-start justify-between gap-4">
+                                    <div className="min-w-0">
+                                      <a
+                                        href={it.url || "#"}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="text-sm font-semibold text-slate-900 hover:underline underline-offset-4"
+                                      >
+                                        {it.title || "Untitled"}
+                                      </a>
+
+                                      {!compact && it.description ? (
+                                        <div className="mt-1 text-sm text-slate-600">{it.description}</div>
+                                      ) : null}
+
+                                      <div className="mt-2 flex flex-wrap gap-2 items-center">
+                                        <PriorityPill value={pr} />
+                                        {tags.slice(0, 3).map((t) => (
+                                          <Pill key={t.key}>{t.label}</Pill>
+                                        ))}
+                                        <Pill>Source: {it.source || it.sourceName || "Unknown"}</Pill>
+                                        <span className="text-[11px] text-slate-500">Date: {fmtDate(it.publishedAt)}</span>
+                                      </div>
+                                    </div>
+
+                                    <div className="shrink-0 flex items-center gap-2">
+                                      <button
+                                        onClick={() => togglePin(id)}
+                                        className="p-2 rounded-lg border border-slate-200 hover:bg-slate-50"
+                                        title={pinned.has(id) ? "Unpin" : "Pin"}
+                                      >
+                                        {pinned.has(id) ? <PinOff size={16} /> : <Pin size={16} />}
+                                      </button>
+
+                                      <button
+                                        onClick={() => toggleHide(id)}
+                                        className="p-2 rounded-lg border border-slate-200 hover:bg-slate-50"
+                                        title={hidden.has(id) ? "Unhide" : "Hide"}
+                                      >
+                                        {hidden.has(id) ? <Eye size={16} /> : <EyeOff size={16} />}
+                                      </button>
+
+                                      <a
+                                        href={it.url || "#"}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="inline-flex items-center gap-1 text-xs font-medium text-blue-700 hover:text-blue-900"
+                                      >
+                                        Open <ExternalLink size={14} />
+                                      </a>
+                                    </div>
+                                  </div>
+                                </li>
+                              );
+                            })
+                          )}
+                        </ul>
+                      )}
+                    </div>
+                  )}
+                </section>
+              );
+            })}
+          </main>
+        </div>
+      </div>
+    </div>
+  );
+}
