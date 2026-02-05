@@ -1,94 +1,123 @@
-export default {
-  async fetch(request) {
-    const headers = {
-      "content-type": "application/json; charset=utf-8",
-      "cache-control": "s-maxage=300, stale-while-revalidate=3600",
-    };
+AIHM Horizon Scanning
+Daily brief · 2026-02-05
+Last scan: 2026-02-05
+Export
+Scan
+Search
+e.g., "nudify", "model card", "AISI", "NSSIF"
+Time window
+90 days
+Category
+All
+Priority
+All
+Focus
+All
+Reset filters
+UK sources
+Broaden if empty
+Density
+Scan complete (incremental). New items merged into existing lists.
+RSS Sources
+Paste a feed URL, click Add. Then hit “Refresh RSS” or “Scan”.
+https://example.com/feed/
+Add
+https://foresightprojects.blog.gov.uk/feed/
 
-    try {
-      const url = new URL(request.url);
+Refresh RSS
+Developer releases & model cards
+raw: 0
+Model/system cards, releases, weights, tooling (high recall).
+/api/gnews?q=%28OpenAI+OR+Anthropic+OR+DeepMind+OR+Google+OR+%22xAI%22+OR+Grok+OR+Meta+OR+Llama+OR+Mistral%29+AND+%28release+OR+launched+OR+update+OR+model+OR+%22model+card%22+OR+%22system+card%22+OR+weights%29&lang=en&max=50&in=title%2Cdescription&sortby=publishedAt&from=2026-01-06T19%3A04%3A12.436Z&to=2026-02-05T19%3A04%3A12.436Z
+Refresh
 
-      let q = (url.searchParams.get("q") || "").trim();
+Brief (rules-based)
+No items matched current filters. Try Reset filters.
+Section fetch failed (API missing / rate limit / network).
+No items after filtering. Try Reset filters or widen Time window.
+Watchdogs & safety monitors
+raw: 0
+AISI/CETaS/Ada/Oxford/IWF + online safety outputs.
+/api/gnews?q=%28AISI+OR+%22AI+Security+Institute%22+OR+CETaS+OR+%22Ada+Lovelace%22+OR+%22Oxford+Internet+Institute%22+OR+IWF+OR+Ofcom%29+AND+%28report+OR+briefing+OR+analysis+OR+consultation+OR+guidance%29&lang=en&max=50&in=title%2Cdescription&sortby=publishedAt&from=2026-01-06T19%3A04%3A12.437Z&to=2026-02-05T19%3A04%3A12.437Z
+Refresh
 
-      // GNews q max 200 chars [1](https://teams.microsoft.com/l/meeting/details?eventId=AAMkADM4ZGMwMDg2LWU0NWEtNDdjMC05MDk5LWJkZmZmZTk4ZDg0NQBGAAAAAADr0mxgvUsEQJU_BcPijvuRBwAOCjAcLxu5TqoZ70bQ0CWjAAAAAAENAAAOCjAcLxu5TqoZ70bQ0CWjAACUuaEaAAA%3d)
-      let truncated = false;
-      if (q.length > 200) {
-        q = q.slice(0, 200);
-        truncated = true;
-      }
+Brief (rules-based)
+No items matched current filters. Try Reset filters.
+Section fetch failed (API missing / rate limit / network).
+No items after filtering. Try Reset filters or widen Time window.
+Government / HMG signals
+raw: 0
+GO‑Science, Ofcom, DSIT, NCSC, NCA (open reporting).
+/api/gnews?q=%28Ofcom+OR+DSIT+OR+%22Government+Office+for+Science%22+OR+%22GO-Science%22+OR+NCSC+OR+NCA+OR+%22Home+Office%22%29+AND+%28AI+OR+%22artificial+intelligence%22+OR+deepfake+OR+%22online+safety%22%29&lang=en&max=50&in=title%2Cdescription&sortby=publishedAt&from=2026-01-06T19%3A04%3A12.438Z&to=2026-02-05T19%3A04%3A12.438Z
+Refresh
 
-      const lang = (url.searchParams.get("lang") || "en").trim();
-      const country = (url.searchParams.get("country") || "").trim();
-      const max = Math.min(parseInt(url.searchParams.get("max") || "10", 10) || 10, 100);
+Brief (rules-based)
+No items matched current filters. Try Reset filters.
+Section fetch failed (API missing / rate limit / network).
+No items after filtering. Try Reset filters or widen Time window.
+CSEA / IBSA signals
+raw: 0
+Nudification, sextortion, NCII, child safety harms.
+/api/gnews?q=%28AI+OR+%22artificial+intelligence%22+OR+deepfake%29+AND+%28nudify+OR+nudification+OR+sextortion+OR+grooming+OR+%22child+sexual+abuse%22+OR+CSAM+OR+CSEA+OR+%22image-based+abuse%22%29&lang=en&max=50&in=title%2Cdescription&sortby=publishedAt&from=2026-01-06T19%3A04%3A12.438Z&to=2026-02-05T19%3A04%3A12.438Z
+Refresh
 
-      // Deterministic + time bound controls supported by GNews [1](https://teams.microsoft.com/l/meeting/details?eventId=AAMkADM4ZGMwMDg2LWU0NWEtNDdjMC05MDk5LWJkZmZmZTk4ZDg0NQBGAAAAAADr0mxgvUsEQJU_BcPijvuRBwAOCjAcLxu5TqoZ70bQ0CWjAAAAAAENAAAOCjAcLxu5TqoZ70bQ0CWjAACUuaEaAAA%3d)
-      const sortby = (url.searchParams.get("sortby") || "publishedAt").trim(); // publishedAt | relevance
-      const from = (url.searchParams.get("from") || "").trim(); // ISO8601
-      const to = (url.searchParams.get("to") || "").trim();     // ISO8601
+Brief (rules-based)
+No items matched current filters. Try Reset filters.
+Section fetch failed (API missing / rate limit / network).
+No items after filtering. Try Reset filters or widen Time window.
+Fraud & impersonation
+raw: 0
+Voice cloning, scams, impersonation, synthetic identity.
+/api/gnews?q=%28AI+OR+%22artificial+intelligence%22+OR+deepfake+OR+%22voice+cloning%22%29+AND+%28scam+OR+fraud+OR+impersonation+OR+%22account+takeover%22+OR+BEC+OR+%22synthetic+identity%22%29&lang=en&max=50&in=title%2Cdescription&sortby=publishedAt&from=2026-01-06T19%3A04%3A12.438Z&to=2026-02-05T19%3A04%3A12.438Z
+Refresh
 
-      // Prefer searching title/description to reduce noise (supported by GNews as "in") [1](https://teams.microsoft.com/l/meeting/details?eventId=AAMkADM4ZGMwMDg2LWU0NWEtNDdjMC05MDk5LWJkZmZmZTk4ZDg0NQBGAAAAAADr0mxgvUsEQJU_BcPijvuRBwAOCjAcLxu5TqoZ70bQ0CWjAAAAAAENAAAOCjAcLxu5TqoZ70bQ0CWjAACUuaEaAAA%3d)
-      const inFields = (url.searchParams.get("in") || "title,description").trim();
+Brief (rules-based)
+No items matched current filters. Try Reset filters.
+Section fetch failed (API missing / rate limit / network).
+No items after filtering. Try Reset filters or widen Time window.
+Cybercrime enablement
+raw: 0
+Phishing, malware, ransomware — AI-enabled where mentioned.
+/api/gnews?q=%28phishing+OR+malware+OR+ransomware+OR+%22social+engineering%22%29+AND+%28AI+OR+%22artificial+intelligence%22+OR+deepfake%29&lang=en&max=50&in=title%2Cdescription&sortby=publishedAt&from=2026-01-06T19%3A04%3A12.439Z&to=2026-02-05T19%3A04%3A12.439Z
+Refresh
 
-      const apiKey =
-        process.env.GNEWS_API_KEY ||
-        process.env.GNEWS_APIKEY ||
-        process.env.GNEWS_TOKEN ||
-        process.env.API_KEY ||
-        "";
+Brief (rules-based)
+No items matched current filters. Try Reset filters.
+Section fetch failed (API missing / rate limit / network).
+No items after filtering. Try Reset filters or widen Time window.
+Academic & futures signals
+raw: 0
+Research/think-tank outputs (high recall).
+/api/gnews?q=%28AI+OR+%22artificial+intelligence%22%29+AND+%28paper+OR+study+OR+report+OR+preprint+OR+evaluation+OR+risk+OR+safety%29&lang=en&max=50&in=title%2Cdescription&sortby=publishedAt&from=2026-01-06T19%3A04%3A12.439Z&to=2026-02-05T19%3A04%3A12.439Z
+Refresh
 
-      if (!apiKey) {
-        return new Response(
-          JSON.stringify({
-            articles: [],
-            error: "Missing GNews API key (set GNEWS_API_KEY in Vercel env).",
-          }),
-          { status: 200, headers }
-        );
-      }
+Brief (rules-based)
+No items matched current filters. Try Reset filters.
+Section fetch failed (API missing / rate limit / network).
+No items after filtering. Try Reset filters or widen Time window.
+Broad media capture (weak signals)
+raw: 0
+Guaranteed baseline: AI + harms keywords.
+/api/gnews?q=%28AI+OR+%22artificial+intelligence%22%29+AND+%28deepfake+OR+fraud+OR+scam+OR+sextortion+OR+grooming+OR+ransomware+OR+phishing+OR+nudify+OR+Ofcom%29&lang=en&max=50&in=title%2Cdescription&sortby=publishedAt&from=2026-01-06T19%3A04%3A12.439Z&to=2026-02-05T19%3A04%3A12.439Z
+Refresh
 
-      if (!q) {
-        return new Response(JSON.stringify({ articles: [], meta: { ok: true, emptyQuery: true } }), {
-          status: 200,
-          headers,
-        });
-      }
+Brief (rules-based)
+No items matched current filters. Try Reset filters.
+Section fetch failed (API missing / rate limit / network).
+No items after filtering. Try Reset filters or widen Time window.
+RSS: Updates & briefs
+raw: 10
+Publisher updates (stable; not headline-search volatility).
+/api/rss?url=https%3A%2F%2Fforesightprojects.blog.gov.uk%2Ffeed%2F&limit=60
+Refresh
 
-      const upstream = new URL("https://gnews.io/api/v4/search");
-      upstream.searchParams.set("q", q);
-      upstream.searchParams.set("lang", lang);
-      upstream.searchParams.set("max", String(max));
-      upstream.searchParams.set("sortby", sortby);
-      upstream.searchParams.set("in", inFields);
-      if (country) upstream.searchParams.set("country", country);
-      if (from) upstream.searchParams.set("from", from);
-      if (to) upstream.searchParams.set("to", to);
-      upstream.searchParams.set("apikey", apiKey);
+Brief (rules-based)
+Showing 1. High: 0, Medium: 0, Low: 1.
+The Future of Childhood #1: Engaging with Children and Young People
+Improving outcomes for future generations What could childhood look like in 10-20 years? That’s what the Government Chief Scientific Adviser is exploring in GO-Science’s latest Foresight project: The Future of Childhood and Adolescence. We want to understand what factors might …
+Low priority
+Source: Futures, Foresight and Horizon Scanning
+Date: 2026-01-06
 
-      const resp = await fetch(upstream.toString());
-      const data = await resp.json().catch(() => ({}));
-      const articles = Array.isArray(data?.articles) ? data.articles : [];
 
-      // Always sort newest first for stability
-      articles.sort((a, b) => {
-        const da = Date.parse(a?.publishedAt || "") || 0;
-        const db = Date.parse(b?.publishedAt || "") || 0;
-        return db - da;
-      });
-
-      return new Response(
-        JSON.stringify({
-          articles,
-          meta: {
-            ok: true,
-            truncated,
-            sent: { q, lang, country, max, sortby, from, to, in: inFields },
-            upstreamStatus: resp.status,
-          },
-        }),
-        { status: 200, headers }
-      );
-    } catch (e) {
-      return new Response(JSON.stringify({ articles: [], error: String(e?.message || e) }), { status: 200, headers });
-    }
-  },
-};
+Open
