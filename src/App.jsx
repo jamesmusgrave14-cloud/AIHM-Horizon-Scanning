@@ -607,7 +607,7 @@ export default function App() {
     <div className="min-h-screen bg-white text-slate-900">
       <div className="max-w-[1200px] mx-auto px-6 py-8">
         <div className="rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-          <div className="bg-[#7a1f3d] px-6 py-6 text-white">
+          <div className="bg-teal-700 px-6 py-6 text-white">
             <div className="flex items-start justify-between gap-6">
               <div>
                 <div className="text-2xl sm:text-3xl font-serif font-bold tracking-tight">AIHM Intelligence Monitor</div>
