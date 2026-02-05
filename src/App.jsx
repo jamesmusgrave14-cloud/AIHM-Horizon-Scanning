@@ -52,74 +52,74 @@ const SECTIONS = [
     key: "dev_releases",
     group: "dev",
     title: "Developer releases & model cards",
-    subtitle: "Model/system cards, open-weights, major release announcements.",
+    subtitle: "Model/system cards, releases, weights, tooling (high recall).",
     tone: "blue",
     query:
-      '"model card" OR "system card" OR "open weights" OR OpenAI OR Anthropic OR DeepMind OR Llama OR Grok',
+      '(OpenAI OR Anthropic OR DeepMind OR Google OR "xAI" OR Grok OR Meta OR Llama OR Mistral) AND (release OR launched OR update OR model OR "model card" OR "system card" OR weights)'
   },
   {
     key: "watchdogs",
     group: "watchdogs",
     title: "Watchdogs & safety monitors",
-    subtitle: "AISI/CETaS/Ada/Oxford/IWF style outputs and commentary.",
+    subtitle: "AISI/CETaS/Ada/Oxford/IWF + online safety outputs.",
     tone: "maroon",
     query:
-      'AISI OR "AI Security Institute" OR "AI Safety Institute" OR CETaS OR "Ada Lovelace Institute" OR IWF',
+      '(AISI OR "AI Security Institute" OR CETaS OR "Ada Lovelace" OR "Oxford Internet Institute" OR IWF OR Ofcom) AND (report OR briefing OR analysis OR consultation OR guidance)'
   },
   {
     key: "gov_signals",
     group: "gov",
     title: "Government / HMG signals",
-    subtitle: "GO-Science, NSSIF and open reporting on emerging tech/threats.",
+    subtitle: "GO‑Science, Ofcom, DSIT, NCSC, NCA (open reporting).",
     tone: "maroon",
     query:
-      '"Government Office for Science" OR "GO-Science" OR NSSIF OR "NSSIF Insights" OR "threat assessment" AND AI',
+      '(Ofcom OR DSIT OR "Government Office for Science" OR "GO-Science" OR NCSC OR NCA OR "Home Office") AND (AI OR "artificial intelligence" OR deepfake OR "online safety")'
   },
   {
     key: "harms_csea",
     group: "harms",
     title: "CSEA / IBSA signals",
-    subtitle: "Nudification, sextortion, grooming, NCII / IBSA indicators.",
+    subtitle: "Nudification, sextortion, NCII, child safety harms.",
     tone: "red",
     query:
-      'CSEA OR CSAM OR nudification OR nudify OR sextortion OR grooming OR "deepfake pornography"',
+      '(AI OR "artificial intelligence" OR deepfake) AND (nudify OR nudification OR sextortion OR grooming OR "child sexual abuse" OR CSAM OR CSEA OR "image-based abuse")'
   },
   {
     key: "harms_fraud",
     group: "harms",
     title: "Fraud & impersonation",
-    subtitle: "Voice cloning, BEC, scams, synthetic identity, account takeover.",
+    subtitle: "Voice cloning, scams, impersonation, synthetic identity.",
     tone: "red",
     query:
-      '"voice cloning" OR "deepfake fraud" OR impersonation OR "CEO fraud" OR BEC OR "account takeover"',
+      '(AI OR "artificial intelligence" OR deepfake OR "voice cloning") AND (scam OR fraud OR impersonation OR "account takeover" OR BEC OR "synthetic identity")'
   },
   {
     key: "harms_cyber",
     group: "harms",
     title: "Cybercrime enablement",
-    subtitle: "Phishing, malware, ransomware, prompt injection/jailbreak commoditisation.",
+    subtitle: "Phishing, malware, ransomware — AI-enabled where mentioned.",
     tone: "red",
     query:
-      'phishing OR malware OR ransomware OR "prompt injection" OR jailbreak AND AI',
+      '(phishing OR malware OR ransomware OR "social engineering") AND (AI OR "artificial intelligence" OR deepfake)'
   },
   {
     key: "research_futures",
     group: "research",
     title: "Academic & futures signals",
-    subtitle: "Future capabilities/limitations; emerging harms research.",
+    subtitle: "Research/think-tank outputs (high recall).",
     tone: "blue",
     query:
-      '"future crime" OR "AI trajectories" OR "frontier AI" OR "agentic AI" OR "capability milestones"',
+      '(AI OR "artificial intelligence") AND (paper OR study OR report OR preprint OR evaluation OR risk OR safety)'
   },
   {
     key: "media_broad",
     group: "media",
     title: "Broad media capture (weak signals)",
-    subtitle: "Catch unexpected developments; triage with filters/tags.",
+    subtitle: "Guaranteed baseline: AI + harms keywords.",
     tone: "blue",
     query:
-      '"artificial intelligence" AND (deepfake OR scam OR ransomware OR "model card" OR Ofcom OR nudify)',
-  },
+      '(AI OR "artificial intelligence") AND (deepfake OR fraud OR scam OR sextortion OR grooming OR ransomware OR phishing OR nudify OR Ofcom)'
+  }
 ];
 
 const RSS_SECTION = {
@@ -485,6 +485,7 @@ export default function App() {
           params.set("q", q);
           params.set("lang", "en");
           params.set("max", "50");
+          params.set("in", "title,description");
           params.set("sortby", "publishedAt");
           params.set("from", fromIso);
           params.set("to", toIso);
@@ -498,21 +499,17 @@ export default function App() {
         }
 
         let finalArticles = all;
-        if (fallbackBroad && finalArticles.length === 0) {
-          const params = new URLSearchParams();
-          params.set("q", String(sec.query).slice(0, 200));
-          params.set("lang", "en");
-          params.set("max", "50");
-          params.set("sortby", "publishedAt");
-          params.set("from", fromIso);
-          params.set("to", toIso);
-          if (ukOnly) params.set("country", "gb");
-
-          const url = `/api/gnews?${params.toString()}`;
-          usedUrl = url;
-          const r2 = await axios.get(url);
-          finalArticles = Array.isArray(r2?.data?.articles) ? r2.data.articles : [];
-        }
+        if (fallbackBroad && mapped.length === 0) {
+        const broad = new URLSearchParams(params);
+        // broaden but keep within GNews 200-char q limit [1](https://teams.microsoft.com/l/meeting/details?eventId=AAMkADM4ZGMwMDg2LWU0NWEtNDdjMC05MDk5LWJkZmZmZTk4ZDg0NQBGAAAAAADr0mxgvUsEQJU_BcPijvuRBwAOCjAcLxu5TqoZ70bQ0CWjAAAAAAENAAAOCjAcLxu5TqoZ70bQ0CWjAACUuaEaAAA%3d)
+        const broadQ = `(${q}) OR AI OR "artificial intelligence" OR deepfake OR fraud`.slice(0, 200);
+        broad.set("q", broadQ);
+      
+        const url2 = `/api/gnews?${broad.toString()}`;
+        const r2 = await axios.get(url2);
+        const a2 = Array.isArray(r2?.data?.articles) ? r2.data.articles : [];
+        // then map a2 the same way you map the normal response
+      }
 
         const seen = new Set();
         const mapped = [];
