@@ -1,82 +1,80 @@
-import { readFile } from "node:fs/promises";
-import path from "node:path";
+export default {
+  async fetch(request) {
+    const headers = {
+      "content-type": "application/json; charset=utf-8",
+      "cache-control": "s-maxage=3600, stale-while-revalidate=86400",
+    };
 
-function safeJsonParse(text) {
-  try {
-    return { ok: true, value: JSON.parse(text) };
-  } catch (e) {
-    return { ok: false, error: String(e?.message || e) };
-  }
-}
-
-export default async function handler(req, res) {
-  // Always respond with JSON (never crash the function)
-  try {
-    res.setHeader("Content-Type", "application/json; charset=utf-8");
-    res.setHeader("Cache-Control", "s-maxage=3600, stale-while-revalidate=86400");
-
-    const limitRaw = Array.isArray(req.query?.limit) ? req.query.limit[0] : req.query?.limit;
-    const limit = Math.min(parseInt(limitRaw || "20", 10) || 20, 100);
-
-    const cachePath = path.join(process.cwd(), "public", "aiid-latest.json");
-
-    let raw;
     try {
-      raw = await readFile(cachePath, "utf8");
+      const url = new URL(request.url);
+      const limit = Math.min(parseInt(url.searchParams.get("limit") || "20", 10) || 20, 100);
+
+      // Read the cached file from the static public path (no filesystem, no heavy work)
+      // This should NOT invoke the function; it should be served as a static asset.
+      const cacheUrl = new URL("/aiid-latest.json", url.origin);
+
+      const resp = await fetch(cacheUrl.toString(), { method: "GET" });
+
+      if (!resp.ok) {
+        return new Response(
+          JSON.stringify({
+            articles: [],
+            meta: {
+              ok: false,
+              reason: "cache_file_missing_or_not_deployed",
+              status: resp.status,
+              cacheUrl: cacheUrl.toString(),
+            },
+          }),
+          { status: 200, headers }
+        );
+      }
+
+      let data;
+      try {
+        data = await resp.json();
+      } catch (e) {
+        return new Response(
+          JSON.stringify({
+            articles: [],
+            meta: {
+              ok: false,
+              reason: "cache_file_not_valid_json",
+              cacheUrl: cacheUrl.toString(),
+              error: String(e?.message || e),
+            },
+          }),
+          { status: 200, headers }
+        );
+      }
+
+      const articles = Array.isArray(data?.articles) ? data.articles : [];
+
+      return new Response(
+        JSON.stringify({
+          articles: articles.slice(0, limit),
+          meta: {
+            ok: true,
+            cacheUrl: cacheUrl.toString(),
+            totalCached: articles.length,
+            generatedAt: data?.meta?.generatedAt || null,
+          },
+        }),
+        { status: 200, headers }
+      );
     } catch (e) {
-      // Cache missing: return empty but healthy
-      return res.status(200).send(
+      // Absolute fail-safe: never crash, always return JSON
+      return new Response(
         JSON.stringify({
           articles: [],
           meta: {
             ok: false,
-            reason: "aiid_cache_missing",
-            note: "public/aiid-latest.json not found in deployment",
+            reason: "aiid_function_exception",
+            error: String(e?.message || e),
           },
-        })
+        }),
+        { status: 200, headers }
       );
     }
-
-    const parsed = safeJsonParse(raw);
-    if (!parsed.ok) {
-      // Cache invalid JSON: return empty but healthy
-      return res.status(200).send(
-        JSON.stringify({
-          articles: [],
-          meta: {
-            ok: false,
-            reason: "aiid_cache_invalid_json",
-            error: parsed.error,
-          },
-        })
-      );
-    }
-
-    const data = parsed.value;
-    const articles = Array.isArray(data?.articles) ? data.articles : [];
-
-    return res.status(200).send(
-      JSON.stringify({
-        articles: articles.slice(0, limit),
-        meta: {
-          ok: true,
-          source: "public/aiid-latest.json",
-          generatedAt: data?.meta?.generatedAt || null,
-          totalCached: articles.length,
-        },
-      })
-    );
-  } catch (e) {
-    // Absolute last resort: still return JSON
-    return res.status(200).send(
-      JSON.stringify({
-        articles: [],
-        meta: {
-          ok: false,
-          reason: "aiid_function_exception",
-          error: String(e?.message || e),
-        },
-      })
-    );
-  }
-}
+  },
+};
