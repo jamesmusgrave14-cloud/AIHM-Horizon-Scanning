@@ -16,19 +16,28 @@ import {
   LayoutList,
   List,
   AlertCircle,
+  Plus,
+  Trash2
 } from "lucide-react";
 
 /**
- * AIHM Intelligence Monitor — v3 (Plan-aligned)
- * - Categories/headings aligned to your AIHM horizon scanning plan sources list:
- *   Developers/model cards; Watchdogs; Govt signals; Harms; Academic research; Media.
- *   (See AIHM Horizon Scanning plan) [1](https://ukhomeoffice.sharepoint.com/sites/CTCOLLAB5541/_layouts/15/Doc.aspx?sourcedoc=%7B3C1D5F74-DB3E-41BD-8623-73865DF69FF0%7D&file=AIHM%20Horizon%20Scanning%20plan.docx&action=default&mobileredirect=true)
- * - Broader capture-first approach, then triage (per plan’s “weak signals” framing). [1](https://ukhomeoffice.sharepoint.com/sites/CTCOLLAB5541/_layouts/15/Doc.aspx?sourcedoc=%7B3C1D5F74-DB3E-41BD-8623-73865DF69FF0%7D&file=AIHM%20Horizon%20Scanning%20plan.docx&action=default&mobileredirect=true)
- * - Better UI: grouped navigation, reset filters, per-section diagnostics, per-section refresh, pin/hide, export.
- * - GNews only (AIID removed).
+ * AIHM Intelligence Monitor — v4
+ * - Adds RSS ingestion (plan-aligned) via /api/rss. [1](https://teams.microsoft.com/l/meeting/details?eventId=AAMkADM4ZGMwMDg2LWU0NWEtNDdjMC05MDk5LWJkZmZmZTk4ZDg0NQBGAAAAAADr0mxgvUsEQJU_BcPijvuRBwAOCjAcLxu5TqoZ70bQ0CWjAAAAAAENAAAOCjAcLxu5TqoZ70bQ0CWjAAA4_V53AAA%3d)[2](https://teams.microsoft.com/l/meeting/details?eventId=AAMkADM4ZGMwMDg2LWU0NWEtNDdjMC05MDk5LWJkZmZmZTk4ZDg0NQFRAAgI3lxt2UvAAEYAAAAA69JsYL1LBECVPgXD4o77kQcADgowHC8buU6qGe9G0NAlowAAAAABDQAADgowHC8buU6qGe9G0NAlowAAFrFR5QAAEA%3d%3d)
+ * - Stabilises scans: incremental fetch (from/to) + merge + local cache.
+ * - Enforces GNews q max length (200 chars) by splitting queries. [3](https://ukhomeoffice.sharepoint.com/sites/CTCOLLAB5541/_layouts/15/Doc.aspx?sourcedoc=%7B0181351B-0FD2-4CE6-8131-F5681E8B38E1%7D&file=Causal%20Mapping%20Methodology%20-%20Template.docx&action=default&mobileredirect=true&DefaultItemOpen=1)
+ * - White background, cleaner navigation, easier finding.
+ *
+ * Requires:
+ * - /api/gnews proxy (recommend setting sortby/from/to there too). [3](https://ukhomeoffice.sharepoint.com/sites/CTCOLLAB5541/_layouts/15/Doc.aspx?sourcedoc=%7B0181351B-0FD2-4CE6-8131-F5681E8B38E1%7D&file=Causal%20Mapping%20Methodology%20-%20Template.docx&action=default&mobileredirect=true&DefaultItemOpen=1)
+ * - /api/rss (rss-parser) to avoid CORS.
  */
 
-/* ----------------------------- Sections (Plan-aligned) ----------------------------- */
+const STORAGE_KEY = "aihm_monitor_state_v4";
+
+const DEFAULT_RSS_FEEDS = [
+  // GO-Science Futures/Foresight/Horizon Scanning blog (you already subscribe by email) [2](https://teams.microsoft.com/l/meeting/details?eventId=AAMkADM4ZGMwMDg2LWU0NWEtNDdjMC05MDk5LWJkZmZmZTk4ZDg0NQFRAAgI3lxt2UvAAEYAAAAA69JsYL1LBECVPgXD4o77kQcADgowHC8buU6qGe9G0NAlowAAAAABDQAADgowHC8buU6qGe9G0NAlowAAFrFR5QAAEA%3d%3d)[5](https://ukhomeoffice.sharepoint.com/sites/CTCOLLAB5541/_layouts/15/Doc.aspx?sourcedoc=%7BEF138EB5-C00B-4033-A7DF-136AB14BDBE5%7D&file=011025%20-%20GOS%20Survey%20-%20future%20of%20AI%20.docx&action=default&mobileredirect=true&DefaultItemOpen=1)
+  "https://foresightprojects.blog.gov.uk/feed/"
+];
 
 const GROUPS = [
   { key: "all", label: "All" },
@@ -38,128 +47,91 @@ const GROUPS = [
   { key: "harms", label: "Operational harms" },
   { key: "research", label: "Academic & futures" },
   { key: "media", label: "Media & broad" },
+  { key: "rss", label: "RSS feeds" }
 ];
 
+// Plan-aligned categories/headings (from your [AIHM Horizon Scanning plan.docx](https://ukhomeoffice.sharepoint.com/sites/CTCOLLAB5541/_layouts/15/Doc.aspx?sourcedoc=%7B3C1D5F74-DB3E-41BD-8623-73865DF69FF0%7D&file=AIHM%20Horizon%20Scanning%20plan.docx&action=default&mobileredirect=true&EntityRepresentationId=c2116c45-1386-48fd-8e0c-64b250400fea)) [1](https://teams.microsoft.com/l/meeting/details?eventId=AAMkADM4ZGMwMDg2LWU0NWEtNDdjMC05MDk5LWJkZmZmZTk4ZDg0NQBGAAAAAADr0mxgvUsEQJU_BcPijvuRBwAOCjAcLxu5TqoZ70bQ0CWjAAAAAAENAAAOCjAcLxu5TqoZ70bQ0CWjAAA4_V53AAA%3d)
 const SECTIONS = [
-  // 1) Developer releases & model cards [1](https://ukhomeoffice.sharepoint.com/sites/CTCOLLAB5541/_layouts/15/Doc.aspx?sourcedoc=%7B3C1D5F74-DB3E-41BD-8623-73865DF69FF0%7D&file=AIHM%20Horizon%20Scanning%20plan.docx&action=default&mobileredirect=true)
   {
     key: "dev_releases",
     group: "dev",
-    title: "Developer Releases & Model Cards",
-    subtitle: "Frontier model announcements, model/system cards, open-weights releases.",
+    title: "Developer releases & model cards",
+    subtitle: "Model/system cards, open-weights, major release announcements.",
     tone: "blue",
-    query:
-      '"model card" OR "system card" OR "open weights" OR "weights release" OR "frontier model" OR OpenAI OR Anthropic OR Google DeepMind OR Meta Llama OR xAI Grok',
+    query: '"model card" OR "system card" OR "open weights" OR "weights release" OR OpenAI OR Anthropic OR DeepMind OR Llama OR Grok'
   },
   {
-    key: "dev_eval",
-    group: "dev",
-    title: "Evaluation, Red Teaming & Safety Testing",
-    subtitle: "Red teaming, eval releases, jailbreak/prompt injection coverage in public reporting.",
-    tone: "blue",
-    query:
-      '"model evaluation" OR "safety evaluation" OR "red teaming" OR jailbreak OR "prompt injection" OR "safety testing" OR "risk assessment" AND (OpenAI OR Anthropic OR DeepMind OR Meta OR xAI)',
-  },
-
-  // 2) Watchdogs & monitors (AISI, CETaS, Ada, Oxford, IWF) [1](https://ukhomeoffice.sharepoint.com/sites/CTCOLLAB5541/_layouts/15/Doc.aspx?sourcedoc=%7B3C1D5F74-DB3E-41BD-8623-73865DF69FF0%7D&file=AIHM%20Horizon%20Scanning%20plan.docx&action=default&mobileredirect=true)
-  {
-    key: "watchdogs_core",
+    key: "watchdogs",
     group: "watchdogs",
-    title: "Watchdogs & Safety Monitors",
-    subtitle: "AISI, CETaS, Ada Lovelace, Oxford institutes, IWF—new reports/briefs and findings.",
+    title: "Watchdogs & safety monitors",
+    subtitle: "AISI/CETaS/Ada/Oxford/IWF style outputs and commentary.",
     tone: "maroon",
-    query:
-      'AISI OR "AI Safety Institute" OR CETaS OR "Ada Lovelace Institute" OR "Oxford Internet Institute" OR "Oxford Institute for Ethics in AI" OR IWF OR "Internet Watch Foundation"',
+    query: 'AISI OR "AI Safety Institute" OR "AI Security Institute" OR CETaS OR "Ada Lovelace Institute" OR "Oxford Internet Institute" OR IWF'
   },
-
-  // 3) Government / HMG signals (emerging-tech sources, NSSIF, GO‑Science, ETSSU) [1](https://ukhomeoffice.sharepoint.com/sites/CTCOLLAB5541/_layouts/15/Doc.aspx?sourcedoc=%7B3C1D5F74-DB3E-41BD-8623-73865DF69FF0%7D&file=AIHM%20Horizon%20Scanning%20plan.docx&action=default&mobileredirect=true)
   {
     key: "gov_signals",
     group: "gov",
-    title: "Government & HMG Signals",
-    subtitle: "GO‑Science, NSSIF Insights, NCA, ETSSU-type emerging tech monitoring (open reporting).",
+    title: "Government / HMG signals",
+    subtitle: "GO-Science futures/horizon scanning, NSSIF, threat assessments (open reporting).",
     tone: "maroon",
-    query:
-      '"Government Office for Science" OR "GO-Science" OR NSSIF OR "NSSIF Insights" OR NCA OR "threat assessment" OR ETSSU OR "emerging technology" AND AI',
+    query: '"Government Office for Science" OR "GO-Science" OR NSSIF OR "NSSIF Insights" OR "threat assessment" AND AI'
   },
-
-  // 4) Operational harms / misuse (your harm buckets)
   {
     key: "harms_csea",
     group: "harms",
-    title: "CSEA / IBSA Signals",
-    subtitle: "CSAM/CSEA, nudification, sextortion, NCII and safeguarding-related signals.",
+    title: "CSEA / IBSA signals",
+    subtitle: "Nudification, sextortion, grooming, NCII / IBSA indicators.",
     tone: "red",
-    query:
-      'CSAM OR CSEA OR "child sexual abuse" OR nudification OR nudify OR sextortion OR grooming OR "non-consensual intimate" OR "deepfake pornography"',
+    query: 'CSAM OR CSEA OR nudification OR nudify OR sextortion OR grooming OR "non-consensual intimate" OR "deepfake pornography"'
   },
   {
     key: "harms_fraud",
     group: "harms",
-    title: "Fraud, Impersonation & Identity Integrity",
-    subtitle: "Voice cloning, scams, synthetic identity, KYC/AML, account takeover and payments fraud.",
+    title: "Fraud & impersonation",
+    subtitle: "Voice cloning, BEC, scams, synthetic identity, account takeover.",
     tone: "red",
-    query:
-      '"voice cloning" OR "deepfake fraud" OR impersonation OR "CEO fraud" OR "business email compromise" OR BEC OR "account takeover" OR "synthetic identity" OR KYC OR AML',
+    query: '"voice cloning" OR "deepfake fraud" OR impersonation OR "CEO fraud" OR BEC OR "account takeover" OR "synthetic identity"'
   },
   {
     key: "harms_cyber",
     group: "harms",
-    title: "Cybercrime & Illicit Enablement",
-    subtitle: "Phishing automation, malware/ransomware enablement, illicit tooling and markets.",
+    title: "Cybercrime enablement",
+    subtitle: "Phishing, malware, ransomware, prompt injection/jailbreak commoditisation.",
     tone: "red",
-    query:
-      'phishing OR malware OR ransomware OR "malware-as-a-service" OR "initial access broker" OR "prompt injection" OR jailbreak AND AI',
+    query: 'phishing OR malware OR ransomware OR "prompt injection" OR jailbreak AND AI'
   },
-  {
-    key: "harms_extremism",
-    group: "harms",
-    title: "National Security: Extremism Misuse",
-    subtitle: "Propaganda, recruitment, and misuse signals in open reporting.",
-    tone: "red",
-    query:
-      'terror* OR extrem* OR propaganda OR radicalis* AND (AI OR deepfake OR "synthetic media" OR chatbot OR LLM)',
-  },
-  {
-    key: "harms_border",
-    group: "harms",
-    title: "Border / Document & Biometric Integrity",
-    subtitle: "Document fraud, biometric spoofing, face morphing, liveness bypass and proofing.",
-    tone: "red",
-    query:
-      '"document fraud" OR "forged passport" OR "counterfeit documents" OR "biometric spoofing" OR "face morphing" OR "liveness bypass" AND (AI OR deepfake OR synthetic)',
-  },
-
-  // 5) Academic research & futures (UCL Future Crime + “future capabilities”) [1](https://ukhomeoffice.sharepoint.com/sites/CTCOLLAB5541/_layouts/15/Doc.aspx?sourcedoc=%7B3C1D5F74-DB3E-41BD-8623-73865DF69FF0%7D&file=AIHM%20Horizon%20Scanning%20plan.docx&action=default&mobileredirect=true)
   {
     key: "research_futures",
     group: "research",
-    title: "Academic & Futures Signals",
-    subtitle: "Research on future capabilities/limitations and emerging harms (UCL Future Crime etc.).",
+    title: "Academic & futures signals",
+    subtitle: "Future capabilities/limitations; emerging harms research.",
     tone: "blue",
-    query:
-      '"future crime" OR "AI trajectories" OR "frontier AI" OR "capability milestones" OR "agentic AI" OR "AI limitations" OR UCL AND AI',
+    query: '"future crime" OR "AI trajectories" OR "frontier AI" OR "agentic AI" OR "capability milestones"'
   },
-
-  // 6) Media coverage & broad capture (weak signals) [1](https://ukhomeoffice.sharepoint.com/sites/CTCOLLAB5541/_layouts/15/Doc.aspx?sourcedoc=%7B3C1D5F74-DB3E-41BD-8623-73865DF69FF0%7D&file=AIHM%20Horizon%20Scanning%20plan.docx&action=default&mobileredirect=true)
   {
     key: "media_broad",
     group: "media",
-    title: "Broad Media Capture (Weak Signals)",
-    subtitle: "Broad catch-all for unexpected developments; triage with filters/tags.",
+    title: "Broad media capture (weak signals)",
+    subtitle: "Catch unexpected developments; triage with filters/tags.",
     tone: "blue",
-    query:
-      '"artificial intelligence" AND (deepfake OR "voice cloning" OR scam OR nudify OR ransomware OR "prompt injection" OR "model card" OR Ofcom)',
-  },
+    query: '"artificial intelligence" AND (deepfake OR scam OR ransomware OR "model card" OR Ofcom OR nudify)'
+  }
 ];
 
-/* ----------------------------- Filters ----------------------------- */
+// RSS section is handled separately (no GNews query)
+const RSS_SECTION = {
+  key: "rss_updates",
+  group: "rss",
+  title: "RSS: Updates & briefs",
+  subtitle: "Publisher updates (more stable than headline search).",
+  tone: "maroon"
+};
 
 const DATE_WINDOWS = [
   { label: "7 days", days: 7 },
   { label: "30 days", days: 30 },
   { label: "90 days", days: 90 },
-  { label: "All time", days: null },
+  { label: "All time", days: null }
 ];
 
 const HIGH_TERMS = ["csam", "csea", "nudification", "sextortion", "ransomware", "account takeover", "bec", "liveness bypass"];
@@ -193,7 +165,7 @@ function computeTags(title, description, source) {
   const tags = [];
   if (t.includes("model card") || t.includes("system card") || t.includes("open weights")) tags.push({ label: "Capability", key: "capability" });
   if (t.includes("ofcom") || t.includes("investigation") || t.includes("fined") || t.includes("charged")) tags.push({ label: "Enforcement", key: "enforcement" });
-  if (t.includes("a i s i") || t.includes("ai safety institute") || t.includes("cetas") || t.includes("report") || t.includes("study")) tags.push({ label: "Research", key: "research" });
+  if (t.includes("a i s i") || t.includes("ai safety institute") || t.includes("ai security institute") || t.includes("cetas") || t.includes("report") || t.includes("study")) tags.push({ label: "Research", key: "research" });
   return tags;
 }
 function toneStyles(tone) {
@@ -229,27 +201,59 @@ function SkeletonRow() {
   );
 }
 
-/* ----------------------------- Main ----------------------------- */
+// Split query into chunks <= 200 chars to respect GNews limit. [3](https://ukhomeoffice.sharepoint.com/sites/CTCOLLAB5541/_layouts/15/Doc.aspx?sourcedoc=%7B0181351B-0FD2-4CE6-8131-F5681E8B38E1%7D&file=Causal%20Mapping%20Methodology%20-%20Template.docx&action=default&mobileredirect=true&DefaultItemOpen=1)
+function splitQuery(q, maxLen = 200) {
+  const s = (q || "").trim();
+  if (s.length <= maxLen) return [s];
+  const parts = s.split(/\s+OR\s+/i).map(x => x.trim()).filter(Boolean);
+
+  const out = [];
+  let cur = "";
+  for (const p of parts) {
+    const candidate = cur ? `${cur} OR ${p}` : p;
+    if (candidate.length <= maxLen) {
+      cur = candidate;
+    } else {
+      if (cur) out.push(cur);
+      cur = p.length <= maxLen ? p : p.slice(0, maxLen);
+    }
+  }
+  if (cur) out.push(cur);
+  return out.length ? out : [s.slice(0, maxLen)];
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+function saveState(state) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch {
+    // ignore
+  }
+}
 
 export default function App() {
-  // Filters
   const [search, setSearch] = useState("");
   const [priority, setPriority] = useState("All");
-  const [windowOpt, setWindowOpt] = useState(DATE_WINDOWS[2]); // default 90 days
-  const [maxPerSection, setMaxPerSection] = useState(8);
+  const [windowOpt, setWindowOpt] = useState(DATE_WINDOWS[2]); // 90 days
+  const [maxPerSection, setMaxPerSection] = useState(10);
   const [focus, setFocus] = useState("All");
   const [group, setGroup] = useState("all");
 
-  // Source controls
   const [ukOnly, setUkOnly] = useState(false);
   const [fallbackBroad, setFallbackBroad] = useState(true);
-  const [viewMode, setViewMode] = useState("comfortable"); // comfortable | compact
+  const [viewMode, setViewMode] = useState("comfortable");
 
-  // Section toggles / collapse
-  const [enabled, setEnabled] = useState(() => Object.fromEntries(SECTIONS.map((s) => [s.key, true])));
-  const [collapsed, setCollapsed] = useState(() => Object.fromEntries(SECTIONS.map((s) => [s.key, false])));
+  const [enabled, setEnabled] = useState(() => Object.fromEntries([...SECTIONS, RSS_SECTION].map((s) => [s.key, true])));
+  const [collapsed, setCollapsed] = useState(() => Object.fromEntries([...SECTIONS, RSS_SECTION].map((s) => [s.key, false])));
 
-  // Data + state
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
   const [loadingSections, setLoadingSections] = useState({});
@@ -257,53 +261,40 @@ export default function App() {
   const [note, setNote] = useState("");
   const [lastScan, setLastScan] = useState(null);
 
-  // Personal
   const [pinned, setPinned] = useState(() => new Set());
   const [hidden, setHidden] = useState(() => new Set());
 
-  // Diagnostics per section (raw count + URL called)
   const [diag, setDiag] = useState(() =>
-    Object.fromEntries(SECTIONS.map((s) => [s.key, { url: "", rawCount: 0, err: "" }]))
+    Object.fromEntries([...SECTIONS, RSS_SECTION].map((s) => [s.key, { url: "", rawCount: 0, err: "" }]))
   );
+
+  // RSS feeds list (editable in UI)
+  const [rssFeeds, setRssFeeds] = useState(() => DEFAULT_RSS_FEEDS);
+  const [rssInput, setRssInput] = useState("");
 
   const today = useMemo(() => new Date().toISOString().split("T")[0], []);
   const listClass = viewMode === "compact" ? "py-2" : "py-3";
 
+  // Restore cached state on mount
+  useEffect(() => {
+    const st = loadState();
+    if (!st) return;
+
+    if (st.data) setData(st.data);
+    if (st.lastScan) setLastScan(st.lastScan);
+    if (Array.isArray(st.rssFeeds)) setRssFeeds(st.rssFeeds);
+  }, []);
+
+  // Persist important state
+  useEffect(() => {
+    saveState({ data, lastScan, rssFeeds });
+  }, [data, lastScan, rssFeeds]);
+
   const visibleSections = useMemo(() => {
-    const base = SECTIONS.filter((s) => enabled[s.key]);
-    return group === "all" ? base : base.filter((s) => s.group === group);
+    const all = [...SECTIONS, RSS_SECTION].filter((s) => enabled[s.key]);
+    if (group === "all") return all;
+    return all.filter((s) => s.group === group);
   }, [enabled, group]);
-
-  const sectionRefs = useRef({});
-  const scrollToSection = (key) => {
-    const el = sectionRefs.current[key];
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
-  const togglePin = (id) => {
-    setPinned((prev) => {
-      const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
-      return next;
-    });
-  };
-  const toggleHide = (id) => {
-    setHidden((prev) => {
-      const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
-      return next;
-    });
-  };
-
-  const resetFilters = () => {
-    setSearch("");
-    setPriority("All");
-    setFocus("All");
-    setWindowOpt(DATE_WINDOWS[2]); // 90 days
-    setUkOnly(false);
-    setFallbackBroad(true);
-    setGroup("all");
-  };
 
   const applyFilters = useCallback(
     (items) => {
@@ -320,7 +311,6 @@ export default function App() {
         .filter((it) => withinWindow(it.publishedAt, windowOpt.days));
 
       if (priority !== "All") out = out.filter((it) => it.priority === priority);
-
       if (focus !== "All") out = out.filter((it) => (it.tags || []).some((t) => t.key === focus));
 
       const q = search.trim().toLowerCase();
@@ -335,9 +325,14 @@ export default function App() {
 
       out.sort((a, b) => (toDate(b.publishedAt)?.getTime() || 0) - (toDate(a.publishedAt)?.getTime() || 0));
 
+      // pinned at top
+      const pinnedItems = out.filter((it) => pinned.has(it.url || it.id || ""));
+      const rest = out.filter((it) => !pinned.has(it.url || it.id || ""));
+      out = [...pinnedItems, ...rest];
+
       return out.slice(0, maxPerSection);
     },
-    [focus, hidden, maxPerSection, priority, search, windowOpt.days]
+    [focus, hidden, maxPerSection, pinned, priority, search, windowOpt.days]
   );
 
   const briefs = useMemo(() => {
@@ -353,63 +348,160 @@ export default function App() {
       );
       return `Showing ${filtered.length}. High: ${counts.High}, Medium: ${counts.Medium}, Low: ${counts.Low}.`;
     };
-    return Object.fromEntries(SECTIONS.map((s) => [s.key, make(data[s.key] || [])]));
+    return Object.fromEntries([...SECTIONS, RSS_SECTION].map((s) => [s.key, make(data[s.key] || [])]));
   }, [applyFilters, data]);
 
   const view = useMemo(
-    () => Object.fromEntries(SECTIONS.map((s) => [s.key, applyFilters(data[s.key] || [])])),
+    () => Object.fromEntries([...SECTIONS, RSS_SECTION].map((s) => [s.key, applyFilters(data[s.key] || [])])),
     [applyFilters, data]
   );
 
+  const resetFilters = () => {
+    setSearch("");
+    setPriority("All");
+    setFocus("All");
+    setWindowOpt(DATE_WINDOWS[2]);
+    setUkOnly(false);
+    setFallbackBroad(true);
+    setGroup("all");
+  };
+
+  // Merge items by URL and keep newest first; avoid full reshuffle
+  function mergeByUrl(existing = [], incoming = []) {
+    const map = new Map();
+    for (const it of existing) {
+      const u = it.url || it.id || "";
+      if (!u) continue;
+      map.set(u, it);
+    }
+    for (const it of incoming) {
+      const u = it.url || it.id || "";
+      if (!u) continue;
+      if (!map.has(u)) map.set(u, it);
+    }
+    const merged = [...map.values()];
+    merged.sort((a, b) => (Date.parse(b.publishedAt || "") || 0) - (Date.parse(a.publishedAt || "") || 0));
+    return merged;
+  }
+
+  // RSS fetcher
+  const fetchRss = useCallback(
+    async () => {
+      setLoadingSections((m) => ({ ...m, [RSS_SECTION.key]: true }));
+      setErrors((m) => ({ ...m, [RSS_SECTION.key]: "" }));
+
+      const params = new URLSearchParams();
+      rssFeeds.forEach((u) => params.append("url", u));
+      params.set("limit", "60");
+
+      const url = `/api/rss?${params.toString()}`;
+      setDiag((d) => ({ ...d, [RSS_SECTION.key]: { ...d[RSS_SECTION.key], url, err: "" } }));
+
+      try {
+        const r = await axios.get(url);
+        const items = Array.isArray(r?.data?.articles) ? r.data.articles : [];
+        setDiag((d) => ({ ...d, [RSS_SECTION.key]: { ...d[RSS_SECTION.key], rawCount: items.length } }));
+
+        // Map to shared schema
+        const mapped = items.map((a) => ({
+          title: a.title ?? "",
+          description: a.description ?? "",
+          url: a.url ?? "#",
+          publishedAt: a.publishedAt ?? "",
+          source: a.source ?? "RSS"
+        }));
+
+        setData((prev) => ({ ...prev, [RSS_SECTION.key]: mergeByUrl(prev[RSS_SECTION.key] || [], mapped) }));
+      } catch {
+        const msg = "RSS fetch failed (feed URL invalid, CORS in server, or /api/rss missing).";
+        setErrors((m) => ({ ...m, [RSS_SECTION.key]: msg }));
+        setDiag((d) => ({ ...d, [RSS_SECTION.key]: { ...d[RSS_SECTION.key], err: msg, rawCount: 0 } }));
+      } finally {
+        setLoadingSections((m) => ({ ...m, [RSS_SECTION.key]: false }));
+      }
+    },
+    [rssFeeds]
+  );
+
+  // GNews fetcher with incremental time bounds (from/to) and stable sort. [3](https://ukhomeoffice.sharepoint.com/sites/CTCOLLAB5541/_layouts/15/Doc.aspx?sourcedoc=%7B0181351B-0FD2-4CE6-8131-F5681E8B38E1%7D&file=Causal%20Mapping%20Methodology%20-%20Template.docx&action=default&mobileredirect=true&DefaultItemOpen=1)
   const fetchGnewsSection = useCallback(
     async (sec) => {
       setLoadingSections((m) => ({ ...m, [sec.key]: true }));
       setErrors((m) => ({ ...m, [sec.key]: "" }));
 
-      const params = new URLSearchParams();
-      params.set("q", sec.query);
-      params.set("lang", "en");
-      params.set("max", String(Math.max(16, maxPerSection * 3)));
-      if (ukOnly) params.set("country", "gb");
+      // Incremental: from lastScan-12h to now
+      const now = new Date();
+      const overlapMs = 12 * 60 * 60 * 1000;
+      const fromDt = lastScan ? new Date(new Date(lastScan).getTime() - overlapMs) : new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+      const fromIso = fromDt.toISOString();
+      const toIso = now.toISOString();
 
-      let url = `/api/gnews?${params.toString()}`;
-      setDiag((d) => ({ ...d, [sec.key]: { ...d[sec.key], url, err: "" } }));
+      const chunks = splitQuery(sec.query, 200);
+      const all = [];
+      let usedUrl = "";
 
       try {
-        const r = await axios.get(url);
-        const articles = Array.isArray(r?.data?.articles) ? r.data.articles : [];
-        let finalArticles = articles;
+        for (const q of chunks) {
+          const params = new URLSearchParams();
+          params.set("q", q);
+          params.set("lang", "en");
+          params.set("max", String(50));
+          params.set("sortby", "publishedAt");
+          params.set("from", fromIso);
+          params.set("to", toIso);
+          if (ukOnly) params.set("country", "gb");
 
-        if (fallbackBroad && finalArticles.length === 0) {
-          const broad = new URLSearchParams(params);
-          broad.set("q", `${sec.query} OR AI OR "artificial intelligence"`);
-          url = `/api/gnews?${broad.toString()}`;
-          const r2 = await axios.get(url);
-          finalArticles = Array.isArray(r2?.data?.articles) ? r2.data.articles : [];
-          setDiag((d) => ({ ...d, [sec.key]: { ...d[sec.key], url } }));
+          const url = `/api/gnews?${params.toString()}`;
+          usedUrl = url;
+          const r = await axios.get(url);
+          const articles = Array.isArray(r?.data?.articles) ? r.data.articles : [];
+          all.push(...articles);
         }
 
-        setDiag((d) => ({ ...d, [sec.key]: { ...d[sec.key], rawCount: finalArticles.length } }));
+        // optional broaden if still empty
+        let finalArticles = all;
+        if (fallbackBroad && finalArticles.length === 0) {
+          const params = new URLSearchParams();
+          params.set("q", `${sec.query}`.slice(0, 200));
+          params.set("lang", "en");
+          params.set("max", String(50));
+          params.set("sortby", "publishedAt");
+          params.set("from", fromIso);
+          params.set("to", toIso);
+          if (ukOnly) params.set("country", "gb");
+          const url = `/api/gnews?${params.toString()}`;
+          usedUrl = url;
+          const r2 = await axios.get(url);
+          finalArticles = Array.isArray(r2?.data?.articles) ? r2.data.articles : [];
+        }
 
-        const mapped = finalArticles.map((a) => ({
-          title: a.title ?? "",
-          description: a.description ?? "",
-          url: a.url ?? "#",
-          publishedAt: a.publishedAt ?? "",
-          source: a?.source?.name || a?.source || "Unknown",
-        }));
+        // dedupe by URL and map schema
+        const seen = new Set();
+        const mapped = [];
+        for (const a of finalArticles) {
+          const u = a?.url || "";
+          if (!u || seen.has(u)) continue;
+          seen.add(u);
+          mapped.push({
+            title: a.title ?? "",
+            description: a.description ?? "",
+            url: u,
+            publishedAt: a.publishedAt ?? "",
+            source: a?.source?.name || a?.source || "Unknown"
+          });
+        }
 
-        setData((prev) => ({ ...prev, [sec.key]: mapped }));
+        setDiag((d) => ({ ...d, [sec.key]: { ...d[sec.key], url: usedUrl, rawCount: mapped.length, err: "" } }));
+        setData((prev) => ({ ...prev, [sec.key]: mergeByUrl(prev[sec.key] || [], mapped) }));
       } catch {
         const msg = "Section fetch failed (API missing / rate limit / network).";
         setErrors((m) => ({ ...m, [sec.key]: msg }));
-        setDiag((d) => ({ ...d, [sec.key]: { ...d[sec.key], err: msg, rawCount: 0 } }));
-        setData((prev) => ({ ...prev, [sec.key]: [] }));
+        setDiag((d) => ({ ...d, [sec.key]: { ...d[sec.key], err: msg, rawCount: 0, url: usedUrl } }));
       } finally {
         setLoadingSections((m) => ({ ...m, [sec.key]: false }));
       }
     },
-    [fallbackBroad, maxPerSection, ukOnly]
+    [fallbackBroad, ukOnly, lastScan]
   );
 
   const runScan = useCallback(async () => {
@@ -418,16 +510,20 @@ export default function App() {
     const started = new Date();
 
     try {
-      await Promise.all(visibleSections.map((sec) => fetchGnewsSection(sec)));
+      // fetch RSS first (stable) then news
+      if (enabled[RSS_SECTION.key]) await fetchRss();
+
+      const sectionsToScan = SECTIONS.filter((s) => enabled[s.key]).filter((s) => group === "all" || s.group === group);
+      await Promise.all(sectionsToScan.map((sec) => fetchGnewsSection(sec)));
+
       setLastScan(started.toISOString());
-      const totalRaw = visibleSections.reduce((sum, s) => sum + (diag[s.key]?.rawCount || 0), 0);
-      setNote(`Scan complete. Raw articles returned (before filters): ${totalRaw}.`);
+      setNote("Scan complete (incremental). New items merged into existing lists.");
     } catch {
       setNote("Scan failed (network/rate limit).");
     } finally {
       setLoading(false);
     }
-  }, [fetchGnewsSection, visibleSections, diag]);
+  }, [enabled, fetchRss, fetchGnewsSection, group]);
 
   useEffect(() => {
     runScan();
@@ -444,14 +540,14 @@ export default function App() {
           source: it.source || "",
           date: it.publishedAt || "",
           url: it.url || "",
-          priority: it.priority || "",
+          priority: it.priority || ""
         });
       }
     }
     const header = ["section", "priority", "date", "source", "title", "url"];
     const csv = [
       header.join(","),
-      ...rows.map((r) => header.map((k) => `"${String(r[k] ?? "").replaceAll('"', '""')}"`).join(",")),
+      ...rows.map((r) => header.map((k) => `"${String(r[k] ?? "").replaceAll('"', '""')}"`).join(","))
     ].join("\n");
 
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
@@ -460,6 +556,16 @@ export default function App() {
     a.download = `aihm-monitor-${today}.csv`;
     a.click();
   };
+
+  // RSS feed editor
+  const addFeed = () => {
+    const u = rssInput.trim();
+    if (!u) return;
+    if (rssFeeds.includes(u)) return;
+    setRssFeeds((prev) => [...prev, u]);
+    setRssInput("");
+  };
+  const removeFeed = (u) => setRssFeeds((prev) => prev.filter((x) => x !== u));
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
@@ -533,9 +639,10 @@ export default function App() {
                   onChange={(e) => setFocus(e.target.value)}
                   className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#7a1f3d]/15"
                 >
-                  {FOCUS_OPTIONS.map((f) => (
-                    <option key={f.value} value={f.value}>{f.label}</option>
-                  ))}
+                  <option value="All">All</option>
+                  <option value="capability">Capability</option>
+                  <option value="enforcement">Enforcement</option>
+                  <option value="research">Research</option>
                 </select>
               </div>
 
@@ -554,10 +661,7 @@ export default function App() {
             </div>
 
             <div className="mt-3 flex flex-wrap gap-2 items-center">
-              <button
-                onClick={resetFilters}
-                className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs"
-              >
+              <button onClick={resetFilters} className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs">
                 Reset filters
               </button>
 
@@ -566,7 +670,7 @@ export default function App() {
                 className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border text-xs ${
                   ukOnly ? "bg-slate-900 text-white border-slate-900" : "bg-white border-slate-200 text-slate-700"
                 }`}
-                title="Only enable if you really want UK-only sources"
+                title="If enabled, restricts to GB source-country when supported"
               >
                 <Globe size={14} />
                 UK sources
@@ -577,10 +681,19 @@ export default function App() {
                 className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border text-xs ${
                   fallbackBroad ? "bg-slate-900 text-white border-slate-900" : "bg-white border-slate-200 text-slate-700"
                 }`}
-                title="Broadens query once if the section returns zero results"
+                title="Broaden query once if a section returns zero"
               >
                 <SlidersHorizontal size={14} />
                 Broaden if empty
+              </button>
+
+              <button
+                onClick={() => setViewMode((m) => (m === "compact" ? "comfortable" : "compact"))}
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs"
+                title="Toggle density"
+              >
+                {viewMode === "compact" ? <LayoutList size={14} /> : <List size={14} />}
+                Density
               </button>
 
               {note ? (
@@ -593,126 +706,188 @@ export default function App() {
           </div>
         </div>
 
-        {/* Content */}
-        <div className="mt-6 space-y-6">
-          {visibleSections.map((s) => {
-            const styles = toneStyles(s.tone);
-            const items = view[s.key] || [];
-            const isLoading = !!loadingSections[s.key];
-            const err = errors[s.key];
-            const raw = diag[s.key]?.rawCount ?? 0;
+        {/* Sidebar: RSS Sources manager */}
+        <div className="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <aside className="lg:col-span-4">
+            <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-4">
+              <div className="text-sm font-semibold text-slate-800">RSS Sources</div>
+              <div className="mt-1 text-xs text-slate-600">
+                Paste a feed URL, click Add. This is how you add RSS without editing code. (Plan includes GO‑Science & other sources.) [1](https://teams.microsoft.com/l/meeting/details?eventId=AAMkADM4ZGMwMDg2LWU0NWEtNDdjMC05MDk5LWJkZmZmZTk4ZDg0NQBGAAAAAADr0mxgvUsEQJU_BcPijvuRBwAOCjAcLxu5TqoZ70bQ0CWjAAAAAAENAAAOCjAcLxu5TqoZ70bQ0CWjAAA4_V53AAA%3d)[2](https://teams.microsoft.com/l/meeting/details?eventId=AAMkADM4ZGMwMDg2LWU0NWEtNDdjMC05MDk5LWJkZmZmZTk4ZDg0NQFRAAgI3lxt2UvAAEYAAAAA69JsYL1LBECVPgXD4o77kQcADgowHC8buU6qGe9G0NAlowAAAAABDQAADgowHC8buU6qGe9G0NAlowAAFrFR5QAAEA%3d%3d)
+              </div>
 
-            return (
-              <section
-                key={s.key}
-                ref={(el) => (sectionRefs.current[s.key] = el)}
-                className={`rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden ring-1 ${styles.ring}`}
-              >
-                <div className="px-5 py-4 border-b border-slate-200">
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-3">
-                        <div className={`h-3.5 w-3.5 rounded ${styles.bar}`} />
-                        <h2 className="text-base sm:text-lg font-bold text-slate-800 truncate">{s.title}</h2>
-                        <Pill>raw: {raw}</Pill>
+              <div className="mt-3 flex gap-2">
+                <input
+                  value={rssInput}
+                  onChange={(e) => setRssInput(e.target.value)}
+                  placeholder="https://example.com/feed/"
+                  className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm"
+                />
+                <button onClick={addFeed} className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-900 text-white hover:bg-slate-800 text-sm">
+                  <Plus size={16} /> Add
+                </button>
+              </div>
+
+              <div className="mt-3 space-y-2">
+                {rssFeeds.length === 0 ? (
+                  <div className="text-sm text-slate-500">No RSS feeds yet.</div>
+                ) : (
+                  rssFeeds.map((u) => (
+                    <div key={u} className="flex items-center justify-between gap-2 rounded-lg border border-slate-200 p-2">
+                      <div className="min-w-0">
+                        <div className="text-xs text-slate-700 truncate">{u}</div>
                       </div>
-                      <div className="mt-1 text-sm text-slate-500">{s.subtitle}</div>
-                      <div className="mt-2 text-[11px] text-slate-400 truncate">{diag[s.key]?.url || ""}</div>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => fetchGnewsSection(s)}
-                        className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs"
-                      >
-                        <RefreshCw size={14} className={isLoading ? "animate-spin" : ""} />
-                        Refresh
-                      </button>
-                      <button
-                        onClick={() => setCollapsed((m) => ({ ...m, [s.key]: !m[s.key] }))}
-                        className="p-2 rounded-lg border border-slate-200 hover:bg-slate-50"
-                      >
-                        {collapsed[s.key] ? <ChevronRight size={16} /> : <ChevronDown size={16} />}
+                      <button onClick={() => removeFeed(u)} className="p-2 rounded-lg hover:bg-slate-50 border border-slate-200" title="Remove feed">
+                        <Trash2 size={14} />
                       </button>
                     </div>
-                  </div>
+                  ))
+                )}
+              </div>
 
-                  <div className="mt-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
-                    <div className="text-[11px] uppercase tracking-wider font-semibold text-slate-500">Brief (rules-based)</div>
-                    <div className="mt-1 text-sm text-slate-700">{briefs[s.key]}</div>
-                  </div>
+              <div className="mt-3 flex gap-2">
+                <button
+                  onClick={fetchRss}
+                  className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-sm"
+                >
+                  <RefreshCw size={16} className={loadingSections[RSS_SECTION.key] ? "animate-spin" : ""} />
+                  Refresh RSS
+                </button>
+                <button
+                  onClick={() => setCollapsed((m) => ({ ...m, [RSS_SECTION.key]: false }))}
+                  className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-sm"
+                  title="Show RSS section"
+                >
+                  Show RSS section
+                </button>
+              </div>
+            </div>
+          </aside>
 
-                  {err ? (
-                    <div className="mt-3 inline-flex items-center gap-2 text-xs text-amber-800 bg-amber-50 border border-amber-200 px-3 py-2 rounded-lg">
-                      <AlertCircle size={14} />
-                      {err}
+          {/* Main content */}
+          <main className="lg:col-span-8 space-y-6">
+            {visibleSections.map((s) => {
+              const styles = toneStyles(s.tone);
+              const items = view[s.key] || [];
+              const isLoading = !!loadingSections[s.key];
+              const err = errors[s.key];
+              const raw = diag[s.key]?.rawCount ?? 0;
+
+              return (
+                <section
+                  key={s.key}
+                  className={`rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden ring-1 ${styles.ring}`}
+                >
+                  <div className="px-5 py-4 border-b border-slate-200">
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-3">
+                          <div className={`h-3.5 w-3.5 rounded ${styles.bar}`} />
+                          <h2 className="text-base sm:text-lg font-bold text-slate-800 truncate">{s.title}</h2>
+                          <Pill>raw: {raw}</Pill>
+                        </div>
+                        <div className="mt-1 text-sm text-slate-500">{s.subtitle}</div>
+                        <div className="mt-2 text-[11px] text-slate-400 truncate">{diag[s.key]?.url || ""}</div>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => (s.key === RSS_SECTION.key ? fetchRss() : fetchGnewsSection(s))}
+                          className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs"
+                        >
+                          <RefreshCw size={14} className={isLoading ? "animate-spin" : ""} />
+                          Refresh
+                        </button>
+                        <button
+                          onClick={() => setCollapsed((m) => ({ ...m, [s.key]: !m[s.key] }))}
+                          className="p-2 rounded-lg border border-slate-200 hover:bg-slate-50"
+                        >
+                          {collapsed[s.key] ? <ChevronRight size={16} /> : <ChevronDown size={16} />}
+                        </button>
+                      </div>
                     </div>
-                  ) : null}
-                </div>
 
-                {collapsed[s.key] ? null : (
-                  <div className="px-5 py-4">
-                    <ul className="divide-y divide-slate-200">
-                      {isLoading ? (
-                        <>
-                          <SkeletonRow />
-                          <SkeletonRow />
-                          <SkeletonRow />
-                        </>
-                      ) : items.length === 0 ? (
-                        <li className="py-3 text-sm text-slate-500">
-                          No items after filtering. Click <span className="font-semibold">Reset filters</span> or set Time window to{" "}
-                          <span className="font-semibold">All time</span>.
-                        </li>
-                      ) : (
-                        items.map((it, idx) => {
-                          const id = it.url || it.id || `${s.key}-${idx}`;
-                          const pr = it.priority || computePriority(it.title, it.description, it.source);
-                          const tags = it.tags || computeTags(it.title, it.description, it.source);
+                    <div className="mt-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
+                      <div className="text-[11px] uppercase tracking-wider font-semibold text-slate-500">Brief (rules-based)</div>
+                      <div className="mt-1 text-sm text-slate-700">{briefs[s.key]}</div>
+                    </div>
 
-                          return (
-                            <li key={id} className={listClass}>
-                              <div className="flex items-start justify-between gap-4">
-                                <div className="min-w-0">
-                                  <a href={it.url || "#"} target="_blank" rel="noreferrer" className="text-sm font-semibold text-slate-900 hover:underline underline-offset-4">
-                                    {it.title || "Untitled"}
-                                  </a>
-                                  {viewMode === "compact" ? null : it.description ? (
-                                    <div className="mt-1 text-sm text-slate-600">{it.description}</div>
-                                  ) : null}
+                    {err ? (
+                      <div className="mt-3 inline-flex items-center gap-2 text-xs text-amber-800 bg-amber-50 border border-amber-200 px-3 py-2 rounded-lg">
+                        <AlertCircle size={14} />
+                        {err}
+                      </div>
+                    ) : null}
+                  </div>
 
-                                  <div className="mt-2 flex flex-wrap gap-2 items-center">
-                                    <PriorityPill value={pr} />
-                                    {tags.slice(0, 3).map((t) => (
-                                      <Pill key={t.key}>{t.label}</Pill>
-                                    ))}
-                                    <Pill>Source: {it.source || "Unknown"}</Pill>
-                                    <span className="text-[11px] text-slate-500">Date: {fmtDate(it.publishedAt)}</span>
+                  {collapsed[s.key] ? null : (
+                    <div className="px-5 py-4">
+                      <ul className="divide-y divide-slate-200">
+                        {isLoading ? (
+                          <>
+                            <SkeletonRow />
+                            <SkeletonRow />
+                            <SkeletonRow />
+                          </>
+                        ) : items.length === 0 ? (
+                          <li className="py-3 text-sm text-slate-500">No items after filtering. Try Reset filters or widen Time window.</li>
+                        ) : (
+                          items.map((it, idx) => {
+                            const id = it.url || it.id || `${s.key}-${idx}`;
+                            const pr = it.priority || computePriority(it.title, it.description, it.source);
+                            const tags = it.tags || computeTags(it.title, it.description, it.source);
+
+                            return (
+                              <li key={id} className={listClass}>
+                                <div className="flex items-start justify-between gap-4">
+                                  <div className="min-w-0">
+                                    <a href={it.url || "#"} target="_blank" rel="noreferrer" className="text-sm font-semibold text-slate-900 hover:underline underline-offset-4">
+                                      {it.title || "Untitled"}
+                                    </a>
+                                    {viewMode === "compact" ? null : it.description ? (
+                                      <div className="mt-1 text-sm text-slate-600">{it.description}</div>
+                                    ) : null}
+
+                                    <div className="mt-2 flex flex-wrap gap-2 items-center">
+                                      <PriorityPill value={pr} />
+                                      {tags.slice(0, 3).map((t) => (
+                                        <Pill key={t.key}>{t.label}</Pill>
+                                      ))}
+                                      <Pill>Source: {it.source || "Unknown"}</Pill>
+                                      <span className="text-[11px] text-slate-500">Date: {fmtDate(it.publishedAt)}</span>
+                                    </div>
+                                  </div>
+
+                                  <div className="shrink-0 flex items-center gap-2">
+                                    <button
+                                      onClick={() => setPinned((prev) => new Set(prev).has(id) ? (s => { const n=new Set(s); n.delete(id); return n; })(prev) : (s => { const n=new Set(s); n.add(id); return n; })(prev)}
+                                      className="p-2 rounded-lg border border-slate-200 hover:bg-slate-50"
+                                      title="Pin/unpin"
+                                    >
+                                      <Pin size={16} />
+                                    </button>
+                                    <button
+                                      onClick={() => setHidden((prev) => { const n = new Set(prev); n.add(id); return n; })}
+                                      className="p-2 rounded-lg border border-slate-200 hover:bg-slate-50"
+                                      title="Hide"
+                                    >
+                                      <EyeOff size={16} />
+                                    </button>
+                                    <a href={it.url || "#"} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-xs font-medium text-blue-700 hover:text-blue-900">
+                                      Open <ExternalLink size={14} />
+                                    </a>
                                   </div>
                                 </div>
-
-                                <div className="shrink-0 flex items-center gap-2">
-                                  <button onClick={() => togglePin(id)} className="p-2 rounded-lg border border-slate-200 hover:bg-slate-50" title={pinned.has(id) ? "Unpin" : "Pin"}>
-                                    {pinned.has(id) ? <PinOff size={16} /> : <Pin size={16} />}
-                                  </button>
-                                  <button onClick={() => toggleHide(id)} className="p-2 rounded-lg border border-slate-200 hover:bg-slate-50" title={hidden.has(id) ? "Unhide" : "Hide"}>
-                                    {hidden.has(id) ? <Eye size={16} /> : <EyeOff size={16} />}
-                                  </button>
-                                  <a href={it.url || "#"} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-xs font-medium text-blue-700 hover:text-blue-900">
-                                    Open <ExternalLink size={14} />
-                                  </a>
-                                </div>
-                              </div>
-                            </li>
-                          );
-                        })
-                      )}
-                    </ul>
-                  </div>
-                )}
-              </section>
-            );
-          })}
+                              </li>
+                            );
+                          })
+                        )}
+                      </ul>
+                    </div>
+                  )}
+                </section>
+              );
+            })}
+          </main>
         </div>
       </div>
     </div>
