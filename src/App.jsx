@@ -25,9 +25,8 @@ export default function App() {
   useEffect(() => {
     const fetchLiveReports = async () => {
       setLoading(true);
-      const API_KEY = import.meta.env.VITE_GNEWS_KEY; 
       const query = searchTerm || CATEGORY_QUERIES[selectedCategory];
-      const url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(query)}&lang=en&token=${API_KEY}`;
+      const url = `/api/news?query=${encodeURIComponent(query)}`;
 
       try {
         const response = await axios.get(url);
