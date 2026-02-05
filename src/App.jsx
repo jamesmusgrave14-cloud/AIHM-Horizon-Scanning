@@ -15,21 +15,16 @@ import {
   SlidersHorizontal,
   Globe,
   LayoutList,
-  Rows3,
+  List,
   AlertCircle,
 } from "lucide-react";
 
 /**
  * AIHM Intelligence Monitor — v2
- * Goals:
- * - Actually loads items (robust query param building; no HTML entities)
- * - White background but sharper visual design
+ * - Robust loading (URLSearchParams: no HTML entity &amp; issues)
+ * - White background, improved layout and hierarchy
  * - More interactive tools: sidebar, per-section toggles, pin/hide, export, view modes, UK filter
  * - AIID optional and non-blocking
- *
- * Assumes:
- * - /api/gnews proxy exists and returns { articles: [...] }
- * - /api/aiid may or may not exist; failures shouldn't break the app
  */
 
 // ----------------------------- Sections -----------------------------
@@ -294,20 +289,17 @@ function computeTags(title, description, source) {
 function toneStyles(tone) {
   if (tone === "maroon") {
     return {
-      badge: "bg-[#f6e7ee] text-[#7a1f3d] border-[#e7c6d3]",
       bar: "bg-[#7a1f3d]",
       ring: "ring-[#7a1f3d]/10",
     };
   }
   if (tone === "blue") {
     return {
-      badge: "bg-blue-50 text-blue-800 border-blue-200",
       bar: "bg-blue-700",
       ring: "ring-blue-700/10",
     };
   }
   return {
-    badge: "bg-red-50 text-red-800 border-red-200",
     bar: "bg-red-700",
     ring: "ring-red-700/10",
   };
@@ -315,12 +307,7 @@ function toneStyles(tone) {
 
 function Pill({ children, className = "" }) {
   return (
-    <span
-      className={
-        "inline-flex items-center px-2 py-0.5 rounded-full border text-[11px] bg-white text-slate-700 border-slate-200 " +
-        className
-      }
-    >
+    <span className={"inline-flex items-center px-2 py-0.5 rounded-full border text-[11px] bg-white text-slate-700 border-slate-200 " + className}>
       {children}
     </span>
   );
@@ -333,11 +320,7 @@ function PriorityPill({ value }) {
       : value === "Medium"
       ? "bg-amber-100 text-amber-900 border-amber-200"
       : "bg-emerald-100 text-emerald-900 border-emerald-200";
-  return (
-    <span className={`inline-flex items-center px-2 py-0.5 rounded-full border text-[11px] ${cls}`}>
-      {value} priority
-    </span>
-  );
+  return <span className={`inline-flex items-center px-2 py-0.5 rounded-full border text-[11px] ${cls}`}>{value} priority</span>;
 }
 
 function SkeletonRow() {
@@ -357,28 +340,26 @@ function SkeletonRow() {
   );
 }
 
-// ----------------------------- Main Component -----------------------------
+// ----------------------------- Main -----------------------------
 export default function App() {
-  // Global controls
   const [search, setSearch] = useState("");
   const [priority, setPriority] = useState("All");
-  const [windowOpt, setWindowOpt] = useState(DATE_WINDOWS[1]); // 30 days
+  const [windowOpt, setWindowOpt] = useState(DATE_WINDOWS[1]);
   const [maxPerSection, setMaxPerSection] = useState(6);
   const [focus, setFocus] = useState("All");
 
-  // UX controls
   const [ukOnly, setUkOnly] = useState(true);
   const [fallbackBroad, setFallbackBroad] = useState(true);
   const [viewMode, setViewMode] = useState("comfortable"); // comfortable | compact
   const [showAIID, setShowAIID] = useState(false);
 
-  // Section toggles + collapse state
   const [enabled, setEnabled] = useState(() => {
     const obj = {};
     for (const s of SECTIONS) obj[s.key] = true;
-    obj[AIID_SECTION.key] = false; // default off
+    obj[AIID_SECTION.key] = false;
     return obj;
   });
+
   const [collapsed, setCollapsed] = useState(() => {
     const obj = {};
     for (const s of SECTIONS) obj[s.key] = false;
@@ -386,16 +367,14 @@ export default function App() {
     return obj;
   });
 
-  // Data + state
   const [data, setData] = useState({});
   const [aiid, setAiid] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingSections, setLoadingSections] = useState({});
-  const [errors, setErrors] = useState({}); // sectionKey -> message
+  const [errors, setErrors] = useState({});
   const [note, setNote] = useState("");
   const [lastScan, setLastScan] = useState(null);
 
-  // Personal tools: pins/hide
   const [pinned, setPinned] = useState(() => new Set());
   const [hidden, setHidden] = useState(() => new Set());
 
@@ -407,7 +386,6 @@ export default function App() {
     return base;
   }, [showAIID]);
 
-  // Normalize + filter pipeline
   const applyFilters = useCallback(
     (items) => {
       let out = [...(items || [])];
@@ -418,7 +396,6 @@ export default function App() {
           const publishedAt = it.publishedAt || it.date || null;
           const priorityVal = it.priority || computePriority(it.title, it.description, source);
           const tags = it.tags || computeTags(it.title, it.description, source);
-
           return { ...it, source, publishedAt, priority: priorityVal, tags };
         })
         .filter((it) => withinWindow(it.publishedAt, windowOpt.days));
@@ -435,17 +412,14 @@ export default function App() {
         });
       }
 
-      // hide
       out = out.filter((it) => !hidden.has(it.url || it.id || ""));
 
-      // sort newest first
       out.sort((a, b) => {
         const da = toDate(a.publishedAt)?.getTime() || 0;
         const db = toDate(b.publishedAt)?.getTime() || 0;
         return db - da;
       });
 
-      // dedupe by url
       const seen = new Set();
       out = out.filter((it) => {
         const u = it.url || "";
@@ -455,7 +429,6 @@ export default function App() {
         return true;
       });
 
-      // pin to top (stable)
       const pinnedItems = out.filter((it) => pinned.has(it.url || it.id || ""));
       const rest = out.filter((it) => !pinned.has(it.url || it.id || ""));
       out = [...pinnedItems, ...rest];
@@ -465,7 +438,6 @@ export default function App() {
     [focus, hidden, maxPerSection, pinned, priority, search, windowOpt.days]
   );
 
-  // Build brief strings
   const briefs = useMemo(() => {
     const make = (items) => {
       const filtered = applyFilters(items);
@@ -493,13 +465,11 @@ export default function App() {
     return out;
   }, [aiid, applyFilters, data]);
 
-  // Helpers: fetch GNews for one section
   const fetchGnewsSection = useCallback(
     async (sec) => {
       setLoadingSections((m) => ({ ...m, [sec.key]: true }));
       setErrors((m) => ({ ...m, [sec.key]: "" }));
 
-      // Build params safely (no HTML entity issues)
       const params = new URLSearchParams();
       params.set("q", sec.query);
       params.set("lang", "en");
@@ -510,7 +480,6 @@ export default function App() {
         const r = await axios.get(`/api/gnews?${params.toString()}`);
         const articles = Array.isArray(r?.data?.articles) ? r.data.articles : [];
 
-        // Optional fallback to broaden query (helps avoid empty sections)
         let finalArticles = articles;
         if (fallbackBroad && finalArticles.length === 0) {
           const broad = new URLSearchParams(params);
@@ -532,8 +501,7 @@ export default function App() {
       } catch (e) {
         setErrors((m) => ({
           ...m,
-          [sec.key]:
-            "Section fetch failed (API route missing, rate limited, or network error).",
+          [sec.key]: "Section fetch failed (API route missing, rate limited, or network error).",
         }));
         setData((prev) => ({ ...prev, [sec.key]: [] }));
       } finally {
@@ -543,7 +511,6 @@ export default function App() {
     [fallbackBroad, maxPerSection, ukOnly]
   );
 
-  // Fetch AIID (optional, non-blocking)
   const fetchAIID = useCallback(async () => {
     setLoadingSections((m) => ({ ...m, [AIID_SECTION.key]: true }));
     setErrors((m) => ({ ...m, [AIID_SECTION.key]: "" }));
@@ -551,9 +518,7 @@ export default function App() {
       const r = await axios.get(`/api/aiid?limit=${Math.max(12, maxPerSection * 2)}`);
       const items = Array.isArray(r?.data?.articles) ? r.data.articles : [];
       setAiid(items);
-      if (!items.length) {
-        setErrors((m) => ({ ...m, [AIID_SECTION.key]: "AIID returned 0 items (optional feed)." }));
-      }
+      if (!items.length) setErrors((m) => ({ ...m, [AIID_SECTION.key]: "AIID returned 0 items (optional feed)." }));
     } catch {
       setAiid([]);
       setErrors((m) => ({ ...m, [AIID_SECTION.key]: "AIID endpoint not available (optional feed)." }));
@@ -562,7 +527,6 @@ export default function App() {
     }
   }, [maxPerSection]);
 
-  // Run scan: only enabled sections
   const runScan = useCallback(async () => {
     setLoading(true);
     setNote("");
@@ -570,40 +534,32 @@ export default function App() {
 
     try {
       const enabledSections = SECTIONS.filter((s) => enabled[s.key]);
-      // Fetch in parallel
       await Promise.all(enabledSections.map((sec) => fetchGnewsSection(sec)));
 
       if (showAIID && enabled[AIID_SECTION.key]) {
         await fetchAIID();
       }
 
-      // Summary note
-      const totalGnews = enabledSections.reduce((sum, s) => sum + ((data[s.key] || []).length || 0), 0);
       setLastScan(started.toISOString());
-      setNote(
-        `Scan complete. Sections: ${enabledSections.length}${showAIID && enabled[AIID_SECTION.key] ? " + AIID" : ""}.`
-      );
+      setNote(`Scan complete. Sections: ${enabledSections.length}${showAIID && enabled[AIID_SECTION.key] ? " + AIID" : ""}.`);
     } catch {
       setNote("Scan failed (network/rate limit).");
     } finally {
       setLoading(false);
     }
-  }, [data, enabled, fetchAIID, fetchGnewsSection, showAIID]);
+  }, [enabled, fetchAIID, fetchGnewsSection, showAIID]);
 
-  // Initial scan
   useEffect(() => {
     runScan();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Sidebar scroll-to
   const sectionRefs = useRef({});
   const scrollToSection = (key) => {
     const el = sectionRefs.current[key];
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  // Pin/hide actions
   const togglePin = (id) => {
     setPinned((prev) => {
       const next = new Set(prev);
@@ -612,6 +568,7 @@ export default function App() {
       return next;
     });
   };
+
   const toggleHide = (id) => {
     setHidden((prev) => {
       const next = new Set(prev);
@@ -621,7 +578,6 @@ export default function App() {
     });
   };
 
-  // Export current visible items to CSV
   const exportCSV = () => {
     const rows = [];
     for (const s of SECTIONS) {
@@ -637,26 +593,12 @@ export default function App() {
         });
       }
     }
-    if (showAIID && enabled[AIID_SECTION.key]) {
-      for (const it of view[AIID_SECTION.key] || []) {
-        rows.push({
-          section: AIID_SECTION.title,
-          title: it.title || "",
-          source: it.source || it.sourceName || "",
-          date: it.publishedAt || it.date || "",
-          url: it.url || "",
-          priority: it.priority || "",
-        });
-      }
-    }
 
     const header = ["section", "priority", "date", "source", "title", "url"];
     const csv = [
       header.join(","),
       ...rows.map((r) =>
-        header
-          .map((k) => `"${String(r[k] ?? "").replaceAll('"', '""')}"`)
-          .join(",")
+        header.map((k) => `"${String(r[k] ?? "").replaceAll('"', '""')}"`).join(",")
       ),
     ].join("\n");
 
@@ -667,13 +609,11 @@ export default function App() {
     a.click();
   };
 
-  // Visual density
   const listClass = viewMode === "compact" ? "py-2" : "py-3";
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
       <div className="max-w-[1200px] mx-auto px-6 py-8">
-        {/* Header */}
         <div className="rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
           <div className="bg-[#7a1f3d] px-6 py-6 text-white">
             <div className="flex items-start justify-between gap-6">
@@ -683,7 +623,7 @@ export default function App() {
                 </div>
                 <div className="mt-1 text-sm opacity-90">Daily brief · {today}</div>
                 <div className="mt-2 text-xs opacity-80">
-                  {lastScan ? `Last scan: ${fmtDate(lastScan)}` : "Last scan: —"}
+                  Last scan: {lastScan ? fmtDate(lastScan) : "—"}
                 </div>
               </div>
 
@@ -706,10 +646,8 @@ export default function App() {
             </div>
           </div>
 
-          {/* Controls */}
           <div className="bg-white px-6 py-4 border-t border-slate-200">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 items-end">
-              {/* Search */}
               <div className="lg:col-span-4">
                 <label className="text-xs font-semibold text-slate-600">Search</label>
                 <div className="mt-1 relative">
@@ -723,7 +661,6 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Time window */}
               <div className="lg:col-span-2">
                 <label className="text-xs font-semibold text-slate-600">Time window</label>
                 <select
@@ -740,7 +677,6 @@ export default function App() {
                 </select>
               </div>
 
-              {/* Priority */}
               <div className="lg:col-span-2">
                 <label className="text-xs font-semibold text-slate-600">Priority</label>
                 <select
@@ -755,7 +691,6 @@ export default function App() {
                 </select>
               </div>
 
-              {/* Focus */}
               <div className="lg:col-span-2">
                 <label className="text-xs font-semibold text-slate-600">Focus</label>
                 <select
@@ -769,7 +704,6 @@ export default function App() {
                 </select>
               </div>
 
-              {/* Items */}
               <div className="lg:col-span-1">
                 <label className="text-xs font-semibold text-slate-600">Items</label>
                 <select
@@ -783,14 +717,13 @@ export default function App() {
                 </select>
               </div>
 
-              {/* Quick toggles */}
               <div className="lg:col-span-1 flex gap-2 justify-end">
                 <button
                   onClick={() => setViewMode((m) => (m === "compact" ? "comfortable" : "compact"))}
                   className="mt-6 inline-flex items-center justify-center w-full gap-2 px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-sm"
                   title="Toggle density"
                 >
-                  {viewMode === "compact" ? <LayoutList size={16} /> : <Rows3 size={16} />}
+                  {viewMode === "compact" ? <LayoutList size={16} /> : <List size={16} />}
                 </button>
               </div>
             </div>
@@ -855,9 +788,7 @@ export default function App() {
           </div>
         </div>
 
-        {/* Body layout: sidebar + content */}
         <div className="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Sidebar */}
           <aside className="lg:col-span-3">
             <div className="sticky top-6 space-y-3">
               <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-4">
@@ -903,7 +834,7 @@ export default function App() {
                 </div>
 
                 <div className="mt-4 text-xs text-slate-500">
-                  Tip: turn a section Off to reduce noise and speed scans.
+                  Tip: if a section is consistently empty, toggle “Fallback broaden” on.
                 </div>
               </div>
 
@@ -928,7 +859,6 @@ export default function App() {
             </div>
           </aside>
 
-          {/* Content */}
           <main className="lg:col-span-9 space-y-6">
             {sectionList.map((s) => {
               const styles = toneStyles(s.tone || "maroon");
@@ -954,27 +884,14 @@ export default function App() {
                       </div>
 
                       <div className="flex items-center gap-2">
-                        {s.kind === "gnews" ? (
-                          <button
-                            onClick={() => fetchGnewsSection(s)}
-                            className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs"
-                            disabled={!enabled[s.key]}
-                            title="Refresh this section"
-                          >
-                            <RefreshCw size={14} className={isLoading ? "animate-spin" : ""} />
-                            Refresh
-                          </button>
-                        ) : (
-                          <button
-                            onClick={fetchAIID}
-                            className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs"
-                            disabled={!enabled[s.key]}
-                            title="Refresh AIID"
-                          >
-                            <RefreshCw size={14} className={isLoading ? "animate-spin" : ""} />
-                            Refresh
-                          </button>
-                        )}
+                        <button
+                          onClick={() => (s.kind === "gnews" ? fetchGnewsSection(s) : fetchAIID())}
+                          className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs"
+                          disabled={!enabled[s.key]}
+                        >
+                          <RefreshCw size={14} className={isLoading ? "animate-spin" : ""} />
+                          Refresh
+                        </button>
 
                         <button
                           onClick={() => setCollapsed((m) => ({ ...m, [s.key]: !m[s.key] }))}
@@ -986,15 +903,13 @@ export default function App() {
                       </div>
                     </div>
 
-                    {/* Brief */}
                     <div className="mt-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
                       <div className="text-[11px] uppercase tracking-wider font-semibold text-slate-500">
                         Brief (rules-based)
                       </div>
-                      <div className="mt-1 text-sm text-slate-700">{briefs[s.key] || briefs[AIID_SECTION.key]}</div>
+                      <div className="mt-1 text-sm text-slate-700">{briefs[s.key] || ""}</div>
                     </div>
 
-                    {/* Error line */}
                     {err ? (
                       <div className="mt-3 inline-flex items-center gap-2 text-xs text-amber-800 bg-amber-50 border border-amber-200 px-3 py-2 rounded-lg">
                         <AlertCircle size={14} />
@@ -1003,7 +918,6 @@ export default function App() {
                     ) : null}
                   </div>
 
-                  {/* Body */}
                   {collapsed[s.key] ? null : (
                     <div className="px-5 py-4">
                       {!enabled[s.key] ? (
@@ -1031,7 +945,7 @@ export default function App() {
                               const compact = viewMode === "compact";
 
                               return (
-                                <li key={id} className={`${listClass}`}>
+                                <li key={id} className={listClass}>
                                   <div className="flex items-start justify-between gap-4">
                                     <div className="min-w-0">
                                       <a
@@ -1044,9 +958,7 @@ export default function App() {
                                       </a>
 
                                       {!compact && it.description ? (
-                                        <div className="mt-1 text-sm text-slate-600 line-clamp-2">
-                                          {it.description}
-                                        </div>
+                                        <div className="mt-1 text-sm text-slate-600 line-clamp-2">{it.description}</div>
                                       ) : null}
 
                                       <div className="mt-2 flex flex-wrap gap-2 items-center">
@@ -1055,9 +967,7 @@ export default function App() {
                                           <Pill key={t.key}>{t.label}</Pill>
                                         ))}
                                         <Pill>Source: {it.source || it.sourceName || "Unknown"}</Pill>
-                                        <span className="text-[11px] text-slate-500">
-                                          Date: {fmtDate(it.publishedAt)}
-                                        </span>
+                                        <span className="text-[11px] text-slate-500">Date: {fmtDate(it.publishedAt)}</span>
                                       </div>
                                     </div>
 
@@ -1099,12 +1009,6 @@ export default function App() {
                 </section>
               );
             })}
-
-            <div className="text-xs text-slate-500">
-              Tip: If you’re still getting empty sections, toggle <span className="font-semibold">Fallback broaden</span>{" "}
-              on, set <span className="font-semibold">Time window</span> to <span className="font-semibold">All time</span>,
-              and keep <span className="font-semibold">UK sources</span> on for relevance.
-            </div>
           </main>
         </div>
       </div>
