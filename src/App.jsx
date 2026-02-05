@@ -548,7 +548,10 @@ export default function App() {
       if (enabled[RSS_SECTION.key]) await fetchRss();
 
       const toScan = SECTIONS.filter((s) => enabled[s.key]).filter((s) => group === "all" || s.group === group);
-      await Promise.all(toScan.map((sec) => fetchGnewsSection(sec)));
+      for (const sec of toScan) {
+  await fetchGnewsSection(sec);
+  await new Promise((r) => setTimeout(r, 250)); // small throttle
+}
 
       setLastScan(started.toISOString());
       setNote("Scan complete (incremental). New items merged into existing lists.");
