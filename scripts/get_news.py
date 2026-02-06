@@ -15,9 +15,18 @@ queries = {
     "media_broad": "https://news.google.com/rss/search?q=artificial+intelligence+risks&hl=en-GB&gl=GB&ceid=GB:en"
 }
 
+def get_priority(title):
+    title = title.lower()
+    # High Risk Tripwires
+    critical_keywords = ["exploit", "breach", "csea", "sextortion", "malware", "scam", "fraud", "weapon", "harm", "abuse"]
+    if any(word in title for word in critical_keywords):
+        return "High"
+    return "Medium"
+
 def fetch_intelligence():
+    print("Initiating Global Intelligence Scan...")
     report = {
-        "last_updated": datetime.now().isoformat(), # Standardized ISO
+        "last_updated": datetime.utcnow().isoformat() + "Z", # Forced Zulu ISO
         "sections": {}
     }
 
@@ -26,25 +35,26 @@ def fetch_intelligence():
         articles = []
         
         for entry in feed.entries[:50]:
-            # Convert feed timestamp to ISO string
             if hasattr(entry, 'published_parsed') and entry.published_parsed:
                 dt = datetime.fromtimestamp(time.mktime(entry.published_parsed))
+                iso_date = dt.isoformat() + "Z"
             else:
-                dt = datetime.now()
+                iso_date = datetime.utcnow().isoformat() + "Z"
             
             articles.append({
                 "title": entry.title.rsplit(' - ', 1)[0],
                 "link": entry.link,
-                "source": entry.source.title if hasattr(entry, 'source') else "Intelligence Feed",
-                "date": dt.isoformat(), # Standardized ISO
-                "priority": "High" if any(x in entry.title.lower() for x in ["harm", "scam", "fraud", "victim"]) else "Medium"
+                "source": entry.source.title if hasattr(entry, 'source') else "News Source",
+                "date": iso_date,
+                "priority": get_priority(entry.title)
             })
         
         report["sections"][key] = articles
-
+    
     os.makedirs('public', exist_ok=True)
     with open('public/news_data.json', 'w', encoding='utf-8') as f:
         json.dump(report, f, indent=4)
+    print("Scan complete. Data pushed to public/news_data.json")
 
 if __name__ == "__main__":
     fetch_intelligence()
