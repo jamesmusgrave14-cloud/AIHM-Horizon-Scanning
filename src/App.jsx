@@ -1,16 +1,16 @@
 import React, { useCallback, useEffect, useState, useMemo } from "react";
 import axios from "axios";
-import { RefreshCw, Search, Clock, Zap, ShieldAlert, ArrowUpDown, LayoutGrid } from "lucide-react";
+import { RefreshCw, Search, Clock, ShieldAlert, AlertCircle, ArrowUpDown, Zap, TriangleAlert } from "lucide-react";
 
 const SECTIONS = [
-  { key: "dev_releases", title: "Model Releases", color: "border-blue-500" },
-  { key: "watchdogs", title: "Safety Monitors", color: "border-purple-500" },
-  { key: "gov_signals", title: "Gov Signals", color: "border-slate-500" },
-  { key: "harms_csea", title: "CSEA Harms", color: "border-red-600" },
-  { key: "harms_fraud", title: "Fraud/Scams", color: "border-orange-500" },
-  { key: "harms_cyber", title: "Cyber Threats", color: "border-red-400" },
-  { key: "research_futures", title: "Research", color: "border-emerald-500" },
-  { key: "media_broad", title: "Media Signals", color: "border-slate-400" },
+  { key: "ai_incidents", title: "Official Incident Database", color: "border-orange-500" },
+  { key: "csam_vawg", title: "CSAM / NCII / VAWG", color: "border-red-600" },
+  { key: "radicalisation", title: "Radicalisation Alerts", color: "border-purple-600" },
+  { key: "fraud", title: "Fraud & Voice Cloning", color: "border-yellow-500" },
+  { key: "cyber_attacks", title: "Cyber Attacks / Jailbreaks", color: "border-cyan-500" },
+  { key: "social_signals", title: "Risk Chatter (Forums)", color: "border-pink-500" },
+  { key: "watchdogs", title: "Regulator Watch", color: "border-slate-500" },
+  { key: "dev_releases", title: "New Model Releases", color: "border-blue-500" },
 ];
 
 export default function App() {
@@ -33,26 +33,17 @@ export default function App() {
 
   useEffect(() => { syncData(); }, [syncData]);
 
-  // DATE LOGIC: Handles "2h ago" vs "Oct 12"
   const formatDisplayDate = (dateStr) => {
     const d = new Date(dateStr);
-    if (isNaN(d.getTime())) return "Recent";
     const diffHours = Math.floor(Math.abs(new Date() - d) / 36e5);
-    if (diffHours < 24) return `${diffHours}h ago`;
-    return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+    return diffHours < 24 ? `${diffHours}h ago` : d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
   };
 
-  const isFresh = (dateStr) => {
-    const d = new Date(dateStr);
-    return (new Date() - d) / 36e5 < 24; // True if < 24 hours old
-  };
-
-  // SUMMARY LOGIC: Picks top 3 High Priority, Newest items
   const summaryItems = useMemo(() => {
     return Object.values(data).flat()
-      .filter(item => item.priority === "High")
+      .filter(item => item.risk?.priority === "High")
       .sort((a, b) => new Date(b.date) - new Date(a.date))
-      .slice(0, 3);
+      .slice(0, 4);
   }, [data]);
 
   const processItems = (items) => {
@@ -66,119 +57,97 @@ export default function App() {
   };
 
   if (loading) return (
-    <div className="h-screen bg-[#020617] flex flex-col items-center justify-center text-teal-500 font-mono">
-      <RefreshCw className="animate-spin mb-4" size={32} />
-      <span className="tracking-[0.4em] uppercase text-[10px]">Decrypting Intelligence Feed...</span>
+    <div className="h-screen bg-[#020617] flex flex-col items-center justify-center text-red-500 font-mono tracking-widest">
+      <RefreshCw className="animate-spin mb-4" />
+      <span>LOADING SAFETY PROTOCOLS...</span>
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-[#020617] text-slate-300 font-sans selection:bg-teal-500/30">
-      {/* GLOBAL HEADER */}
+    <div className="min-h-screen bg-[#020617] text-slate-300 font-sans selection:bg-red-500/30">
       <nav className="sticky top-0 z-50 bg-[#0f172a]/95 backdrop-blur-md border-b border-slate-800 px-6 py-4 flex justify-between items-center shadow-2xl">
         <div className="flex items-center gap-3">
-          <Zap size={20} className="text-teal-500" fill="currentColor" />
-          <h1 className="font-black text-xl tracking-tighter uppercase italic text-white">AIHM <span className="text-teal-500 not-italic">Horizon</span></h1>
+          <ShieldAlert size={22} className="text-red-500" />
+          <h1 className="font-black text-xl tracking-tighter uppercase italic text-white">SAFETY <span className="text-red-500 not-italic">HORIZON</span></h1>
         </div>
-        <div className="flex items-center gap-6 text-[10px] font-bold text-slate-500 uppercase tracking-[0.2em]">
-          <span className="hidden md:block">System Status: <span className="text-teal-500">Active</span></span>
+        <div className="flex items-center gap-6 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
           <span className="flex items-center gap-2 border-l border-slate-800 pl-6">
-            <Clock size={14} className="text-teal-500" />
-            Scan Time: {lastScan ? new Date(lastScan).toLocaleTimeString() : "--:--"}
+            <Clock size={14} className="text-red-500" />
+            LAST SCAN: {lastScan ? new Date(lastScan).toLocaleTimeString() : "--:--"}
           </span>
-          <button onClick={syncData} className="hover:text-teal-400 transition transform active:scale-95">
+          <button onClick={syncData} className="hover:text-red-400 transition transform active:scale-95">
             <RefreshCw size={18} />
           </button>
         </div>
       </nav>
 
       <div className="max-w-[1800px] mx-auto grid grid-cols-1 lg:grid-cols-12">
-        {/* SIDEBAR CONTROLS */}
+        {/* SIDEBAR */}
         <aside className="lg:col-span-2 border-r border-slate-800 p-6 bg-[#020617] hidden lg:block">
           <div className="sticky top-28 space-y-10">
             <div>
               <label className="text-[10px] font-black uppercase text-slate-600 mb-4 block tracking-widest">Master Filter</label>
-              <div className="relative">
-                <Search className="absolute left-3 top-2.5 text-slate-600" size={14} />
-                <input 
-                  value={search} 
-                  onChange={e => setSearch(e.target.value)} 
-                  className="w-full pl-9 pr-4 py-2 bg-slate-900 border border-slate-800 rounded text-xs focus:border-teal-500 outline-none text-slate-200 transition" 
-                  placeholder="Filter signals..." 
-                />
-              </div>
+              <input 
+                value={search} 
+                onChange={e => setSearch(e.target.value)} 
+                className="w-full p-2 bg-slate-900 border border-slate-800 rounded text-xs focus:border-red-500 outline-none text-slate-200" 
+                placeholder="Search Risk..." 
+              />
             </div>
-
             <div>
-              <label className="text-[10px] font-black uppercase text-slate-600 mb-4 block tracking-widest">Scan Depth</label>
-              <input type="range" min="1" max="50" value={limit} onChange={e => setLimit(e.target.value)} className="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-teal-500" />
-              <div className="flex justify-between mt-2 font-mono text-[9px] text-slate-500">
-                <span>01</span>
-                <span>{limit} ITEMS</span>
-                <span>50</span>
-              </div>
+              <label className="text-[10px] font-black uppercase text-slate-600 mb-4 block tracking-widest">Depth: {limit}</label>
+              <input type="range" min="1" max="50" value={limit} onChange={e => setLimit(e.target.value)} className="w-full accent-red-500" />
             </div>
-
-            <button 
-              onClick={() => setSortOrder(s => s === "newest" ? "oldest" : "newest")}
-              className="w-full flex items-center justify-between p-3 bg-slate-900 border border-slate-800 rounded text-[10px] font-bold uppercase tracking-widest hover:border-teal-500 transition"
-            >
-              <ArrowUpDown size={14} className="text-teal-500"/>
+            <button onClick={() => setSortOrder(s => s === "newest" ? "oldest" : "newest")} className="w-full p-3 bg-slate-900 border border-slate-800 rounded text-[10px] font-bold uppercase tracking-widest hover:border-red-500 transition">
               Sort: {sortOrder}
             </button>
+            <div className="pt-10 space-y-2">
+              <label className="text-[10px] font-black uppercase text-slate-600 block mb-4">External Pulse</label>
+              <a href="https://x.com/search?q=AI+jailbreak+OR+deepfake+scam&f=live" target="_blank" className="block text-[9px] bg-slate-900 border border-slate-800 p-2 rounded hover:border-red-500 text-center">X / Twitter Live</a>
+              <a href="https://www.google.com/search?q=site:lesswrong.com+incident" target="_blank" className="block text-[9px] bg-slate-900 border border-slate-800 p-2 rounded hover:border-red-500 text-center">Safety Forums</a>
+            </div>
           </div>
         </aside>
 
-        {/* FEED CONTENT */}
+        {/* MAIN CONTENT */}
         <main className="lg:col-span-10 p-6 space-y-8 h-[calc(100vh-69px)] overflow-y-auto">
-          
-          {/* INTELLIGENCE BRIEFING (SUMMARY) */}
-          <section className="bg-gradient-to-r from-teal-900/20 to-transparent border border-teal-500/20 rounded-lg p-6 shadow-2xl">
+          {/* HIGH RISK BRIEFING */}
+          <section className="bg-red-950/20 border border-red-500/30 rounded-lg p-6 shadow-2xl">
             <div className="flex items-center gap-2 mb-5">
-              <ShieldAlert className="text-teal-400" size={18} />
-              <h2 className="font-black text-[11px] uppercase tracking-[0.4em] text-teal-400">High-Priority Command Briefing</h2>
+              <AlertCircle className="text-red-500 animate-pulse" size={18} />
+              <h2 className="font-black text-[11px] uppercase tracking-[0.4em] text-red-500">Critical Risk Briefing</h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               {summaryItems.length > 0 ? summaryItems.map((item, i) => (
-                <div key={i} className="bg-slate-900/40 p-4 border-l-2 border-teal-500 rounded-r hover:bg-slate-900/60 transition group">
-                  <span className="text-[9px] font-mono text-teal-600 uppercase mb-2 block tracking-widest">{item.source}</span>
-                  <a href={item.link} target="_blank" rel="noreferrer" className="text-xs font-bold leading-relaxed text-slate-200 group-hover:text-white group-hover:underline">
-                    {item.title}
-                  </a>
+                <div key={i} className="bg-slate-900/60 p-4 border-l-4 border-red-500 rounded hover:bg-slate-900/80 transition group">
+                  <span className="text-[8px] font-mono text-red-500 uppercase font-black mb-2 block tracking-widest">{item.risk?.tag}</span>
+                  <a href={item.link} target="_blank" className="text-xs font-bold leading-tight text-slate-200 group-hover:text-white group-hover:underline">{item.title}</a>
                 </div>
-              )) : (
-                <div className="col-span-3 text-xs text-slate-600 italic">No critical anomalies detected in current search parameters.</div>
-              )}
+              )) : <div className="text-[10px] text-slate-600 italic">Scanning for high-severity signals...</div>}
             </div>
           </section>
 
-          {/* MAIN GRID */}
+          {/* GRID */}
           <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-6">
             {SECTIONS.map(s => {
               const items = processItems(data[s.key]);
               return (
-                <div key={s.key} className="bg-[#0f172a] border border-slate-800/50 rounded-sm flex flex-col">
+                <div key={s.key} className="bg-[#0f172a] border border-slate-800 rounded-sm overflow-hidden">
                   <div className={`border-t-2 ${s.color} px-4 py-3 bg-slate-900/80 flex justify-between items-center`}>
-                    <h2 className="font-black text-[10px] uppercase tracking-[0.2em] text-slate-400">{s.title}</h2>
-                    <span className="font-mono text-[10px] text-teal-500 bg-teal-500/5 px-2 py-0.5 rounded">{items.length}</span>
+                    <h2 className="font-black text-[10px] uppercase tracking-widest text-slate-400">{s.title}</h2>
+                    <span className="font-mono text-[10px] text-red-500 bg-red-500/5 px-2 py-0.5 rounded">{items.length}</span>
                   </div>
-                  
                   <div className="divide-y divide-slate-800/40">
                     {items.map((item, i) => (
-                      <div key={i} className="p-4 hover:bg-slate-800/30 transition-all group">
-                        <a href={item.link} target="_blank" rel="noreferrer" className="text-[13px] font-semibold text-slate-300 group-hover:text-white leading-tight block mb-3 italic group-hover:not-italic">
+                      <div key={i} className="p-4 hover:bg-slate-800/30 transition group">
+                        <a href={item.link} target="_blank" className="text-[13px] font-semibold text-slate-300 group-hover:text-white leading-tight block mb-3 uppercase tracking-tight italic group-hover:not-italic">
                           {item.title}
                         </a>
                         <div className="flex items-center gap-3">
-                          <span className="text-[9px] font-black text-teal-600 uppercase tracking-tighter truncate max-w-[100px]">{item.source}</span>
-                          <span className="text-[9px] font-mono text-slate-500 flex items-center gap-1">
-                            <Clock size={10}/> {formatDisplayDate(item.date)}
-                          </span>
-                          {isFresh(item.date) && (
-                            <span className="text-[8px] font-black bg-teal-500 text-slate-950 px-1.5 py-0.5 rounded-sm animate-pulse">NEW</span>
-                          )}
-                          {item.priority === "High" && (
-                            <span className="ml-auto text-[8px] font-black border border-red-900 text-red-500 px-1.5 py-0.5 rounded uppercase shadow-[0_0_10px_rgba(153,27,27,0.3)]">Critical</span>
+                          <span className="text-[9px] font-black text-red-600 uppercase tracking-tighter truncate max-w-[100px]">{item.source}</span>
+                          <span className="text-[9px] font-mono text-slate-500">{formatDisplayDate(item.date)}</span>
+                          {item.risk?.priority === "High" && (
+                            <span className="ml-auto text-[8px] font-black bg-red-600 text-white px-1.5 py-0.5 rounded shadow-[0_0_10px_rgba(220,38,38,0.4)]">CRITICAL: {item.risk.tag}</span>
                           )}
                         </div>
                       </div>
