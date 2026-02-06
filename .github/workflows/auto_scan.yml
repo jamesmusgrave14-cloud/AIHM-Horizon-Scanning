@@ -1,0 +1,26 @@
+name: AIHM Horizon Scan
+on:
+  schedule:
+    - cron: '0 */6 * * *' # Every 6 hours
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install feedparser
+        run: pip install feedparser
+      - name: Run Scraper
+        run: python scripts/get_news.py
+      - name: Commit Data
+        run: |
+          git config --global user.name "AI Warden Bot"
+          git config --global user.email "bot@aiwarden.com"
+          git add public/news_data.json
+          git commit -m "🗞️ Daily Intelligence Update" || exit 0
+          git push
