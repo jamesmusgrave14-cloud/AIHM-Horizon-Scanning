@@ -2,6 +2,7 @@ import feedparser
 import json
 import os
 from datetime import datetime
+import time
 
 queries = {
     "dev_releases": "https://news.google.com/rss/search?q=OpenAI+OR+Anthropic+OR+Mistral+AI+model+release&hl=en-GB&gl=GB&ceid=GB:en",
@@ -16,7 +17,7 @@ queries = {
 
 def fetch_intelligence():
     report = {
-        "last_updated": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
+        "last_updated": datetime.now().isoformat(), # Standardized ISO
         "sections": {}
     }
 
@@ -24,16 +25,18 @@ def fetch_intelligence():
         feed = feedparser.parse(url)
         articles = []
         
-        # Increased to 50 items so the user has a pool to filter from
         for entry in feed.entries[:50]:
-            # Convert published date to ISO format for easier sorting in JS
-            dt = datetime(*entry.published_parsed[:6]) if hasattr(entry, 'published_parsed') else datetime.now()
+            # Convert feed timestamp to ISO string
+            if hasattr(entry, 'published_parsed') and entry.published_parsed:
+                dt = datetime.fromtimestamp(time.mktime(entry.published_parsed))
+            else:
+                dt = datetime.now()
             
             articles.append({
                 "title": entry.title.rsplit(' - ', 1)[0],
                 "link": entry.link,
                 "source": entry.source.title if hasattr(entry, 'source') else "Intelligence Feed",
-                "date": dt.isoformat(),
+                "date": dt.isoformat(), # Standardized ISO
                 "priority": "High" if any(x in entry.title.lower() for x in ["harm", "scam", "fraud", "victim"]) else "Medium"
             })
         
