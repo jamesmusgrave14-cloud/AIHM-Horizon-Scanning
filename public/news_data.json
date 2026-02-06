@@ -1,130 +1,580 @@
 {
-    "last_updated": "Feb 06, 2026 - 10:01",
+    "last_updated": "06 Feb 2026, 10:09",
     "sections": {
-        "uk_regulation": [
+        "dev_releases": [
+            {
+                "title": "Introducing Claude Opus 4.6",
+                "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE90b09UTmFMU3laaUE4WGQ0ejltUDEtZHdHMjlSY1pDTUhjX1A3VF9qRU56ejhuRkR3eFFvUFB4UV9ZTjMzaklkTkczSEJZWXRNOE1UX3hDd3dHdw?oc=5",
+                "source": "Anthropic",
+                "published": "Thu, 05 Feb 2026 17:46:34 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Introducing GPT-5.3-Codex",
+                "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE1WSFdyRV9lZDd3TTJWVlhKY1pWMTRaSHJaa0hLU05kTE1QcGVjRVdndHhuNnFhQW5ObmtkcFhpRm1wd21yU1o2dDRYUWE2aDJzX1p4ZERNVlZjSHlaMTl6Qw?oc=5",
+                "source": "OpenAI",
+                "published": "Thu, 05 Feb 2026 18:11:15 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Voxtral transcribes at the speed of sound.",
+                "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE82VkZSUWVmd01BUXlEd1lQa0FOemZPWjJUdE83OW8zeTYzdUxoVFZnTWtPRGZRbWVOZGZQd1pJVnZjeVpJWEtMa3F5YmlqQ2Z6YmJ6eEoyUQ?oc=5",
+                "source": "Mistral AI",
+                "published": "Fri, 06 Feb 2026 09:12:37 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "'The market's in seek and destroy mode': The new Anthropic AI model scaring lawyers and legal firms",
+                "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxPLVdiOTl2dm9taG5QTkpmZnN0T0Q1SGNrTFNiV3p6dVBCOWpOUUVqRmhtUEFFVHhVaDU1Mk1fTlhibHgwZlJqOUVrV19uaC0tdmRKaERWblhCWTdPTWpKY2puM2R5X2xxclAwbWdYbUNiOE9nS1RxTVR0dFdkb2xtcVlEVlBaMTN3WG9pemdZbE9yaXhhMHpQajJSRmlUYUo0V1c1MEF2VldoVlZuMmtrY0ctLTNVaG5IcEV0TV9sVlY1Qmp6LTdWdG5UVQ?oc=5",
+                "source": "Sky News",
+                "published": "Thu, 05 Feb 2026 20:26:15 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Anthropic launches new Claude model as AI fears rattle markets",
+                "link": "https://news.google.com/rss/articles/CBMicEFVX3lxTE9SdXk4MzA2bThkbU56MHVhNU9tclpNVkdnMkJtMGphZURzN3pocEFLUTlnSG9FZWI1Qlo0Z0pMRTAxYVJqVlhrQVN4QlAzMWQ1aHpXdlBEOVdpNUhpMXVTU0c4amd4MzlialhmWFlqeFc?oc=5",
+                "source": "Financial Times",
+                "published": "Thu, 05 Feb 2026 17:45:05 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Anthropic Releases New Model That\u2019s Adept at Financial Research",
+                "link": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOVXV0eUhiY3lHa3pkYW93Q29UWUtDSTlaWHZKU3M2QmZIdFdtbFhpRkNrV09WMTV5ZjRGRDNQUEJNV1dFVUp1dGdfcnVRZEV2Z1VJekZMUU5ucjBGYkpxTmk4WXhHWmVGR1hkYk1KWExIb29xdDY4SGl2WVRwRHZDTVZOdmVab3BBMWNhY0x3VlNrSGF4WURmTkFfdVhQeXBoeXdLTS1VZDZhaEJKYmF6VHJpWHdiMlo0Nnc?oc=5",
+                "source": "bloomberg.com",
+                "published": "Thu, 05 Feb 2026 18:14:21 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Anthropic launches Claude Opus 4.6 as AI moves toward a 'vibe working' era",
+                "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPTkdENG5vM1RzWEJ0LXlucHpBRmgtWnl5WlNiMFozVG5zVXYyeFlfZGlfZ3hIMXRfbWlualI0X2QxZWZGX3JWajJTN3BEQThmNGZXMFRIdGxMOWdWbDlHUkQxM3I3SFpXUm5vMkRBNGlSZlVwM3dqLVRsSnhNUF9xT9IBhgFBVV95cUxNalhTaTdScWQxbGpfRDFaaHJxRllxUGt5dUgyYW5WN1hjVkN0QUo4ZmF3SWt3cnlsbFB6QXh1Z3NNTmpweWQ1WTlJSV9tbnhKWjk2WldqbjRMUUtlVld2T1BlRWdINXNDbmhaZ3h2dWlaT3N6U2FQR1FSVEFPQjhpRThRR080dw?oc=5",
+                "source": "CNBC",
+                "published": "Thu, 05 Feb 2026 17:45:01 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "OpenAI releases GPT-5.3-Codex, a coding model that helped build itself",
+                "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE5CTGRjMlMzbHpDUkVmR3FFcTZmY2Utb25vV1VnSXhqdWhYWWNDTEx3cmpnMU9odnczaUFSTkY5UXBaY0duUEpmYVl0djVmb1UzeUdoYmZtMA?oc=5",
+                "source": "Mashable",
+                "published": "Thu, 05 Feb 2026 21:29:53 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Anthropic releases AI upgrade as market punishes software stocks",
+                "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPQXdIcmJhcjcxSlgtUExzUGJmNXgzZHRzdGR0MW1jb0VKRzF4MUNMUnJCWE0zYVVjV2x5dl9mc2VULWlXRW04OFh5S0NkMGNfMkdMOGdLcHJwaTFjcFlkTzllbnh6NWwzTk51VDFFRFNJa3d5NDgwQUlPYXZFaW51a2RpSEtIWE5oV1BNVFc5dXRXTExBa3ZmX01jZVVkcEQ5QWhEZGFxZUR4WFczMkVuWTJoODBIOXVrdmdwRjA2TQ?oc=5",
+                "source": "Reuters",
+                "published": "Thu, 05 Feb 2026 17:45:39 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "OpenAI and Anthropic release new AI models the same day as their rivalry intensifies",
+                "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxOb2N5ck9sV1V5WUYtOUlES19EQW11b0VHdUNvOHlKbjR1LWF1UWRaVDJTRlYyb3NLZW04RWhLYlVhWXJPWWRfVDhkREgwdUJCOU1PckI2NmV0eU5TSlY0QW4tQ1BzSmdyQ0h0XzJVT0lWbkVLT3V6Z2JPZnBKczFfRDhRejRfS1Q1WWdQMHNQSzRZbTd5UDRiMmVaYVlhcnR0bjA0N0JNWTlUTFg5elRqSGNEV05ueGFTYl9DWHFQV2tXVjhLODlPUGhGWEl6Z9IB0wFBVV95cUxNWTBzN2pqbzF4Q1VSWUxwck1kTlcySzFZQTNjM1YySnBJZjdfMGFpcGtjTkhDblloWmJ2bVFKRWpjVlFJUzV0Y2tFcFh1UGp2NVpWek1xdUpSbzBzRlozTTZNZXhxNFJUNDhodTZlWXJEdWlWdVZqOXJYbGpBellfd0NQZnFWLVJzQXYxV2g1aExwdEtFTzczWXlyMEN4anI0S0JsSTdmbUxWa0dwMUNNOV9rQi1fM3BEZ1dJTXJEdS1LR0JjR05BZzE0ZkV6aHFPdEZn?oc=5",
+                "source": "WION",
+                "published": "Fri, 06 Feb 2026 08:41:00 GMT",
+                "priority": "Medium"
+            }
+        ],
+        "watchdogs": [
+            {
+                "title": "Inaugural report pioneered by AI Security Institute gives clearest picture yet of capabilities of most advanced AI",
+                "link": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxOWlkwc2pZblBBWHRvclhIWUpBUk9JSVRaSWRwNWwyOXpoQUl1UkdEZnBxS0VNOHR2NGpNNXNOZk84aUlxakhNSEw2SnBPY0g1R294WTFZa1VlNWNKbGdRb0FmdTd4MWI3dHkyU0YtMGdfVkdWUUdNYThvbk5aWThBb2RYbG0tajg3b0VQNldIUV9Fa1BDeEVTS1laYTg0TmQ3c3NZRWxWcjB5eXR0ZTYzcWNOV19zSXBBOVlZN19vQmxYN3h6WDBOaG1oMThBTjd5WmplblZuNGVRXzNQU0JRV2o5TQ?oc=5",
+                "source": "GOV.UK",
+                "published": "Thu, 18 Dec 2025 08:00:00 GMT",
+                "priority": "Medium"
+            },
             {
                 "title": "ICO announces investigation into Grok",
                 "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQdlkzUXU5ZVNGMkYyRmlaOHlvVEhnWlZyRFQ5c1F0ckJpbnpfMUhlVEFOWnhoOXp4VFU4ZjlFdG9MMWVESFIwRlBQVHZGZmNWZWtwNEhZN05CVFRmY1pGb0w0WTAtU3BqOFF2MnNOdHJqaUhnS2R6X2l1RjNIX21oaTBmM1NDNjhOTV9kM2NnSXkyVGs5bnhicFpuS08yTGFwVzNFM2l6WW40T1k?oc=5",
-                "source": "Information Commissioner's Office"
+                "source": "Information Commissioner's Office",
+                "published": "Tue, 03 Feb 2026 12:03:13 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "New International AI Safety Report Spotlights Emerging Risks",
+                "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxQLXYtQlh0T2tIQUlfZFJfVHBZVzVYbjNfOEFXNFpxOFRlVFMwZFZFTUQ5UmlpUHQ4Nk4yOGQwU1o4NE0tUkVxUl9tZWpRNFJoY283ZENOcmdNay02ZHRnT29WNFdja2d4aWJ0WkFQTVIwY3NtU0lsN1lQckcxbmRpSnA0NHZhNXh0ZXJ1ZzF0S2hMeVAyZUJ5ZVpZeHpja3AwM1YzRmc1bnJXazlBdUdzcjR0VGJVUjFKNEY1Y0FOZkZZeWZ2WlptWERfU2xjQQ?oc=5",
+                "source": "ASIS International",
+                "published": "Tue, 03 Feb 2026 19:01:21 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Potential future risks from autonomous AI systems",
+                "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPQks1OTF3YzlLNWtKZlBJN1pmejk3X2psdFZQZDIxbFlyOF9PRnFES1R4eDhoVUdfbVYwdVRxck5jWmhnVWVWNnVIVVY2bFg4NTRjTXAxcUUyNjhlaGdVQ0tRc0V0cExRRllZTDFTcjA2Z0UtVDJMQWVNM0lweHZJME9RcFZFMjk5d2ROUjJR?oc=5",
+                "source": "House of Lords Library",
+                "published": "Mon, 05 Jan 2026 08:00:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "AI Security Institute highlights progress in cyber security",
+                "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOcGttemFCSmJNWm9FaEVKbzFIQVdlMUpaQllsdTlHeXRiMmU2akg0MGwxMm1sZnRGaWV5aHJRdU55MEY0d1E1Ylc4SmV5Wm1GYjNtcHZXZmxpLVBaS3NxeGUxZDZkNjVuUUZibURBdm5uNGg1dkZ3eGpiNjBNem1Vemtjc1RLSUJ3VU44eUQ0dERRbEEtY3htSldmNHY?oc=5",
+                "source": "UKAuthority",
+                "published": "Thu, 18 Dec 2025 08:00:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Top AI companies are failing on safety",
+                "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxQeFFJTkx5enFKUGVuZW5qUHoyQloydVB2RUVyODJnMHVnRWhYZDd3QmRZLW9kMXNpQ2lycDN1SG5fOG5LNEs0YzR6YXRMcHU1S1NGdTE0WGdId01heHF6YzZ6d2ZJNHY2MG10T2VtN2U3OTVUaDg1NTk5Q1dTeWZXQw?oc=5",
+                "source": "Computing UK",
+                "published": "Thu, 04 Dec 2025 08:00:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Experts find flaws in hundreds of tests that check AI safety and effectiveness",
+                "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNN1BMWF9sMk1MRUdRSVgzanN1VDM1WURKZ3hDNW9kSmFLanQ4Uk5vNTFSU0V4TGRWUVNuSXhJLVEyMmg4RFlEVGhaWElEdkNvRnotZU8tUTRTYjc0ZnRWOW5FcDdzaWE2blRvMWhiV2ZxVElhMWhOS1lnbVlXX2JjNzl6UVJiZXotcGUxNm5aMjF0d01xbFE3NkxEWTJUT29CYUVPLWthTEVVSUxaTm03TllheC0?oc=5",
+                "source": "The Guardian",
+                "published": "Tue, 04 Nov 2025 08:00:00 GMT",
+                "priority": "Medium"
             },
             {
                 "title": "Grok, generative AI and the UK Online Safety Act",
                 "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNMjgxeVB1TkRKMmdzMURfWGlwT3o3OF83cUNBaFVaOGVONEd3RXNWczhCb09wWGJyMHFWdzBKeGVRVlRVLUVfMFQtVXAzNTh5Rm8zY3l0YWJneVZaeUc4dmNIeHFEeW1WU0tQb0d4NlBRb0U3UG1uQ2lBeFN6TnRnZHkzWEZ2aDJBazhfdW55Wml3VmRMT2h6bGUtZ1Vhanc3aURCTWJuOFk1ZkswSUFlaUE1UGRhNWVwdUx6Y3p3?oc=5",
-                "source": "simmons-simmons.com"
+                "source": "simmons-simmons.com",
+                "published": "Thu, 15 Jan 2026 08:00:00 GMT",
+                "priority": "Medium"
             },
             {
-                "title": "AI regulation in the UK: The role of the regulators",
-                "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPVF8yZjlEX2xGRUpZNGhzdEhqMGxWM3UtNFJsT2l3TzcwSlhRNkc4ckN4SmRmdDNud2FwRmJmWXZUengzX0owcnN1TWFxRWxRVVpBdGVxWjIwRWpSR1J0eUNtTVJ4LTVEVWRLNHNiOHZsT3NQc0g2R1FwXzZySW5ESjVWXzc1RnVtNk13S2xRV1UxMDJzOUNIbFNOVQ?oc=5",
-                "source": "twobirds.com"
+                "title": "2026 International AI Safety Report Charts Rapid Changes and Emerging Risks",
+                "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9Ud25SaGdYTFd3WF81aUxRUWYyU3RjRV9FOXVnblAxN0dUbko1WUVBTzZEeXB5TW55a3hQbV9DUWUxbmd5RFNKU29lemdfbFBFWjA2clY4aTlIdw?oc=5",
+                "source": "lelezard.com",
+                "published": "Wed, 04 Feb 2026 07:38:46 GMT",
+                "priority": "Medium"
             },
             {
-                "title": "UK explores tougher laws on AI chatbots",
-                "link": "https://news.google.com/rss/articles/CBMicEFVX3lxTFB5bmZKMDEyNXhmRFZiaEhXdkJVOUFEUTdiT0VFRWVrRmN2Q3Y3LTlMbzB1QXRwV1lnZUprS3A1cDNIQWJhdXZLREkzMk1GTnpIa1hSVDRPNlo3Ry05NU8zZGxXY2pQLTY3RGpCWVplRVM?oc=5",
-                "source": "Financial Times"
+                "title": "Sovereignty, Security, Scale: A UK Strategy for AI Infrastructure",
+                "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxQeU11NVVpTUt0WlQ5WGs0T3VsQjVXeEQ4T1JoT2V3YW84ZnlERGd4c1pIaDNhQ2VDNzJqWmtGNUlTR09oUGN4ZmJKUHVaWTBoQTl4NW1HUkpaS0Vxd1hGY29MaFdka3VGeU9hY2JUQm9VeFR3RXFsZG80b0RBdkxDLUg0N0pyOFJSVzg4YjNQdGVEdGFGVHhMRDZrZE1oWG1XLVZ1RE5XNks3RE1QcXlQU3hoZUNnUVc4SFpQWA?oc=5",
+                "source": "Tony Blair Institute for Global Change",
+                "published": "Tue, 29 Jul 2025 07:00:00 GMT",
+                "priority": "Medium"
+            }
+        ],
+        "gov_signals": [
+            {
+                "title": "New blueprint for AI regulation could speed up planning approvals, slash NHS waiting times, and drive growth and public trust",
+                "link": "https://news.google.com/rss/articles/CBMi7wFBVV95cUxPWk1tS1dJVE5ZQkIwV3lxUEZsN3k0cXRBazhkWUVKSnp2LXlsaElKZDFpRThmcmtSU3o3dTdaLWtZaEJEdC1DOXFKOEVsc3JLM0YxYVRfSW1YaVhvODhHS1JsUmhRVWtIQXNVOVZ6NzV2a2lDV0NUajd0NG8yZWhrdTVWTjlVd2p5dVByYTZaeTNjdk9sZWtfVkNMbE5QWmRHTUNFMEdkNC1VbG1BZ3pOSmdCUkdJcUVaOHdZZGNmaVRYWTM2a3dGVHdBa29CTjB1aTRXbE9RZFI1eGdhb2tNdDdJdUFDdkZBTXNGUTNNdw?oc=5",
+                "source": "GOV.UK",
+                "published": "Tue, 21 Oct 2025 07:00:00 GMT",
+                "priority": "Medium"
             },
             {
-                "title": "ICO wades into Grok AI row with data protection probe",
-                "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQRTFnYU43QWlOdklXNDBmOW9ER2pLUUw4SnozSjdkbWxHSVF3eHAzeUlzeWdQd3dkNzRSOEd6SzB6UnJYWmtYX2JkaGphd3NkNUtFN0V5QlNLRXY3aEo5UDh0VEJjcHQ0ZkJidEhRTzJLZjlyRjJPbnhnb24xS3F0YUx3S1ByUnM0SVZCRFZ1MXVWZXcxTURycDVBQ214OHRz?oc=5",
-                "source": "DecisionMarketing"
+                "title": "AI Watch: Global regulatory tracker - United Kingdom",
+                "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOMFIwUWthTUFhd1V4eHkweW82cWVCX0wtR3pjWVMxaS12MFdkTWZCS2ZEM1dpNWxPeHJDMk5lbmZlbzRNRi1UVUtMNUlMU0hBNldnM211UV81aGtBMkRRNlczdzJEeGxFZDZMdmdOb0V1SHBmTWJYaGtEOER3bUZMZldMX3V4S3h4cGdadXM3Y3JpeWl6XzFJYmV4X2E?oc=5",
+                "source": "White & Case LLP",
+                "published": "Tue, 25 Nov 2025 08:00:00 GMT",
+                "priority": "Medium"
             },
             {
-                "title": "Content moderation and online safety: key updates (22 January \u2013 3 February)\u00a0",
-                "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNR21MN3hNYWVvQmR5WmJFdHlBSHc3QV9yUkYxOVNoRFFRbXZIVi1fRFZVeHhhOWhzS0hCTEJkeTFEaXdFVXZQa3pGTUx6MjZ5bTlYZEpqa0Vlcm1HQ2U1ZTJUeEJNWVhJYllwWGIyOVhKVFhDTU9LTTJGejdfZXBwbFAzYUllVmVhaE1RS3ozNXVCeE44VTkyRk5pSGpGcS1XU2FhMkhVMXdGZkU?oc=5",
-                "source": "Lexology"
+                "title": "UK government appoints first chief AI officer",
+                "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNeUlQM0RULUdXT1ZzUWt3ZlFaMGhaMVNZMjdCQWVLd1FFVC15ZE1zVTNlSmtoN3piQ2xGZU1BdlJBN0Q2TWRoYWh1SUwtblJkNUF6cmstUFhlM0ZVUW1YMWk2Uy0wank5WERjWXZiWGhjZ0hNblJCTHdfQWJGdFZaWXlFX1NSLWt2MnpHNQ?oc=5",
+                "source": "Global Government Forum",
+                "published": "Tue, 06 Jan 2026 08:00:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Can the UK\u2019s AI Growth Lab make regulation an engine for growth?",
+                "link": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE9OQWxyR282SzRFa2F0RkVaM05mM3pxaFJTbDU5R3F0REpSQzJXeHdoNGdsd25ocEwwbmlHTGJEdmRGQ3NJRVJUVDVXUmJPdjNPUnpyckFJRUFFdzk4R0lPenppVQ?oc=5",
+                "source": "Raconteur",
+                "published": "Mon, 10 Nov 2025 08:00:00 GMT",
+                "priority": "Medium"
             },
             {
                 "title": "Secretary of State statement to the House of Commons: 12 January 2026",
                 "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOWEcyUTA4Skg3NG92bW9QeUpSOWN5NVpsT19PUmc5bVBhSXliSV9BRHJvcV92R1BGSGp5Ynl6R1N3WWtNRXRicG5ub3pJc1RTbXFUSmV6NEFXZ0FPVE42WUk0YW9uQWo5dXc2WjhLNGM1RG5PTVpwSGVPYWdseXoxYnF6eEtwekRmSzJXWmU0SkRRY2hmV2JzMHJzMXlvakp2bWFMdFhrZWg1b3c?oc=5",
-                "source": "GOV.UK"
+                "source": "GOV.UK",
+                "published": "Mon, 12 Jan 2026 08:00:00 GMT",
+                "priority": "Medium"
             },
             {
-                "title": "The applicability of the Online Safety Act to generative AI: Ofcom's position and regulatory uncertainties",
-                "link": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxNdmF1ZldXX2JSUFc1NVFBTUJqVmw4SFRVZV9NTERPd1ZxOVV3LVVtWTJqYjlPZkp0NDViVVBWZ0R1RXhpckNzVDBUOVBIMjFyTE40bUJRYlBwRWV0ZGpQWjZFOFd5S0hoblBGcUFRM3JpUjVIeXdoUzFsU3FtZGxwMmhHMEp5YTlrZXdjd2FKVjJ3SXk2RTRzQTJ0X2VhY0k5WW9uV2k2RnY5NDN6Z2FmQlFUR1ZlaG91ZUZjOVRBdWVpbUtYYjNXeHgzZlhSZ2ltUnVqRHZB?oc=5",
-                "source": "Taylor Wessing"
+                "title": "The UK government is prepping for superhuman AI. Businesses have bigger problems.",
+                "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQcEJOOHZNZ1BoZ2QxV1NJcEtOWUFqWUhjalBNQ1NGcjRyYXY3SVNpalR4UnA3MFU2Ulg2RWFYdHhOMzRtTFJ0MjUwQ0ZfLVJsbTVHazRPdVlwRWRtekM1WmVRR3hqY25GSEcwcU5sQ2pRMzBJb0pKWnNfVjNjSnBjdXFZaDRPUnhEMmZUeUpqdUg4NE1KRVFpc1VqMExQVkNUcXVhVnhuSnJ6WmJ2NTBraDZLLVZJWFk?oc=5",
+                "source": "politico.eu",
+                "published": "Thu, 04 Sep 2025 07:00:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "The relaunched UK AI Regulation Bill \u2013 a step towards statutory regulation of AI in the UK?",
+                "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPaVhZeGlzUXhLcDlUY3Q2dDEwekYwaTUxZC1paWhmQ05STDRhTUVuRktLQmFSdl9IU3FEb3RXZDlDN0trV3dhRjQtdjRjN3JuWDh4MG1tRFBxUEVIWGdkN0h0YjdqdkphcUpTS1hkOG8tLU91ZWUxQWpaZVBlZWYtUTFMblp3dnhPMmhZOUZseDU2SFVqRENpQ3Bn?oc=5",
+                "source": "Clyde & Co",
+                "published": "Fri, 14 Mar 2025 07:00:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Artificial Intelligence timeline: key developments",
+                "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPb184dWdPZG9icGd4dUlWeE1rVlF4WFh5MXcyNm14bG5MN3FsWjg4Y1JiZi1odXZGb3BwZnI3YWwyYjBrSnNBSGJmNVRZUU03aVJMeVhBMFR3REtNblpucVB5VEcyNVFuUzI3aHVCRlJSeGVDZFhSVkZOUkRieU9HTHBqbzVLNEloVlFkczh4TjV5OE9QWkZOeVAwTkhoSzgzcTZzS1dvT2o1RVNsb2JHVXVDdW5QbTQ?oc=5",
+                "source": "kennedyslaw.com",
+                "published": "Sun, 16 Mar 2025 03:10:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Artificial Intelligence sector study 2024",
+                "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxQckI5cEZnVzM1TjMyR20zTEluREhLRFFxS0hBSy1ac2NPSWNPdV9yam5nNklqVkx0QnFkQkRWclZDSDZ4UkpnODNQX09mYjZYeGpHajJSSEVSZl9ZcWl1bHpnM3dfSk5FMXI0YWRBR3VaWDlWN2pPZ1ZwSS1wVWdLcFJaNUlsQjJHNEl3aTVUOHU5azNya1dsTXhTVnBtWWJTM0h1d285UU9fRkpCVmJ0SHVqMjZqbk5kNi10X0daeGthQU1P?oc=5",
+                "source": "GOV.UK",
+                "published": "Wed, 03 Sep 2025 07:00:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "UK government\u2019s AI system \u2018Humphrey\u2019 set to review thousands of public consultations to improve civil service efficiency",
+                "link": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxPVTEwckF3V25wY1JnaU5DU2hDSDFEWFZaLUVudHRwU0ZSZEtRLTBYYzFDRHdrR1RmTnpRRHFJejI0MzVRVXF5R19uV3d3ckpnZFlLRDNBVF9HYnZDS1BsTUluUm9NM2QyT0lhRUdFeGlGLXdiYWNlZE13a3lOUjd3Z3hlaWFLNjFWUGh0NHg0NHpwYnluMEE2Q1B2Z0hYSFdwSEozb1JSdGQzWVAyWTM5bjU1MkZuakl1MkRKc1BpSDB4QnBLV0xhVGlnd1dDWGhBVlJEOXlzNTQ2NUl6WHU1TkxJUFllQ2ZORU52bw?oc=5",
+                "source": "Global Government Forum",
+                "published": "Thu, 22 May 2025 07:00:00 GMT",
+                "priority": "Medium"
             }
         ],
-        "ai_incidents": [
+        "harms_csea": [
             {
-                "title": "Artificial Intelligence Incident Database - Discover",
-                "link": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE5ibUJIQTc2aDJ6UFVZeTNXRURubzZLV0VwaVJ5WnRQc3UwQ05HcjRRSnUzSXBNckVSWFloZ2xWWmZZaWVkTEdUWC16VUtIV1BieWJ6Ng?oc=5",
-                "source": "AI Incident Database"
+                "title": "Campaign win: Deepfake abuse offence to be brought into force",
+                "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxNNS1nNkRsVHF2Z3pHWUVibVRwVUNEZGhZMzVrcHNKWHRvQnhGUC05MGhrZHFUSlJIVnhDYzRkWHJKcmNaczE0Nm5YNG5NdFV4XzBXWjZrRXNib3JzYW04dlJlVk9CT1J4X1lycWF5Z0duSHhJazlUZW9vNXdTcUdicWRGZkhtb0huOGZFTzZpQk9RS1RQSWdEQ3B0UUd0LUQ0NzVBOFdmMA?oc=5",
+                "source": "End Violence Against Women",
+                "published": "Thu, 15 Jan 2026 08:00:00 GMT",
+                "priority": "Medium"
             },
             {
-                "title": "AI Incident Roundup \u2013 November and December 2025 and January 2026",
-                "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxQbXBpSEd5Z3VzTTFXUHp1b1Jlb1ZId0hLN2NrR1VPSmhZWkdEWFpJc0lSQUd1cnFRVlNnekVmaEYwTWJ2bDN5SzdtTEh3dE0wODEwSzVCRUxoMENXVEtLa0lMdGhRVndraHhhSU9JSkpob3NnRURlcTA3SmFobG9TNHUwZmNkczhWREZsOA?oc=5",
-                "source": "AI Incident Database"
+                "title": "Grok, generative AI and the UK Online Safety Act",
+                "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNMjgxeVB1TkRKMmdzMURfWGlwT3o3OF83cUNBaFVaOGVONEd3RXNWczhCb09wWGJyMHFWdzBKeGVRVlRVLUVfMFQtVXAzNTh5Rm8zY3l0YWJneVZaeUc4dmNIeHFEeW1WU0tQb0d4NlBRb0U3UG1uQ2lBeFN6TnRnZHkzWEZ2aDJBazhfdW55Wml3VmRMT2h6bGUtZ1Vhanc3aURCTWJuOFk1ZkswSUFlaUE1UGRhNWVwdUx6Y3p3?oc=5",
+                "source": "simmons-simmons.com",
+                "published": "Thu, 15 Jan 2026 08:00:00 GMT",
+                "priority": "Medium"
             },
             {
-                "title": "Funding the AIID - Part I",
-                "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9BNzNJbW01d2pTck1aSk1MREluQXVYZ09jS3V2Qk1JNnRHVkpmNHBLT05xalhWcEg0eDhhVWw3bUxUZzFuU0VSMkV6NVRQRDQybDZ3M0RNQjE1SEl4M1RrZlpDUF82YWRB?oc=5",
-                "source": "AI Incident Database"
+                "title": "As Australia\u2019s online harm crackdown reshapes the debate, NZ must find its own path",
+                "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQM0RrWDlNblFWUGl5dGNqd0tnaGtjS3dzbWpMN0ZnWlBvcUdZVG9sZG95ellNdmx1ejNpa3VwZUZrQ3dpWG11ZVc1QW54NDI1X2F4MUxhUnNWTlFnWk5qb0NMd3pZb1dKRFJKcGZuZ293YlhGYjE2OUJ0bkhad2o5YzFBa1pMUWxFVzh1a1Y5dWtQWmVKZXFIeDNQUVNNMUhMRU8yQWRJbldHV0ZwaWVVRExoVFh4Yzg?oc=5",
+                "source": "The Conversation",
+                "published": "Mon, 02 Feb 2026 19:06:32 GMT",
+                "priority": "High"
             },
             {
-                "title": "New Incident Report",
-                "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE9vcEM4Qzk4d21zVEhHalU2M1JlVFQ1V1BkbXNfd29YckljZHBjaEF0dmhVUi01dHZLNzlMNi1QZzNmZFpaZjloN3Nfc3lURlo5aXc?oc=5",
-                "source": "AI Incident Database"
+                "title": "From deepfakes to grooming: UN warns of escalating AI threats to children",
+                "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE1TSUM4WUxORFN2ZWdzWFp0OXFYc3MyMXJRUmNMalZNR2VaTnAzVXYxT3VDOXdlZ2owdmt6blRiQlZtOXBRc0NvTnNTdnNlNXh3VG4xaW40TQ?oc=5",
+                "source": "news.un.org",
+                "published": "Mon, 26 Jan 2026 08:00:00 GMT",
+                "priority": "Medium"
             },
             {
-                "title": "AI Incident Roundup \u2013 June and July 2025",
-                "link": "https://news.google.com/rss/articles/CBMickFVX3lxTE9vVUtfUGJFZkFMdlNFNnk3c0QxQ1hZTDIzUThMcDE0NjgwZDVRNEYyVXNkR0tOQ3JNY3pqQ1JaSjk4akEzTFg4RzVCUVYwV1ZMNzEtTEsxLXoxM01fb01hWE9waVJEc01YUDY0WEJiVGNaZw?oc=5",
-                "source": "AI Incident Database"
+                "title": "AI deepfake abuse on X sparks global scrutiny over platform safety",
+                "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxNNUtraXlNdmdDdGdUZ2g2UGRrODVwNWNyaTVzdjUzazE0RzJHOWIyYkR2eTNNdmtsLUk5aUhKckh2TEt2UDRac1VTaGJCc09vRnBMYnZrZmpyQ3NMcVVCTHVZUzVsVm5jeWJjTlhoWlVfT2ZISjVsdFlnNDBLWXZWS0s1QXlYR1FHTFpYbXR6QTZqMHI4RjBEbGQ0R041cmhYVjgwNEExTQ?oc=5",
+                "source": "The Media Online",
+                "published": "Mon, 02 Feb 2026 06:53:09 GMT",
+                "priority": "Medium"
             },
             {
-                "title": "Incident 541: ChatGPT Reportedly Produced False Court Case Law Presented by Legal Counsel in Court",
-                "link": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE43bzlkcXJvSGhXWUhVank3X3doZnFsaGxHLVF1czctTVhmSWZ0dnI0aGgzT0ZiVnNJWTZjSENTNmJ5Y3lnRWZQZ09fQjJSUQ?oc=5",
-                "source": "AI Incident Database"
+                "title": "AI-powered online abuse: How AI is amplifying violence against women and what can stop it",
+                "link": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxNZXhjSWpSci1qUmtoTzIxWjZ3U3FlQkIxalRxblhCOTlIX2ROd0NwanVKTDR3WTBLVnU4cEc1RVg2UXctSWpVNnI1X0FiNkFUNHVDX1RrSy1jN2RHazFZN1dPU0NWbXktTEplamFsYVk5ZFBpbEpqU3VMQlJLcF8wWlJjTmRMdDhadTN4SVdpbWl1Wno0WHY1bTlzVHA4SGR0bGJWSnFvN1ROVkZSeWRjTE43dnA4TXE3N0NJYzRJLW9BMXlxTEpCYQ?oc=5",
+                "source": "UN Women",
+                "published": "Tue, 18 Nov 2025 08:00:00 GMT",
+                "priority": "Medium"
             },
             {
-                "title": "Defining an \u201cAI Incident\u201d",
-                "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE50cFFaRG45ZzhfSm1qRFVpUEFwaEJ6N2FaT1JhUnhWbk15bkdiM0lvdVh6RXhkVmx4RW9XeG4wdkVfTWpFVEhkT2IxcXhGWG9tR3k1ay1XS3plVG9jdmxheg?oc=5",
-                "source": "AI Incident Database"
+                "title": "AI-generated nude deepfakes are part of a larger system of gender-based digital harms, expert warns",
+                "link": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQdTFvd1RqcUxoV0k5eG5GU3kxRjg4MkxvZlZmSlBwZWRRWElUUjFBXzhaOWtSX3lCeThRaDUwYVVwT2V6ZC1QbTFCUFVIWkZMOVVVcFprLTE1dVU0RjM5YkMyYnpsWTRQeENhc1pDUlNGNjBNQ1paSnRXOE4yZjZiYzNsRnFZdWVRSDR0cVRzdWZodnZwOWNGUkhUdzFhOVptdnZTdFYyaTltalFtczNFVUJMdFlzNmRXN3M3MUNLSFlHQQ?oc=5",
+                "source": "McMaster News",
+                "published": "Fri, 30 Jan 2026 16:55:52 GMT",
+                "priority": "High"
             },
             {
-                "title": "Incident 826: Character.ai Chatbot Allegedly Influenced Teen User Toward Suicide Amid Claims of Missing Guardrails",
-                "link": "https://news.google.com/rss/articles/CBMiTkFVX3lxTFBkSmdzZnhWUFFnLUVCV2gyLXJBUDBEeFdfQVgyV29RUjJSR19RZUR4VjM0YXE2UXhQNW5GZ1pOaWhpd3JKeFM2c2k0c3Nvdw?oc=5",
-                "source": "AI Incident Database"
+                "title": "A Safety by Design Governance Approach to Addressing AI-Facilitated Online Harms",
+                "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQWTZ2RVdSVGRtLTk2enFOR25lRVBOR0ZoUWNRdkxwWnlBUWJBSlFVajFfRFN6UGQtcGJ3XzVhcW5vT0o2dmpwOHh1Q1BGQ21PQjQ2ZTlGdDU3blQ2X1VuOUdkZXVuSm11dlhZbF9TS3k4NFdMSW1RNXJLNHpBbGxrX25Ea045STJGNlp3UEtjV3dXZVNJZHVUUlNJNExYRm8tNWJZUFNpbw?oc=5",
+                "source": "Tech Policy Press",
+                "published": "Mon, 25 Aug 2025 07:00:00 GMT",
+                "priority": "High"
+            },
+            {
+                "title": "AI fake nudes, sextortion and scams surge to record highs as Netsafe calls for urgent NZ law reform",
+                "link": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxPWk9qRjBSNWt0ZU1vNUVIR3pqZW1DZ2dXWGoxWnhmQlNOXzR6UmRtTlhqajdFY25RNjlneGtTUjU2YnE2dHdKNVo5R0diSFVTVDJ6dmtPRVlJNy1YelZFajNkVFcwM0hPd0JzaVBZNm1mTDdZOXA5RmtLX3h0UmJVMElPRkx4ME9nS3dKcW5ZTEpBM0lPTzlVcGlNazZJQWw5eFRET3Q4SDNVaG5SbmlMX0hPTDZMbkJKeXV2d3FwUUlSY01BZlBnQnU3UUQzMGNvZHFVbHZUQVpfengyM3dv?oc=5",
+                "source": "Australian Cyber Security Magazine",
+                "published": "Thu, 27 Nov 2025 08:00:00 GMT",
+                "priority": "High"
+            },
+            {
+                "title": "From deepfakes to chatbots: How AI is reinforcing sexual entitlement, fuelling abuse",
+                "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPakpVVXBRMy1Ba08zQVJqTWwyMHhYS1I0a0VHRmVXd0Vyb0hjaG9TNjQySjhkOWl6WmFJMk0zd0dkMjNIVkhHQk9MU1l2ZmF0YVE5ZTBWcnBOcXlnQkdrRHA1eTh1TF95RTNBRzdIbXh4U3FiVlkyMTlfeEQxcDhjWUtEOFNZT2d3dm1PbXJsQkU3b20xZjBjYUY3SUZicWpfTDZTek1vbXdIMXM?oc=5",
+                "source": "Monash Lens",
+                "published": "Mon, 01 Dec 2025 08:00:00 GMT",
+                "priority": "Medium"
             }
         ],
-        "us_policy": [
+        "harms_fraud": [
             {
-                "title": "2026 AI Policy and Semiconductor Outlook: How Federal Preemption, State AI Laws, and Chip Export Controls Will Shape U.S. Policy",
-                "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxQMkdnMWpHSFBFel93MkY5MDRackZGM3MtTzNzSno3bUtBRFB3MmhRclNydXZubGp5a0RkaHJ0a0dWd1ZJRmVJTjVtSi1KaUNtLWhjb2RmYjcxaS1hODZjY3JtcmhkN0E4NnNULVRrdEhJMXcxLWgyclVuakI2dkxHcg?oc=5",
-                "source": "JD Supra"
+                "title": "There's a creepy new phone scam draining bank accounts - how to block it immediately",
+                "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPYkNsZldEcmtoMzFQSEZKdUMwOW5nXzZ3TEwtalJBcXZxR2pFaTh5VEhmUnd6dllGNW9BZzVsblk0Zkt0UHlfN2YtM2hqcUE5d0R6MDdNZ18tNy1TLUt4c0NWRkg3dkdZQmk1TUhKeHNzanoxMmFMRjFDTVdIZkozS2Y2WlpIdw?oc=5",
+                "source": "AOL.co.uk",
+                "published": "Fri, 06 Feb 2026 08:53:07 GMT",
+                "priority": "High"
             },
             {
-                "title": "President Trump\u2019s AI National Policy Executive Order Is an Unambiguous Threat to States Beyond Just AI",
-                "link": "https://news.google.com/rss/articles/CBMi2wFBVV95cUxPQWRqcmh4cFpTZy1XQTF0UktjQy1IOUJDRmdlN1hpeS0ydGM1V2dIdWRoX1VkU0JVU2FzdlpCWFZoVXIyd0loOFVMZnBObnNpY3ZBODBzeHBMcGQ4Y2prQjBmRDlXanliTWl2TU45c2xZVkEzcHd4UTViUlR6bkpPUXdhS09mMERDQTJSOU9GZnhNRkNNcFIyQjlCM3VtUUpZZUZnY0llNjc4N3lySjJmV3Q0WWx5MzczVGx1LVhDWU13UWtTbTVEd1lWSl8xQ1QzQi0xRnU1Yll0Z0k?oc=5",
-                "source": "Center for American Progress"
+                "title": "Phone scam alert",
+                "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE43RTloeFBiYmZaQVBkTWx3S29hbTdINmpTWlBWTXdHY1NEUlRnTlZBdWxjTmM5OEszS1ZaUmNIVWZzRW1mTXJfS1NmOTZjM2xYOVp5WHk5WFlfUG5q?oc=5",
+                "source": "Knowsley News",
+                "published": "Thu, 05 Feb 2026 13:53:26 GMT",
+                "priority": "High"
             },
             {
-                "title": "President Trump Issues Executive Order on \u201cEnsuring a National Policy Framework for Artificial Intelligence\u201d",
-                "link": "https://news.google.com/rss/articles/CBMi-gFBVV95cUxPRGhZVFV4Z1M3a3FhUkJvNzVvVzVwX1VDSWpaUGMtbFFGSE5sMk1CSnRBNlRIdVMyc3VsQ2x1WDF4YXY3b3R4RE5FQ1hwUVRsU3VtX3gzU2xrZkw5MHQwd3lndUhha0dUbUhQSW52dWRVeDJjZG5uWG04OFhkb2x0dlF1emtfM1lWanJkSS1GcktPbmNmN0I2blBMQ0w5ZXlSWjVQa2VDN2UwbnAwSzg3LWQ0TzJLSmNGX2xYbUNhTFFOWlhNWHpTQkd3NmhPMTlCR2pHaENBYnB5NGNCMW84aUxZWm5paWFWb2ZGUU5rZUg0MnZDckNyd19R?oc=5",
-                "source": "Mayer Brown"
+                "title": "Scammers use AI voice cloning to make fraudulent payments",
+                "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxObUwxYVdKcU1scXk5dmx4cV9MbUtTQTlqMS1KQ2hnNkpUNmhzMzR2RnhQLWlQby1RNTRYSlg0Y2ZhR1RBMWJRbkJmcUF1Q0ZBQmphSW1uTXBDQkhPX19PdjZGSUZGOW5PSkVCUDRjRDA1M0hhWnl0VUhWQ2pocjlvUWRmMWY?oc=5",
+                "source": "which.co.uk",
+                "published": "Thu, 05 Feb 2026 00:05:45 GMT",
+                "priority": "High"
             },
             {
-                "title": "Timeline of Trump White House Actions and Statements on Artificial Intelligence",
-                "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNVW1SN0pHUndtejZ4NDZKcVhUTmNIajVrUnVKbHAzTkRaLVQ4ZEdNQzFBNFMwVmJTa0pMRElXcmRLa0lLUmt1NV9HeURqZUxsRDZyNW0yTjl1NVR0aDJGYW5YX2h0SVhxS19WVTJYMUZIbGowQm02bkJlT3NBOF9uWWNFUW1JWEFna3B5cDlBOVhTM21HeC1JcVU1a3Q4eVVpMnZHWGExTEdQcEt3M2c?oc=5",
-                "source": "Tech Policy Press"
+                "title": "Criminals using AI to clone voices and set up direct debits",
+                "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNa3ZNQTZKd3F3LXJ5aUNrRW5LM0NVbHBPXzBLeFhlcTY2NTJaTWd0Yzh5alZfNWViWUZ1MHY4STZ5NzB0TzNWc2NiNkQ1WVJkQzVHX1Zka0hyTVF4VTAtRWIxMVA3WFBoeGh2dzFYbjNUeXdWdUUwdEVCazBJbWdnVUtLMDRSWEx2RDNwQTBhVHFXYXJyTmd4WTJ4UEJ3bzVMdW00ZDdkcUNhanlRZDJJ?oc=5",
+                "source": "Radio News Hub",
+                "published": "Thu, 05 Feb 2026 08:03:29 GMT",
+                "priority": "Medium"
             },
             {
-                "title": "Key Insights on President Trump\u2019s New AI Executive Order and Policy & Regulatory Implications",
-                "link": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxPeHhrNlA2ZjhoWkxGU3ZzQkUzVlNYaVplMDVVNUxhaGpTX0s5b0ZMc0EySVk2eW14MHBPbFA5bWRGdWE2LU1tSmpQWkZzWUlMSXZ2UkRkaFB5T1Q1dHE3Ui0wQ0pPVmI5STF2dWRoSE5YMnZvWG9vTGYtMm8zZU5PY01CelhfWVRFb1ctZmtmdlF0Y0p6clFXT2dXNUpiay1EOFlRMkVDblR5TTZ3UklxRTdtVWNCUTc0STFhWU1WSEswenNYQXBkX3Q5RnVnWklVWVBxTEZEYXZBVjlhM0tiVQ?oc=5",
-                "source": "Squire Patton Boggs"
+                "title": "New warning over AI voice-cloning scam targeting UK bank accounts",
+                "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNdnVZYXJKY0t0UGo2d0FucXpOT0R5VTlaX2hoM3pnRXpQYjllNVRqTzNHUTE1dUJBaDJ5NkN4MEJ1RTE2ZHlFc3lMX1hKWVJsa204MDBlVzVWYzhmNVVjYmR5ZkkwYzZabm5ic2p6ZWk4enFPRzNUbVR0cU5kYjVSMTVSM1o?oc=5",
+                "source": "Birmingham Live",
+                "published": "Thu, 05 Feb 2026 11:55:00 GMT",
+                "priority": "High"
             },
             {
-                "title": "White House Drafting Executive Order to Reshape U.S. Quantum Policy",
-                "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxOU0dGV0oxQ2pzQTNnVU05WE1xUldGX2xDazdGV0lPbVlMV3A2QlEtek9pTzJtRTlVMmdXX1JyY2lJZGY0bVhUVUdSbXpQSW9SVVVuaHVHSWNSSXVKNVBiOE1JMUlUUDBTUU0telQtWjByZ2FmRG9ieWc5LWFOZEh4VFFqd3B5VzJsWk93cUdWUGxkMEhTWWo2eHptUEVRRXJ4NjRXanZKQWs4eVB4?oc=5",
-                "source": "The Quantum Insider"
+                "title": "Your voice is being cloned - how AI scammers are emptying UK bank accounts",
+                "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxOUERXLV85VWpGZkZaVFl6X3cyc2hXNW5CY3ZGSVJpLVJqYmpLbEhYTGxBSnBjQ1M0RUxic2lLMXlpT2ZnY3JFWVFtUDdIRDBGT1YtbEJjd2t5b1g3bGhEOU1PanVuUTZ1RkZQLWlMYm5xMkpzcWY5XzVucVhUbjFpQnVrR3V6cmhCb3hfamJQZTBVbTRsRzJaY0dmakU0NUYzMG9BTlN3N3RwUQ?oc=5",
+                "source": "InYourArea",
+                "published": "Thu, 05 Feb 2026 12:31:56 GMT",
+                "priority": "High"
             },
             {
-                "title": "Policy Alert: New U.S. Executive Order on Artificial Intelligence \u2013 Aon Tips for Better Risk Capital Decisions",
-                "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPYU9xR3FRaDlpdHBmcFZYcHNtSTl4UGtidUFRNGFSTWhHUEtZSmUxZU1kMXBUbmZlR1A3dTR0eHB1Y0RsLTU2aENUdTJfNG1yeWVQamZuaUVsa2V4U0UxVzA4WDZtOGVaOGpoWlhZNkFwNFFHWnhERmk2UDZJN0w5a0RZbWxKcUtsVXBtc25sck9CUDlk?oc=5",
-                "source": "aon.com"
+                "title": "\u2018Help! I need money. It\u2019s an emergency\u2019: your child\u2019s voicemail that could be a scam",
+                "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxONE9kMXNDQ0V6QUprbUlrRjRna3pQV0dpR0R3bnNiX2dpM1l3bWdBTGJmSHZPZGExSjE0bTFlb2JrQnNCRXEwOGJULVNjZFY0RDhhUk9ob3llUGVFX3Qwb0FSZDVZcWhaRzRUbEM3WFhFR0QxT0JBWm04QmZzelQyQS1HRlJZVjhSczVyRzZyYw?oc=5",
+                "source": "The Guardian",
+                "published": "Sun, 21 Dec 2025 08:00:00 GMT",
+                "priority": "High"
             },
             {
-                "title": "State AI laws under federal scrutiny: Key takeaways from the executive order establishing federal AI policy framework",
-                "link": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQdDNXLTdkcWpkVU9idTlzODdGU1dsejVNWGxaWUFXMlJTWEd2N200TmhCSkUwQlc3WDVfVndxM2k1QnktdWNKNFpubzBhU0FtbENjTHU4ZWdLNzFuYlVZeTBSNEg0V3dMclh0N3dsX3pKMVRuZVB6ci1kbkZRUWY5ZTlQS2ttUEtsN1JsbmxYalFPWWJadjNIQWx5Wng1NUlYbF9VUkE1cTlZS0dxbTJTSXpjN3ctSVB2NzBR?oc=5",
-                "source": "White & Case LLP"
+                "title": "Criminals using AI to clone pensioners' voices and empty their bank accounts in new scam",
+                "link": "https://news.google.com/rss/articles/CBMi9gFBVV95cUxPck5qSHJubnNhUmNXUFVqZXFTQmJBNnpPbE5GdFJyRXdZMjkxekVlQW5zTmY3bWFoNGQxS1lnNlRxT3Y4Y0N3YlZkUmFWN3VYS0tpd3I1RUNrNkFEYTFYN3JvS0luSkJOTlhNWmJTcGxnSkhhb3dPVFdoOWRiOVk4bVJiUDc0RVI0LURkQU9ISjE1Wnc5ZXg4eFk5YVJNTmhvc3FYakpIZWVnWDhyOUdlaDdwYTNNaHhKWTdOSnp6TlVFODlmXzVmdHVtMGhpRnRMcktlckN2cFFodURjUC10VkJwTGp3b0M2dUJEX3hrR2ZfdWZLSnc?oc=5",
+                "source": "MSN",
+                "published": "Thu, 05 Feb 2026 13:41:10 GMT",
+                "priority": "High"
+            },
+            {
+                "title": "Criminals cloning Brits VOICES with AI to steal cash & victims 'don't even realise' they're being raided, watchdog warns",
+                "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxQcmdIc3h5dGhmUXJGc1l0ZzFmRGpmanl2QkVpSXhfUnc1eVFla1UtQ1F1Q2pWbU5zaHh6bWtOOG1mUk56Z2FGWlBQUTZ4VV93Ymlmck5aRE8zTHJPMWhLcWFDUmxST2E0M1lkcFd2OTA1OEc4NWQ5dGFHbHBhWUhwUElqV0NzM2lsTTFUN19WcDU?oc=5",
+                "source": "The Sun",
+                "published": "Thu, 05 Feb 2026 00:01:00 GMT",
+                "priority": "High"
+            },
+            {
+                "title": "AI voice cloning scams cost Australians AUD $25.8m",
+                "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNandyWVZPd19DTzFLWnE2NVhncXdzNXZoSU9NbVlQZDl1ZXFmZlVyNExDaDJyY1BFUnE3cE5QeWVZbW11a0g4Znh0aURzdV9rMTBNdVk1aDlXU0V0TUx4cGZLakZSamlBNTc4ZFFaMUd2eDZ2RktRMk42T1lXaF85ZUl4NU5wWUNKQ0RQbw?oc=5",
+                "source": "SecurityBrief Australia",
+                "published": "Wed, 04 Feb 2026 01:25:00 GMT",
+                "priority": "High"
+            }
+        ],
+        "harms_cyber": [
+            {
+                "title": "UK firms confident on ransomware but face rising AI-driven risks",
+                "link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxQQXkzRFNlS0N6dDN0TzVwR3VzWkFvVklHSWhWc25faDRlWnc0bEpObC14REJOa1p6TGFMX3F4ZHc5SV84TzhUWjZ0QUlPemc2ZEpTc2NfVGVBbDN5Y2ltNHY2TE9namg5NG4tLUwzWDZJLWxOM0NuWElzNElIUlVqY28zc015MjA0dWFHU2tVUjNNWXJKM095MHhGV0FXLTg?oc=5",
+                "source": "SecurityBrief UK",
+                "published": "Wed, 29 Oct 2025 07:00:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Arms Race: AI's Impact on Cybersecurity",
+                "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE1tSzJZbDhfT2ZPNEhhUEMyRVd1VWFYUlZZMjhnc3ZiYWN4TGNNa0c4eVhTWVhtNVpQUFJ2alRZUnVjZUZzOUNzdXdpSkRXSDhSYnZOb2hTMTVYcXc1Q2x3ZW5lRGE1cVY5SDEzSnFYLXBkVE85b0E?oc=5",
+                "source": "SECURITY.COM",
+                "published": "Thu, 20 Nov 2025 13:25:22 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "AI-based malware makes attacks stealthier and more adaptive",
+                "link": "https://news.google.com/rss/articles/CBMifEFVX3lxTE45MjZmblVKdTBkdDBHanlhdzd6bTJPd0ZDWjlkRm5BcmZVZUxoNS1sSGdoMTM3Y1ZkdkdremFweUxHSmM3a0FESXhqQndUX3ZLb3FpR0tSSklFRlhhZ3Y4MlNISkV1LWVFSDBWSWZOTUlWNzFZZV9ONU1peDM?oc=5",
+                "source": "Cybersecurity Dive",
+                "published": "Wed, 05 Nov 2025 08:00:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "MALWARE ATTACKS SEE 131% SPIKE IN 2025, LEADING CYBERSECURITY REPORT FINDS",
+                "link": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPN1pVeFpVZ0wxVnFXb0RQRVVIOVZLY2p4Q2JPMllQMnRMMXJvaGRUajhOcVRXZDZLU1lXRURib3kyd3pjY0xtSWoxUmxmaDZ2VWZHRkd2dUdRcl96QzNTWDdrbWh3aHVOeDZ6cWoyelY0NHdha0NJRWFWY2RBcmsxS21neFlxWUhlMkJzZ1hxNXVXdURpRTF1MFZfTXRRM2xqM2Z1d3l3ZzJSNWVRTktfblo0MjN1dllpN3h6YXk4Wkh2QQ?oc=5",
+                "source": "PA Media",
+                "published": "Wed, 19 Nov 2025 08:00:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "AI cyberattacks and three pillars for defense",
+                "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxPcnJDblNCT2d5MC1GaU9NQXE3QV8taWU1Z2J0R2YxZF9DVk40cUhzdlBrM2FmRXNsNXVxMjczQ1dyTHRTMWdtVTFkT3kxVlhIQlFOdkNxSmNwZUh3ZzFsYk9tUGZ6a21EVF9GdFFHX2hFZ0dWaFVyb0pOTEtRVjVLR1BWSE5aUEp0VnJz?oc=5",
+                "source": "MIT Sloan",
+                "published": "Mon, 08 Sep 2025 07:00:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "From Phishing to Malware: AI Becomes Russia's New Cyber Weapon in War on Ukraine",
+                "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9RVUY4WU5ma3p4UDVkTjFiMWtLakszd1lPWjI2elRRbW5YZ2JlMVBxMEludkIzYS11ZmltMjl4N3ZQYmw5di0yMnVJOVp0UngxZXNCTnpNaWw4STZZR1kzdHQ3V3VPNFF0NUpkTWN2eVpWVkR2eGtIVm5wYmJ6LWc?oc=5",
+                "source": "The Hacker News",
+                "published": "Thu, 09 Oct 2025 07:00:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "How AI malware works and how to defend against it",
+                "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOQlk1ZmNxSnpMRU0zRkFNWjFreXlSenlBZ2dmeE1LQTFpZ014QXAxeFRzb3pmZkMtWDFxTzhQX1BydEROdUhBMDFDNnhZSU03NHZOWDUzUDhyTHI0aFdUdkd4b3V4d0lnVUw5eENnWjFHdlVyQXBuUzJ1cl9KS0d3cTBBc1NVT0E5YzlSR04zaE9pVzFyMVAwX3JVaw?oc=5",
+                "source": "TechTarget",
+                "published": "Wed, 27 Aug 2025 07:00:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Only 20% of ransomware is not powered by AI, but expect that number to drop even further in 2025",
+                "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxObUREOGU3ZkkwNk9sSzEwV0pxdjhOQmpZcTc4cXdPcHZDR2lueXJsSTVOb2FNTmRxaEN5anA3MW9yTi1zZnhzZktpZUUzU2pLaUxqNEdWNU1RTVR5N0VyWTd3ckRsdDdxVEc5dDdLX3huY0t1NkFmTnlSUWhsekFqS3M2djVVNzVZNkRVS2ZVNUR4eTByQ2V0WnB3Tl9mZDNtM2xUbzNoNFh6d3VfZzVjRWphbjU3Ymk2MW9yb3I3cUg3UTRQUl9GdWRRZUFVQQ?oc=5",
+                "source": "TechRadar",
+                "published": "Wed, 10 Sep 2025 07:00:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "The Emerging Danger of AI-Powered Malware",
+                "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxNeGhFNGZvSjh2Y2o5dGxWQ3dPZFB2RWlxanZxUTZSUFNkbGhwUGx4N19HQkY0cWdmUk9IM0s1T1NZdjdrd0gzR0RxSWZmVlFtYTdjU2g5dndLV2hWZHlya2NTdkNGQl8tVll5U3lqU2VqckY1WDZBRDRURWtyb0FBaVJR?oc=5",
+                "source": "ibsintelligence.com",
+                "published": "Wed, 28 May 2025 07:00:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "AI website builder Lovable fuels rise in phishing & scams",
+                "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxOV05QZ3hDOWxYZWF2UDJPX2ZwRHQ5bTFDNG1ueTFaSGxBajh3MklBd2N0Slg4dTdCZVZyMk1sUWEwaVNwbFBDTmFEeDc2dE5TcVMzRXR0NW9UNk1RazdqX3hMMTZLbDhrc0JtRTZyNFgxNGI0N1NYX0twUnBFOWFKa1pyUmZ2RVUxSDJDQkN0YUNGajA4?oc=5",
+                "source": "SecurityBrief Australia",
+                "published": "Tue, 26 Aug 2025 07:00:00 GMT",
+                "priority": "High"
+            }
+        ],
+        "research_futures": [
+            {
+                "title": "AI Safety Evaluations: An Explainer",
+                "link": "https://news.google.com/rss/articles/CBMie0FVX3lxTE9oc2ZBV2dOSGNMdmhhdXhfX1FYSElhbDhqcVp4NENOa05DVnpBYmp2bl9ROGUzTXNVVzFfZDRlcTc2aXZweTkxMmVwZzZJMXNPOHFDMHBTbWJ2Q3I5aXpKcHBFTFo2TldNMWVuN1ZMdkRuYXo3TERUdmpacw?oc=5",
+                "source": "Center for Security and Emerging Technology",
+                "published": "Wed, 28 May 2025 07:00:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Petri: An open-source auditing tool to accelerate AI safety research",
+                "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5MQ1YtdWIxUjVJcDF0cVA1VExPZHREYXV5UDdLTUliemMtMG5aTGVOTlE3S012UDBRMV9mVGtxckwxTmRaQUFTaEVNRktNd1V4RndFZmJhMDlGUTlDSXVzRlplU3RkOU5menM0SUln?oc=5",
+                "source": "Anthropic",
+                "published": "Mon, 06 Oct 2025 07:00:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Findings from a pilot Anthropic\u2013OpenAI alignment evaluation exercise: OpenAI Safety Tests",
+                "link": "https://news.google.com/rss/articles/CBMibEFVX3lxTE5iOXByMEhlT2xaQkdoNGhoSVNKUHpDQVd1Q1BzOGJWVkxic3lvWlNZUHNkR1ZjVXdFVlpEV3haOXFPUXBxX1pjaDhNT1pWZ1JDSThFMXcyN3Jtc2UyM1dONVRVM05kVjBBQmZSQg?oc=5",
+                "source": "OpenAI",
+                "published": "Wed, 27 Aug 2025 07:00:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "AI Safety Report: Top 3 Companies Outpace Rivals In Risk Mitigation",
+                "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOdHVWbjJRS3Z3S2ZKNHJYMmEwMVhJSFQ3MWdXN2lFNzBRNmhqSHAxRGlvdXNaLUpRNVpzaHFiR0ZVdXZYdlBjWXdkLVN6X3pFcjE3QWc4Z2RrRjFkTkt6WlBKdDNHMXo5cTROSFVKRk9HU2ladXd0cl9tYS0zYUk0aklUanZleVU?oc=5",
+                "source": "Quantum Zeitgeist",
+                "published": "Fri, 05 Dec 2025 08:00:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Anthropic Safety Researchers Run Into Trouble When New Model Realizes It\u2019s Being Tested",
+                "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxOcHhSS2FkTDVsOFJjTGhudkxkcFFqeU53aW5EZlRPOW5KalVlVHFrM1pGd0VVeFJEVWJNRUZUdTJxM0dBUkxraDR6NG16cUFPLU9RYXRzNEFqZm94QzZacmpvS1lUdXd2SHp5YzZWMVo0eUh4OEpyTndjc3k1OXp3bndvZw?oc=5",
+                "source": "Futurism",
+                "published": "Thu, 02 Oct 2025 07:00:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Exclusive: Former OpenAI policy chief creates nonprofit institute, calls for independent safety audits of frontier AI models",
+                "link": "https://news.google.com/rss/articles/CBMi3AFBVV95cUxPYm9pQ25aR1BXV04yb3UzVGJBZjVHaTJ2aFdyOHVBQTlrTkZha1JnSFRRVHh4TkpoN0ZBQmVrV2pENGdkVWFWX1BnamNhWlM4RlNnZVJOWC1jelY5NkZlSVZscm9NaXRPaFcya1UzbDYtalF5YTdQZFRld19XQ1hLXzJjNWZzcV9iRWhjZnhMTTJfbUxUNjR2dTdPcXd0NjE2TThNYk9TSWJHWS1fWFRxNHp1YncxUnlIdmdkeUtkN0owSDA4bGQyY0o1YmdNb2FmWE41Vy1fNXd6QzM3?oc=5",
+                "source": "Fortune",
+                "published": "Thu, 15 Jan 2026 08:00:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Illinois information sciences researchers develop AI safety testing methods",
+                "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQaFp3S1hjMUVWcXpKbTJzTU8yNlJmclBVQUVfdkJTdm14VHVMMWhMRzRUN2NSLTRiRW03d2NiNERzNlFNeHJyMnVucDJnMl9SeldONDF6SkVsNjAzRk1aYXp3Uk5IUDJVLTdyYW9sTlVhb2lkQU5LQXVSLVNqNk5kSzZ1aThlMmZvSUFrWjI4UHhULTE4NmVsUE9sWEVBS0JOekVrWQ?oc=5",
+                "source": "Illinois News Bureau",
+                "published": "Tue, 12 Aug 2025 07:00:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Taking a responsible path to AGI",
+                "link": "https://news.google.com/rss/articles/CBMib0FVX3lxTE1YX3d5aWI0dWUyVFh6T25Zc252c0E4YUUydWk4dnZfb3l0ZjBrQkNtbTJpWXNCUy0zLXdpa3gzYWhEcmZsS2YzZVBiazl5aHlvVEMyWU5oTGlBRUlCaGF1RDhvYy1nb3JITndlZnlZYw?oc=5",
+                "source": "deepmind.google",
+                "published": "Wed, 02 Apr 2025 07:00:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Learning from other domains to advance AI evaluation and testing",
+                "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOeUpEY0pzdHlqYkszMTVHaDBfQ0RKVThGeDB3NXJULTF5cmhwN0VyWkNVc3JWaXNBTjhBRXBnaUNIMnNPaGFVelJhdzg4OEJWTmtVQzQydGJBQTktVmRONXM1NnhmeXctN25BcUF2RFc1WXVsa3BtWHlFRjgwZXI2UWloVEtGMUFxVExWdzJHaUdkS0V0WWc1dXNuVVU3bDJGSGR3akxDNFhFSnpsTzJXMg?oc=5",
+                "source": "Microsoft",
+                "published": "Mon, 23 Jun 2025 07:00:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Towards Interactive Evaluations for Interaction Harms in Human-AI Systems",
+                "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPd29yaElWalNpLUNueHpzb05GYVpQRnNXbnYwMk5Mc3dBcjJvdlk2YVU5ZllVQXVIYnRyQl9LdmplMWNrZEtvNmZaUWxWV2czYjExc3ZKTG5pNndZTFJ1WlgtM2xvVUFrS1E3dFF1M2h6X29wTmpWQ05fUDZ2alhXYTA0X19zR055NHpoMTlKZER1OXFNS01ZU3A2amxRRG1teEltc1RUVTN6a1Vw?oc=5",
+                "source": "| Knight First Amendment Institute",
+                "published": "Mon, 23 Jun 2025 07:00:00 GMT",
+                "priority": "High"
+            }
+        ],
+        "media_broad": [
+            {
+                "title": "Black box AI is hiding new risks around data confidence \u2013 Cactus\u2019s Robinson",
+                "link": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQcmM5aHZDMVdJQi1tc19Mdk0tZ3hHZG5JMVg4dGd1VHBaZ25GY2N6QTZreFAzRlBGZVZPX2h1dnpGZGcxYW4zTFlHT1lHZTVBRDFDcnZ5OU51N1E3dnhmVllmcHV5QUVycWo0enlueTFlVHFBc1N6MFlrUkVOSVhnSzRDdzEtVzhRUldXMXhKRlM4dC1Xc0VfRTNGVEtIVDJHalk3WHFlZnZweFluOThKbVBMS0NvUUpONmxGS3lTWTBEVy1VRkE?oc=5",
+                "source": "Global Reinsurance",
+                "published": "Thu, 05 Feb 2026 22:30:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Using AI to Improve Safety: Managing the Legal Risks Alongside the Benefits \u2013 Publications",
+                "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNSGhqdVlJUU9yZUFmdGhXdTFUdVItOV9KMk43bm1HNnM4TFl2Nzk1UEl1Rk5OSU5uZDljMnhqSm1yX1BCTDNGbEVHYkJ0UHVLMTZPQUZjalcxSmZsTnp0VkhrOFFfMlRKbWs3QTdWcVl6YVBTdjYwbHVIMTZRQWRpQ0NhUWdjLU5uSmYtMjhKd01MdVMzb2FTVWRtRkhSQmtTY2ktQ2lBUlJNeFFwNHNLYzFBMUYwdw?oc=5",
+                "source": "Morgan Lewis",
+                "published": "Thu, 05 Feb 2026 18:58:30 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Lockton Re warns that AI is reshaping insured risks",
+                "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPaUdmMEsxSnBjYTlRbnVkc3F2S1JVSDlDYllDeGY0NDNJMlEyb0RQU2hham9ZekRlQjF2dUprT3g1a3BZdXJYNkZYZTVPYm5TcmlJWERLakZoay1oMnk5dVVMcDlRdm81SERRTXpweUZfdXFVV3ViX3Rja0xZajdtVll2TXVXQ1VMTmgtTVRLUWpiZw?oc=5",
+                "source": "Captive International",
+                "published": "Thu, 05 Feb 2026 13:37:10 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Can AI safety frameworks keep pace with frontier model risks?",
+                "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPTW04X29jSUNoN3pDZ3dmY09mbEJick1OX0hGdXhUaTRaNmlzNnhXeTFpSnRuaEdTaFZudjk4cDkyWWwtVlhHdmpjRnktSmI0RFd2dGZRbFlnaDJibnl2emNPOTRObjhhN2tqWlhtaS1iaE4zbzBobmxRSzNmQmhDU0N5NkR5aXpiS0k3Y1R5dl8td2dFNjhZ?oc=5",
+                "source": "Lexology",
+                "published": "Thu, 05 Feb 2026 17:59:52 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Study warns AI risks in schools may outweigh benefits for students",
+                "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxOc01hME10Tk5OZXdRQkdkaFNXVVVVSFp1TnNhMEowa2JZR3E1TzB4TlBjbklTNGZySzZRNjF4LUtFSmpvTUo2Z29UVE4yM1VzUVBGLThwUG83UGJ6UHRaSUJOSjZOaEFxbUJJbzB0MzFGTEg2Vy1ETUlLRk5rQnJEd3hBQzRzRkUxOVRETGJIVXc3T2h4OXY00gGrAUFVX3lxTE1kZUQxcktNQTNjcUJka1R3emt1UHVMbHZ0VnhXdTVLWXZfYUFEeFZvYjVVZzlPWVFPNVZlbjl1TC1nV3B4S0I3M0ljUFlIWjFpdl9nZ0JxWHBfeUZIcFlkRzFLR09HZHR2UmdHbnM5dXI4bVo4Y2IwZENxYXotYVZrU1R2SlAzUk5CWWdWWHhETmZHZU10dzJWRy1FZ0U2YWtubmdXQWZVR19uQQ?oc=5",
+                "source": "WILX",
+                "published": "Fri, 06 Feb 2026 04:06:00 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Current approach to AI in financial services risks serious harm to consumers and wider system",
+                "link": "https://news.google.com/rss/articles/CBMiggJBVV95cUxPdERJUFVwU0xGWGhUemJON3pHZGtva0VGZFUzNmdVOHV6Q1BOM2w1Y09mM00zREhWTjZfcGRaU1hvQk5yZWFBMm1TenhBUE05eFBkZmt6N3p5bzYtcU9JQkJKekFrWWdXQ1gyYU0zaDlzSWxGSlZocFoxeW9ZZllSdF91UERaaXpldGhOZElQeTJJY2VqaGFwVDRLNTQyUHc2SDFONWpoRjlwTmdGNmc3ZjY3ZzVuaFJDZTRZUHljcGRMd0lpakpWOTg0dko4dTB5UVpUZS1WTllSakREVld0YmhyemVYbkxRYVEwMGs5dlI1bFZQazN0a3I5U1NPTGNFNXc?oc=5",
+                "source": "UK Parliament",
+                "published": "Tue, 20 Jan 2026 08:00:00 GMT",
+                "priority": "High"
+            },
+            {
+                "title": "Agentic AI Site 'Moltbook' Is Riddled With Security Risks",
+                "link": "https://news.google.com/rss/articles/CBMifkFVX3lxTFBnb1pBOXoyYTAxNFVGT1pBaUgzWUc3SHdmY3M0QUs3X3QzOWJ4UDA2bXc1cjV5TFFMdWUzR1VsR1ozN0JTMl9vY0NLbUtsY1M1RXFsRUtlcHVudk5CVlFTdUlBRGdnd3pZc3JGaWl1Y0oyVmg0Q1F6WkpFUmtYdw?oc=5",
+                "source": "Dark Reading",
+                "published": "Fri, 06 Feb 2026 04:18:45 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Shares of private capital giants sink on worries AI risks hitting growth",
+                "link": "https://news.google.com/rss/articles/CBMicEFVX3lxTE1tWFRpeFlCTzhYS3B1bl9ZTjJzUnVqSjFIWmhXN0s5VWJMUWhVZi1jZG5iU3hsc1lMeDgtSGNOdDVKbmRubHdETGdGV19fYWhNcHN3RkJwWm5ZRHktVnhTT1R2a2VSelJCWmJ4WXdfNjc?oc=5",
+                "source": "Financial Times",
+                "published": "Thu, 05 Feb 2026 11:05:05 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "Cyber and AI as major business risks",
+                "link": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxQQWtSTWVjTnBDZFhzeEU1R0xKN1J2a2hvVTB2NmkzRVFyUTc2VkRlY0NqV2NHdlNFZkZueFRUeExsSWhOb0NXOWdraGMyYXBvRDJqRFVxSGNybkFjdlQ0X2hsdy00WlhuSUIxcm4xcVlRb2hkTnYyS3dNa0pfaUNSSEtpWXVLU1lEM3VpTUxKb2NsNnQxXzlhWldKVjJaV04yVHl1cFI1QW5HYldadGlCUGc2dm5ZNm52QmQ2TF9KMk1jVldhLVhnTg?oc=5",
+                "source": "Allianz.com",
+                "published": "Tue, 03 Feb 2026 08:01:15 GMT",
+                "priority": "Medium"
+            },
+            {
+                "title": "1.5 million AI agents are at risk of going rogue",
+                "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOOThYN2Z5clZtR3JFR0I0dkl6VEI2ZXVzN2ozRXNNM2Vxb0J3RzZXSUFXQk5vdDRFNmxtbVVfWEVpVjZ5azVkZjFaTjdGLVR2NmxoZXhtMkEwZVhlVU5DOTdOYVJoblFhV3FzYkx6N25Xb2hsZkcwMGFHTEJWS0N0ZnprX0NsQ2pjTW5QSFc5cDRKd2c3aDVpWHhRTQ?oc=5",
+                "source": "csoonline.com",
+                "published": "Thu, 05 Feb 2026 02:44:18 GMT",
+                "priority": "Medium"
             }
         ]
     }
