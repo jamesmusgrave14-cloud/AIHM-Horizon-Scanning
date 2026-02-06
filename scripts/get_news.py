@@ -3,8 +3,6 @@ import json
 import os
 from datetime import datetime
 
-# Define the search queries for each section
-# These use Google News RSS format
 queries = {
     "dev_releases": "https://news.google.com/rss/search?q=OpenAI+OR+Anthropic+OR+Mistral+AI+model+release&hl=en-GB&gl=GB&ceid=GB:en",
     "watchdogs": "https://news.google.com/rss/search?q=AI+Safety+Institute+OR+Ofcom+AI+report&hl=en-GB&gl=GB&ceid=GB:en",
@@ -16,46 +14,34 @@ queries = {
     "media_broad": "https://news.google.com/rss/search?q=artificial+intelligence+risks&hl=en-GB&gl=GB&ceid=GB:en"
 }
 
-def get_priority(title):
-    title = title.lower()
-    high_risk = ["harm", "scam", "fraud", "victim", "exploit", "breach", "csea"]
-    if any(word in title for word in high_risk):
-        return "High"
-    return "Medium"
-
 def fetch_intelligence():
-    print("Starting Intelligence Scan...")
     report = {
-        "last_updated": datetime.now().strftime("%d %b %Y, %H:%M"),
+        "last_updated": datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
         "sections": {}
     }
 
     for key, url in queries.items():
-        print(f"Fetching {key}...")
         feed = feedparser.parse(url)
         articles = []
         
-        # Take the top 10 articles per section
-        for entry in feed.entries[:10]:
+        # Increased to 50 items so the user has a pool to filter from
+        for entry in feed.entries[:50]:
+            # Convert published date to ISO format for easier sorting in JS
+            dt = datetime(*entry.published_parsed[:6]) if hasattr(entry, 'published_parsed') else datetime.now()
+            
             articles.append({
-                "title": entry.title.rsplit(' - ', 1)[0], # Removes the source from the title string
+                "title": entry.title.rsplit(' - ', 1)[0],
                 "link": entry.link,
                 "source": entry.source.title if hasattr(entry, 'source') else "Intelligence Feed",
-                "published": entry.published if hasattr(entry, 'published') else "",
-                "priority": get_priority(entry.title)
+                "date": dt.isoformat(),
+                "priority": "High" if any(x in entry.title.lower() for x in ["harm", "scam", "fraud", "victim"]) else "Medium"
             })
         
         report["sections"][key] = articles
-        print(f"Found {len(articles)} items for {key}")
 
-    # Ensure the public directory exists
     os.makedirs('public', exist_ok=True)
-    
-    # Save the file
     with open('public/news_data.json', 'w', encoding='utf-8') as f:
         json.dump(report, f, indent=4)
-    
-    print("Scan Complete. File saved to public/news_data.json")
 
 if __name__ == "__main__":
     fetch_intelligence()
