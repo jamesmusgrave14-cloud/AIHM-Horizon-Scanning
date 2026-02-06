@@ -5,107 +5,76 @@ import requests
 from datetime import datetime
 import time
 
-# 1. Targeted Queries for the Risk Dashboard
+# Defined queries mapped to your new Tab structure
 queries = {
-    "csam_vawg": "https://news.google.com/rss/search?q=AI+CSAM+OR+NCII+OR+%22simulated+undressing%22+OR+%22deepfake+abuse%22+OR+VAWG+online+safety&hl=en-GB&gl=GB&ceid=GB:en",
-    "radicalisation": "https://news.google.com/rss/search?q=AI+radicalisation+OR+%22extremist+narrative%22+OR+%22accelerationalist%22+OR+%22terrorist+recruitment%22+AI&hl=en-GB&gl=GB&ceid=GB:en",
-    "fraud": "https://news.google.com/rss/search?q=AI+%22voice+cloning%22+fraud+OR+deepfake+scam+OR+vishing+OR+%22synthetic+identity%22&hl=en-GB&gl=GB&ceid=GB:en",
-    "cyber_attacks": "https://news.google.com/rss/search?q=AI+malware+OR+%22automated+phishing%22+OR+%22LLM+exploit%22+OR+jailbreak+OR+%22data+poisoning%22&hl=en-GB&gl=GB&ceid=GB:en",
-    "dev_releases": "https://news.google.com/rss/search?q=OpenAI+OR+Anthropic+OR+Mistral+AI+model+release&hl=en-GB&gl=GB&ceid=GB:en",
-    "watchdogs": "https://news.google.com/rss/search?q=UK+AI+Safety+Institute+OR+Ofcom+AI+report&hl=en-GB&gl=GB&ceid=GB:en"
+    "harms": "https://news.google.com/rss/search?q=(AI+CSAM+OR+NCII+OR+fraud+OR+radicalisation+OR+jailbreak+OR+vawg)+-stock+-investment&hl=en-GB&gl=GB&ceid=GB:en",
+    "models": "https://news.google.com/rss/search?q=(OpenAI+OR+Anthropic+OR+Mistral+OR+Llama+OR+DeepSeek)+release+OR+model+card+OR+technical+report&hl=en-GB&gl=GB&ceid=GB:en",
+    "watchdogs": "https://news.google.com/rss/search?q=AI+Safety+Institute+OR+Ofcom+AI+regulation&hl=en-GB&gl=GB&ceid=GB:en"
 }
 
-# 2. Advanced Risk Detection Engine
 def get_risk_intel(title):
     title = title.lower()
-    risk_profile = {"priority": "Medium", "tag": None}
-    
-    # Critical Risk Mapping (2026 Focus)
     mapping = {
-        "CSAM/NCII": ["csam", "ncii", "undressing", "nudify", "abuse", "non-consensual", "vawg", "victim"],
-        "FRAUD": ["scam", "fraud", "cloning", "vishing", "synthetic", "impersonation", "bank"],
-        "RADICAL": ["radical", "extremist", "terror", "accelerationalist", "incitement", "propaganda", "isis"],
-        "CYBER": ["jailbreak", "exploit", "malware", "phishing", "injection", "breach", "poisoning"]
+        "CSAM/NCII": ["csam", "ncii", "undressing", "abuse", "vawg"],
+        "FRAUD": ["scam", "fraud", "cloning", "vishing", "impersonation"],
+        "RADICAL": ["radical", "extremist", "terror", "propaganda"],
+        "CYBER": ["jailbreak", "exploit", "malware", "phishing", "breach"]
     }
-
     for tag, keywords in mapping.items():
         if any(k in title for k in keywords):
-            risk_profile["priority"] = "High"
-            risk_profile["tag"] = tag
-            break
-            
-    return risk_profile
+            return {"priority": "High", "tag": tag}
+    return {"priority": "Medium", "tag": "General"}
 
-# 3. Official AI Incident Database Connection (Direct API)
-def fetch_aiid_direct():
-    print("Connecting to AI Incident Database...")
+def fetch_aiid():
     url = "https://incidentdatabase.ai/api/graphql"
-    query = "{ incidents(limit: 15, order: {date: DESC}) { incident_id title date } }"
+    query = "{ incidents(limit: 20, order: {date: DESC}) { incident_id title date description } }"
     try:
         res = requests.post(url, json={'query': query}, timeout=10)
-        if res.status_code == 200:
-            data = res.json().get('data', {}).get('incidents', [])
-            return [{
-                "title": i['title'],
-                "link": f"https://incidentdatabase.ai/cite/{i['incident_id']}",
-                "source": "AIID Official",
-                "date": f"{i['date']}T00:00:00Z",
-                "risk": get_risk_intel(i['title'])
-            } for i in data]
+        return [{
+            "title": i['title'],
+            "link": f"https://incidentdatabase.ai/cite/{i['incident_id']}",
+            "source": "AIID Official",
+            "date": f"{i['date']}T00:00:00Z",
+            "risk": get_risk_intel(i['title'])
+        } for i in res.json()['data']['incidents']]
     except: return []
 
-# 4. Forum/Social Pulse Scanner (Reddit JSON)
-def fetch_social():
-    print("Scanning social frequencies...")
-    subs = ["netsec", "artificial", "MachineLearning", "openai"]
+def fetch_reddit():
+    subs = ["netsec", "artificial", "openai"]
     signals = []
     headers = {'User-Agent': 'Mozilla/5.0 AI-Horizon-Bot/1.0'}
     for sub in subs:
         try:
-            url = f"https://www.reddit.com/r/{sub}/new.json?limit=10"
-            res = requests.get(url, headers=headers, timeout=10)
-            if res.status_code == 200:
-                for post in res.json()['data']['children']:
-                    data = post['data']
-                    risk = get_risk_intel(data['title'])
-                    # We only include social chatter if it matches a risk keyword
-                    if risk['priority'] == "High":
-                        signals.append({
-                            "title": f"[{sub.upper()}] {data['title']}",
-                            "link": f"https://reddit.com{data['permalink']}",
-                            "source": "Reddit Chatter",
-                            "date": datetime.fromtimestamp(data['created_utc']).isoformat() + "Z",
-                            "risk": risk
-                        })
+            res = requests.get(f"https://www.reddit.com/r/{sub}/new.json?limit=10", headers=headers, timeout=10)
+            for post in res.json()['data']['children']:
+                data = post['data']
+                signals.append({
+                    "title": f"[{sub.upper()}] {data['title']}",
+                    "link": f"https://reddit.com{data['permalink']}",
+                    "source": "Reddit",
+                    "date": datetime.fromtimestamp(data['created_utc']).isoformat() + "Z",
+                    "risk": get_risk_intel(data['title'])
+                })
         except: continue
     return signals
 
 def fetch_intelligence():
-    print("Initiating Global Intelligence Scan...")
     report = {"last_updated": datetime.utcnow().isoformat() + "Z", "sections": {}}
-    
-    # Merge all feeds
-    report["sections"]["ai_incidents"] = fetch_aiid_direct()
-    report["sections"]["social_signals"] = fetch_social()
+    report["sections"]["aiid"] = fetch_aiid()
+    report["sections"]["forums"] = fetch_reddit()
     
     for key, url in queries.items():
         feed = feedparser.parse(url)
-        articles = []
-        for entry in feed.entries[:30]:
-            dt = datetime(*entry.published_parsed[:6]) if hasattr(entry, 'published_parsed') else datetime.utcnow()
-            articles.append({
-                "title": entry.title.rsplit(' - ', 1)[0],
-                "link": entry.link,
-                "source": entry.source.title if hasattr(entry, 'source') else "News",
-                "date": dt.isoformat() + "Z",
-                "risk": get_risk_intel(entry.title)
-            })
-        report["sections"][key] = articles
+        report["sections"][key] = [{
+            "title": e.title.rsplit(' - ', 1)[0],
+            "link": e.link,
+            "source": e.source.title if hasattr(e, 'source') else "News",
+            "date": (datetime(*e.published_parsed[:6]) if hasattr(e, 'published_parsed') else datetime.utcnow()).isoformat() + "Z",
+            "risk": get_risk_intel(e.title)
+        } for e in feed.entries[:40]]
 
-    os.makedirs('public', exist_ok=True)
     with open('public/news_data.json', 'w', encoding='utf-8') as f:
         json.dump(report, f, indent=4)
-    print("Intelligence stored in public/news_data.json")
 
 if __name__ == "__main__":
     fetch_intelligence()
