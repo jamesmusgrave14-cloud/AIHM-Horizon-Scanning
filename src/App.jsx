@@ -22,7 +22,7 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [limit, setLimit] = useState(10);
-  const [sortOrder, setSortOrder] = useState("newest"); // "newest" or "oldest"
+  const [sortOrder, setSortOrder] = useState("newest");
 
   const syncData = useCallback(async () => {
     setLoading(true);
@@ -39,6 +39,13 @@ export default function App() {
 
   useEffect(() => { syncData(); }, [syncData]);
 
+  // Safe Date Formatter
+  const formatDisplayDate = (dateStr) => {
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return "Recently";
+    return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+  };
+
   const processItems = (items) => {
     let filtered = [...(items || [])];
     if (search) {
@@ -46,8 +53,8 @@ export default function App() {
     }
     
     filtered.sort((a, b) => {
-      const dateA = new Date(a.date);
-      const dateB = new Date(b.date);
+      const dateA = new Date(a.date).getTime() || 0;
+      const dateB = new Date(b.date).getTime() || 0;
       return sortOrder === "newest" ? dateB - dateA : dateA - dateB;
     });
 
@@ -55,15 +62,14 @@ export default function App() {
   };
 
   if (loading) return (
-    <div className="flex flex-col items-center justify-center h-screen bg-slate-50 font-sans text-slate-500">
+    <div className="flex flex-col items-center justify-center h-screen bg-slate-50 font-sans text-slate-500 text-center px-4">
       <RefreshCw className="animate-spin mb-4" size={32} />
-      <p className="font-bold tracking-widest uppercase text-xs">Loading Intelligence</p>
+      <p className="font-bold tracking-widest uppercase text-xs">Synchronizing Intelligence</p>
     </div>
   );
 
   return (
     <div className="min-h-screen bg-[#f8fafc] text-slate-900 font-sans selection:bg-teal-100">
-      {/* TOP NAV */}
       <nav className="sticky top-0 z-50 bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between shadow-sm">
         <div className="flex items-center gap-2">
           <div className="bg-slate-900 text-white p-1 rounded">
@@ -72,8 +78,10 @@ export default function App() {
           <h1 className="font-black text-lg tracking-tighter uppercase">AIHM <span className="text-teal-600">Horizon</span></h1>
         </div>
         
-        <div className="flex items-center gap-4 text-xs font-bold text-slate-500">
-          <span className="flex items-center gap-1"><Clock size={14}/> Updated: {new Date(lastScan).toLocaleString()}</span>
+        <div className="flex items-center gap-4 text-[10px] md:text-xs font-bold text-slate-500">
+          <span className="flex items-center gap-1">
+            <Clock size={14}/> {lastScan ? new Date(lastScan).toLocaleString() : "Syncing..."}
+          </span>
           <button onClick={syncData} className="p-2 hover:bg-slate-100 rounded-full transition">
             <RefreshCw size={18} />
           </button>
@@ -81,8 +89,6 @@ export default function App() {
       </nav>
 
       <div className="max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-0">
-        
-        {/* SIDEBAR CONTROLS */}
         <aside className="lg:col-span-3 border-r border-slate-200 h-[calc(100vh-57px)] sticky top-[57px] bg-white p-6 hidden lg:block">
           <div className="space-y-8">
             <section>
@@ -117,7 +123,6 @@ export default function App() {
           </div>
         </aside>
 
-        {/* FEED GRID */}
         <main className="lg:col-span-9 p-6 lg:p-10 h-[calc(100vh-57px)] overflow-y-auto bg-[#f1f5f9]">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {SECTIONS.map(s => {
@@ -129,18 +134,18 @@ export default function App() {
                     <span className="text-[10px] font-bold bg-slate-100 px-2 py-0.5 rounded text-slate-500">{items.length}</span>
                   </div>
                   
-                  <div className="divide-y divide-slate-100 overflow-y-auto max-h-[400px]">
+                  <div className="divide-y divide-slate-100">
                     {items.map((item, i) => (
                       <div key={i} className="p-4 hover:bg-slate-50 transition group">
                         <div className="flex justify-between items-start gap-3">
-                          <a href={item.link} target="_blank" className="text-sm font-bold text-slate-800 group-hover:text-teal-700 leading-snug">
+                          <a href={item.link} target="_blank" rel="noreferrer" className="text-sm font-bold text-slate-800 group-hover:text-teal-700 leading-snug">
                             {item.title}
                           </a>
                         </div>
                         <div className="flex items-center gap-3 mt-3">
-                          <span className="text-[10px] font-black text-slate-400 uppercase tracking-tighter truncate max-w-[100px]">{item.source}</span>
+                          <span className="text-[10px] font-black text-slate-400 uppercase tracking-tighter truncate max-w-[120px]">{item.source}</span>
                           <span className="text-[10px] font-medium text-slate-400 flex items-center gap-1">
-                            <Calendar size={10}/> {new Date(item.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+                            <Calendar size={10}/> {formatDisplayDate(item.date)}
                           </span>
                           {item.priority === "High" && (
                             <span className="ml-auto text-[8px] font-black bg-red-100 text-red-600 px-1.5 py-0.5 rounded uppercase">High Risk</span>
