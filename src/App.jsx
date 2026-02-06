@@ -11,17 +11,16 @@ import {
   Eye,
   ChevronDown,
   ChevronRight,
-  SlidersHorizontal,
-  Globe,
   LayoutList,
   List,
+  Globe,
+  SlidersHorizontal,
   AlertCircle,
   Plus,
   Trash2,
 } from "lucide-react";
 
 const STORAGE_KEY = "aihm_monitor_state_v5";
-const DEFAULT_RSS_FEEDS = ["https://foresightprojects.blog.gov.uk/feed/"];
 
 const GROUPS = [
   { key: "all", label: "All" },
@@ -31,763 +30,183 @@ const GROUPS = [
   { key: "harms", label: "Operational harms" },
   { key: "research", label: "Academic & futures" },
   { key: "media", label: "Media & broad" },
-  { key: "rss", label: "RSS feeds" },
 ];
 
 const SECTIONS = [
-  {
-    key: "dev_releases",
-    group: "dev",
-    title: "Developer releases & model cards",
-    subtitle: "Model/system cards, releases, weights, tooling (high recall).",
-    tone: "blue",
-    query:
-      '(OpenAI OR Anthropic OR DeepMind OR Google OR "xAI" OR Grok OR Meta OR Llama OR Mistral) AND (release OR launched OR update OR model OR "model card" OR "system card" OR weights)',
-  },
-  {
-    key: "watchdogs",
-    group: "watchdogs",
-    title: "Watchdogs & safety monitors",
-    subtitle: "AISI/CETaS/Ada/Oxford/IWF + online safety outputs.",
-    tone: "maroon",
-    query:
-      '(AISI OR "AI Security Institute" OR CETaS OR "Ada Lovelace" OR "Oxford Internet Institute" OR IWF OR Ofcom) AND (report OR briefing OR analysis OR consultation OR guidance)',
-  },
-  {
-    key: "gov_signals",
-    group: "gov",
-    title: "Government / HMG signals",
-    subtitle: "GO‑Science, Ofcom, DSIT, NCSC, NCA (open reporting).",
-    tone: "maroon",
-    query:
-      '(Ofcom OR DSIT OR "Government Office for Science" OR "GO-Science" OR NCSC OR NCA OR "Home Office") AND (AI OR "artificial intelligence" OR deepfake OR "online safety")',
-  },
-  {
-    key: "harms_csea",
-    group: "harms",
-    title: "CSEA / IBSA signals",
-    subtitle: "Nudification, sextortion, NCII, child safety harms.",
-    tone: "red",
-    query:
-      '(AI OR "artificial intelligence" OR deepfake) AND (nudify OR nudification OR sextortion OR grooming OR "child sexual abuse" OR CSAM OR CSEA OR "image-based abuse")',
-  },
-  {
-    key: "harms_fraud",
-    group: "harms",
-    title: "Fraud & impersonation",
-    subtitle: "Voice cloning, scams, impersonation, synthetic identity.",
-    tone: "red",
-    query:
-      '(AI OR "artificial intelligence" OR deepfake OR "voice cloning") AND (scam OR fraud OR impersonation OR "account takeover" OR BEC OR "synthetic identity")',
-  },
-  {
-    key: "harms_cyber",
-    group: "harms",
-    title: "Cybercrime enablement",
-    subtitle: "Phishing, malware, ransomware — AI-enabled where mentioned.",
-    tone: "red",
-    query:
-      '(phishing OR malware OR ransomware OR "social engineering") AND (AI OR "artificial intelligence" OR deepfake)',
-  },
-  {
-    key: "research_futures",
-    group: "research",
-    title: "Academic & futures signals",
-    subtitle: "Research/think-tank outputs (high recall).",
-    tone: "blue",
-    query:
-      '(AI OR "artificial intelligence") AND (paper OR study OR report OR preprint OR evaluation OR risk OR safety)',
-  },
-  {
-    key: "media_broad",
-    group: "media",
-    title: "Broad media capture (weak signals)",
-    subtitle: "Guaranteed baseline: AI + harms keywords.",
-    tone: "blue",
-    query:
-      '(AI OR "artificial intelligence") AND (deepfake OR fraud OR scam OR sextortion OR grooming OR ransomware OR phishing OR nudify OR Ofcom)',
-  },
+  { key: "dev_releases", group: "dev", title: "Developer releases & model cards", subtitle: "Model/system cards, releases, weights.", tone: "blue" },
+  { key: "watchdogs", group: "watchdogs", title: "Watchdogs & safety monitors", subtitle: "AISI/CETaS/Ada/Oxford/IWF outputs.", tone: "maroon" },
+  { key: "gov_signals", group: "gov", title: "Government / HMG signals", subtitle: "GO‑Science, Ofcom, DSIT, NCSC, NCA.", tone: "maroon" },
+  { key: "harms_csea", group: "harms", title: "CSEA / IBSA signals", subtitle: "Nudification, sextortion, child safety harms.", tone: "red" },
+  { key: "harms_fraud", group: "harms", title: "Fraud & impersonation", subtitle: "Voice cloning, scams, synthetic identity.", tone: "red" },
+  { key: "harms_cyber", group: "harms", title: "Cybercrime enablement", subtitle: "Phishing, malware, ransomware.", tone: "red" },
+  { key: "research_futures", group: "research", title: "Academic & futures signals", subtitle: "Research/think-tank outputs.", tone: "blue" },
+  { key: "media_broad", group: "media", title: "Broad media capture", subtitle: "Guaranteed baseline: AI + harms keywords.", tone: "blue" },
 ];
 
-const RSS_SECTION = {
-  key: "rss_updates",
-  group: "rss",
-  title: "RSS: Updates & briefs",
-  subtitle: "Publisher updates (stable; not headline-search volatility).",
-  tone: "maroon",
+// Helper Functions
+const fmtDate = (d) => (d ? new Date(d).toISOString().slice(0, 10) : "—");
+const Pill = ({ children }) => (
+  <span className="inline-flex items-center px-2 py-0.5 rounded-full border text-[11px] bg-white text-slate-700 border-slate-200">{children}</span>
+);
+const PriorityPill = ({ value }) => {
+  const cls = value === "High" ? "bg-red-100 text-red-800 border-red-200" : value === "Medium" ? "bg-amber-100 text-amber-900 border-amber-200" : "bg-emerald-100 text-emerald-900 border-emerald-200";
+  return <span className={`inline-flex items-center px-2 py-0.5 rounded-full border text-[11px] ${cls}`}>{value} priority</span>;
 };
 
-const DATE_WINDOWS = [
-  { label: "7 days", days: 7 },
-  { label: "30 days", days: 30 },
-  { label: "90 days", days: 90 },
-  { label: "All time", days: null },
-];
-
-const HIGH_TERMS = ["csam", "csea", "nudification", "sextortion", "ransomware", "account takeover", "bec", "liveness bypass"];
-const MED_TERMS = ["deepfake", "voice cloning", "phishing", "malware", "model card", "system card", "open weights", "watermark", "provenance", "c2pa"];
-
-function toDate(d) {
-  const dt = d ? new Date(d) : null;
-  return dt && !Number.isNaN(dt.getTime()) ? dt : null;
-}
-function fmtDate(iso) {
-  const dt = toDate(iso);
-  if (!dt) return "—";
-  return dt.toISOString().slice(0, 10);
-}
-function withinWindow(iso, days) {
-  if (!days) return true;
-  const dt = toDate(iso);
-  if (!dt) return true;
-  const cutoff = new Date();
-  cutoff.setDate(cutoff.getDate() - days);
-  return dt >= cutoff;
-}
-function computePriority(title, description, source) {
-  const t = `${title || ""} ${description || ""} ${source || ""}`.toLowerCase();
-  if (HIGH_TERMS.some((w) => t.includes(w))) return "High";
-  if (MED_TERMS.some((w) => t.includes(w))) return "Medium";
-  return "Low";
-}
-function computeTags(title, description, source) {
-  const t = `${title || ""} ${description || ""} ${source || ""}`.toLowerCase();
-  const tags = [];
-  if (t.includes("model card") || t.includes("system card") || t.includes("open weights")) tags.push({ label: "Capability", key: "capability" });
-  if (t.includes("ofcom") || t.includes("investigation") || t.includes("fined") || t.includes("charged")) tags.push({ label: "Enforcement", key: "enforcement" });
-  if (t.includes("a i s i") || t.includes("ai safety institute") || t.includes("ai security institute") || t.includes("cetas") || t.includes("report") || t.includes("study")) tags.push({ label: "Research", key: "research" });
-  return tags;
-}
-function toneStyles(tone) {
-  if (tone === "maroon") return { bar: "bg-teal-700", ring: "ring-teal-700/10" };
-  if (tone === "blue") return { bar: "bg-teal-600", ring: "ring-teal-600/10" };
-  return { bar: "bg-teal-800", ring: "ring-teal-800/10" };
-}
-function Pill({ children }) {
-  return (
-    <span className="inline-flex items-center px-2 py-0.5 rounded-full border text-[11px] bg-white text-slate-700 border-slate-200">
-      {children}
-    </span>
-  );
-}
-function PriorityPill({ value }) {
-  const cls =
-    value === "High"
-      ? "bg-red-100 text-red-800 border-red-200"
-      : value === "Medium"
-      ? "bg-amber-100 text-amber-900 border-amber-200"
-      : "bg-emerald-100 text-emerald-900 border-emerald-200";
-  return <span className={`inline-flex items-center px-2 py-0.5 rounded-full border text-[11px] ${cls}`}>{value} priority</span>;
-}
-function SkeletonRow() {
-  return (
-    <li className="py-3 border-b border-slate-200 last:border-b-0">
-      <div className="animate-pulse space-y-2">
-        <div className="h-4 bg-slate-200 rounded w-3/4" />
-        <div className="h-3 bg-slate-100 rounded w-full" />
-        <div className="h-3 bg-slate-100 rounded w-5/6" />
-      </div>
-    </li>
-  );
-}
-
-// GNews q max 200 chars: split on OR to avoid truncation errors
-function splitQuery(q, maxLen = 200) {
-  const s = (q || "").trim();
-  if (s.length <= maxLen) return [s];
-  const parts = s.split(/\s+OR\s+/i).map((x) => x.trim()).filter(Boolean);
-  const out = [];
-  let cur = "";
-  for (const p of parts) {
-    const candidate = cur ? `${cur} OR ${p}` : p;
-    if (candidate.length <= maxLen) cur = candidate;
-    else {
-      if (cur) out.push(cur);
-      cur = p.length <= maxLen ? p : p.slice(0, maxLen);
-    }
-  }
-  if (cur) out.push(cur);
-  return out.length ? out : [s.slice(0, maxLen)];
-}
-
-function loadState() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : null;
-  } catch {
-    return null;
-  }
-}
-function saveState(state) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  } catch {}
-}
-
 export default function App() {
-  const allSections = useMemo(() => [...SECTIONS, RSS_SECTION], []);
-
+  const [data, setData] = useState({});
+  const [lastScan, setLastScan] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [priority, setPriority] = useState("All");
-  const [windowOpt, setWindowOpt] = useState(DATE_WINDOWS[2]);
-  const [maxPerSection, setMaxPerSection] = useState(10);
-  const [focus, setFocus] = useState("All");
   const [group, setGroup] = useState("all");
-  const [ukOnly, setUkOnly] = useState(false);
-  const [fallbackBroad, setFallbackBroad] = useState(true);
   const [viewMode, setViewMode] = useState("comfortable");
+  const [pinned, setPinned] = useState(new Set());
+  const [hidden, setHidden] = useState(new Set());
+  const [collapsed, setCollapsed] = useState({});
 
-  const [enabled, setEnabled] = useState(() => Object.fromEntries(allSections.map((s) => [s.key, true])));
-  const [collapsed, setCollapsed] = useState(() => Object.fromEntries(allSections.map((s) => [s.key, false])));
-
-  const [data, setData] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [loadingSections, setLoadingSections] = useState({});
-  const [errors, setErrors] = useState({});
-  const [note, setNote] = useState("");
-  const [lastScan, setLastScan] = useState(null);
-
-  const [pinned, setPinned] = useState(() => new Set());
-  const [hidden, setHidden] = useState(() => new Set());
-
-  const [diag, setDiag] = useState(() =>
-    Object.fromEntries(allSections.map((s) => [s.key, { url: "", rawCount: 0, err: "" }]))
-  );
-
-  const [rssFeeds, setRssFeeds] = useState(() => DEFAULT_RSS_FEEDS);
-  const [rssInput, setRssInput] = useState("");
-
-  const today = useMemo(() => new Date().toISOString().split("T")[0], []);
-  const listClass = viewMode === "compact" ? "py-2" : "py-3";
-
-  useEffect(() => {
-    const st = loadState();
-    if (!st) return;
-    if (st.data) setData(st.data);
-    if (st.lastScan) setLastScan(st.lastScan);
-    if (Array.isArray(st.rssFeeds)) setRssFeeds(st.rssFeeds);
-  }, []);
-
-  useEffect(() => {
-    saveState({ data, lastScan, rssFeeds });
-  }, [data, lastScan, rssFeeds]);
-
-  const visibleSections = useMemo(() => {
-    const base = allSections.filter((s) => enabled[s.key]);
-    return group === "all" ? base : base.filter((s) => s.group === group);
-  }, [allSections, enabled, group]);
-
-  const togglePinned = (key) => {
-    setPinned((prev) => {
-      const next = new Set(prev);
-      next.has(key) ? next.delete(key) : next.add(key);
-      return next;
-    });
-  };
-
-  const toggleHidden = (key) => {
-    setHidden((prev) => {
-      const next = new Set(prev);
-      next.has(key) ? next.delete(key) : next.add(key);
-      return next;
-    });
-  };
-
-  const resetFilters = () => {
-    setSearch("");
-    setPriority("All");
-    setFocus("All");
-    setWindowOpt(DATE_WINDOWS[2]);
-    setUkOnly(false);
-    setFallbackBroad(true);
-    setGroup("all");
-  };
-
-  function mergeByUrl(existing = [], incoming = []) {
-    const map = new Map();
-    for (const it of existing) {
-      const u = it.url || it.id || "";
-      if (u) map.set(u, it);
-    }
-    for (const it of incoming) {
-      const u = it.url || it.id || "";
-      if (u && !map.has(u)) map.set(u, it);
-    }
-    const merged = [...map.values()];
-    merged.sort((a, b) => (Date.parse(b.publishedAt || "") || 0) - (Date.parse(a.publishedAt || "") || 0));
-    return merged;
-  }
-
-  const applyFilters = useCallback(
-    (items) => {
-      let out = [...(items || [])];
-
-      out = out
-        .map((it) => {
-          const source = it.source?.name || it.source || it.sourceName || "Unknown";
-          const publishedAt = it.publishedAt || it.date || null;
-          const p = it.priority || computePriority(it.title, it.description, source);
-          const tags = it.tags || computeTags(it.title, it.description, source);
-          return { ...it, source, publishedAt, priority: p, tags };
-        })
-        .filter((it) => withinWindow(it.publishedAt, windowOpt.days));
-
-      if (priority !== "All") out = out.filter((it) => it.priority === priority);
-      if (focus !== "All") out = out.filter((it) => (it.tags || []).some((t) => t.key === focus));
-
-      const q = search.trim().toLowerCase();
-      if (q) {
-        out = out.filter((it) => {
-          const text = `${it.title || ""} ${it.description || ""} ${it.source || ""}`.toLowerCase();
-          return text.includes(q);
-        });
-      }
-
-      out = out.filter((it) => !hidden.has(it.url || it.id || ""));
-
-      out.sort((a, b) => (toDate(b.publishedAt)?.getTime() || 0) - (toDate(a.publishedAt)?.getTime() || 0));
-
-      const pinnedItems = out.filter((it) => pinned.has(it.url || it.id || ""));
-      const rest = out.filter((it) => !pinned.has(it.url || it.id || ""));
-      out = [...pinnedItems, ...rest];
-
-      return out.slice(0, maxPerSection);
-    },
-    [focus, hidden, maxPerSection, pinned, priority, search, windowOpt.days]
-  );
-
-  const briefs = useMemo(() => {
-    const make = (items) => {
-      const filtered = applyFilters(items);
-      if (!filtered.length) return "No items matched current filters. Try Reset filters.";
-      const counts = filtered.reduce(
-        (acc, it) => {
-          acc[it.priority] = (acc[it.priority] || 0) + 1;
-          return acc;
-        },
-        { High: 0, Medium: 0, Low: 0 }
-      );
-      return `Showing ${filtered.length}. High: ${counts.High}, Medium: ${counts.Medium}, Low: ${counts.Low}.`;
-    };
-    return Object.fromEntries(allSections.map((s) => [s.key, make(data[s.key] || [])]));
-  }, [allSections, applyFilters, data]);
-
-  const view = useMemo(
-    () => Object.fromEntries(allSections.map((s) => [s.key, applyFilters(data[s.key] || [])])),
-    [allSections, applyFilters, data]
-  );
-
-  const fetchRss = useCallback(async () => {
-    setLoadingSections((m) => ({ ...m, [RSS_SECTION.key]: true }));
-    setErrors((m) => ({ ...m, [RSS_SECTION.key]: "" }));
-
-    const params = new URLSearchParams();
-    rssFeeds.forEach((u) => params.append("url", u));
-    params.set("limit", "60");
-
-    const url = `/api/rss?${params.toString()}`;
-    setDiag((d) => ({ ...d, [RSS_SECTION.key]: { ...d[RSS_SECTION.key], url, err: "" } }));
-
-    const r = await axios.get(url, { validateStatus: () => true });
-    const items = Array.isArray(r?.data?.articles) ? r.data.articles : [];
-
-    setDiag((d) => ({ ...d, [RSS_SECTION.key]: { ...d[RSS_SECTION.key], rawCount: items.length } }));
-
-    const mapped = items.map((a) => ({
-      title: a.title ?? "",
-      description: a.description ?? "",
-      url: a.url ?? "#",
-      publishedAt: a.publishedAt ?? "",
-      source: a.source ?? "RSS",
-    }));
-
-    setData((prev) => ({ ...prev, [RSS_SECTION.key]: mergeByUrl(prev[RSS_SECTION.key] || [], mapped) }));
-    setLoadingSections((m) => ({ ...m, [RSS_SECTION.key]: false }));
-  }, [rssFeeds]);
-
-  const fetchGnewsSection = useCallback(
-    async (sec) => {
-      setLoadingSections((m) => ({ ...m, [sec.key]: true }));
-      setErrors((m) => ({ ...m, [sec.key]: "" }));
-
-      const now = new Date();
-      const overlapMs = 12 * 60 * 60 * 1000;
-      const fromDt = lastScan ? new Date(new Date(lastScan).getTime() - overlapMs) : new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-      const fromIso = fromDt.toISOString();
-      const toIso = now.toISOString();
-
-      const chunks = splitQuery(sec.query, 200);
-      const all = [];
-      let lastUrl = "";
-
-      for (const q of chunks) {
-        const params = new URLSearchParams();
-        params.set("q", q);
-        params.set("lang", "en");
-        params.set("max", "25");
-        params.set("in", "title,description");
-        params.set("sortby", "publishedAt");
-        params.set("from", fromIso);
-        params.set("to", toIso);
-        if (ukOnly) params.set("country", "gb");
-
-        const url = `/api/gnews?${params.toString()}`;
-        lastUrl = url;
-
-        const r = await axios.get(url, { validateStatus: () => true });
-        const articles = Array.isArray(r?.data?.articles) ? r.data.articles : [];
-        all.push(...articles);
-      }
-
-      // Fallback broaden if still empty
-      let final = all;
-      if (fallbackBroad && final.length === 0) {
-        const params = new URLSearchParams();
-        params.set("q", `AI OR "artificial intelligence" OR deepfake OR fraud OR ransomware OR phishing`.slice(0, 200));
-        params.set("lang", "en");
-        params.set("max", "25");
-        params.set("in", "title,description");
-        params.set("sortby", "publishedAt");
-        params.set("from", fromIso);
-        params.set("to", toIso);
-        if (ukOnly) params.set("country", "gb");
-        const url = `/api/gnews?${params.toString()}`;
-        lastUrl = url;
-        const r2 = await axios.get(url, { validateStatus: () => true });
-        final = Array.isArray(r2?.data?.articles) ? r2.data.articles : [];
-      }
-
-      const seen = new Set();
-      const mapped = [];
-      for (const a of final) {
-        const u = a?.url || "";
-        if (!u || seen.has(u)) continue;
-        seen.add(u);
-        mapped.push({
-          title: a.title ?? "",
-          description: a.description ?? "",
-          url: u,
-          publishedAt: a.publishedAt ?? "",
-          source: a?.source?.name || a?.source || "Unknown",
-        });
-      }
-
-      setDiag((d) => ({ ...d, [sec.key]: { ...d[sec.key], url: lastUrl, rawCount: mapped.length, err: "" } }));
-      setData((prev) => ({ ...prev, [sec.key]: mergeByUrl(prev[sec.key] || [], mapped) }));
-
-      setLoadingSections((m) => ({ ...m, [sec.key]: false }));
-    },
-    [fallbackBroad, lastScan, ukOnly]
-  );
-
-  const runScan = useCallback(async () => {
+  // 1. SYNC LOGIC: Reads from the file created by GitHub Actions
+  const syncData = useCallback(async () => {
     setLoading(true);
-    setNote("");
-
     try {
-      if (enabled[RSS_SECTION.key]) await fetchRss();
-
-      const toScan = SECTIONS.filter((s) => enabled[s.key]).filter((s) => group === "all" || s.group === group);
-
-      // SEQUENTIAL scan to avoid rate limits
-      for (const sec of toScan) {
-        await fetchGnewsSection(sec);
-        await new Promise((r) => setTimeout(r, 200));
-      }
-
-      setLastScan(new Date().toISOString());
-      setNote("Scan complete. New items merged into existing lists.");
-    } catch {
-      setNote("Scan failed.");
+      const res = await axios.get("/news_data.json");
+      setData(res.data.sections || {});
+      setLastScan(res.data.last_updated);
+    } catch (err) {
+      console.error("News data not found. Run GitHub Action first.");
     } finally {
       setLoading(false);
     }
-  }, [enabled, fetchRss, fetchGnewsSection, group]);
-
-  useEffect(() => {
-    runScan();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const exportCSV = () => {
-    const rows = [];
-    for (const s of visibleSections) {
-      for (const it of view[s.key] || []) {
-        rows.push({
-          section: s.title,
-          title: it.title || "",
-          source: it.source || "",
-          date: it.publishedAt || "",
-          url: it.url || "",
-          priority: it.priority || "",
-        });
+  useEffect(() => { syncData(); }, [syncData]);
+
+  // 2. FILTERING LOGIC
+  const filteredView = useMemo(() => {
+    const out = {};
+    SECTIONS.forEach((s) => {
+      let items = data[s.key] || [];
+      
+      // Filter by Search
+      if (search) {
+        items = items.filter(it => it.title.toLowerCase().includes(search.toLowerCase()));
       }
-    }
-    const header = ["section", "priority", "date", "source", "title", "url"];
-    const csv = [
-      header.join(","),
-      ...rows.map((r) => header.map((k) => `"${String(r[k] ?? "").replaceAll('"', '""')}"`).join(",")),
-    ].join("\n");
+      
+      // Filter by Priority (Logic handled in Python script normally, but we can verify here)
+      if (priority !== "All") {
+        // Simple client-side priority filter if your script adds it
+        items = items.filter(it => (it.priority || "Low") === priority);
+      }
 
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = `aihm-monitor-${today}.csv`;
-    a.click();
-  };
+      // Handle Pinned/Hidden
+      const pinnedItems = items.filter(it => pinned.has(it.link));
+      const rest = items.filter(it => !pinned.has(it.link) && !hidden.has(it.link));
+      
+      out[s.key] = [...pinnedItems, ...rest];
+    });
+    return out;
+  }, [data, search, priority, pinned, hidden]);
 
-  const addFeed = () => {
-    const u = rssInput.trim();
-    if (!u) return;
-    if (rssFeeds.includes(u)) return;
-    setRssFeeds((prev) => [...prev, u]);
-    setRssInput("");
-  };
-  const removeFeed = (u) => setRssFeeds((prev) => prev.filter((x) => x !== u));
+  const visibleSections = useMemo(() => 
+    SECTIONS.filter(s => group === "all" || s.group === group), 
+  [group]);
+
+  if (loading) return <div className="flex items-center justify-center h-screen font-serif animate-pulse text-slate-500">Synchronising Intelligence Briefing...</div>;
 
   return (
-    <div className="min-h-screen bg-white text-slate-900">
-      <div className="max-w-[1200px] mx-auto px-6 py-8">
-        <div className="rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-          <div className="bg-teal-700 px-6 py-6 text-white">
-            <div className="flex items-start justify-between gap-6">
-              <div>
-                <div className="text-2xl sm:text-3xl font-serif font-bold tracking-tight">AIHM Horizon Scanning</div>
-                <div className="mt-1 text-sm opacity-90">Daily brief · {today}</div>
-                <div className="mt-2 text-xs opacity-80">Last scan: {lastScan ? fmtDate(lastScan) : "—"}</div>
-              </div>
-              <div className="hidden md:flex items-center gap-2">
-                <button onClick={exportCSV} className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-white/10 hover:bg-white/15 border border-white/20 text-sm">
-                  <Download size={16} /> Export
-                </button>
-                <button onClick={runScan} className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-white text-teal-800 hover:bg-white/95 font-semibold text-sm">
-                  <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
-                  {loading ? "Scanning…" : "Scan"}
-                </button>
-              </div>
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-serif">
+      <div className="max-w-6xl mx-auto px-6 py-10">
+        
+        {/* HEADER */}
+        <header className="bg-teal-800 text-white p-8 rounded-t-2xl shadow-lg border-b-4 border-black">
+          <div className="flex justify-between items-start">
+            <div>
+              <h1 className="text-4xl font-black uppercase tracking-tighter italic">AIHM Horizon Scanning</h1>
+              <p className="text-sm font-sans opacity-80 mt-2 tracking-widest uppercase">Intelligence Report • Updated: {lastScan}</p>
             </div>
+            <button onClick={syncData} className="bg-white text-teal-900 px-4 py-2 rounded-lg font-sans font-bold text-sm flex items-center gap-2 hover:bg-slate-100 transition">
+              <RefreshCw size={16} /> Sync Latest
+            </button>
           </div>
+        </header>
 
-          <div className="bg-white px-6 py-4 border-t border-slate-200">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 items-end">
-              <div className="lg:col-span-4">
-                <label className="text-xs font-semibold text-slate-600">Search</label>
-                <div className="mt-1 relative">
-                  <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                  <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder='e.g., "nudify", "model card", "AISI", "NSSIF"'
-                    className="w-full rounded-lg border border-slate-200 bg-white pl-9 pr-3 py-2 text-sm" />
-                </div>
-              </div>
-
-              <div className="lg:col-span-2">
-                <label className="text-xs font-semibold text-slate-600">Time window</label>
-                <select value={windowOpt.label}
-                  onChange={(e) => setWindowOpt(DATE_WINDOWS.find((d) => d.label === e.target.value) || DATE_WINDOWS[2])}
-                  className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm">
-                  {DATE_WINDOWS.map((d) => <option key={d.label} value={d.label}>{d.label}</option>)}
-                </select>
-              </div>
-
-              <div className="lg:col-span-2">
-                <label className="text-xs font-semibold text-slate-600">Category</label>
-                <select value={group} onChange={(e) => setGroup(e.target.value)}
-                  className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm">
-                  {GROUPS.map((g) => <option key={g.key} value={g.key}>{g.label}</option>)}
-                </select>
-              </div>
-
-              <div className="lg:col-span-2">
-                <label className="text-xs font-semibold text-slate-600">Priority</label>
-                <select value={priority} onChange={(e) => setPriority(e.target.value)}
-                  className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm">
-                  <option>All</option><option>High</option><option>Medium</option><option>Low</option>
-                </select>
-              </div>
-
-              <div className="lg:col-span-2">
-                <label className="text-xs font-semibold text-slate-600">Focus</label>
-                <select value={focus} onChange={(e) => setFocus(e.target.value)}
-                  className="mt-1 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm">
-                  <option value="All">All</option>
-                  <option value="capability">Capability</option>
-                  <option value="enforcement">Enforcement</option>
-                  <option value="research">Research</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="mt-3 flex flex-wrap gap-2 items-center">
-              <button onClick={resetFilters} className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs">
-                Reset filters
-              </button>
-
-              <button onClick={() => setUkOnly((v) => !v)}
-                className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border text-xs ${ukOnly ? "bg-slate-900 text-white border-slate-900" : "bg-white border-slate-200 text-slate-700"}`}>
-                <Globe size={14} /> UK sources
-              </button>
-
-              <button onClick={() => setFallbackBroad((v) => !v)}
-                className={`inline-flex items-center gap-2 px-3 py-2 rounded-lg border text-xs ${fallbackBroad ? "bg-slate-900 text-white border-slate-900" : "bg-white border-slate-200 text-slate-700"}`}>
-                <SlidersHorizontal size={14} /> Broaden if empty
-              </button>
-
-              <button onClick={() => setViewMode((m) => (m === "compact" ? "comfortable" : "compact"))}
-                className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs">
-                {viewMode === "compact" ? <LayoutList size={14} /> : <List size={14} />} Density
-              </button>
-
-              {note ? (
-                <div className="ml-auto inline-flex items-center gap-2 text-xs text-slate-700 bg-slate-50 border border-slate-200 px-3 py-2 rounded-lg">
-                  <AlertCircle size={14} className="text-slate-500" /> {note}
-                </div>
-              ) : null}
-            </div>
+        {/* CONTROLS */}
+        <div className="bg-white border-x border-slate-200 p-6 grid grid-cols-1 md:grid-cols-4 gap-4 shadow-sm">
+          <div className="relative">
+            <Search className="absolute left-3 top-2.5 text-slate-400" size={18} />
+            <input 
+              className="w-full pl-10 pr-4 py-2 border rounded-lg font-sans text-sm focus:ring-2 focus:ring-teal-500 outline-none" 
+              placeholder="Search reports..." 
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
           </div>
+          <select className="border rounded-lg p-2 font-sans text-sm" value={group} onChange={(e) => setGroup(e.target.value)}>
+            {GROUPS.map(g => <option key={g.key} value={g.key}>{g.label}</option>)}
+          </select>
+          <select className="border rounded-lg p-2 font-sans text-sm" value={priority} onChange={(e) => setPriority(e.target.value)}>
+            <option value="All">All Priorities</option>
+            <option value="High">High Priority</option>
+            <option value="Medium">Medium Priority</option>
+          </select>
+          <button onClick={() => setViewMode(v => v === "compact" ? "comfortable" : "compact")} className="border rounded-lg p-2 font-sans text-sm flex items-center justify-center gap-2">
+            {viewMode === "compact" ? <LayoutList size={16} /> : <List size={16} />} Toggle Density
+          </button>
         </div>
 
-        <div className="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <aside className="lg:col-span-4">
-            <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-4">
-              <div className="text-sm font-semibold text-slate-800">RSS Sources</div>
-              <div className="mt-1 text-xs text-slate-600">Paste a feed URL, click Add, then “Refresh RSS”.</div>
-
-              <div className="mt-3 flex gap-2">
-                <input value={rssInput} onChange={(e) => setRssInput(e.target.value)} placeholder="https://example.com/feed/"
-                  className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm" />
-                <button onClick={addFeed} className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-900 text-white hover:bg-slate-800 text-sm">
-                  <Plus size={16} /> Add
-                </button>
-              </div>
-
-              <div className="mt-3 space-y-2">
-                {rssFeeds.map((u) => (
-                  <div key={u} className="flex items-center justify-between gap-2 rounded-lg border border-slate-200 p-2">
-                    <div className="text-xs text-slate-700 truncate">{u}</div>
-                    <button onClick={() => removeFeed(u)} className="p-2 rounded-lg hover:bg-slate-50 border border-slate-200" title="Remove feed">
-                      <Trash2 size={14} />
-                    </button>
+        {/* MAIN FEED */}
+        <main className="bg-white border-x border-b border-slate-200 rounded-b-2xl p-6 shadow-sm min-h-[500px]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {visibleSections.map(s => (
+              <section key={s.key} className="border-t-2 border-slate-100 pt-6 first:border-t-0 lg:first:border-t-2">
+                <div className="flex items-center justify-between mb-4">
+                  <div>
+                    <h2 className={`text-xl font-black uppercase tracking-tight ${s.tone === 'red' ? 'text-red-800' : 'text-teal-800'}`}>
+                      {s.title}
+                    </h2>
+                    <p className="text-xs text-slate-500 font-sans">{s.subtitle}</p>
                   </div>
-                ))}
-              </div>
+                  <Pill>{filteredView[s.key]?.length || 0} hits</Pill>
+                </div>
 
-              <div className="mt-3">
-                <button onClick={fetchRss} className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-sm">
-                  <RefreshCw size={16} /> Refresh RSS
-                </button>
-              </div>
-            </div>
-          </aside>
-
-          <main className="lg:col-span-8 space-y-6">
-            {visibleSections.map((s) => {
-              const styles = toneStyles(s.tone);
-              const items = view[s.key] || [];
-              const isLoading = !!loadingSections[s.key];
-              const err = errors[s.key];
-              const raw = diag[s.key]?.rawCount ?? 0;
-
-              return (
-                <section key={s.key} className={`rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden ring-1 ${styles.ring}`}>
-                  <div className="px-5 py-4 border-b border-slate-200">
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-3">
-                          <div className={`h-3.5 w-3.5 rounded ${styles.bar}`} />
-                          <h2 className="text-base sm:text-lg font-bold text-slate-800 truncate">{s.title}</h2>
-                          <Pill>raw: {raw}</Pill>
+                <ul className="space-y-4">
+                  {filteredView[s.key]?.map((item, i) => (
+                    <li key={i} className={`group border-l-2 pl-4 transition-all ${pinned.has(item.link) ? 'border-teal-500 bg-teal-50' : 'border-slate-200'}`}>
+                      <div className="flex justify-between items-start gap-2">
+                        <a href={item.link} target="_blank" className="font-bold text-slate-900 hover:text-teal-700 leading-tight block">
+                          {item.title}
+                        </a>
+                        <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition">
+                          <button onClick={() => {
+                            const next = new Set(pinned);
+                            next.has(item.link) ? next.delete(item.link) : next.add(item.link);
+                            setPinned(next);
+                          }} className="text-slate-400 hover:text-teal-600">
+                            {pinned.has(item.link) ? <PinOff size={14} /> : <Pin size={14} />}
+                          </button>
                         </div>
-                        <div className="mt-1 text-sm text-slate-500">{s.subtitle}</div>
-                        <div className="mt-2 text-[11px] text-slate-400 truncate">{diag[s.key]?.url || ""}</div>
                       </div>
-
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => (s.key === RSS_SECTION.key ? fetchRss() : fetchGnewsSection(s))}
-                          className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs"
-                        >
-                          <RefreshCw size={14} className={isLoading ? "animate-spin" : ""} /> Refresh
-                        </button>
-                        <button onClick={() => setCollapsed((m) => ({ ...m, [s.key]: !m[s.key] }))}
-                          className="p-2 rounded-lg border border-slate-200 hover:bg-slate-50">
-                          {collapsed[s.key] ? <ChevronRight size={16} /> : <ChevronDown size={16} />}
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="mt-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3">
-                      <div className="text-[11px] uppercase tracking-wider font-semibold text-slate-500">Brief (rules-based)</div>
-                      <div className="mt-1 text-sm text-slate-700">{briefs[s.key]}</div>
-                    </div>
-
-                    {err ? (
-                      <div className="mt-3 inline-flex items-center gap-2 text-xs text-amber-800 bg-amber-50 border border-amber-200 px-3 py-2 rounded-lg">
-                        <AlertCircle size={14} /> {err}
-                      </div>
-                    ) : null}
-                  </div>
-
-                  {collapsed[s.key] ? null : (
-                    <div className="px-5 py-4">
-                      <ul className="divide-y divide-slate-200">
-                        {isLoading ? (
-                          <>
-                            <SkeletonRow /><SkeletonRow /><SkeletonRow />
-                          </>
-                        ) : items.length === 0 ? (
-                          <li className="py-3 text-sm text-slate-500">No items after filtering. Try Reset filters or widen Time window.</li>
-                        ) : (
-                          items.map((it, idx) => {
-                            const key = it.url || it.id || `${s.key}-${idx}`;
-                            const pr = it.priority || computePriority(it.title, it.description, it.source);
-                            const tags = it.tags || computeTags(it.title, it.description, it.source);
-                            const pinnedNow = pinned.has(key);
-                            const hiddenNow = hidden.has(key);
-
-                            return (
-                              <li key={key} className={listClass}>
-                                <div className="flex items-start justify-between gap-4">
-                                  <div className="min-w-0">
-                                    <a href={it.url || "#"} target="_blank" rel="noreferrer" className="text-sm font-semibold text-slate-900 hover:underline underline-offset-4">
-                                      {it.title || "Untitled"}
-                                    </a>
-                                    {viewMode === "compact" ? null : it.description ? (
-                                      <div className="mt-1 text-sm text-slate-600">{it.description}</div>
-                                    ) : null}
-
-                                    <div className="mt-2 flex flex-wrap gap-2 items-center">
-                                      <PriorityPill value={pr} />
-                                      {tags.slice(0, 3).map((t) => <Pill key={t.key}>{t.label}</Pill>)}
-                                      <Pill>Source: {it.source || "Unknown"}</Pill>
-                                      <span className="text-[11px] text-slate-500">Date: {fmtDate(it.publishedAt)}</span>
-                                    </div>
-                                  </div>
-
-                                  <div className="shrink-0 flex items-center gap-2">
-                                    <button onClick={() => togglePinned(key)} className="p-2 rounded-lg border border-slate-200 hover:bg-slate-50" title={pinnedNow ? "Unpin" : "Pin"}>
-                                      {pinnedNow ? <PinOff size={16} /> : <Pin size={16} />}
-                                    </button>
-
-                                    <button onClick={() => toggleHidden(key)} className="p-2 rounded-lg border border-slate-200 hover:bg-slate-50" title={hiddenNow ? "Unhide" : "Hide"}>
-                                      {hiddenNow ? <Eye size={16} /> : <EyeOff size={16} />}
-                                    </button>
-
-                                    <a href={it.url || "#"} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-xs font-medium text-teal-700 hover:text-teal-900">
-                                      Open <ExternalLink size={14} />
-                                    </a>
-                                  </div>
-                                </div>
-                              </li>
-                            );
-                          })
-                        )}
-                      </ul>
-                    </div>
+                      
+                      {viewMode !== "compact" && (
+                        <div className="flex gap-3 mt-2 items-center">
+                          <span className="text-[10px] uppercase font-sans font-bold text-slate-400">{item.source}</span>
+                          <PriorityPill value={item.priority || "Low"} />
+                        </div>
+                      )}
+                    </li>
+                  ))}
+                  {filteredView[s.key]?.length === 0 && (
+                    <p className="text-xs text-slate-400 italic">No reports found for this section.</p>
                   )}
-                </section>
-              );
-            })}
-          </main>
-        </div>
+                </ul>
+              </section>
+            ))}
+          </div>
+        </main>
+
+        <footer className="mt-8 text-center text-xs text-slate-400 font-sans uppercase tracking-[0.2em]">
+          Automated Horizon Scan • AIHM Internal Report • Proprietary Data
+        </footer>
       </div>
     </div>
   );
