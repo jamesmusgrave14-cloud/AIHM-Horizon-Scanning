@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Shield, Database, Cpu, Terminal, Clock, RefreshCw, AlertTriangle, Lock } from "lucide-react";
+import { Shield, Database, Cpu, Terminal, Clock, RefreshCw, Search, AlertCircle } from "lucide-react";
 
 export default function App() {
   const [data, setData] = useState({ harms: [], aiid: [], dev_releases: [], technical: [] });
   const [activeTab, setActiveTab] = useState("harms");
+  const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
@@ -12,117 +13,132 @@ export default function App() {
     try {
       const res = await axios.get("/news_data.json?v=" + Date.now());
       setData(res.data.sections);
-    } catch (e) { console.error(e); }
+    } catch (e) { console.error("Missing news_data.json in public folder"); }
     setLoading(false);
   };
 
   useEffect(() => { fetchData(); }, []);
 
+  // Filtering Logic
+  const filteredItems = (items) => {
+    if (!items) return [];
+    return items.filter(item => 
+      item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (item.category && item.category.toLowerCase().includes(searchTerm.toLowerCase()))
+    );
+  };
+
   return (
     <div className="min-h-screen bg-white text-slate-900 font-sans antialiased">
-      <header className="border-b border-slate-200 py-6 px-8 sticky top-0 bg-white/95 backdrop-blur z-50 flex justify-between items-center">
+      <header className="border-b border-slate-200 py-6 px-8 sticky top-0 bg-white/95 backdrop-blur z-50 flex flex-col md:flex-row justify-between items-center gap-4">
         <div className="flex items-center gap-3">
-          <Shield size={22} className="text-slate-900" />
-          <h1 className="font-bold text-base uppercase tracking-tight">AI Harms Monitoring</h1>
+          <Shield size={22} className="text-slate-900 fill-slate-900" />
+          <h1 className="font-bold text-base uppercase tracking-tight">AI Harms Intelligence</h1>
         </div>
-        <div className="flex items-center gap-4">
-          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Live Feed // 2026</span>
+        
+        <div className="flex items-center gap-4 w-full md:w-auto">
+          <div className="relative w-full md:w-64">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={14} />
+            <input 
+              type="text" 
+              placeholder="Filter signals..." 
+              className="w-full bg-slate-50 border border-slate-200 rounded-full py-2 pl-9 pr-4 text-xs focus:outline-none focus:ring-2 focus:ring-slate-900/5 transition"
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
           <button onClick={fetchData} className="p-2 hover:bg-slate-100 rounded-full border border-slate-200 transition">
             <RefreshCw size={15} className={loading ? "animate-spin" : ""} />
           </button>
         </div>
       </header>
 
-      <nav className="flex px-8 border-b border-slate-100 bg-slate-50 gap-10 overflow-x-auto">
+      <nav className="flex px-8 border-b border-slate-100 bg-white gap-8 overflow-x-auto no-scrollbar">
         {[
-          { id: "harms", label: "Harms Monitor", icon: Shield },
-          { id: "aiid", label: "AIID Reports", icon: Database },
-          { id: "technical", label: "Technical Risk Signals", icon: Terminal }
+          { id: "harms", label: "Monitoring", icon: Shield },
+          { id: "technical", label: "Technical Signals", icon: Terminal },
+          { id: "dev_releases", label: "Model Releases", icon: Cpu },
+          { id: "aiid", label: "AIID Incidents", icon: Database }
         ].map(tab => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`py-4 text-[11px] font-bold uppercase tracking-widest border-b-2 whitespace-nowrap transition-all flex items-center gap-2 ${
+            className={`py-4 text-[10px] font-bold uppercase tracking-widest border-b-2 whitespace-nowrap flex items-center gap-2 transition-all ${
               activeTab === tab.id ? "border-slate-900 text-slate-900" : "border-transparent text-slate-400 hover:text-slate-600"
             }`}
           >
-            <tab.icon size={14} /> {tab.label}
+            <tab.icon size={13} /> {tab.label}
           </button>
         ))}
       </nav>
 
       <main className="p-8 max-w-7xl mx-auto">
-        {/* CATEGORIZED HARMS */}
         {activeTab === "harms" && (
-          <div className="space-y-16">
-            {["Fraud", "CSAM", "Terrorism", "Cyber", "VAWG"].map(cat => (
-              <section key={cat}>
-                <h2 className="text-[11px] font-black uppercase text-slate-400 mb-6 tracking-[0.2em] border-l-4 border-slate-900 pl-3">
-                  {cat}
-                </h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {data.harms?.filter(h => h.category === cat).map((item, i) => (
-                    <article key={i} className="group border-b border-slate-50 pb-6">
-                      <div className="flex justify-between items-start mb-2">
-                        <span className="text-[9px] font-bold text-slate-300 uppercase">{item.source}</span>
-                        <span className="text-[9px] text-slate-400 font-mono">{item.date.split(' ').slice(1,4).join(' ')}</span>
-                      </div>
-                      <a href={item.link} target="_blank" rel="noreferrer" className="text-[15px] font-bold leading-snug hover:text-blue-600 block transition-colors">
-                        {item.title}
-                      </a>
-                    </article>
-                  ))}
-                </div>
-              </section>
-            ))}
+          <div className="space-y-12">
+            {["Fraud", "CSAM", "Terrorism", "Cyber", "VAWG"].map(cat => {
+              const list = filteredItems(data.harms?.filter(h => h.category === cat));
+              if (list.length === 0 && searchTerm) return null;
+              return (
+                <section key={cat}>
+                  <h2 className="text-[10px] font-black uppercase text-slate-400 mb-6 tracking-[0.2em] border-l-2 border-slate-900 pl-3">
+                    {cat} <span className="ml-2 text-slate-200">// {list.length}</span>
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {list.map((item, i) => (
+                      <article key={i} className="group border border-slate-100 p-5 rounded-lg hover:border-slate-300 transition-colors bg-slate-50/30">
+                        <div className="flex justify-between items-start mb-3">
+                          <span className="text-[8px] font-bold text-blue-600 uppercase tracking-tighter">{item.source}</span>
+                          <span className="text-[9px] text-slate-400">{item.date?.split(' ').slice(1,4).join(' ')}</span>
+                        </div>
+                        <a href={item.link} target="_blank" rel="noreferrer" className="text-[14px] font-bold leading-snug hover:underline block">
+                          {item.title}
+                        </a>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              );
+            })}
           </div>
         )}
 
-        {/* TECHNICAL SIGNALS OVERHAUL */}
         {activeTab === "technical" && (
-          <div className="max-w-4xl mx-auto space-y-6">
-            <div className="bg-amber-50 border border-amber-100 p-4 rounded text-[10px] font-bold text-amber-700 flex items-center gap-2 uppercase tracking-widest">
-              <Lock size={14} /> Risk Analysis Module: Identifying High-Impact Exploits
-            </div>
-            {data.technical?.map((sig, i) => (
-              <div key={i} className="bg-white border border-slate-200 rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden">
-                <div className="p-6">
-                  <div className="flex justify-between items-start mb-4">
-                    <h3 className="text-slate-900 font-bold text-base leading-tight pr-4">{sig.title}</h3>
-                    <span className={`px-2 py-1 rounded text-[9px] font-black uppercase tracking-tighter ${
-                      sig.risk === 'CRITICAL' ? 'bg-red-600 text-white' : 
-                      sig.risk === 'High' ? 'bg-orange-500 text-white' : 'bg-slate-100 text-slate-500'
-                    }`}>
-                      {sig.risk} RISK
-                    </span>
-                  </div>
-                  <div className="bg-slate-50 border border-slate-100 p-4 rounded-md mb-4">
-                    <p className="text-[12px] text-slate-600 italic leading-relaxed">
-                      "{sig.summary}"
-                    </p>
-                  </div>
-                  <div className="flex items-center justify-between text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                    <div className="flex items-center gap-2">
-                      <Clock size={12} /> {sig.date}
-                    </div>
-                    <span className="text-slate-300">{sig.source}</span>
-                  </div>
+          <div className="max-w-3xl mx-auto space-y-4">
+            {filteredItems(data.technical).map((sig, i) => (
+              <div key={i} className="bg-white border border-slate-200 rounded-lg overflow-hidden shadow-sm">
+                <div className="px-5 py-3 bg-slate-50 border-b border-slate-100 flex justify-between items-center">
+                   <div className="flex gap-2">
+                    {sig.flags.map(f => (
+                      <span key={f} className={`px-2 py-0.5 rounded-[4px] text-[8px] font-black tracking-widest ${
+                        f === 'CRITICAL' ? 'bg-red-100 text-red-700' : 'bg-slate-200 text-slate-600'
+                      }`}>{f}</span>
+                    ))}
+                   </div>
+                   <span className="text-[9px] font-mono text-slate-400 uppercase">{sig.source}</span>
+                </div>
+                <div className="p-5">
+                  <a href={sig.link} target="_blank" rel="noreferrer" className="text-sm font-bold block mb-3 hover:text-blue-600">
+                    {sig.title}
+                  </a>
+                  <p className="text-xs text-slate-500 leading-relaxed bg-slate-50 p-3 rounded border-l-2 border-slate-200">
+                    {sig.summary}
+                  </p>
                 </div>
               </div>
             ))}
           </div>
         )}
 
-        {/* AIID LIST */}
-        {activeTab === "aiid" && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {data.aiid?.map((item, i) => (
+        {/* MODEL RELEASES & AIID GRID */}
+        {(activeTab === "dev_releases" || activeTab === "aiid") && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredItems(data[activeTab]).map((item, i) => (
               <article key={i} className="border-b border-slate-100 pb-6">
-                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-[10px] font-bold text-slate-400 tracking-widest uppercase">{item.source}</span>
-                  <span className="text-[10px] text-slate-300">{item.date}</span>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-[9px] font-bold text-slate-400 uppercase">{item.source}</span>
+                  <div className="w-1 h-1 rounded-full bg-slate-200"></div>
+                  <span className="text-[9px] text-slate-300">{item.date}</span>
                 </div>
-                <a href={item.link} target="_blank" rel="noreferrer" className="text-sm font-bold leading-relaxed hover:text-blue-600">
+                <a href={item.link} target="_blank" rel="noreferrer" className="text-sm font-bold leading-relaxed hover:text-slate-600">
                   {item.title}
                 </a>
               </article>
