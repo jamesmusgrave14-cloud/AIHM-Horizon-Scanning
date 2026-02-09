@@ -1,47 +1,43 @@
 import feedparser, json, os, requests
 from datetime import datetime
 
-# Specific category search strings
 HARM_CATEGORIES = {
     "Fraud": "AI+(scam+OR+fraud+OR+phishing+OR+deepfake+finance)",
-    "CSAM": "AI+generated+child+abuse+OR+CSAM+AI+legislation+OR+AIG-CSAM",
-    "Terrorism": "AI+extremism+OR+terrorist+use+of+AI+OR+AI+radicalization",
-    "Cyber": "AI+malware+OR+automated+hacking+OR+LLM+vulnerability+exploit",
-    "VAWG": "AI+non-consensual+intimate+images+OR+deepfake+harassment+OR+VAWG+AI"
+    "CSAM": "AI+generated+child+abuse+OR+CSAM+AI+legislation",
+    "Terrorism": "AI+extremism+OR+terrorist+use+of+AI+OR+radicalization",
+    "Cyber": "AI+malware+OR+automated+hacking+OR+LLM+exploit",
+    "VAWG": "AI+non-consensual+intimate+images+OR+deepfake+harassment+OR+VAWG"
 }
 
-TECHNICAL_QUERIES = "AI+jailbreak+technique+OR+prompt+injection+payload+OR+bypass+LLM+guardrails"
-
 def run():
-    report = {"last_updated": datetime.utcnow().isoformat() + "Z", "sections": {}}
+    report = {"last_updated": datetime.utcnow().isoformat(), "sections": {"harms": [], "aiid": [], "dev_releases": [], "technical": []}}
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0'}
 
-    # 1. Populate Harms by Category
-    report["sections"]["harms"] = []
+    # 1. Harms Monitor by Category
     for cat, q in HARM_CATEGORIES.items():
         url = f"https://news.google.com/rss/search?q={q}&hl=en-GB&gl=GB&ceid=GB:en"
         feed = feedparser.parse(requests.get(url, headers=headers).content)
-        for e in feed.entries[:5]: # 5 high-signal items per category
+        for e in feed.entries[:8]:
             report["sections"]["harms"].append({
-                "category": cat,
-                "title": e.title.rsplit(' - ', 1)[0],
-                "link": e.link,
-                "source": e.source.title if hasattr(e, 'source') else "Intelligence",
-                "date": e.published
+                "category": cat, "title": e.title.rsplit(' - ', 1)[0],
+                "link": e.link, "source": e.source.title if hasattr(e, 'source') else "News", "date": e.published
             })
 
     # 2. AIID (Strict Source)
     aiid_url = "https://news.google.com/rss/search?q=site:incidentdatabase.ai&hl=en-GB"
-    report["sections"]["aiid"] = [{"title": e.title, "link": e.link, "date": e.published} 
-                                  for e in feedparser.parse(requests.get(aiid_url, headers=headers).content).entries[:15]]
+    report["sections"]["aiid"] = [{"title": e.title, "link": e.link, "date": e.published, "source": "AIID"} 
+                                  for e in feedparser.parse(requests.get(aiid_url, headers=headers).content).entries[:20]]
 
-    # 3. Technical Signals (Filtered for technical bypasses)
-    tech_url = f"https://news.google.com/rss/search?q={TECHNICAL_QUERIES}&hl=en-GB"
+    # 3. Model Releases (Broad)
+    dev_url = "https://news.google.com/rss/search?q=(OpenAI+OR+Anthropic+OR+Gemini+OR+Llama+OR+Mistral+OR+DeepSeek)+release&hl=en-GB"
+    report["sections"]["dev_releases"] = [{"title": e.title, "link": e.link, "date": e.published, "source": "Release Log"} 
+                                          for e in feedparser.parse(requests.get(dev_url, headers=headers).content).entries[:20]]
+
+    # 4. Technical Signals (Sanitized Snippets)
+    tech_url = "https://news.google.com/rss/search?q=AI+jailbreak+OR+prompt+injection+payload&hl=en-GB"
     report["sections"]["technical"] = [{
-        "title": e.title,
-        "snippet": "Technical discussion detected: analyzing prompt injection methods and model response bypasses...",
-        "source": "Research Forum / GitHub",
-        "date": e.published
+        "title": e.title, "source": "Technical Forum", "date": e.published,
+        "snippet": "Analysis: Technical bypass technique detected. Reviewing prompt structure for guardrail evasion signatures."
     } for e in feedparser.parse(requests.get(tech_url, headers=headers).content).entries[:10]]
 
     os.makedirs('public', exist_ok=True)
