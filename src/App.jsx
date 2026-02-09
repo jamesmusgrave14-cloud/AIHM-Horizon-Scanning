@@ -1,117 +1,86 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { ShieldAlert, Cpu, Database, MessageSquare, ExternalLink, RefreshCw, Clock, Filter } from "lucide-react";
-
-const CONFIG = {
-  harms: { label: "Harm Monitor", icon: ShieldAlert },
-  aiid: { label: "AIID Reports", icon: Database },
-  dev_releases: { label: "Model Releases", icon: Cpu },
-  forums: { label: "Technical Signals", icon: MessageSquare }
-};
+import { Shield, Code, Terminal, AlertCircle, FileText, Lock } from "lucide-react";
 
 export default function App() {
-  const [data, setData] = useState({});
+  const [data, setData] = useState({ harms: [], aiid: [], technical: [] });
   const [activeTab, setActiveTab] = useState("harms");
-  const [loading, setLoading] = useState(true);
-  const [limit, setLimit] = useState(15);
-  const [showHighOnly, setShowHighOnly] = useState(false);
 
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const res = await axios.get("/news_data.json?v=" + Date.now());
-      setData(res.data.sections || {});
-    } catch (e) { console.error(e); }
-    setLoading(false);
-  };
-
-  useEffect(() => { fetchData(); }, []);
-
-  const items = useMemo(() => {
-    let filtered = [...(data[activeTab] || [])].sort((a, b) => new Date(b.date) - new Date(a.date));
-    if (showHighOnly) filtered = filtered.filter(i => i.priority === "High");
-    return filtered.slice(0, limit);
-  }, [data, activeTab, limit, showHighOnly]);
+  useEffect(() => {
+    axios.get("/news_data.json").then(res => setData(res.data.sections));
+  }, []);
 
   return (
     <div className="min-h-screen bg-white text-slate-900 font-sans antialiased">
-      <header className="border-b border-slate-200 bg-white sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <ShieldAlert size={20} className="text-slate-800" />
-            <h1 className="text-sm font-bold tracking-tight uppercase">AI Harms Monitor</h1>
-          </div>
-          <div className="flex items-center gap-4 text-[11px] font-medium text-slate-400">
-            <span>Official Feed</span>
-            <button onClick={fetchData} className="p-2 hover:bg-slate-50 rounded-full border border-slate-100 transition">
-              <RefreshCw size={14} className={loading ? "animate-spin" : ""} />
-            </button>
-          </div>
+      {/* PROFESSIONAL HEADER */}
+      <header className="border-b border-slate-200 py-4 px-8 bg-white sticky top-0 z-50 flex justify-between items-center">
+        <div className="flex items-center gap-2">
+          <Shield className="text-slate-900" size={20} />
+          <h1 className="font-bold text-sm uppercase tracking-tight">AI Harm & Risk Monitor</h1>
+        </div>
+        <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+          Consolidated Oversight // 2026
         </div>
       </header>
 
-      <div className="border-b border-slate-100 bg-slate-50/30">
-        <div className="max-w-7xl mx-auto px-6 h-12 flex items-center justify-between text-[11px] font-bold text-slate-500 uppercase">
-          <nav className="flex gap-8 h-full">
-            {Object.keys(CONFIG).map(key => (
-              <button
-                key={key}
-                onClick={() => setActiveTab(key)}
-                className={`relative h-full px-1 transition-colors hover:text-slate-900 ${activeTab === key ? 'text-blue-600 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-blue-600' : ''}`}
-              >
-                {CONFIG[key].label} ({data[key]?.length || 0})
-              </button>
+      {/* NAVIGATION */}
+      <nav className="border-b border-slate-100 flex px-8 gap-8 bg-slate-50/50">
+        {["harms", "aiid", "technical"].map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`py-4 text-xs font-bold uppercase tracking-wide border-b-2 transition-all ${
+              activeTab === tab ? "border-slate-900 text-slate-900" : "border-transparent text-slate-400"
+            }`}
+          >
+            {tab === "harms" ? "Harm Categories" : tab === "aiid" ? "Incident Database" : "Technical Signals"}
+          </button>
+        ))}
+      </nav>
+
+      <main className="p-8 max-w-7xl mx-auto">
+        {/* HARMS BY CATEGORY VIEW */}
+        {activeTab === "harms" && (
+          <div className="space-y-12">
+            {["Fraud", "CSAM", "Terrorism", "Cyber", "VAWG"].map(cat => (
+              <section key={cat}>
+                <h2 className="text-xs font-black uppercase text-slate-400 mb-4 flex items-center gap-2">
+                  <span className="w-2 h-2 bg-slate-200 rounded-full"></span> {cat}
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {data.harms.filter(h => h.category === cat).map((item, i) => (
+                    <div key={i} className="border border-slate-100 p-4 rounded hover:bg-slate-50 transition-colors">
+                      <p className="text-[10px] text-slate-400 font-bold mb-1 uppercase">{item.source}</p>
+                      <a href={item.link} className="text-sm font-bold leading-snug hover:text-blue-600 block">{item.title}</a>
+                    </div>
+                  ))}
+                </div>
+              </section>
             ))}
-          </nav>
-          
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2">
-              <Filter size={12} />
-              <span>Limit:</span>
-              {[15, 30, 50].map(n => (
-                <button key={n} onClick={() => setLimit(n)} className={`hover:text-slate-900 ${limit === n ? 'text-blue-600 underline' : ''}`}>{n}</button>
-              ))}
-            </div>
-            <label className="flex items-center gap-2 cursor-pointer hover:text-slate-900 border-l border-slate-200 pl-6">
-              <input type="checkbox" checked={showHighOnly} onChange={() => setShowHighOnly(!showHighOnly)} className="rounded border-slate-300 text-blue-600" />
-              High Priority
-            </label>
           </div>
-        </div>
-      </div>
+        )}
 
-      <main className="max-w-7xl mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8">
-          {items.map((item, i) => (
-            <article key={i} className="group border-b border-slate-100 pb-6 last:border-0 hover:bg-slate-50/50 p-2 -m-2 rounded-lg transition-colors flex flex-col justify-between">
-              <div>
-                <div className="flex justify-between items-start mb-3">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{item.source}</span>
-                  {item.priority === "High" && (
-                    <span className="text-[9px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded border border-red-100 uppercase">Priority</span>
-                  )}
+        {/* TECHNICAL SIGNALS SNIPPET VIEW */}
+        {activeTab === "technical" && (
+          <div className="max-w-4xl mx-auto space-y-4">
+            <div className="bg-amber-50 border border-amber-100 p-4 rounded-lg flex gap-3 mb-8">
+              <Lock size={18} className="text-amber-600 shrink-0" />
+              <p className="text-xs text-amber-800 leading-relaxed">
+                <strong>Internalized View:</strong> External forum links are restricted. Snippets below show sanitized technical payloads regarding model jailbreaks and guardrail bypasses.
+              </p>
+            </div>
+            {data.technical.map((sig, i) => (
+              <div key={i} className="bg-slate-900 rounded-lg p-6 shadow-sm border border-slate-800">
+                <div className="flex items-center gap-2 mb-3">
+                  <Terminal size={14} className="text-emerald-500" />
+                  <span className="text-[10px] font-mono text-emerald-500/70 uppercase tracking-widest">{sig.source}</span>
                 </div>
-                <a href={item.link} target="_blank" rel="noreferrer" className="block mb-4">
-                  <h3 className="text-sm font-bold leading-snug text-slate-800 group-hover:text-blue-600 transition-colors">
-                    {item.title}
-                  </h3>
-                </a>
-              </div>
-              
-              <div className="flex items-center justify-between text-[10px] font-medium text-slate-400">
-                <div className="flex items-center gap-1.5">
-                  <Clock size={12} />
-                  {new Date(item.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                <h3 className="text-slate-100 font-bold text-sm mb-4">{sig.title}</h3>
+                <div className="bg-black/50 p-4 rounded font-mono text-[11px] text-slate-400 border border-white/5">
+                  {sig.snippet}
                 </div>
-                <ExternalLink size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
-            </article>
-          ))}
-        </div>
-
-        {items.length === 0 && (
-          <div className="py-24 text-center border-2 border-dashed border-slate-50 rounded-xl">
-            <p className="text-slate-400 text-xs font-medium uppercase tracking-widest">No matching signals found</p>
+            ))}
           </div>
         )}
       </main>
