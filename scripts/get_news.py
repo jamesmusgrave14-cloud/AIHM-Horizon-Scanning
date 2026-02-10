@@ -2,52 +2,38 @@ import feedparser, json, os, requests, time, re, hashlib
 from datetime import datetime
 from urllib.parse import quote_plus
 from difflib import SequenceMatcher
-from collections import defaultdict
 
 # ----------------------------
-# CONFIG
+# PATHS (important for GitHub Actions)
 # ----------------------------
+BASE_DIR = os.path.dirname(__file__)
 
-# Keep your existing categories, but (optionally) override by putting a harm_queries.json
-# next to this script. This avoids hardcoding sensitive query strings here.
+# ----------------------------
+# DEFAULTS (used if JSON files missing)
+# ----------------------------
 DEFAULT_HARM_CATEGORIES = {
-    "Fraud": "AI scam OR AI fraud OR phishing OR deepfake finance",
-    "Category_2": "YOUR_QUERY_HERE",
-    "Category_3": "YOUR_QUERY_HERE",
-    "Category_4": "YOUR_QUERY_HERE",
-    "Category_5": "YOUR_QUERY_HERE",
+    "Fraud": "AI scam OR AI fraud OR phishing",
+    "Cyber": "AI malware OR LLM exploit OR prompt injection",
+    "Terrorism": "AI extremism OR radicalization",
+    "Child safety": "child safety online AI",
+    "Harassment & abuse": "AI harassment OR AI abuse"
 }
 
-# Forum feeds (RSS). You can override with forum_feeds.json too.
-# Reddit supports adding .rss to subreddit URLs. [1](https://www.howtogeek.com/320264/how-to-get-an-rss-feed-for-any-subreddit/)
-# Hacker News: use hnrss search feeds. [2](https://hnrss.github.io/)
-DEFAULT_FORUM_FEEDS = [
-    # Reddit subreddit "new" feeds (example placeholders)
-    # Replace SUBREDDIT with ones you care about.
-    # Example format: https://www.reddit.com/r/SUBREDDIT/new/.rss
-    {"name": "Reddit: example_subreddit", "url": "https://www.reddit.com/r/example_subreddit/new/.rss", "tags": ["forum", "reddit"]},
+DEFAULT_FORUM_FEEDS = []
+DEFAULT_X_KEYWORDS = {}
 
-    # Hacker News keyword search (replace KEYWORDS)
-    # Example format: https://hnrss.org/newest?q=KEYWORD+OR+KEYWORD2
-    {"name": "HN search: AI misuse", "url": "https://hnrss.org/newest?q=AI+misuse", "tags": ["forum", "hn"]},
-]
-
-# Google News RSS locale & recency window
+# ----------------------------
+# SETTINGS
+# ----------------------------
 LOCALE_HL = os.getenv("NEWS_HL", "en-GB")
 LOCALE_GL = os.getenv("NEWS_GL", "GB")
 LOCALE_CEID = os.getenv("NEWS_CEID", "GB:en")
 
-# How far back should Google News searches look (e.g. 1h, 24h, 7d, 30d)
-# Google News RSS commonly supports `when:` constraints in queries. [3](https://ukhomeoffice.sharepoint.com/sites/CTCOLLAB5541/_layouts/15/Doc.aspx?sourcedoc=%7BC2817573-EBB1-4A86-A565-A44977B44928%7D&file=AI%20Harms%20Quantification%20Summary%20%28Off-Sen%20-%20Not%20for%20onward%20sharing%29%20-%20130625.docx&action=default&mobileredirect=true&DefaultItemOpen=1)[4](https://ukhomeoffice.sharepoint.com/sites/CTCOLLAB5541/_layouts/15/Doc.aspx?sourcedoc=%7B8C8EE97B-B995-4221-B7F7-874B867D8D36%7D&file=Bespoke%20Research%20Planning.docx&action=default&mobileredirect=true&DefaultItemOpen=1)
 TIME_WINDOW = os.getenv("TIME_WINDOW", "7d")
-
-# How many items to pull per feed before clustering
 MAX_PER_HARM = int(os.getenv("MAX_PER_HARM", "25"))
 MAX_RELEASES = int(os.getenv("MAX_RELEASES", "30"))
 MAX_AI_ID = int(os.getenv("MAX_AI_ID", "30"))
 MAX_FORUM_ITEMS = int(os.getenv("MAX_FORUM_ITEMS", "40"))
-
-# Signal clustering threshold (0-1). Higher = more strict (less merging)
 SIGNAL_SIM_THRESHOLD = float(os.getenv("SIGNAL_SIM_THRESHOLD", "0.86"))
 
 HEADERS = {
@@ -57,7 +43,6 @@ HEADERS = {
 # ----------------------------
 # HELPERS
 # ----------------------------
-
 def load_json_if_exists(path, fallback):
     if os.path.exists(path):
         try:
@@ -68,12 +53,8 @@ def load_json_if_exists(path, fallback):
     return fallback
 
 def parse_date(date_str):
-    """
-    RSS dates vary. Keep it forgiving.
-    """
     if not date_str:
         return datetime.utcnow()
-    # Common RSS format: 'Tue, 10 Feb 2026 11:05:00 GMT'
     for fmt in [
         "%a, %d %b %Y %H:%M:%S %Z",
         "%a, %d %b %Y %H:%M:%S %z",
@@ -87,7 +68,6 @@ def parse_date(date_str):
     return datetime.utcnow()
 
 def google_rss_url(q: str) -> str:
-    # Google may ignore parentheses for grouping in queries, so prefer ORs/quotes. [5](https://ukhomeoffice-my.sharepoint.com/personal/james_musgrave_homeoffice_gov_uk/_layouts/15/Doc.aspx?action=edit&mobileredirect=true&wdorigin=Sharepoint&DefaultItemOpen=1&sourcedoc={2ff8063c-3452-43c9-93c2-c9cb158f0c68}&wd=target%28/Horizon%20Scanning.one/%29&wdpartid={dbc01bc1-8cc9-401e-9ffc-2f743d351677}{1}&wdsectionfileid={0f3adac6-8222-461c-9c0a-4c6db062a93f})
     q2 = f"{q} when:{TIME_WINDOW}"
     return (
         "https://news.google.com/rss/search?q="
@@ -103,12 +83,11 @@ def fetch_feed(url, retries=3, base_sleep=0.8):
             return feedparser.parse(r.content)
         except Exception:
             if i == retries - 1:
-                return feedparser.parse(b"")  # empty on failure
+                return feedparser.parse(b"")
             time.sleep(base_sleep * (i + 1))
     return feedparser.parse(b"")
 
 def strip_source_suffix(title: str) -> str:
-    # Google News often appends " - Source"
     if not title:
         return ""
     return title.rsplit(" - ", 1)[0].strip()
@@ -119,7 +98,6 @@ def norm_title(t: str) -> str:
     t = re.sub(r"[\u2013\u2014\-]", " ", t)
     t = re.sub(r"[^a-z0-9\s]", " ", t)
     t = re.sub(r"\s+", " ", t).strip()
-    # Remove ultra-common fluff tokens to help clustering
     for w in ["ai", "artificial intelligence", "model", "release"]:
         t = t.replace(w, "")
     return re.sub(r"\s+", " ", t).strip()
@@ -130,11 +108,18 @@ def similar(a: str, b: str) -> float:
 def stable_id(key: str) -> str:
     return hashlib.sha1(key.encode("utf-8")).hexdigest()[:16]
 
+def dedupe_items(items):
+    seen = set()
+    out = []
+    for it in items:
+        key = (it.get("link") or "") + "||" + (it.get("title") or "")
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(it)
+    return out
+
 def cluster_to_signals(items, threshold=SIGNAL_SIM_THRESHOLD):
-    """
-    Cluster near-duplicate headlines into "signals".
-    Each signal contains multiple links/sources and a first/last seen.
-    """
     clusters = []
     for it in items:
         nt = norm_title(it.get("title", ""))
@@ -151,6 +136,7 @@ def cluster_to_signals(items, threshold=SIGNAL_SIM_THRESHOLD):
                 c["first_seen"] = min(c["first_seen"], it.get("timestamp", 0))
                 placed = True
                 break
+
         if not placed:
             clusters.append({
                 "key": nt,
@@ -185,51 +171,34 @@ def cluster_to_signals(items, threshold=SIGNAL_SIM_THRESHOLD):
             ]
         })
 
-    # Sort by newest, then by number of sources (proxy for "signal strength")
     signals.sort(key=lambda s: (s["last_seen"], s["source_count"]), reverse=True)
     return signals
-
-def dedupe_items(items):
-    """
-    Remove obvious duplicates by link or title.
-    """
-    seen = set()
-    out = []
-    for it in items:
-        key = (it.get("link") or "") + "||" + (it.get("title") or "")
-        if key in seen:
-            continue
-        seen.add(key)
-        out.append(it)
-    return out
 
 # ----------------------------
 # MAIN
 # ----------------------------
-
 def run():
-    harm_queries = load_json_if_exists("harm_queries.json", DEFAULT_HARM_CATEGORIES)
-    forum_feeds = load_json_if_exists("forum_feeds.json", DEFAULT_FORUM_FEEDS)
+    harm_queries = load_json_if_exists(os.path.join(BASE_DIR, "harm_queries.json"), DEFAULT_HARM_CATEGORIES)
+    forum_feeds = load_json_if_exists(os.path.join(BASE_DIR, "forum_feeds.json"), DEFAULT_FORUM_FEEDS)
+    x_keywords = load_json_if_exists(os.path.join(BASE_DIR, "x_keywords.json"), DEFAULT_X_KEYWORDS)
 
     report = {
         "last_updated": datetime.utcnow().isoformat(),
         "sections": {
-            "harms": [],         # raw articles grouped by category (your existing tab)
-            "signals": [],       # clustered signals across harms + releases + forums
-            "forums": [],        # raw forum items
-            "dev_releases": [],  # raw model releases items (your existing tab)
-            "aiid": [],          # raw AIID items (your existing tab)
+            "harms": [],
+            "signals": [],
+            "forums": [],
+            "dev_releases": [],
+            "aiid": [],
+            "x_watchlist": x_keywords
         },
-        "coverage": {
-            "by_harm": {},       # counts & last seen by harm category
-        }
+        "coverage": { "by_harm": {} }
     }
 
     # 1) Harms Monitor (raw)
     raw_harm_items = []
     for cat, q in harm_queries.items():
-        url = google_rss_url(q)
-        feed = fetch_feed(url)
+        feed = fetch_feed(google_rss_url(q))
         for e in feed.entries[:MAX_PER_HARM]:
             title = strip_source_suffix(getattr(e, "title", ""))
             published = getattr(e, "published", "")
@@ -252,21 +221,22 @@ def run():
                 "link": raw["link"],
                 "source": raw["source"],
                 "timestamp": raw["timestamp"],
-                "date": raw["date"],
+                "date": raw["date"]
             })
 
     report["sections"]["harms"] = dedupe_items(report["sections"]["harms"])
     report["sections"]["harms"].sort(key=lambda x: x["timestamp"], reverse=True)
 
-    # Coverage by harm
-    cov = defaultdict(lambda: {"count": 0, "last_seen": None})
+    # coverage by harm category
+    cov = {}
     for it in report["sections"]["harms"]:
-        cov[it["category"]]["count"] += 1
-        cov[it["category"]]["last_seen"] = max(cov[it["category"]]["last_seen"] or 0, it["timestamp"])
+        cat = it["category"]
+        cov.setdefault(cat, {"count": 0, "last_seen": None})
+        cov[cat]["count"] += 1
+        cov[cat]["last_seen"] = max(cov[cat]["last_seen"] or 0, it["timestamp"])
     report["coverage"]["by_harm"] = cov
 
     # 2) Model Releases (raw)
-    # Note: Google may ignore parentheses; keep query simple with ORs. [5](https://ukhomeoffice-my.sharepoint.com/personal/james_musgrave_homeoffice_gov_uk/_layouts/15/Doc.aspx?action=edit&mobileredirect=true&wdorigin=Sharepoint&DefaultItemOpen=1&sourcedoc={2ff8063c-3452-43c9-93c2-c9cb158f0c68}&wd=target%28/Horizon%20Scanning.one/%29&wdpartid={dbc01bc1-8cc9-401e-9ffc-2f743d351677}{1}&wdsectionfileid={0f3adac6-8222-461c-9c0a-4c6db062a93f})
     release_q = "OpenAI OR Anthropic OR DeepSeek OR Meta OR Llama OR Mistral release model"
     release_feed = fetch_feed(google_rss_url(release_q))
     raw_release_items = []
@@ -312,14 +282,13 @@ def run():
     report["sections"]["aiid"].sort(key=lambda x: x["timestamp"], reverse=True)
 
     # 4) Forums (raw RSS ingestion)
-    # Reddit supports .rss endpoints; Hacker News has hnrss search feeds. [1](https://www.howtogeek.com/320264/how-to-get-an-rss-feed-for-any-subreddit/)[2](https://hnrss.github.io/)
     raw_forum_items = []
     for f in forum_feeds:
         name = f.get("name", "Forum")
-        url = f.get("url")
+        url = f.get("url", "")
         tags = f.get("tags", ["forum"])
         if not url:
-            continue
+            continue  # skip empty placeholders (e.g., X until you add RSS URL)
 
         feed = fetch_feed(url)
         for e in feed.entries[:MAX_FORUM_ITEMS]:
@@ -346,21 +315,3 @@ def run():
             })
 
     report["sections"]["forums"] = dedupe_items(report["sections"]["forums"])
-    report["sections"]["forums"].sort(key=lambda x: x["timestamp"], reverse=True)
-
-    # 5) Signals tab (cluster across harms + releases + forums)
-    all_for_signals = []
-    all_for_signals.extend(raw_harm_items)
-    all_for_signals.extend(raw_release_items)
-    all_for_signals.extend(raw_forum_items)
-
-    all_for_signals = dedupe_items(all_for_signals)
-    report["sections"]["signals"] = cluster_to_signals(all_for_signals, threshold=SIGNAL_SIM_THRESHOLD)
-
-    # Write output
-    os.makedirs("public", exist_ok=True)
-    with open("public/news_data.json", "w") as f:
-        json.dump(report, f, indent=2)
-
-if __name__ == "__main__":
-    run()
