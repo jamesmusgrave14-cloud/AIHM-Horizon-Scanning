@@ -3,28 +3,25 @@ from datetime import datetime
 from urllib.parse import quote_plus
 from difflib import SequenceMatcher
 
-# ----------------------------
-# PATHS (important for GitHub Actions)
-# ----------------------------
 BASE_DIR = os.path.dirname(__file__)
 
-# ----------------------------
-# DEFAULTS (used if JSON files missing)
-# ----------------------------
-DEFAULT_HARM_CATEGORIES = {
-    "Fraud": "AI scam OR AI fraud OR phishing",
-    "Cyber": "AI malware OR LLM exploit OR prompt injection",
-    "Terrorism": "AI extremism OR radicalization",
-    "Child safety": "child safety online AI",
-    "Harassment & abuse": "AI harassment OR AI abuse"
+# ---------- CONFIG DEFAULTS ----------
+DEFAULT_HARM_QUERIES = {
+    "Fraud": "AI scam OR AI fraud OR AI phishing OR voice cloning scam",
+    "Cyber": "AI malware OR LLM exploit OR prompt injection OR jailbreak",
+    "Terrorism": "AI extremism OR AI radicalisation OR synthetic propaganda",
+    "VAWG": "AI harassment OR deepfake abuse OR image-based abuse",
+    "CSAM": "AI-generated child abuse material OR CSAM AI",
+    "Other": "AI violence OR AI weapons OR AI drugs OR AI crime instructions"
 }
 
-DEFAULT_FORUM_FEEDS = []
-DEFAULT_X_KEYWORDS = {}
+DEFAULT_FORUM_FEEDS = [
+    # You can override with scripts/forum_feeds.json
+    {"name": "Reddit: netsec (new)", "url": "https://old.reddit.com/r/netsec/new/.rss", "tags": ["forum", "reddit", "cyber"]},
+    {"name": "HN: AI agents", "url": "https://hnrss.org/newest?q=AI+agent+OR+agentic", "tags": ["forum", "hn", "agents"]}
+]
 
-# ----------------------------
-# SETTINGS
-# ----------------------------
+# ---------- SETTINGS ----------
 LOCALE_HL = os.getenv("NEWS_HL", "en-GB")
 LOCALE_GL = os.getenv("NEWS_GL", "GB")
 LOCALE_CEID = os.getenv("NEWS_CEID", "GB:en")
@@ -32,17 +29,17 @@ LOCALE_CEID = os.getenv("NEWS_CEID", "GB:en")
 TIME_WINDOW = os.getenv("TIME_WINDOW", "7d")
 MAX_PER_HARM = int(os.getenv("MAX_PER_HARM", "25"))
 MAX_RELEASES = int(os.getenv("MAX_RELEASES", "30"))
-MAX_AI_ID = int(os.getenv("MAX_AI_ID", "30"))
+MAX_AI_ID = int(os.getenv("MAX_AI_ID", "50"))
 MAX_FORUM_ITEMS = int(os.getenv("MAX_FORUM_ITEMS", "40"))
 SIGNAL_SIM_THRESHOLD = float(os.getenv("SIGNAL_SIM_THRESHOLD", "0.86"))
 
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 MonitorBot/2.0 (+https://example.invalid)"
+    # A descriptive UA reduces blocks on some sites. [3](https://www.reddit.com/r/redditdev/comments/1bz9hjm/requesting_rsubredditjson_constantly_gives_me_429/)
+    "User-Agent": "AIHM-Horizon-Scanning/1.0 (contact: internal) Mozilla/5.0",
+    "Accept": "application/rss+xml,application/xml;q=0.9,*/*;q=0.8",
 }
 
-# ----------------------------
-# HELPERS
-# ----------------------------
+# ---------- HELPERS ----------
 def load_json_if_exists(path, fallback):
     if os.path.exists(path):
         try:
@@ -75,10 +72,18 @@ def google_rss_url(q: str) -> str:
         + f"&hl={LOCALE_HL}&gl={LOCALE_GL}&ceid={quote_plus(LOCALE_CEID)}"
     )
 
-def fetch_feed(url, retries=3, base_sleep=0.8):
+def fetch_feed(url, retries=3, base_sleep=1.0):
+    """
+    Fetch RSS with backoff. Respect 429 by sleeping (don’t try to dodge it). [4](https://stackoverflow.com/questions/22786068/how-to-avoid-http-error-429-too-many-requests-python)
+    """
     for i in range(retries):
         try:
-            r = requests.get(url, headers=HEADERS, timeout=20)
+            r = requests.get(url, headers=HEADERS, timeout=25)
+            if r.status_code == 429:
+                retry_after = r.headers.get("Retry-After")
+                sleep_s = int(retry_after) if (retry_after and retry_after.isdigit()) else (base_sleep * (i + 2))
+                time.sleep(sleep_s)
+                continue
             r.raise_for_status()
             return feedparser.parse(r.content)
         except Exception:
@@ -174,13 +179,15 @@ def cluster_to_signals(items, threshold=SIGNAL_SIM_THRESHOLD):
     signals.sort(key=lambda s: (s["last_seen"], s["source_count"]), reverse=True)
     return signals
 
-# ----------------------------
-# MAIN
-# ----------------------------
+def ensure_old_reddit(url: str) -> str:
+    if "www.reddit.com" in url:
+        return url.replace("www.reddit.com", "old.reddit.com")
+    return url
+
+# ---------- MAIN ----------
 def run():
-    harm_queries = load_json_if_exists(os.path.join(BASE_DIR, "harm_queries.json"), DEFAULT_HARM_CATEGORIES)
+    harm_queries = load_json_if_exists(os.path.join(BASE_DIR, "harm_queries.json"), DEFAULT_HARM_QUERIES)
     forum_feeds = load_json_if_exists(os.path.join(BASE_DIR, "forum_feeds.json"), DEFAULT_FORUM_FEEDS)
-    x_keywords = load_json_if_exists(os.path.join(BASE_DIR, "x_keywords.json"), DEFAULT_X_KEYWORDS)
 
     report = {
         "last_updated": datetime.utcnow().isoformat(),
@@ -189,13 +196,12 @@ def run():
             "signals": [],
             "forums": [],
             "dev_releases": [],
-            "aiid": [],
-            "x_watchlist": x_keywords
+            "aiid": []
         },
         "coverage": { "by_harm": {} }
     }
 
-    # 1) Harms Monitor (raw)
+    # 1) Harms (raw)
     raw_harm_items = []
     for cat, q in harm_queries.items():
         feed = fetch_feed(google_rss_url(q))
@@ -204,6 +210,7 @@ def run():
             published = getattr(e, "published", "")
             dt = parse_date(published)
             src = getattr(getattr(e, "source", None), "title", None) if hasattr(e, "source") else None
+
             raw = {
                 "category": cat,
                 "title": title,
@@ -214,6 +221,7 @@ def run():
                 "source_type": "news",
                 "tags": [cat]
             }
+
             raw_harm_items.append(raw)
             report["sections"]["harms"].append({
                 "category": cat,
@@ -227,7 +235,7 @@ def run():
     report["sections"]["harms"] = dedupe_items(report["sections"]["harms"])
     report["sections"]["harms"].sort(key=lambda x: x["timestamp"], reverse=True)
 
-    # coverage by harm category
+    # coverage
     cov = {}
     for it in report["sections"]["harms"]:
         cat = it["category"]
@@ -236,19 +244,25 @@ def run():
         cov[cat]["last_seen"] = max(cov[cat]["last_seen"] or 0, it["timestamp"])
     report["coverage"]["by_harm"] = cov
 
-    # 2) Model Releases (raw)
-    release_q = "OpenAI OR Anthropic OR DeepSeek OR Meta OR Llama OR Mistral release model"
+    # 2) Model releases (raw) — stricter search + title filtering
+    release_q = (
+        '("model card" OR "release notes" OR released OR launches OR "open weights") '
+        '(OpenAI OR Anthropic OR DeepMind OR Google OR Meta OR Llama OR Mistral OR xAI)'
+    )
     release_feed = fetch_feed(google_rss_url(release_q))
     raw_release_items = []
+    keep_words = ["release", "released", "launch", "model card", "weights", "preview", "version", "rollout"]
     for e in release_feed.entries[:MAX_RELEASES]:
         title = strip_source_suffix(getattr(e, "title", ""))
+        if not any(w in title.lower() for w in keep_words):
+            continue
         published = getattr(e, "published", "")
         dt = parse_date(published)
         src = getattr(getattr(e, "source", None), "title", None) if hasattr(e, "source") else None
         item = {
             "title": title,
             "link": getattr(e, "link", ""),
-            "source": src or "Release Log",
+            "source": src or "News",
             "timestamp": dt.timestamp(),
             "date": published,
             "source_type": "news",
@@ -266,31 +280,44 @@ def run():
     report["sections"]["dev_releases"] = dedupe_items(report["sections"]["dev_releases"])
     report["sections"]["dev_releases"].sort(key=lambda x: x["timestamp"], reverse=True)
 
-    # 3) AIID (raw)
-    aiid_feed = fetch_feed(google_rss_url("site:incidentdatabase.ai"))
+    # 3) AIID — keep only "Incident ####" and sort most recent first
+    # AIID pages commonly present incidents as "Incident 1360: ..." [5](https://incidentdatabase.ai/)
+    aiid_query = 'site:incidentdatabase.ai inurl:incident "Incident"'
+    aiid_feed = fetch_feed(google_rss_url(aiid_query))
+
+    aiid_items = []
+    rx = re.compile(r"Incident\s+(\d+)", re.IGNORECASE)
     for e in aiid_feed.entries[:MAX_AI_ID]:
+        title = strip_source_suffix(getattr(e, "title", "")) or getattr(e, "title", "")
+        m = rx.search(title)
+        if not m:
+            continue
+        incident_no = int(m.group(1))
         published = getattr(e, "published", "")
         dt = parse_date(published)
-        report["sections"]["aiid"].append({
-            "title": getattr(e, "title", ""),
+        aiid_items.append({
+            "incident_no": incident_no,
+            "title": title,
             "link": getattr(e, "link", ""),
             "date": published,
             "source": "AIID",
             "timestamp": dt.timestamp()
         })
-    report["sections"]["aiid"] = dedupe_items(report["sections"]["aiid"])
-    report["sections"]["aiid"].sort(key=lambda x: x["timestamp"], reverse=True)
 
-    # 4) Forums (raw RSS ingestion)
+    # Prefer incident number descending; fallback timestamp
+    aiid_items.sort(key=lambda x: (x["incident_no"], x["timestamp"]), reverse=True)
+    report["sections"]["aiid"] = aiid_items
+
+    # 4) Forums (raw RSS)
     raw_forum_items = []
     for f in forum_feeds:
         name = f.get("name", "Forum")
-        url = f.get("url", "")
+        url = ensure_old_reddit(f.get("url", ""))
         tags = f.get("tags", ["forum"])
         if not url:
-            continue  # skip empty placeholders (e.g., X until you add RSS URL)
+            continue
 
-        feed = fetch_feed(url)
+        feed = fetch_feed(url, retries=4)
         for e in feed.entries[:MAX_FORUM_ITEMS]:
             title = strip_source_suffix(getattr(e, "title", "")) or getattr(e, "title", "")
             published = getattr(e, "published", "") or getattr(e, "updated", "")
@@ -315,3 +342,20 @@ def run():
             })
 
     report["sections"]["forums"] = dedupe_items(report["sections"]["forums"])
+    report["sections"]["forums"].sort(key=lambda x: x["timestamp"], reverse=True)
+
+    # 5) Signals (cluster across harms + releases + forums)
+    all_for_signals = []
+    all_for_signals.extend(raw_harm_items)
+    all_for_signals.extend(raw_release_items)
+    all_for_signals.extend(raw_forum_items)
+    all_for_signals = dedupe_items(all_for_signals)
+    report["sections"]["signals"] = cluster_to_signals(all_for_signals)
+
+    os.makedirs("public", exist_ok=True)
+    with open("public/news_data.json", "w") as f:
+        json.dump(report, f, indent=2)
+
+if __name__ == "__main__":
+    run()
+``
