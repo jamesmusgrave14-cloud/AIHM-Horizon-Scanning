@@ -144,3 +144,223 @@ export default function App() {
         ))}
       </nav>
 
+      <main className="p-8 max-w-7xl mx-auto">
+        {/* HARMS MONITOR */}
+        {activeTab === "harms" && (
+          <div className="space-y-12">
+            {harmCategories.map((cat) => {
+              const list = filteredItems(
+                (data.harms || []).filter((h) => h.category === cat)
+              );
+              if (list.length === 0 && searchTerm) return null;
+
+              const cov = coverage?.by_harm?.[cat];
+              const covText =
+                cov?.last_seen != null
+                  ? ` · ${cov.count} items · last: ${new Date(
+                      cov.last_seen * 1000
+                    )
+                      .toUTCString()
+                      .slice(5, 16)}`
+                  : "";
+
+              return (
+                <section key={cat}>
+                  <h2 className="text-[10px] font-black uppercase text-slate-400 mb-6 tracking-[0.2em] border-l-2 border-slate-900 pl-3">
+                    {cat}
+                    {covText}
+                  </h2>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {list.map((item, i) => (
+                      <article
+                        key={i}
+                        className="group border border-slate-100 p-5 rounded-lg hover:border-slate-300 transition-colors bg-slate-50/30"
+                      >
+                        <div className="flex justify-between items-start mb-3">
+                          <span className="text-[8px] font-bold text-blue-600 uppercase tracking-tighter">
+                            {item.source}
+                          </span>
+                          <span className="text-[9px] text-slate-400 font-mono italic">
+                            {(item.date || "")
+                              .split(" ")
+                              .slice(1, 4)
+                              .join(" ")}
+                          </span>
+                        </div>
+
+                        <a
+                          href={item.link}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-[14px] font-bold leading-snug hover:underline block"
+                        >
+                          {item.title}
+                        </a>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              );
+            })}
+          </div>
+        )}
+
+        {/* SIGNALS */}
+        {activeTab === "signals" && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {signalsVisible.map((s) => {
+              const status = triage[s.signal_id] || "new";
+              return (
+                <article
+                  key={s.signal_id}
+                  className="border border-slate-100 p-5 rounded-lg bg-slate-50/30 hover:border-slate-300 transition-colors"
+                >
+                  <div className="flex justify-between items-start mb-2">
+                    <div className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">
+                      {(s.tags || []).slice(0, 3).join(" · ") || "Signal"}
+                      {s.source_count ? ` · ${s.source_count} sources` : ""}
+                    </div>
+                    <div className="text-[9px] text-slate-400 font-mono">
+                      {(s.latest_date || "")
+                        .split(" ")
+                        .slice(1, 4)
+                        .join(" ")}
+                    </div>
+                  </div>
+
+                  <div className="text-[14px] font-bold leading-snug">
+                    {s.title}
+                  </div>
+
+                  <div className="mt-3 space-y-2">
+                    {(s.links || []).map((lnk, idx) => (
+                      <a
+                        key={idx}
+                        href={lnk.link}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="block text-[12px] text-blue-700 hover:underline"
+                      >
+                        {(lnk.source_type === "forum" ? "Forum" : "News")} ·{" "}
+                        {lnk.source}: {lnk.title}
+                      </a>
+                    ))}
+                  </div>
+
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {["new", "watching", "actionable", "archived"].map((st) => (
+                      <button
+                        key={st}
+                        onClick={() => setStatus(s.signal_id, st)}
+                        className={`text-[10px] px-3 py-1 rounded-full border transition ${
+                          status === st
+                            ? "border-slate-900 bg-white"
+                            : "border-slate-200 bg-transparent hover:bg-white"
+                        }`}
+                      >
+                        {st}
+                      </button>
+                    ))}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        )}
+
+        {/* FORUMS */}
+        {activeTab === "forums" && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredItems(data.forums || []).map((item, i) => (
+              <article key={i} className="border-b border-slate-100 pb-6 group">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">
+                    {item.source}
+                  </span>
+                  <div className="w-1 h-1 rounded-full bg-slate-200" />
+                  <span className="text-[9px] text-slate-300 font-mono">
+                    {item.date}
+                  </span>
+                </div>
+
+                <a
+                  href={item.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-[15px] font-bold leading-relaxed group-hover:text-blue-600 transition-colors"
+                >
+                  {item.title}
+                </a>
+
+                {item.tags?.length ? (
+                  <div className="mt-2 text-[10px] text-slate-400 uppercase tracking-widest">
+                    {item.tags.join(" · ")}
+                  </div>
+                ) : null}
+              </article>
+            ))}
+          </div>
+        )}
+
+        {/* X WATCHLIST */}
+        {activeTab === "x_watchlist" && (
+          <div className="space-y-10">
+            <div className="text-sm text-slate-600">
+              This is a keyword watchlist. To ingest X content into the tool,
+              connect RSS feed URLs for X keyword searches and paste those URLs
+              into <code>scripts/forum_feeds.json</code>.
+            </div>
+
+            {xWatchlistEntries.map(([group, keywords]) => (
+              <section key={group}>
+                <h2 className="text-[10px] font-black uppercase text-slate-400 mb-4 tracking-[0.2em] border-l-2 border-slate-900 pl-3">
+                  {group.replaceAll("_", " ")}
+                </h2>
+
+                <div className="flex flex-wrap gap-2">
+                  {(keywords || []).map((kw, idx) => (
+                    <span
+                      key={idx}
+                      className="text-[11px] px-3 py-1 rounded-full bg-slate-100 border border-slate-200"
+                    >
+                      {kw}
+                    </span>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
+        )}
+
+        {/* MODEL RELEASES + AIID */}
+        {(activeTab === "dev_releases" || activeTab === "aiid") && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredItems(data[activeTab] || []).map((item, i) => (
+              <article key={i} className="border-b border-slate-100 pb-6 group">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">
+                    {item.source}
+                  </span>
+                  <div className="w-1 h-1 rounded-full bg-slate-200" />
+                  <span className="text-[9px] text-slate-300 font-mono">
+                    {item.date}
+                  </span>
+                </div>
+
+                <a
+                  href={item.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-[15px] font-bold leading-relaxed group-hover:text-blue-600 transition-colors"
+                >
+                  {item.title}
+                </a>
+              </article>
+            ))}
+          </div>
+        )}
+      </main>
+    </div>
+  );
+}
