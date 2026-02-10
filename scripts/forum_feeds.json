@@ -1,0 +1,47 @@
+[
+  // -------------------------
+  // REDDIT (20 subreddits) — RSS via adding .rss to subreddit views [1](https://ukhomeoffice.sharepoint.com/sites/CTCOLLAB5541/_layouts/15/Doc.aspx?sourcedoc=%7B18772A2B-E461-4EBD-BEA8-258FF3F7107D%7D&file=250829%20IMG%20Harms%20Review%20Paper%20v6%20_%20HO.docx&action=default&mobileredirect=true&DefaultItemOpen=1)
+  // -------------------------
+  { "name": "Reddit: netsec (new)", "url": "https://www.reddit.com/r/netsec/new/.rss", "tags": ["forum", "reddit", "cyber"] },
+  { "name": "Reddit: cybersecurity (new)", "url": "https://www.reddit.com/r/cybersecurity/new/.rss", "tags": ["forum", "reddit", "cyber"] },
+  { "name": "Reddit: malware (new)", "url": "https://www.reddit.com/r/Malware/new/.rss", "tags": ["forum", "reddit", "cyber"] },
+  { "name": "Reddit: blueteamsec (new)", "url": "https://www.reddit.com/r/blueteamsec/new/.rss", "tags": ["forum", "reddit", "defence"] },
+  { "name": "Reddit: OSINT (new)", "url": "https://www.reddit.com/r/OSINT/new/.rss", "tags": ["forum", "reddit", "osint"] },
+  { "name": "Reddit: privacy (new)", "url": "https://www.reddit.com/r/privacy/new/.rss", "tags": ["forum", "reddit", "privacy"] },
+  { "name": "Reddit: Scams (new)", "url": "https://www.reddit.com/r/Scams/new/.rss", "tags": ["forum", "reddit", "fraud"] },
+  { "name": "Reddit: socialengineering (new)", "url": "https://www.reddit.com/r/socialengineering/new/.rss", "tags": ["forum", "reddit", "fraud"] },
+  { "name": "Reddit: MachineLearning (new)", "url": "https://www.reddit.com/r/MachineLearning/new/.rss", "tags": ["forum", "reddit", "ml"] },
+  { "name": "Reddit: LocalLLaMA (new)", "url": "https://www.reddit.com/r/LocalLLaMA/new/.rss", "tags": ["forum", "reddit", "open-source", "models"] },
+  { "name": "Reddit: artificial (new)", "url": "https://www.reddit.com/r/artificial/new/.rss", "tags": ["forum", "reddit", "general-ai"] },
+  { "name": "Reddit: ChatGPT (new)", "url": "https://www.reddit.com/r/ChatGPT/new/.rss", "tags": ["forum", "reddit", "general-ai"] },
+  { "name": "Reddit: OpenAI (new)", "url": "https://www.reddit.com/r/OpenAI/new/.rss", "tags": ["forum", "reddit", "models"] },
+  { "name": "Reddit: Anthropic (new)", "url": "https://www.reddit.com/r/Anthropic/new/.rss", "tags": ["forum", "reddit", "models"] },
+  { "name": "Reddit: LLMDevs (new)", "url": "https://www.reddit.com/r/LLMDevs/new/.rss", "tags": ["forum", "reddit", "dev"] },
+  { "name": "Reddit: PromptEngineering (new)", "url": "https://www.reddit.com/r/PromptEngineering/new/.rss", "tags": ["forum", "reddit", "model-safety"] },
+  { "name": "Reddit: MLOps (new)", "url": "https://www.reddit.com/r/MLOps/new/.rss", "tags": ["forum", "reddit", "deployment"] },
+  { "name": "Reddit: datasecurity (new)", "url": "https://www.reddit.com/r/datasecurity/new/.rss", "tags": ["forum", "reddit", "privacy"] },
+  { "name": "Reddit: ReverseEngineering (new)", "url": "https://www.reddit.com/r/ReverseEngineering/new/.rss", "tags": ["forum", "reddit", "cyber"] },
+  { "name": "Reddit: sysadmin (new)", "url": "https://www.reddit.com/r/sysadmin/new/.rss", "tags": ["forum", "reddit", "ops"] },
+
+  // -------------------------
+  // HACKER NEWS (10 keyword feeds) via hnrss.org search feeds [2](https://ukhomeoffice.sharepoint.com/sites/proj2111/_layouts/15/Doc.aspx?sourcedoc=%7B91ED8FC6-43C8-44CE-AA45-C1C772088E7C%7D&file=Risk%20Horizon%20Scan%20template.pptx&action=edit&mobileredirect=true&DefaultItemOpen=1)
+  // -------------------------
+  { "name": "HN: AI agents", "url": "https://hnrss.org/newest?q=AI+agent+OR+agentic+OR+autonomous", "tags": ["forum", "hn", "agents"] },
+  { "name": "HN: prompt injection / jailbreak", "url": "https://hnrss.org/newest?q=prompt+injection+OR+jailbreak", "tags": ["forum", "hn", "model-safety"] },
+  { "name": "HN: tool poisoning / supply chain", "url": "https://hnrss.org/newest?q=tool+poisoning+OR+supply+chain+attack", "tags": ["forum", "hn", "supply-chain"] },
+  { "name": "HN: deepfakes / provenance", "url": "https://hnrss.org/newest?q=deepfake+OR+provenance+OR+watermarking+OR+C2PA", "tags": ["forum", "hn", "provenance"] },
+  { "name": "HN: open weights / open source models", "url": "https://hnrss.org/newest?q=open+weights+OR+open-source+model+OR+model+weights", "tags": ["forum", "hn", "open-source"] },
+  { "name": "HN: fraud / phishing", "url": "https://hnrss.org/newest?q=phishing+OR+scam+OR+fraud", "tags": ["forum", "hn", "fraud"] },
+  { "name": "HN: synthetic identity / verification", "url": "https://hnrss.org/newest?q=synthetic+identity+OR+identity+verification", "tags": ["forum", "hn", "identity"] },
+  { "name": "HN: KYC / liveness", "url": "https://hnrss.org/newest?q=KYC+OR+liveness", "tags": ["forum", "hn", "identity"] },
+  { "name": "HN: malware / exploit", "url": "https://hnrss.org/newest?q=malware+OR+exploit+OR+vulnerability", "tags": ["forum", "hn", "cyber"] },
+  { "name": "HN: OSINT / doxxing", "url": "https://hnrss.org/newest?q=OSINT+OR+doxxing", "tags": ["forum", "hn", "osint"] },
+
+  // -------------------------
+  // X keyword monitoring placeholders
+  // Your pipeline ingests RSS URLs; paste RSS URLs here once you have them.
+  // -------------------------
+  { "name": "X: fraud/scams keyword feed (ADD RSS URL)", "url": "", "tags": ["x", "keyword", "fraud"] },
+  { "name": "X: deepfake/provenance keyword feed (ADD RSS URL)", "url": "", "tags": ["x", "keyword", "provenance"] },
+  { "name": "X: open-weights/model-release keyword feed (ADD RSS URL)", "url": "", "tags": ["x", "keyword", "models"] }
+]
