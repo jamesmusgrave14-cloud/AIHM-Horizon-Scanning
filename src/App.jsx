@@ -1,24 +1,36 @@
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import {
+  LayoutDashboard,
   Shield,
   TrendingUp,
-  MessageSquare,
   Cpu,
   Database,
-  RefreshCw,
+  MessageSquare,
   Search,
-  Filter,
+  SlidersHorizontal,
+  RefreshCw,
   Info,
+  ExternalLink,
 } from "lucide-react";
+
+/*
+  Dashboard-style UI inspired by "interactive explorer" sites
+  while staying compatible with your existing news_data.json shape.
+
+  Expects payload structure:
+    payload.last_updated
+    payload.disclaimer (optional)
+    payload.meta.limits (optional)
+    payload.meta.errors (optional)
+    payload.sections.{harms,signals,forums,dev_releases,aiid}
+*/
 
 function fmtDateShort(d) {
   if (!d) return "";
-  // Works with RSS strings and ISO-ish strings; fall back to raw
   const t = Date.parse(d);
-  if (!Number.isFinite(t)) return String(d).slice(0, 16);
-  const dt = new Date(t);
-  return dt.toISOString().slice(0, 10);
+  if (!Number.isFinite(t)) return String(d).slice(0, 10);
+  return new Date(t).toISOString().slice(0, 10);
 }
 
 function withinWindow(timestamp, windowKey) {
@@ -31,52 +43,49 @@ function withinWindow(timestamp, windowKey) {
   return true;
 }
 
-function badgeTone(level) {
-  if (level === "High") return "bg-green-100 text-green-800 border-green-200";
-  if (level === "Medium") return "bg-amber-100 text-amber-800 border-amber-200";
-  return "bg-slate-100 text-slate-700 border-slate-200";
+function clamp(n, a, b) {
+  return Math.max(a, Math.min(b, n));
 }
 
-function catTone(cat) {
+function confidenceColor(level) {
+  if (level === "High") return "border-[rgba(34,197,94,0.45)] bg-[rgba(34,197,94,0.10)] text-[rgba(240,253,244,0.92)]";
+  if (level === "Medium") return "border-[rgba(245,158,11,0.45)] bg-[rgba(245,158,11,0.10)] text-[rgba(255,251,235,0.92)]";
+  return "border-[rgba(255,255,255,0.14)] bg-[rgba(255,255,255,0.05)] text-[rgba(255,255,255,0.82)]";
+}
+
+function categoryBadge(cat) {
   const key = (cat || "").toLowerCase();
-  if (key.includes("fraud")) return "border-amber-500 text-amber-700";
-  if (key.includes("cyber")) return "border-sky-500 text-sky-700";
-  if (key.includes("terror")) return "border-rose-500 text-rose-700";
-  if (key.includes("vawg")) return "border-fuchsia-500 text-fuchsia-700";
-  if (key.includes("csam") || key.includes("child")) return "border-violet-500 text-violet-700";
-  if (key.includes("model")) return "border-slate-500 text-slate-700";
-  return "border-slate-400 text-slate-700";
+  if (key.includes("fraud")) return "border-[rgba(245,158,11,0.45)] bg-[rgba(245,158,11,0.10)] text-[rgba(255,251,235,0.92)]";
+  if (key.includes("cyber")) return "border-[rgba(6,182,212,0.45)] bg-[rgba(6,182,212,0.10)] text-[rgba(236,254,255,0.92)]";
+  if (key.includes("terror")) return "border-[rgba(244,63,94,0.45)] bg-[rgba(244,63,94,0.10)] text-[rgba(255,241,242,0.92)]";
+  if (key.includes("vawg")) return "border-[rgba(217,70,239,0.45)] bg-[rgba(217,70,239,0.10)] text-[rgba(253,244,255,0.92)]";
+  if (key.includes("csam") || key.includes("child")) return "border-[rgba(139,92,246,0.45)] bg-[rgba(139,92,246,0.10)] text-[rgba(245,243,255,0.92)]";
+  return "border-[rgba(255,255,255,0.14)] bg-[rgba(255,255,255,0.05)] text-[rgba(255,255,255,0.82)]";
 }
 
 export default function App() {
   const [payload, setPayload] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const [activeTab, setActiveTab] = useState("signals");
-  const [searchTerm, setSearchTerm] = useState("");
+  // Views (feels more like “dashboards”)
+  const [view, setView] = useState("overview"); // overview | harms | signals | releases | incidents | forums
 
+  // Controls
+  const [searchTerm, setSearchTerm] = useState("");
   const [timeFilter, setTimeFilter] = useState("7d");
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [sourceFilter, setSourceFilter] = useState("All"); // All | News | Forum
   const [hideLowRel, setHideLowRel] = useState(true);
-
-  const [showN, setShowN] = useState({
-    signals: 24,
-    harms: 48,
-    forums: 36,
-    dev_releases: 24,
-    aiid: 36,
-  });
+  const [showN, setShowN] = useState(30);
+  const [showFilters, setShowFilters] = useState(true);
 
   async function load() {
     setLoading(true);
     try {
-      const res = await axios.get(
-        `${import.meta.env.BASE_URL}news_data.json?ts=${Date.now()}`
-      );
+      const res = await axios.get(`${import.meta.env.BASE_URL}news_data.json?ts=${Date.now()}`);
       setPayload(res.data);
-    } catch (err) {
-      console.error("Failed to load news_data.json", err);
+    } catch (e) {
+      console.error(e);
       setPayload(null);
     }
     setLoading(false);
@@ -90,6 +99,14 @@ export default function App() {
   const meta = payload?.meta || {};
   const limits = meta?.limits || {};
   const errors = meta?.errors || {};
+
+  const counts = useMemo(() => ({
+    harms: (sections.harms || []).length,
+    signals: (sections.signals || []).length,
+    dev_releases: (sections.dev_releases || []).length,
+    aiid: (sections.aiid || []).length,
+    forums: (sections.forums || []).length,
+  }), [sections]);
 
   const allCategories = useMemo(() => {
     const cats = new Set();
@@ -108,12 +125,7 @@ export default function App() {
     const source = (item?.source || "").toLowerCase();
     const tags = (item?.tags || []).join(" ").toLowerCase();
     const cat = (item?.category || item?.primary_category || "").toLowerCase();
-    return (
-      title.includes(q) ||
-      source.includes(q) ||
-      tags.includes(q) ||
-      cat.includes(q)
-    );
+    return title.includes(q) || source.includes(q) || tags.includes(q) || cat.includes(q);
   }
 
   function matchesCommon(item) {
@@ -131,7 +143,6 @@ export default function App() {
         if (sourceFilter === "News" && st !== "news") return false;
         if (sourceFilter === "Forum" && st !== "forum") return false;
       }
-      // Signals don't have source_type; we infer from their links
       if (!st && item?.links?.length) {
         const anyForum = item.links.some((l) => (l?.source_type || "").toLowerCase() === "forum");
         const anyNews = item.links.some((l) => (l?.source_type || "").toLowerCase() === "news");
@@ -141,7 +152,6 @@ export default function App() {
     }
 
     if (hideLowRel && item?.relevance_score !== undefined) {
-      // Only applies to harms (and signal links); conservative default
       if (Number(item.relevance_score) === 0) return false;
     }
 
@@ -149,433 +159,425 @@ export default function App() {
     return true;
   }
 
-  const tabs = [
-    { id: "signals", label: "Signals", icon: TrendingUp },
-    { id: "harms", label: "Harms", icon: Shield },
-    { id: "forums", label: "Forums", icon: MessageSquare },
-    { id: "dev_releases", label: "Model Releases", icon: Cpu },
-    { id: "aiid", label: "Incident DB", icon: Database },
-  ];
+  // Derived content per view
+  const harms = (sections.harms || []).filter(matchesCommon).slice(0, showN);
+  const signals = (sections.signals || []).filter(matchesCommon).slice(0, showN);
+  const releases = (sections.dev_releases || []).filter(matchesCommon).slice(0, showN);
+  const incidents = (sections.aiid || []).filter(matchesCommon).slice(0, showN);
+  const forums = (sections.forums || []).filter(matchesCommon).slice(0, showN);
 
-  const counts = {
-    signals: (sections?.signals || []).length,
-    harms: (sections?.harms || []).length,
-    forums: (sections?.forums || []).length,
-    dev_releases: (sections?.dev_releases || []).length,
-    aiid: (sections?.aiid || []).length,
-  };
+  // Overview metrics
+  const topCats = useMemo(() => {
+    const m = new Map();
+    (sections.harms || []).forEach((h) => {
+      const c = h.category || "Other";
+      m.set(c, (m.get(c) || 0) + 1);
+    });
+    const arr = Array.from(m.entries()).sort((a, b) => b[1] - a[1]);
+    return arr.slice(0, 6);
+  }, [sections.harms]);
+
+  const maxTopCat = topCats.reduce((mx, [, v]) => Math.max(mx, v), 1);
 
   return (
-    <div className="min-h-screen bg-white text-slate-900">
-      {/* HEADER */}
-      <header className="border-b border-slate-200 px-6 md:px-8 py-6 sticky top-0 bg-white/90 backdrop-blur z-40">
-        <div className="flex flex-col gap-3">
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <Shield size={18} />
-              <div className="flex flex-col">
-                <h1 className="font-bold text-sm uppercase tracking-tight">
-                  AI Harms Horizon Scan
-                </h1>
-                <div className="text-[11px] text-slate-500">
-                  {payload?.last_updated ? (
-                    <span className="font-mono">updated {payload.last_updated.slice(0, 19)}</span>
-                  ) : (
-                    <span className="text-slate-400">no timestamp</span>
-                  )}
+    <div className="min-h-screen">
+      {/* Shell */}
+      <div className="max-w-7xl mx-auto px-5 py-5">
+        <div className="grid grid-cols-1 lg:grid-cols-[260px,1fr] gap-4">
+          {/* Sidebar */}
+          <aside className="glass rounded-2xl p-4 animate-fadeUp">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <div className="flex items-center gap-2">
+                  <div className="h-2.5 w-2.5 rounded-full bg-[var(--accent)]" />
+                  <div className="text-sm font-semibold tracking-wide">
+                    AI Harms Horizon Scan
+                  </div>
+                </div>
+                <div className="text-[12px] text-[var(--muted)] mt-1 font-mono">
+                  {payload?.last_updated ? `updated ${payload.last_updated.slice(0, 19)}` : "loading…"}
                 </div>
               </div>
+
+              <button
+                onClick={load}
+                className="pill px-3 py-2 text-[12px] hover:bg-[rgba(255,255,255,0.06)] transition"
+                title="Refresh data"
+              >
+                <span className="inline-flex items-center gap-2">
+                  <RefreshCw size={14} className={loading ? "animate-spin" : ""} />
+                  Refresh
+                </span>
+              </button>
             </div>
 
-            <button
-              onClick={load}
-              className="inline-flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-full hover:bg-slate-100"
-              title="Refresh"
+            {payload?.disclaimer ? (
+              <div className="mt-3 text-[12px] text-[var(--muted)] leading-relaxed">
+                {payload.disclaimer}
+              </div>
+            ) : null}
+
+            <div className="hr my-4" />
+
+            <NavItem icon={<LayoutDashboard size={16} />} label="Overview" active={view === "overview"} onClick={() => setView("overview")} count={null} />
+            <NavItem icon={<Shield size={16} />} label="Harms" active={view === "harms"} onClick={() => setView("harms")} count={counts.harms} />
+            <NavItem icon={<TrendingUp size={16} />} label="Signals" active={view === "signals"} onClick={() => setView("signals")} count={counts.signals} />
+            <NavItem icon={<Cpu size={16} />} label="Model releases" active={view === "releases"} onClick={() => setView("releases")} count={counts.dev_releases} />
+            <NavItem icon={<Database size={16} />} label="Incident DB" active={view === "incidents"} onClick={() => setView("incidents")} count={counts.aiid} />
+            <NavItem icon={<MessageSquare size={16} />} label="Forums" active={view === "forums"} onClick={() => setView("forums")} count={counts.forums} />
+
+            <div className="hr my-4" />
+
+            {/* External reference link (your inspiration site) */}
+            <a
+              className="pill px-3 py-2 text-[12px] flex items-center justify-between hover:bg-[rgba(255,255,255,0.06)] transition"
+              href="https://airisk.mit.edu/ai-incident-tracker"
+              target="_blank"
+              rel="noreferrer"
+              title="Inspiration site"
             >
-              <RefreshCw size={14} className={loading ? "animate-spin" : ""} />
-              <span className="text-[11px] font-semibold">Refresh</span>
-            </button>
-          </div>
+              <span className="inline-flex items-center gap-2">
+                <ExternalLink size={14} />
+                MIT tracker
+              </span>
+              <span className="text-[var(--faint)]">opens</span>
+            </a>
 
-          {payload?.disclaimer && (
-            <div className="text-[12px] text-slate-600 max-w-4xl">
-              {payload.disclaimer}
+            {/* Note: MIT tracker explicitly describes interactive dashboards and incident view. [1](https://pipedream.com/apps/rss/integrations/mistral-ai/upload-file-with-mistral-ai-api-on-new-item-in-feed-from-rss-api-int_Gjsy1rNA)[2](https://tracefeed.com/ai/anthropic/) */}
+            <div className="mt-3 text-[11px] text-[var(--faint)] leading-relaxed">
+              Inspired by multi-view interactive dashboards (risk classification / incident view / timelines). [1](https://pipedream.com/apps/rss/integrations/mistral-ai/upload-file-with-mistral-ai-api-on-new-item-in-feed-from-rss-api-int_Gjsy1rNA)[2](https://tracefeed.com/ai/anthropic/)
             </div>
-          )}
+          </aside>
 
-          {/* SEARCH + FILTERS */}
-          <div className="flex flex-col md:flex-row md:items-center gap-3">
-            <div className="relative flex-1">
-              <Search
-                size={14}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
-              />
-              <input
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search titles, sources, tags…"
-                className="w-full bg-slate-50 border border-slate-200 rounded-full py-2 pl-9 pr-4 text-xs focus:outline-none focus:ring-2 focus:ring-slate-200"
-              />
-            </div>
+          {/* Main */}
+          <section className="animate-fadeUp">
+            {/* Toolbar */}
+            <div className="glass rounded-2xl p-4">
+              <div className="flex flex-col xl:flex-row xl:items-center gap-3">
+                <div className="relative flex-1">
+                  <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--faint)]" />
+                  <input
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    placeholder="Search titles, sources, tags…"
+                    className="w-full rounded-xl bg-[rgba(255,255,255,0.04)] border border-[var(--border)] px-9 py-2 text-sm outline-none focus:ring-2 focus:ring-[rgba(79,70,229,0.35)]"
+                  />
+                </div>
 
-            <div className="flex flex-wrap items-center gap-2">
-              <div className="inline-flex items-center gap-2 text-xs text-slate-500">
-                <Filter size={14} />
-                Filters
+                <div className="flex items-center gap-2 flex-wrap">
+                  <button
+                    onClick={() => setShowFilters((v) => !v)}
+                    className="pill px-3 py-2 text-sm hover:bg-[rgba(255,255,255,0.06)] transition"
+                  >
+                    <span className="inline-flex items-center gap-2">
+                      <SlidersHorizontal size={14} />
+                      Filters
+                    </span>
+                  </button>
+
+                  <select className="pill px-3 py-2 text-sm bg-transparent" value={timeFilter} onChange={(e) => setTimeFilter(e.target.value)}>
+                    <option value="24h">Last 24h</option>
+                    <option value="7d">Last 7d</option>
+                    <option value="30d">Last 30d</option>
+                    <option value="All">Any time</option>
+                  </select>
+
+                  <select className="pill px-3 py-2 text-sm bg-transparent" value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)}>
+                    {allCategories.map((c) => <option key={c} value={c}>{c}</option>)}
+                  </select>
+
+                  <select className="pill px-3 py-2 text-sm bg-transparent" value={sourceFilter} onChange={(e) => setSourceFilter(e.target.value)}>
+                    <option value="All">All sources</option>
+                    <option value="News">News only</option>
+                    <option value="Forum">Forums only</option>
+                  </select>
+
+                  <select className="pill px-3 py-2 text-sm bg-transparent" value={showN} onChange={(e) => setShowN(parseInt(e.target.value, 10))} title="How many items to show">
+                    {[18, 24, 30, 48, 72, 100].map((n) => <option key={n} value={n}>Show {n}</option>)}
+                  </select>
+
+                  <label className="pill px-3 py-2 text-sm inline-flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" checked={hideLowRel} onChange={(e) => setHideLowRel(e.target.checked)} />
+                    Hide low relevance
+                  </label>
+                </div>
               </div>
 
-              <select
-                className="text-xs border border-slate-200 rounded-full px-3 py-2 bg-white"
-                value={timeFilter}
-                onChange={(e) => setTimeFilter(e.target.value)}
-                title="Recency filter"
-              >
-                <option value="24h">Last 24h</option>
-                <option value="7d">Last 7d</option>
-                <option value="30d">Last 30d</option>
-                <option value="All">Any time</option>
-              </select>
-
-              <select
-                className="text-xs border border-slate-200 rounded-full px-3 py-2 bg-white"
-                value={categoryFilter}
-                onChange={(e) => setCategoryFilter(e.target.value)}
-                title="Category filter"
-              >
-                {allCategories.map((c) => (
-                  <option key={c} value={c}>{c}</option>
-                ))}
-              </select>
-
-              <select
-                className="text-xs border border-slate-200 rounded-full px-3 py-2 bg-white"
-                value={sourceFilter}
-                onChange={(e) => setSourceFilter(e.target.value)}
-                title="Source type"
-              >
-                <option value="All">All sources</option>
-                <option value="News">News only</option>
-                <option value="Forum">Forums only</option>
-              </select>
-
-              <label className="inline-flex items-center gap-2 text-xs text-slate-600 px-3 py-2 border border-slate-200 rounded-full bg-white">
-                <input
-                  type="checkbox"
-                  checked={hideLowRel}
-                  onChange={(e) => setHideLowRel(e.target.checked)}
-                />
-                Hide low relevance
-              </label>
-            </div>
-          </div>
-
-          {/* META */}
-          {limits && (
-            <div className="text-[11px] text-slate-500 flex flex-wrap gap-x-4 gap-y-1">
-              <span className="font-mono">TIME_WINDOW={String(limits.TIME_WINDOW || "")}</span>
-              <span className="font-mono">MAX_PER_HARM={String(limits.MAX_PER_HARM || "")}</span>
-              <span className="font-mono">MAX_RELEASES={String(limits.MAX_RELEASES || "")}</span>
-              <span className="font-mono">MAX_AI_ID={String(limits.MAX_AI_ID || "")}</span>
-              <span className="font-mono">MAX_FORUM_ITEMS={String(limits.MAX_FORUM_ITEMS || "")}</span>
-            </div>
-          )}
-        </div>
-      </header>
-
-      {/* TABS */}
-      <nav className="flex px-6 md:px-8 border-b border-slate-100 bg-white gap-6 overflow-x-auto">
-        {tabs.map((t) => (
-          <button
-            key={t.id}
-            onClick={() => setActiveTab(t.id)}
-            className={`py-4 text-[10px] font-bold uppercase tracking-widest border-b-2 whitespace-nowrap flex items-center gap-2 transition-all ${
-              activeTab === t.id
-                ? "border-slate-900 text-slate-900"
-                : "border-transparent text-slate-400 hover:text-slate-600"
-            }`}
-          >
-            <t.icon size={13} />
-            {t.label}
-            <span className="ml-1 text-[10px] text-slate-400 font-mono">
-              {counts[t.id] ?? 0}
-            </span>
-          </button>
-        ))}
-      </nav>
-
-      {/* CONTENT */}
-      <main className="p-6 md:p-8 max-w-7xl mx-auto">
-        {!payload && !loading && (
-          <div className="border border-red-200 bg-red-50 text-red-700 p-4 rounded-lg">
-            Failed to load <span className="font-mono">news_data.json</span>.
-          </div>
-        )}
-
-        {activeTab === "signals" && (
-          <SignalsView
-            items={(sections?.signals || []).filter(matchesCommon)}
-            showN={showN.signals}
-            setShowN={(n) => setShowN((s) => ({ ...s, signals: n }))}
-          />
-        )}
-
-        {activeTab === "harms" && (
-          <HarmsView
-            items={(sections?.harms || []).filter(matchesCommon)}
-            showN={showN.harms}
-            setShowN={(n) => setShowN((s) => ({ ...s, harms: n }))}
-          />
-        )}
-
-        {activeTab === "forums" && (
-          <ListView
-            title="Forums"
-            items={(sections?.forums || []).filter(matchesCommon)}
-            showN={showN.forums}
-            setShowN={(n) => setShowN((s) => ({ ...s, forums: n }))}
-            emptyHint={errors?.forums ? `Backend error: ${errors.forums}` : "No forum items returned."}
-            itemMeta={(it) => (it?.tags?.length ? it.tags.join(" · ") : "")}
-          />
-        )}
-
-        {activeTab === "dev_releases" && (
-          <ListView
-            title="Model Releases"
-            items={(sections?.dev_releases || []).filter(matchesCommon)}
-            showN={showN.dev_releases}
-            setShowN={(n) => setShowN((s) => ({ ...s, dev_releases: n }))}
-            emptyHint={errors?.dev_releases ? `Backend error: ${errors.dev_releases}` : "No model releases returned (try widening TIME_WINDOW or MAX_RELEASES)."}
-          />
-        )}
-
-        {activeTab === "aiid" && (
-          <AIIDView
-            items={(sections?.aiid || []).filter(matchesCommon)}
-            showN={showN.aiid}
-            setShowN={(n) => setShowN((s) => ({ ...s, aiid: n }))}
-            emptyHint={errors?.aiid ? `Backend error: ${errors.aiid}` : "No AIID incidents returned (Google RSS may be sparse)."}
-          />
-        )}
-      </main>
-    </div>
-  );
-}
-
-function ShowCount({ value, onChange }) {
-  return (
-    <div className="flex items-center gap-2">
-      <span className="text-[11px] text-slate-500">Show</span>
-      <select
-        className="text-xs border border-slate-200 rounded-full px-3 py-2 bg-white"
-        value={value}
-        onChange={(e) => onChange(parseInt(e.target.value, 10))}
-      >
-        {[12, 24, 36, 48, 72, 100].map((n) => (
-          <option key={n} value={n}>{n}</option>
-        ))}
-      </select>
-    </div>
-  );
-}
-
-function SignalsView({ items, showN, setShowN }) {
-  const sliced = items.slice(0, showN);
-
-  return (
-    <div className="space-y-5">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-        <div className="flex items-center gap-2 text-slate-700">
-          <Info size={16} />
-          <div className="text-[12px] text-slate-600 max-w-3xl">
-            <span className="font-semibold">Signals</span> group similar headlines within the same primary category,
-            across news + forums + model releases. They are a prioritisation aid, not verification.
-          </div>
-        </div>
-        <ShowCount value={showN} onChange={setShowN} />
-      </div>
-
-      {!sliced.length ? (
-        <EmptyState text="No signals match your filters." />
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {sliced.map((s) => {
-            const tone = catTone(s.primary_category);
-            return (
-              <article
-                key={s.signal_id}
-                className="border border-slate-200 rounded-lg p-5 bg-white hover:border-slate-300 transition"
-              >
-                <div className="flex justify-between items-start gap-3 mb-2">
-                  <div className={`text-[10px] uppercase tracking-widest border-l-2 pl-3 ${tone}`}>
-                    {s.primary_category || "Signal"}
-                    <span className="ml-2 text-slate-400 font-mono">
-                      {s.source_count ?? 0}s / {s.cluster_size ?? 0}i
-                    </span>
-                  </div>
-                  <span className={`text-[10px] px-2 py-1 rounded-full border ${badgeTone(s.confidence_label)}`}>
-                    {s.confidence_label || "Low"}
-                  </span>
+              {showFilters ? (
+                <div className="mt-3 text-[12px] text-[var(--muted)] flex flex-wrap gap-x-4 gap-y-1">
+                  {limits.TIME_WINDOW ? <span className="font-mono">TIME_WINDOW={String(limits.TIME_WINDOW)}</span> : null}
+                  {limits.RELEASE_TIME_WINDOW ? <span className="font-mono">RELEASE_TIME_WINDOW={String(limits.RELEASE_TIME_WINDOW)}</span> : null}
+                  {limits.INCIDENT_TIME_WINDOW ? <span className="font-mono">INCIDENT_TIME_WINDOW={String(limits.INCIDENT_TIME_WINDOW)}</span> : null}
+                  {errors && Object.keys(errors).length ? (
+                    <span className="font-mono text-[rgba(245,158,11,0.9)]">warnings: {Object.keys(errors).length}</span>
+                  ) : null}
                 </div>
-
-                <div className="text-sm font-bold leading-snug mb-2">{s.title}</div>
-
-                {s.ai_summary && (
-                  <div className="text-[12px] text-slate-600 mb-3">{s.ai_summary}</div>
-                )}
-
-                {s.why_this_is_a_signal && (
-                  <div className="text-[11px] text-slate-500 mb-3">{s.why_this_is_a_signal}</div>
-                )}
-
-                <div className="text-[11px] text-slate-400 font-mono mb-2">
-                  latest {fmtDateShort(s.latest_date)}
-                </div>
-
-                <div className="space-y-1">
-                  {(s.links || []).slice(0, 6).map((l, i) => (
-                    <a
-                      key={i}
-                      href={l.link}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="block text-[11px] text-blue-700 hover:underline"
-                    >
-                      {(l.source_type || "news").toUpperCase()} · {l.source}: {l.title}
-                    </a>
-                  ))}
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function HarmsView({ items, showN, setShowN }) {
-  const sliced = items.slice(0, showN);
-
-  return (
-    <div className="space-y-5">
-      <div className="flex items-center justify-between gap-3">
-        <div className="text-[12px] text-slate-600">
-          Raw query hits bucketed by category (use “Hide low relevance” to reduce noise).
-        </div>
-        <ShowCount value={showN} onChange={setShowN} />
-      </div>
-
-      {!sliced.length ? (
-        <EmptyState text="No harms items match your filters." />
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {sliced.map((h, i) => {
-            const tone = catTone(h.category);
-            return (
-              <article
-                key={`${h.link || ""}-${i}`}
-                className="border border-slate-200 rounded-lg p-5 bg-slate-50/30 hover:border-slate-300 transition"
-              >
-                <div className="flex justify-between items-start gap-3 mb-2">
-                  <div className={`text-[10px] uppercase tracking-widest border-l-2 pl-3 ${tone}`}>
-                    {h.category || "Other"}
-                  </div>
-                  {h.relevance_score !== undefined && (
-                    <span className="text-[10px] text-slate-400 font-mono">
-                      rel {h.relevance_score}
-                    </span>
-                  )}
-                </div>
-
-                <a
-                  href={h.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-sm font-bold hover:underline block"
-                >
-                  {h.title}
-                </a>
-
-                <div className="mt-2 text-[11px] text-slate-500">
-                  {h.source}
-                  <span className="ml-2 text-slate-400 font-mono">
-                    {fmtDateShort(h.date)}
-                  </span>
-                </div>
-              </article>
-            );
-          })}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function ListView({ title, items, showN, setShowN, emptyHint, itemMeta }) {
-  const sliced = items.slice(0, showN);
-
-  return (
-    <div className="space-y-5">
-      <div className="flex items-center justify-between gap-3">
-        <div className="text-[12px] text-slate-600">{title}</div>
-        <ShowCount value={showN} onChange={setShowN} />
-      </div>
-
-      {!sliced.length ? (
-        <EmptyState text={emptyHint || "No items returned."} />
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {sliced.map((it, i) => (
-            <article key={`${it.link || ""}-${i}`} className="border border-slate-200 rounded-lg p-5 bg-white hover:border-slate-300 transition">
-              <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-2">
-                {it.source || title}
-                <span className="ml-2 text-slate-400 font-mono">{fmtDateShort(it.date)}</span>
-              </div>
-
-              <a href={it.link} target="_blank" rel="noreferrer" className="text-sm font-bold hover:underline">
-                {it.title}
-              </a>
-
-              {itemMeta && itemMeta(it) ? (
-                <div className="mt-2 text-[11px] text-slate-500">{itemMeta(it)}</div>
               ) : null}
-            </article>
-          ))}
+            </div>
+
+            {/* View content */}
+            <div className="mt-4">
+              {loading && !payload ? <OverviewSkeleton /> : null}
+              {!loading && !payload ? (
+                <div className="card p-4 text-sm text-[rgba(255,255,255,0.85)]">
+                  Failed to load <span className="font-mono">news_data.json</span>.
+                </div>
+              ) : null}
+
+              {!loading && payload && view === "overview" ? (
+                <Overview
+                  counts={counts}
+                  topCats={topCats}
+                  maxTopCat={maxTopCat}
+                  errors={errors}
+                  limits={limits}
+                />
+              ) : null}
+
+              {!loading && payload && view === "signals" ? (
+                <SignalsView items={signals} emptyHint="No signals match your filters." />
+              ) : null}
+
+              {!loading && payload && view === "harms" ? (
+                <TableView
+                  title="Harms"
+                  subtitle="Raw query hits bucketed by category."
+                  rows={harms}
+                  kind="harms"
+                  emptyHint="No harms items match your filters."
+                />
+              ) : null}
+
+              {!loading && payload && view === "releases" ? (
+                <TableView
+                  title="Model releases"
+                  subtitle="Official posts + credible coverage of releases and model/system cards."
+                  rows={releases}
+                  kind="releases"
+                  emptyHint={errors?.dev_releases ? `Backend error: ${errors.dev_releases}` : "No model releases returned."}
+                />
+              ) : null}
+
+              {!loading && payload && view === "incidents" ? (
+                <TableView
+                  title="Incident DB"
+                  subtitle="Incident entries (can be backed by MIT tracker or AIID)."
+                  rows={incidents}
+                  kind="aiid"
+                  emptyHint={errors?.aiid ? `Backend error: ${errors.aiid}` : "No incidents returned."}
+                />
+              ) : null}
+
+              {!loading && payload && view === "forums" ? (
+                <TableView
+                  title="Forums"
+                  subtitle="High-noise sources; we can refine separately."
+                  rows={forums}
+                  kind="forums"
+                  emptyHint={errors?.forums ? `Backend error: ${errors.forums}` : "No forum items returned."}
+                />
+              ) : null}
+            </div>
+          </section>
         </div>
-      )}
+      </div>
     </div>
   );
 }
 
-function AIIDView({ items, showN, setShowN, emptyHint }) {
-  const sliced = items.slice(0, showN);
-
+function NavItem({ icon, label, active, onClick, count }) {
   return (
-    <div className="space-y-5">
-      <div className="flex items-center justify-between gap-3">
-        <div className="text-[12px] text-slate-600">AI Incident Database (AIID)</div>
-        <ShowCount value={showN} onChange={setShowN} />
+    <button
+      onClick={onClick}
+      className={`w-full text-left px-3 py-2 rounded-xl mb-1 transition flex items-center justify-between ${
+        active
+          ? "bg-[rgba(79,70,229,0.18)] border border-[rgba(79,70,229,0.25)]"
+          : "hover:bg-[rgba(255,255,255,0.05)]"
+      }`}
+    >
+      <span className="inline-flex items-center gap-2 text-sm">
+        <span className="text-[var(--muted)]">{icon}</span>
+        <span className="text-[rgba(255,255,255,0.92)]">{label}</span>
+      </span>
+      {count !== null && count !== undefined ? (
+        <span className="text-[11px] font-mono text-[var(--muted)]">{count}</span>
+      ) : null}
+    </button>
+  );
+}
+
+function Overview({ counts, topCats, maxTopCat, errors, limits }) {
+  return (
+    <div className="space-y-4">
+      {/* Metric cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+        <MetricCard title="Harms" value={counts.harms} hint="Raw items" accent="var(--accent)" />
+        <MetricCard title="Signals" value={counts.signals} hint="Clusters" accent="var(--accent-2)" />
+        <MetricCard title="Model releases" value={counts.dev_releases} hint="Release feed" accent="var(--accent)" />
+        <MetricCard title="Incidents" value={counts.aiid} hint="Incident DB" accent="var(--accent-2)" />
       </div>
 
-      {!sliced.length ? (
-        <EmptyState text={emptyHint || "No incidents returned."} />
+      {/* Category distribution (simple bar chart) */}
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+        <div className="card card-hover p-4">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <div className="text-sm font-semibold">Top harm categories</div>
+              <div className="text-[12px] text-[var(--muted)] mt-1">
+                Quick distribution view (helps “scan” without reading everything).
+              </div>
+            </div>
+            <div className="pill px-2 py-1 text-[11px] text-[var(--muted)] font-mono">
+              {counts.harms} total
+            </div>
+          </div>
+
+          <div className="mt-3 space-y-2">
+            {topCats.map(([cat, n]) => (
+              <div key={cat}>
+                <div className="flex items-center justify-between text-[12px] text-[var(--muted)]">
+                  <span className={`inline-flex items-center gap-2`}>
+                    <span className={`px-2 py-0.5 rounded-full border ${categoryBadge(cat)} text-[11px]`}>
+                      {cat}
+                    </span>
+                  </span>
+                  <span className="font-mono">{n}</span>
+                </div>
+                <div className="mt-1 h-2 rounded-full bg-[rgba(255,255,255,0.06)] overflow-hidden">
+                  <div
+                    className="h-2 rounded-full"
+                    style={{
+                      width: `${clamp((n / maxTopCat) * 100, 4, 100)}%`,
+                      background: "linear-gradient(90deg, var(--accent), var(--accent-2))",
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Notes + warnings */}
+        <div className="card card-hover p-4">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <div className="text-sm font-semibold">About this dashboard</div>
+              <div className="text-[12px] text-[var(--muted)] mt-1">
+                The inspiration site emphasises interactive exploration (multiple dashboards and incident views). [1](https://pipedream.com/apps/rss/integrations/mistral-ai/upload-file-with-mistral-ai-api-on-new-item-in-feed-from-rss-api-int_Gjsy1rNA)[2](https://tracefeed.com/ai/anthropic/)
+              </div>
+            </div>
+            <span className="pill px-2 py-1 text-[11px] text-[var(--muted)] font-mono">
+              PoC
+            </span>
+          </div>
+
+          <div className="mt-3 space-y-2 text-[12px] text-[var(--muted)] leading-relaxed">
+            {limits?.TIME_WINDOW ? (
+              <div><span className="font-mono">TIME_WINDOW</span> is <span className="font-mono">{String(limits.TIME_WINDOW)}</span> (harms).</div>
+            ) : null}
+            {limits?.RELEASE_TIME_WINDOW ? (
+              <div><span className="font-mono">RELEASE_TIME_WINDOW</span> is <span className="font-mono">{String(limits.RELEASE_TIME_WINDOW)}</span> (releases).</div>
+            ) : null}
+            {limits?.INCIDENT_TIME_WINDOW ? (
+              <div><span className="font-mono">INCIDENT_TIME_WINDOW</span> is <span className="font-mono">{String(limits.INCIDENT_TIME_WINDOW)}</span> (incidents).</div>
+            ) : null}
+
+            {errors && Object.keys(errors).length ? (
+              <div className="mt-2 border border-[rgba(245,158,11,0.35)] bg-[rgba(245,158,11,0.08)] rounded-xl p-3">
+                <div className="text-[12px] font-semibold text-[rgba(255,251,235,0.92)]">Warnings</div>
+                <div className="text-[12px] text-[rgba(255,251,235,0.85)] mt-1">
+                  Some sources failed or returned empty. See <span className="font-mono">meta.errors</span> in <span className="font-mono">news_data.json</span>.
+                </div>
+              </div>
+            ) : (
+              <div className="mt-2 border border-[rgba(34,197,94,0.30)] bg-[rgba(34,197,94,0.06)] rounded-xl p-3">
+                <div className="text-[12px] font-semibold text-[rgba(240,253,244,0.92)]">All sources healthy</div>
+                <div className="text-[12px] text-[rgba(240,253,244,0.80)] mt-1">
+                  No backend errors reported in <span className="font-mono">meta.errors</span>.
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MetricCard({ title, value, hint, accent }) {
+  return (
+    <div className="card card-hover p-4">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <div className="text-[12px] text-[var(--muted)]">{hint}</div>
+          <div className="text-sm font-semibold mt-1">{title}</div>
+        </div>
+        <div className="h-8 w-8 rounded-xl" style={{ background: `linear-gradient(180deg, ${accent}, rgba(255,255,255,0.06))`, opacity: 0.9 }} />
+      </div>
+      <div className="mt-3 text-3xl font-semibold tracking-tight">{value ?? 0}</div>
+      <div className="mt-2 h-1.5 rounded-full bg-[rgba(255,255,255,0.06)] overflow-hidden">
+        <div className="h-1.5 rounded-full" style={{ width: `${clamp((value || 0) / 200 * 100, 4, 100)}%`, background: `linear-gradient(90deg, ${accent}, rgba(255,255,255,0.25))` }} />
+      </div>
+    </div>
+  );
+}
+
+function SignalsView({ items, emptyHint }) {
+  return (
+    <div className="card p-4">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <div className="text-sm font-semibold">Signals</div>
+          <div className="text-[12px] text-[var(--muted)] mt-1">
+            Clusters of similar headlines within a primary category (prioritisation aid, not verification).
+          </div>
+        </div>
+        <span className="pill px-2 py-1 text-[11px] text-[var(--muted)] font-mono">{items.length}</span>
+      </div>
+
+      <div className="hr my-4" />
+
+      {!items.length ? (
+        <div className="text-sm text-[var(--muted)]">{emptyHint}</div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {sliced.map((it, i) => (
-            <article key={`${it.link || ""}-${i}`} className="border border-slate-200 rounded-lg p-5 bg-white hover:border-slate-300 transition">
-              <div className="text-[10px] uppercase tracking-widest text-slate-500 mb-2">
-                AIID
-                {it.incident_no !== undefined ? (
-                  <span className="ml-2 text-slate-400 font-mono">Incident {it.incident_no}</span>
-                ) : null}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+          {items.map((s) => (
+            <article key={s.signal_id} className="card card-hover p-4">
+              <div className="flex items-start justify-between gap-3">
+                <span className={`inline-flex px-2 py-1 text-[11px] rounded-full border ${categoryBadge(s.primary_category)}`}>
+                  {s.primary_category || "Signal"}
+                </span>
+                <span className={`inline-flex px-2 py-1 text-[11px] rounded-full border ${confidenceColor(s.confidence_label)}`}>
+                  {s.confidence_label || "Low"}
+                </span>
               </div>
 
-              <a href={it.link} target="_blank" rel="noreferrer" className="text-sm font-bold hover:underline">
-                {it.title}
-              </a>
+              <div className="mt-2 text-sm font-semibold leading-snug">
+                {s.title}
+              </div>
 
-              <div className="mt-2 text-[11px] text-slate-500 font-mono">
-                {fmtDateShort(it.date)}
+              {s.ai_summary ? (
+                <div className="mt-2 text-[12px] text-[var(--muted)] leading-relaxed">
+                  {s.ai_summary}
+                </div>
+              ) : null}
+
+              <div className="mt-3 text-[11px] text-[var(--faint)] font-mono">
+                latest {fmtDateShort(s.latest_date)} · {s.source_count ?? 0}s / {s.cluster_size ?? 0}i
+              </div>
+
+              <div className="mt-3 space-y-1">
+                {(s.links || []).slice(0, 5).map((l, i) => (
+                  <a
+                    key={i}
+                    href={l.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="block text-[12px] text-[rgba(147,197,253,0.95)] hover:underline"
+                  >
+                    {(l.source_type || "news").toUpperCase()} · {l.source}: {l.title}
+                  </a>
+                ))}
               </div>
             </article>
           ))}
@@ -585,10 +587,90 @@ function AIIDView({ items, showN, setShowN, emptyHint }) {
   );
 }
 
-function EmptyState({ text }) {
+function TableView({ title, subtitle, rows, kind, emptyHint }) {
   return (
-    <div className="border border-slate-200 bg-slate-50 text-slate-600 p-4 rounded-lg text-sm">
-      {text}
+    <div className="card p-4">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <div className="text-sm font-semibold">{title}</div>
+          <div className="text-[12px] text-[var(--muted)] mt-1">{subtitle}</div>
+        </div>
+        <span className="pill px-2 py-1 text-[11px] text-[var(--muted)] font-mono">{rows.length}</span>
+      </div>
+
+      <div className="hr my-4" />
+
+      {!rows.length ? (
+        <div className="text-sm text-[var(--muted)]">{emptyHint}</div>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="min-w-full">
+            <thead>
+              <tr className="text-left text-[11px] text-[var(--faint)]">
+                <th className="py-2 pr-4 w-36">Category</th>
+                <th className="py-2 pr-4">Title</th>
+                <th className="py-2 pr-4 w-44">Source</th>
+                <th className="py-2 pr-4 w-28">Date</th>
+                {kind === "harms" ? <th className="py-2 pr-4 w-16">Rel</th> : null}
+                {kind === "aiid" ? <th className="py-2 pr-4 w-20">ID</th> : null}
+              </tr>
+            </thead>
+            <tbody className="text-sm">
+              {rows.map((r, idx) => {
+                const category =
+                  kind === "harms" ? r.category :
+                  kind === "releases" ? "Releases" :
+                  kind === "aiid" ? "AIID" :
+                  (r.tags && r.tags[0]) || "Other";
+                return (
+                  <tr key={`${r.link || ""}-${idx}`} className="border-t border-[var(--border)]">
+                    <td className="py-3 pr-4 align-top">
+                      <span className={`inline-flex px-2 py-1 text-[11px] rounded-full border ${categoryBadge(category)}`}>
+                        {category}
+                      </span>
+                    </td>
+                    <td className="py-3 pr-4 align-top">
+                      <a href={r.link} target="_blank" rel="noreferrer" className="hover:underline">
+                        {r.title}
+                      </a>
+                    </td>
+                    <td className="py-3 pr-4 align-top text-[var(--muted)]">
+                      {r.source || ""}
+                    </td>
+                    <td className="py-3 pr-4 align-top text-[var(--muted)] font-mono">
+                      {fmtDateShort(r.date)}
+                    </td>
+                    {kind === "harms" ? (
+                      <td className="py-3 pr-4 align-top text-[var(--muted)] font-mono">
+                        {r.relevance_score ?? ""}
+                      </td>
+                    ) : null}
+                    {kind === "aiid" ? (
+                      <td className="py-3 pr-4 align-top text-[var(--muted)] font-mono">
+                        {r.incident_no ?? ""}
+                      </td>
+                    ) : null}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function OverviewSkeleton() {
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+        {[0,1,2,3].map((i) => <div key={i} className="card p-4 skeleton h-[120px]" />)}
+      </div>
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+        <div className="card p-4 skeleton h-[260px]" />
+        <div className="card p-4 skeleton h-[260px]" />
+      </div>
     </div>
   );
 }
