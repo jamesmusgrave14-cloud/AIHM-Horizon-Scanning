@@ -22,9 +22,16 @@ DEFAULT_HARM_QUERIES = {
     "Other": "AI violence OR AI weapons OR AI drugs OR AI crime instructions",
 }
 
+# Forums: deliberately harms-adjacent only (avoid generic AI subs)
 DEFAULT_FORUM_FEEDS = [
+    {"name": "Reddit: scams (new)", "url": "https://old.reddit.com/r/Scams/new/.rss", "tags": ["forum", "reddit", "fraud"]},
+    {"name": "Reddit: socialengineering (new)", "url": "https://old.reddit.com/r/socialengineering/new/.rss", "tags": ["forum", "reddit", "fraud"]},
     {"name": "Reddit: netsec (new)", "url": "https://old.reddit.com/r/netsec/new/.rss", "tags": ["forum", "reddit", "cyber"]},
-    {"name": "HN: AI agents", "url": "https://hnrss.org/newest?q=AI+agent+OR+agentic", "tags": ["forum", "hn", "agents"]},
+    {"name": "Reddit: cybersecurity (new)", "url": "https://old.reddit.com/r/cybersecurity/new/.rss", "tags": ["forum", "reddit", "cyber"]},
+    {"name": "Reddit: malware (new)", "url": "https://old.reddit.com/r/Malware/new/.rss", "tags": ["forum", "reddit", "cyber"]},
+    {"name": "HN: phishing/scams", "url": "https://hnrss.org/newest?q=phishing+OR+scam+OR+fraud", "tags": ["forum", "hn", "fraud"]},
+    {"name": "HN: prompt injection/jailbreak", "url": "https://hnrss.org/newest?q=prompt+injection+OR+jailbreak", "tags": ["forum", "hn", "cyber"]},
+    {"name": "HN: malware/exploit", "url": "https://hnrss.org/newest?q=malware+OR+exploit+OR+vulnerability", "tags": ["forum", "hn", "cyber"]},
 ]
 
 # ---------- SETTINGS ----------
@@ -33,28 +40,27 @@ LOCALE_HL = os.getenv("NEWS_HL", "en-GB")
 LOCALE_GL = os.getenv("NEWS_GL", "GB")
 LOCALE_CEID = os.getenv("NEWS_CEID", "GB:en")
 
-# Harms are high volume; keep short
 TIME_WINDOW = os.getenv("TIME_WINDOW", "7d")
 
-# Model releases are low frequency; keep long
+# Releases are rare -> longer window is sane
 RELEASE_TIME_WINDOW = os.getenv("RELEASE_TIME_WINDOW", "365d")
 
-# Incidents low frequency; keep long
-INCIDENT_TIME_WINDOW = os.getenv("INCIDENT_TIME_WINDOW", "365d")
-
 MAX_PER_HARM = int(os.getenv("MAX_PER_HARM", "25"))
-MAX_RELEASES = int(os.getenv("MAX_RELEASES", "60"))
-MAX_AI_ID = int(os.getenv("MAX_AI_ID", "60"))
-MAX_FORUM_ITEMS = int(os.getenv("MAX_FORUM_ITEMS", "40"))
+MAX_RELEASES = int(os.getenv("MAX_RELEASES", "50"))
+MAX_FORUM_ITEMS = int(os.getenv("MAX_FORUM_ITEMS", "30"))
 
 SIGNAL_SIM_THRESHOLD = float(os.getenv("SIGNAL_SIM_THRESHOLD", "0.86"))
 
 # Dedupe strategy label for UI debug
 DEDUPE_MODE = os.getenv("DEDUPE_MODE", "title_fingerprint_v3")
 
-# Optional: true LLM summaries (safe to leave unset; deterministic summaries still produced)
+# Optional: true LLM summary (keep empty for deterministic-only)
 SUMMARY_OPENAI_API_KEY = os.getenv("SUMMARY_OPENAI_API_KEY", "").strip()
 SUMMARY_OPENAI_MODEL = os.getenv("SUMMARY_OPENAI_MODEL", "gpt-4.1-mini").strip()
+
+# Sources for releases
+OPENAI_NEWS_RSS = "https://openai.com/news/rss.xml"  # official feed referenced in OpenAI community thread 
+RUNDOWN_RSS = "https://rss.beehiiv.com/feeds/2R3C6Bt5wj.xml"  # The Rundown AI RSS [1](https://rss.beehiiv.com/feeds/2R3C6Bt5wj.xml)
 
 HEADERS = {
     "User-Agent": "AIHM-Horizon-Scanning/1.0 (rss fetch)",
@@ -70,19 +76,23 @@ STOPWORDS = {
 
 HARM_CATEGORIES = set(DEFAULT_HARM_QUERIES.keys())
 
-# Release-only filters: keep "new model released" style items; exclude funding/partnership noise
+# Release-only filters (tighten to "new model releases", avoid funding/partnership noise)
 RELEASE_INCLUDE = [
     "introducing", "released", "launch", "rollout", "preview", "system card", "model card",
-    "open weights", "weights", "new model", "foundation model",
-    "gpt", "o3", "o4", "codex", "sora",
-    "gemini", "gemma",
-    "opus", "sonnet", "haiku", "claude",
-    "llama", "mistral", "pixtral", "codestral", "devstral",
-    "qwen", "deepseek"
+    "open weights", "open-weight", "weights", "new model", "foundation model",
+    "gpt", "o1", "o3", "codex", "gemini", "opus", "sonnet", "haiku", "llama",
+    "mistral", "qwen", "deepseek", "gemma", "mixtral", "phi", "seed", "kimi"
 ]
 RELEASE_EXCLUDE = [
     "funding", "raises", "series", "valuation", "partners", "partnership", "opens office",
-    "mou", "board", "appoint", "donating", "policy", "press", "contract"
+    "mou", "board", "appoint", "donating", "contract", "investment", "acquires", "acquisition"
+]
+
+# UK prioritisation keywords (simple heuristic)
+UK_TOKENS = [
+    " uk ", " united kingdom ", " britain ", " british ", " england ", " scotland ", " wales ",
+    " northern ireland ", " nhs ", " nca ", " metropolitan police ", " met police ", " home office ",
+    " ofcom ", " ico ", " cps ", " crown prosecution ", " westminster ", " parliament "
 ]
 
 # ---------- HELPERS ----------
@@ -95,6 +105,7 @@ def load_json_if_exists(path, fallback):
         except Exception:
             return fallback
     return fallback
+
 
 def parse_date(date_str):
     if not date_str:
@@ -111,20 +122,6 @@ def parse_date(date_str):
             pass
     return datetime.utcnow()
 
-def parse_date_loose(date_str):
-    """
-    For scraped pages where dates might look like:
-      "Feb 17, 2026" or "February 4, 2026" or "Jan 27, 2026"
-    """
-    if not date_str:
-        return datetime.utcnow()
-    s = str(date_str).strip()
-    for fmt in ["%b %d, %Y", "%B %d, %Y", "%b %d %Y", "%B %d %Y"]:
-        try:
-            return datetime.strptime(s, fmt)
-        except Exception:
-            pass
-    return datetime.utcnow()
 
 def google_rss_url(q, window):
     q2 = f"{q} when:{window}"
@@ -133,6 +130,7 @@ def google_rss_url(q, window):
         + quote_plus(q2)
         + f"&hl={LOCALE_HL}&gl={LOCALE_GL}&ceid={quote_plus(LOCALE_CEID)}"
     )
+
 
 def fetch_url(url, retries=3, base_sleep=1.0, allow_html=False):
     hdrs = dict(HEADERS)
@@ -154,16 +152,19 @@ def fetch_url(url, retries=3, base_sleep=1.0, allow_html=False):
             time.sleep(base_sleep * (i + 1))
     return b""
 
+
 def fetch_feed(url, retries=3, base_sleep=1.0):
     content = fetch_url(url, retries=retries, base_sleep=base_sleep, allow_html=False)
     if not content:
         return feedparser.parse(b"")
     return feedparser.parse(content)
 
+
 def strip_source_suffix(title):
     if not title:
         return ""
     return title.rsplit(" - ", 1)[0].strip()
+
 
 def norm_text(t):
     t = (t or "").lower()
@@ -173,17 +174,20 @@ def norm_text(t):
     t = re.sub(r"\s+", " ", t).strip()
     return t
 
+
 def stable_id(text):
     return hashlib.sha1(text.encode("utf-8")).hexdigest()[:16]
+
 
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
 
+
 def clean_url(url):
     """
-    Reduce URL uniqueness (helps dedupe Google News redirects).
+    Reduce URL uniqueness (helps dedupe Google News redirects):
     - removes utm_ params
-    - normalizes google news ?url= redirect patterns if present
+    - if query has ?url=<real>, return that
     """
     if not url:
         return ""
@@ -191,12 +195,13 @@ def clean_url(url):
         p = urlparse(url)
         qs = [(k, v) for (k, v) in parse_qsl(p.query, keep_blank_values=True) if not k.lower().startswith("utm_")]
         qsd = dict(qs)
-        if "url" in qsd and isinstance(qsd["url"], str) and qsd["url"].startswith("http"):
+        if "url" in qsd and qsd["url"].startswith("http"):
             return qsd["url"]
         p2 = p._replace(query=urlencode(qs))
         return urlunparse(p2)
     except Exception:
         return url
+
 
 def ensure_old_reddit(url):
     if not url:
@@ -204,6 +209,7 @@ def ensure_old_reddit(url):
     if "www.reddit.com" in url:
         return url.replace("www.reddit.com", "old.reddit.com")
     return url
+
 
 def query_keywords(q):
     q = (q or "").lower()
@@ -218,6 +224,7 @@ def query_keywords(q):
             out.append(t)
     return out[:14]
 
+
 def relevance_score(title, keywords):
     t = norm_text(title)
     if not t or not keywords:
@@ -227,6 +234,7 @@ def relevance_score(title, keywords):
         if kw in t:
             score += 1
     return score
+
 
 def dedupe_by_key(items, key_fn):
     seen = set()
@@ -239,15 +247,17 @@ def dedupe_by_key(items, key_fn):
         out.append(it)
     return out
 
+
 def fingerprint_title(title):
     """
-    Aggressive title fingerprint to dedupe across redirects and minor punctuation differences.
+    Aggressive normalization for dedupe: title-only fingerprint.
     """
     t = norm_text(strip_source_suffix(title or ""))
     for w in ["ai", "artificial intelligence", "model", "models", "llm", "chatbot"]:
         t = t.replace(w, "")
     t = re.sub(r"\s+", " ", t).strip()
     return t
+
 
 def extract_keywords(text, max_words=6):
     words = re.findall(r"[a-z]{4,}", (text or "").lower())
@@ -257,12 +267,14 @@ def extract_keywords(text, max_words=6):
         freq[w] = freq.get(w, 0) + 1
     return [w for w, _ in sorted(freq.items(), key=lambda x: x[1], reverse=True)[:max_words]]
 
-def summarize_list(titles, max_kws=6):
-    joined = " ".join(titles[:25])
+
+def summarize_list(titles, max_kws=7):
+    joined = " ".join(titles[:30])
     kws = extract_keywords(joined, max_words=max_kws)
     if not kws:
         return "No clear recurring themes detected."
     return "Recurring themes: " + ", ".join(kws) + "."
+
 
 def looks_like_release(title):
     t = (title or "").lower()
@@ -270,76 +282,48 @@ def looks_like_release(title):
         return False
     return any(x in t for x in RELEASE_INCLUDE)
 
-def signal_primary_category(tags):
-    tags = tags or []
-    for t in tags:
-        if t in HARM_CATEGORIES:
-            return t
-    if tags:
-        return tags[0]
-    return "Other"
 
-def classify_harm_subbucket(category, title):
+def uk_score_for_item(title, link, source):
+    t = f" {norm_text(title)} "
+    s = f" {norm_text(source)} "
+    u = (link or "").lower()
+    score = 0
+
+    for tok in UK_TOKENS:
+        if tok in t:
+            score += 2
+        if tok in s:
+            score += 1
+
+    # UK domains get a boost
+    if ".uk/" in u or u.endswith(".uk"):
+        score += 2
+
+    return score
+
+
+def assign_harm_category_from_text(title, harm_query_map):
     """
-    Clearer buckets within a category (deterministic keyword rules).
+    Assign a harm category to a forum item by checking overlap with that category's keywords.
+    Uses the harm_queries.json terms -> keywords.
     """
-    t = (title or "").lower()
+    t = norm_text(title)
+    best_cat = None
+    best = 0
+    for cat, q in harm_query_map.items():
+        kws = query_keywords(q)
+        score = 0
+        for kw in kws:
+            if kw in t:
+                score += 1
+        if score > best:
+            best = score
+            best_cat = cat
+    # require at least minimal overlap to avoid generic AI chatter
+    if best_cat and best >= 2:
+        return best_cat, best
+    return None, 0
 
-    if category == "Fraud":
-        if any(x in t for x in ["voice", "cloning", "impersonat"]): return ("Impersonation / voice", "Matched voice/impersonation keywords")
-        if any(x in t for x in ["phish", "credential", "login"]): return ("Phishing / credential theft", "Matched phishing/credential keywords")
-        if any(x in t for x in ["scam", "fraud", "con", "romance"]): return ("Scams", "Matched scam/fraud keywords")
-        return ("Other fraud", "No specific fraud sub-bucket match")
-
-    if category == "Cyber":
-        if any(x in t for x in ["prompt injection", "jailbreak"]): return ("Prompt injection / jailbreak", "Matched prompt injection/jailbreak keywords")
-        if any(x in t for x in ["malware", "ransom", "exploit", "vulnerab"]): return ("Malware / exploits", "Matched malware/exploit keywords")
-        if any(x in t for x in ["supply chain", "dependency", "package"]): return ("Supply chain", "Matched supply chain keywords")
-        return ("Other cyber", "No specific cyber sub-bucket match")
-
-    if category == "Terrorism":
-        if any(x in t for x in ["propaganda", "radical", "extrem"]): return ("Propaganda / radicalisation", "Matched propaganda/radicalisation keywords")
-        if any(x in t for x in ["attack", "weapon", "bomb"]): return ("Attack planning", "Matched attack-planning keywords")
-        return ("Other terrorism", "No specific terrorism sub-bucket match")
-
-    if category == "VAWG":
-        if any(x in t for x in ["deepfake", "nudify", "sexual image"]): return ("Synthetic sexual imagery", "Matched deepfake/nudify keywords")
-        if any(x in t for x in ["harass", "stalk", "abuse"]): return ("Harassment / stalking", "Matched harassment/stalking keywords")
-        return ("Other VAWG", "No specific VAWG sub-bucket match")
-
-    if category == "CSAM":
-        if any(x in t for x in ["generated", "synthetic", "ai-generated"]): return ("Synthetic CSAM", "Matched synthetic/AI-generated keywords")
-        return ("CSAM-related", "No specific CSAM sub-bucket match")
-
-    return ("Other", "Default sub-bucket")
-
-def openai_chat_summary(prompt, errors):
-    """
-    Optional LLM summary. If SUMMARY_OPENAI_API_KEY not set, caller should not call this.
-    Uses OpenAI Chat Completions endpoint; errors are recorded and we fall back to deterministic.
-    """
-    try:
-        url = "https://api.openai.com/v1/chat/completions"
-        headers = {
-            "Authorization": f"Bearer {SUMMARY_OPENAI_API_KEY}",
-            "Content-Type": "application/json",
-        }
-        payload = {
-            "model": SUMMARY_OPENAI_MODEL,
-            "messages": [
-                {"role": "system", "content": "You produce short, neutral summaries for horizon scanning dashboards. Avoid speculation and avoid sensitive personal data."},
-                {"role": "user", "content": prompt},
-            ],
-            "temperature": 0.2,
-        }
-        r = requests.post(url, headers=headers, json=payload, timeout=30)
-        r.raise_for_status()
-        data = r.json()
-        txt = data["choices"][0]["message"]["content"].strip()
-        return txt
-    except Exception as ex:
-        errors["llm_summary"] = str(ex)
-        return ""
 
 def summarize_signal(signal):
     tags = signal.get("tags") or []
@@ -347,28 +331,28 @@ def summarize_signal(signal):
     links = signal.get("links") or []
     joined = " ".join([(l.get("title") or "") for l in links[:6]])
     kws = extract_keywords(joined)
-    primary = signal.get("primary_category") or signal_primary_category(tags)
+    primary = signal.get("primary_category") or (tags[0] if tags else "Other")
     harm_txt = f"Potential {primary} harm" if primary in HARM_CATEGORIES else primary
     if kws:
         return f"{harm_txt}: recurring themes include {', '.join(kws)} ({src_count} sources)."
     return f"{harm_txt}: clustered coverage detected ({src_count} sources)."
 
-def cluster_to_signals(items):
+
+def cluster_to_signals(items, threshold=SIGNAL_SIM_THRESHOLD):
     clusters = []
     for it in items:
         title_key = fingerprint_title(it.get("title", ""))
         if not title_key:
             continue
-        tags = it.get("tags", []) or []
-        primary = signal_primary_category(tags)
+        primary = it.get("primary_category") or it.get("category") or "Other"
         cluster_key = f"{primary}::{title_key}"
 
         placed = False
         for c in clusters:
-            if similar(cluster_key, c["key"]) >= SIGNAL_SIM_THRESHOLD:
+            if similar(cluster_key, c["key"]) >= threshold:
                 c["items"].append(it)
                 c["sources"].add(it.get("source", ""))
-                c["tags"].update(tags)
+                c["tags"].update(it.get("tags", []))
                 c["last_seen"] = max(c["last_seen"], it.get("timestamp", 0))
                 c["first_seen"] = min(c["first_seen"], it.get("timestamp", 0))
                 placed = True
@@ -379,7 +363,7 @@ def cluster_to_signals(items):
                 "key": cluster_key,
                 "items": [it],
                 "sources": set([it.get("source", "")]),
-                "tags": set(tags),
+                "tags": set(it.get("tags", [])),
                 "first_seen": it.get("timestamp", 0),
                 "last_seen": it.get("timestamp", 0),
             })
@@ -388,15 +372,14 @@ def cluster_to_signals(items):
     for c in clusters:
         items_sorted = sorted(c["items"], key=lambda x: x.get("timestamp", 0), reverse=True)
         tags_sorted = sorted([t for t in c["tags"] if t])
-
-        primary = signal_primary_category(tags_sorted)
+        primary = items_sorted[0].get("primary_category") or items_sorted[0].get("category") or "Other"
         source_count = len([s for s in c["sources"] if s])
 
         signal = {
             "signal_id": stable_id(c["key"]),
             "title": items_sorted[0].get("title"),
             "primary_category": primary,
-            "tags": tags_sorted,
+            "tags": tags_sorted if tags_sorted else ([primary] if primary else []),
             "cluster_size": len(items_sorted),
             "source_count": source_count,
             "first_seen": c["first_seen"],
@@ -410,159 +393,50 @@ def cluster_to_signals(items):
                     "date": x.get("date"),
                     "source_type": x.get("source_type", "news"),
                     "category": x.get("category"),
-                    "relevance_score": x.get("relevance_score", 0),
+                    "uk_score": x.get("uk_score", 0),
                 }
                 for x in items_sorted[:8]
             ],
         }
 
-        confidence = min(1.0, (source_count / 5.0) + (len(items_sorted) / 20.0))
+        confidence = min(1.0, (source_count / 5.0) + (len(items_sorted) / 18.0))
         signal["confidence"] = round(confidence, 3)
         signal["confidence_label"] = "High" if confidence > 0.8 else "Medium" if confidence > 0.4 else "Low"
-
         signal["ai_summary"] = summarize_signal(signal)
-        signal["why_this_is_a_signal"] = (
-            "Clustered by headline similarity within the same primary category; "
-            f"{signal['cluster_size']} items across {signal['source_count']} sources."
-        )
-
         signals.append(signal)
 
-    signals.sort(
-        key=lambda s: (s.get("last_seen", 0), s.get("source_count", 0), s.get("cluster_size", 0)),
-        reverse=True
-    )
+    signals.sort(key=lambda s: (s.get("last_seen", 0), s.get("source_count", 0), s.get("cluster_size", 0)), reverse=True)
     return signals
 
 
-# ---------- MODEL RELEASE SOURCES (avoid Google News noise) ----------
-
-def releases_from_openai_rss(errors):
+def openai_summarise(prompt):
     """
-    OpenAI official RSS: https://openai.com/news/rss.xml [1](https://community.openai.com/t/openai-website-rss-feed-inquiry/733747)[2](https://community.openai.com/t/rss-feed-openai-research-index-rss-feed/1088852)
+    Optional true LLM summary via OpenAI API. Only used if SUMMARY_OPENAI_API_KEY is set.
+    Safe: if it fails, we fall back to deterministic summaries.
     """
-    url = "https://openai.com/news/rss.xml"
-    out = []
-    feed = fetch_feed(url, retries=3, base_sleep=1.0)
-    for e in feed.entries[:MAX_RELEASES]:
-        title = strip_source_suffix(getattr(e, "title", ""))
-        if not looks_like_release(title):
-            continue
-        published = getattr(e, "published", "") or getattr(e, "updated", "")
-        dt = parse_date(published)
-        link = clean_url(getattr(e, "link", ""))
-        if not title or not link:
-            continue
-        out.append({
-            "title": title,
-            "link": link,
-            "source": "OpenAI",
-            "timestamp": dt.timestamp(),
-            "date": published,
-            "source_type": "news",
-            "tags": ["Model Releases"],
-        })
-    return out
-
-def releases_from_deepmind_feed(errors):
-    """
-    DeepMind feed endpoint: https://deepmind.google/blog/feed/ [3](https://deepmind.google/blog/feed/)
-    """
-    url = "https://deepmind.google/blog/feed/"
-    out = []
-    feed = fetch_feed(url, retries=3, base_sleep=1.0)
-    for e in feed.entries[:MAX_RELEASES]:
-        title = strip_source_suffix(getattr(e, "title", ""))
-        if not looks_like_release(title):
-            continue
-        published = getattr(e, "published", "") or getattr(e, "updated", "")
-        dt = parse_date(published)
-        link = clean_url(getattr(e, "link", ""))
-        if not title or not link:
-            continue
-        out.append({
-            "title": title,
-            "link": link,
-            "source": "Google DeepMind",
-            "timestamp": dt.timestamp(),
-            "date": published,
-            "source_type": "news",
-            "tags": ["Model Releases"],
-        })
-    return out
-
-def scrape_list_page(url, errors, source_name):
-    """
-    Generic HTML list scraper: extracts (title, href, date-ish) from a list page.
-    This is intentionally conservative to avoid breaking often.
-    """
-    html = fetch_url(url, retries=3, base_sleep=1.0, allow_html=True)
-    if not html:
-        errors[f"scrape:{source_name}"] = f"No HTML returned from {url}"
-        return []
-    text = html.decode("utf-8", errors="ignore")
-
-    # Find candidate article links
-    # Keep absolute URLs.
-    links = re.findall(r'href="(https?://[^"]+)"', text, flags=re.IGNORECASE)
-    links = [l for l in links if source_name in l or urlparse(l).netloc in urlparse(url).netloc]
-    # Dedup while preserving order
-    seen = set()
-    links2 = []
-    for l in links:
-        if l in seen:
-            continue
-        seen.add(l)
-        links2.append(l)
-
-    # Extract titles near links (best-effort)
-    items = []
-    for l in links2[:200]:
-        # Try to find a nearby <a ...>Title</a>
-        m = re.search(r'href="' + re.escape(l) + r'".{0,200}>([^<]{4,140})<', text, flags=re.IGNORECASE | re.DOTALL)
-        title = ""
-        if m:
-            title = re.sub(r"\s+", " ", m.group(1)).strip()
-        if not title:
-            continue
-
-        # Try to find a nearby date string
-        # (This is heuristic; we accept empty and set timestamp to now.)
-        date_match = re.search(r'([A-Z][a-z]{2,8}\s+\d{1,2},\s+\d{4})', text[m.start():m.start()+600], flags=re.IGNORECASE)
-        date_str = date_match.group(1) if date_match else ""
-        dt = parse_date_loose(date_str) if date_str else datetime.utcnow()
-
-        items.append({
-            "title": strip_source_suffix(title),
-            "link": clean_url(l),
-            "source": source_name,
-            "timestamp": dt.timestamp(),
-            "date": date_str or "",
-            "source_type": "news",
-            "tags": ["Model Releases"],
-        })
-
-    return items
-
-def releases_from_anthropic(errors):
-    """
-    Anthropic releases/news page exists at https://www.anthropic.com/news [4](https://www.anthropic.com/news)[5](https://www.anthropic.com/news/claude-sonnet-4-6?cam=claude)
-    We'll scrape and filter to release-like titles.
-    """
-    url = "https://www.anthropic.com/news"
-    raw = scrape_list_page(url, errors, "anthropic.com")
-    out = [x for x in raw if looks_like_release(x["title"])]
-    return out
-
-def releases_from_mistral(errors):
-    """
-    Mistral has structured list at https://mistral.ai/news [6](https://mistral.ai/news)[7](https://mistral.ai/news/mistral-vibe-2-0)
-    We'll scrape and filter.
-    """
-    url = "https://mistral.ai/news"
-    raw = scrape_list_page(url, errors, "mistral.ai")
-    out = [x for x in raw if looks_like_release(x["title"])]
-    return out
+    if not SUMMARY_OPENAI_API_KEY:
+        return None
+    try:
+        url = "https://api.openai.com/v1/chat/completions"
+        headers = {
+            "Authorization": f"Bearer {SUMMARY_OPENAI_API_KEY}",
+            "Content-Type": "application/json",
+        }
+        payload = {
+            "model": SUMMARY_OPENAI_MODEL,
+            "messages": [
+                {"role": "system", "content": "You are a concise analyst. Summarise strictly from provided titles. Avoid speculation."},
+                {"role": "user", "content": prompt},
+            ],
+            "temperature": 0.2,
+            "max_tokens": 180,
+        }
+        r = requests.post(url, headers=headers, json=payload, timeout=25)
+        r.raise_for_status()
+        data = r.json()
+        return (data.get("choices") or [{}])[0].get("message", {}).get("content", "").strip() or None
+    except Exception:
+        return None
 
 
 # ---------- MAIN ----------
@@ -583,41 +457,28 @@ def run():
             "limits": {
                 "TIME_WINDOW": TIME_WINDOW,
                 "RELEASE_TIME_WINDOW": RELEASE_TIME_WINDOW,
-                "INCIDENT_TIME_WINDOW": INCIDENT_TIME_WINDOW,
                 "MAX_PER_HARM": MAX_PER_HARM,
                 "MAX_RELEASES": MAX_RELEASES,
-                "MAX_AI_ID": MAX_AI_ID,
                 "MAX_FORUM_ITEMS": MAX_FORUM_ITEMS,
                 "SIGNAL_SIM_THRESHOLD": SIGNAL_SIM_THRESHOLD,
             },
             "dedupe_mode": DEDUPE_MODE,
-            "llm_summary_enabled": bool(SUMMARY_OPENAI_API_KEY),
         },
         "sections": {
             "harms": [],
             "signals": [],
             "forums": [],
             "dev_releases": [],
-            "aiid": [],
         },
         "coverage": {"by_harm": {}},
         "summaries": {
-            "harms_overview": "",
             "harms_by_category": {},
-            "releases_overview": "",
+            "signals_top": "",
+            "releases_top": "",
         }
     }
 
-    # Global seen keys to reduce duplicates across sections
-    seen_global = set()
-
-    def seen_key(kind, title, source, link):
-        fp = fingerprint_title(title)
-        src = norm_text(source)
-        lk = clean_url(link)
-        return f"{kind}|{fp}|{src}|{lk}"
-
-    # 1) Harms (Google News RSS)
+    # 1) HARMS (Google News RSS, UK-prioritised sorting)
     raw_harm_items = []
     for cat, q in harm_queries.items():
         try:
@@ -633,92 +494,87 @@ def run():
                     src = getattr(getattr(e, "source", None), "title", None)
 
                 link = clean_url(getattr(e, "link", ""))
+
+                uk_score = uk_score_for_item(title, link, src or "")
                 rel = relevance_score(title, kws)
 
-                sub_bucket, sub_reason = classify_harm_subbucket(cat, title)
-
-                raw = {
+                item = {
                     "category": cat,
-                    "sub_bucket": sub_bucket,
-                    "sub_bucket_reason": sub_reason,
                     "title": title,
                     "link": link,
                     "source": src or "News",
                     "timestamp": dt.timestamp(),
                     "date": published,
                     "source_type": "news",
-                    "tags": [cat, sub_bucket],
+                    "tags": [cat],
                     "relevance_score": rel,
+                    "uk_score": uk_score,
+                    "uk_relevance": True if uk_score >= 2 else False,
                 }
-
-                k = seen_key("harms", raw["title"], raw["source"], raw["link"])
-                if k in seen_global:
-                    continue
-                seen_global.add(k)
-
-                raw_harm_items.append(raw)
-
-                report["sections"]["harms"].append({
-                    "category": cat,
-                    "sub_bucket": sub_bucket,
-                    "title": title,
-                    "link": link,
-                    "source": raw["source"],
-                    "timestamp": raw["timestamp"],
-                    "date": raw["date"],
-                    "relevance_score": rel,
-                })
+                raw_harm_items.append(item)
         except Exception as ex:
             errors[f"harms:{cat}"] = str(ex)
 
-    # Sort harms newest first
-    report["sections"]["harms"].sort(key=lambda x: x.get("timestamp", 0), reverse=True)
+    # Dedupe harms aggressively by category + fingerprint (ignores minor source/URL differences)
+    raw_harm_items = dedupe_by_key(
+        raw_harm_items,
+        lambda x: f"{x.get('category')}|{fingerprint_title(x.get('title'))}"
+    )
 
-    # Coverage by category + sub-bucket counts
+    # Sort within category: UK first, then relevance, then recency
+    raw_harm_items.sort(key=lambda x: (x.get("uk_score", 0), x.get("relevance_score", 0), x.get("timestamp", 0)), reverse=True)
+
+    report["sections"]["harms"] = [
+        {
+            "category": x["category"],
+            "title": x["title"],
+            "link": x["link"],
+            "source": x["source"],
+            "timestamp": x["timestamp"],
+            "date": x["date"],
+            "relevance_score": x["relevance_score"],
+            "uk_score": x["uk_score"],
+            "uk_relevance": x["uk_relevance"],
+        }
+        for x in raw_harm_items
+    ]
+
+    # Coverage per harm
     cov = {}
-    sub_cov = {}
     for it in report["sections"]["harms"]:
-        cat = it.get("category", "Other")
-        cov.setdefault(cat, {"count": 0, "last_seen": None})
-        cov[cat]["count"] += 1
-        cov[cat]["last_seen"] = max(cov[cat]["last_seen"] or 0, it.get("timestamp", 0))
-
-        sb = it.get("sub_bucket") or "Other"
-        sub_cov.setdefault(cat, {})
-        sub_cov[cat][sb] = sub_cov[cat].get(sb, 0) + 1
-
+        c = it.get("category", "Other")
+        cov.setdefault(c, {"count": 0, "uk_count": 0, "last_seen": None})
+        cov[c]["count"] += 1
+        if it.get("uk_relevance"):
+            cov[c]["uk_count"] += 1
+        cov[c]["last_seen"] = max(cov[c]["last_seen"] or 0, it.get("timestamp", 0))
     report["coverage"]["by_harm"] = cov
-    report["coverage"]["by_harm_subbucket"] = sub_cov
 
-    # Deterministic “overview” summaries
-    all_titles = [h["title"] for h in report["sections"]["harms"]]
-    report["summaries"]["harms_overview"] = summarize_list(all_titles)
+    # Deterministic harm summaries
+    for cat in harm_queries.keys():
+        titles = [h["title"] for h in report["sections"]["harms"] if h["category"] == cat]
+        report["summaries"]["harms_by_category"][cat] = summarize_list(titles)
 
-    by_cat = {}
-    for cat in cov.keys():
-        titles = [h["title"] for h in report["sections"]["harms"] if h.get("category") == cat]
-        by_cat[cat] = summarize_list(titles)
-    report["summaries"]["harms_by_category"] = by_cat
-
-    # Optional LLM summaries (if key provided)
+    # Optional LLM harm summaries (top 3 categories only, to limit cost)
     if SUMMARY_OPENAI_API_KEY:
-        # Short executive overview (harms)
-        prompt = (
-            "Write a 5-bullet executive summary of the most important AI-harms headlines in the last period. "
-            "Be neutral, avoid speculation, and do not over-claim. "
-            "Headlines:\n- " + "\n- ".join(all_titles[:40])
-        )
-        txt = openai_chat_summary(prompt, errors)
-        if txt:
-            report["summaries"]["harms_overview_llm"] = txt
+        try:
+            top3 = sorted(cov.items(), key=lambda kv: kv[1]["count"], reverse=True)[:3]
+            for cat, _ in top3:
+                titles = [h["title"] for h in report["sections"]["harms"] if h["category"] == cat][:20]
+                prompt = f"Summarise these headlines into 2 sentences for a policy audience. Category: {cat}\n- " + "\n- ".join(titles)
+                llm = openai_summarise(prompt)
+                if llm:
+                    report["summaries"]["harms_by_category"][cat] = llm
+        except Exception:
+            pass
 
-    # 2) Forums (left as-is; you said handle separately)
+    # 2) FORUMS (harms-tagged only)
     raw_forum_items = []
     try:
         for f in forum_feeds:
             name = f.get("name", "Forum")
             url = ensure_old_reddit((f.get("url") or "").strip())
-            tags = f.get("tags", ["forum"])
+            base_tags = f.get("tags", ["forum"])
             if not url:
                 continue
 
@@ -729,118 +585,173 @@ def run():
                 dt = parse_date(published)
                 link = clean_url(getattr(e, "link", ""))
 
+                # Assign harm category by overlap with harm query keywords
+                cat, score = assign_harm_category_from_text(title, harm_queries)
+                if not cat:
+                    continue  # drop generic AI chatter
+
+                uk_score = uk_score_for_item(title, link, name)
+
                 item = {
+                    "category": cat,
+                    "primary_category": cat,
                     "title": title,
                     "link": link,
                     "source": name,
                     "timestamp": dt.timestamp(),
                     "date": published,
                     "source_type": "forum",
-                    "tags": tags,
+                    "tags": list(set(base_tags + [cat])),
+                    "uk_score": uk_score,
+                    "uk_relevance": True if uk_score >= 2 else False,
+                    "forum_match_score": score,
                 }
-
-                k = seen_key("forums", item["title"], item["source"], item["link"])
-                if k in seen_global:
-                    continue
-                seen_global.add(k)
-
                 raw_forum_items.append(item)
-                report["sections"]["forums"].append({
-                    "title": title,
-                    "link": link,
-                    "source": name,
-                    "timestamp": item["timestamp"],
-                    "date": published,
-                    "tags": tags,
-                    "source_type": "forum",
-                })
+
     except Exception as ex:
         errors["forums"] = str(ex)
 
-    report["sections"]["forums"].sort(key=lambda x: x.get("timestamp", 0), reverse=True)
+    raw_forum_items = dedupe_by_key(raw_forum_items, lambda x: f"{x.get('category')}|{fingerprint_title(x.get('title'))}")
+    raw_forum_items.sort(key=lambda x: (x.get("uk_score", 0), x.get("forum_match_score", 0), x.get("timestamp", 0)), reverse=True)
 
-    # 3) Model releases (use official/primary sources + filter strongly)
+    report["sections"]["forums"] = [
+        {
+            "category": x["category"],
+            "title": x["title"],
+            "link": x["link"],
+            "source": x["source"],
+            "timestamp": x["timestamp"],
+            "date": x["date"],
+            "tags": x["tags"],
+            "source_type": "forum",
+            "uk_score": x["uk_score"],
+            "uk_relevance": x["uk_relevance"],
+        }
+        for x in raw_forum_items
+    ]
+
+    # 3) MODEL RELEASES (better sources: OpenAI RSS + The Rundown RSS + filtered Google fallback)
     raw_release_items = []
-    try:
-        raw_release_items.extend(releases_from_openai_rss(errors))      # official RSS [1](https://community.openai.com/t/openai-website-rss-feed-inquiry/733747)[2](https://community.openai.com/t/rss-feed-openai-research-index-rss-feed/1088852)
-        raw_release_items.extend(releases_from_deepmind_feed(errors))   # feed endpoint [3](https://deepmind.google/blog/feed/)
-        raw_release_items.extend(releases_from_anthropic(errors))       # scrape /news [4](https://www.anthropic.com/news)[5](https://www.anthropic.com/news/claude-sonnet-4-6?cam=claude)
-        raw_release_items.extend(releases_from_mistral(errors))         # scrape /news [6](https://mistral.ai/news)[7](https://mistral.ai/news/mistral-vibe-2-0)
 
-        # Apply global dedupe
-        raw_release_items = dedupe_by_key(
-            raw_release_items,
-            lambda x: f"{fingerprint_title(x.get('title'))}|{norm_text(x.get('source'))}"
-        )
-        raw_release_items.sort(key=lambda x: x.get("timestamp", 0), reverse=True)
-
-        # Trim to window by timestamp (coarse; RELEASE_TIME_WINDOW may be "365d")
-        # We avoid strict parsing of "365d" for now; it remains a generation knob.
-
-        for it in raw_release_items[:MAX_RELEASES]:
-            k = seen_key("releases", it["title"], it["source"], it["link"])
-            if k in seen_global:
+    def ingest_release_feed(feed_url, source_label):
+        out = []
+        feed = fetch_feed(feed_url, retries=3, base_sleep=1.0)
+        for e in feed.entries[:MAX_RELEASES]:
+            title = strip_source_suffix(getattr(e, "title", "")) or getattr(e, "title", "")
+            if not looks_like_release(title):
                 continue
-            seen_global.add(k)
-
-            report["sections"]["dev_releases"].append({
-                "title": it["title"],
-                "link": it["link"],
-                "source": it["source"],
-                "timestamp": it["timestamp"],
-                "date": it["date"],
-                "category": "Releases",
+            published = getattr(e, "published", "") or getattr(e, "updated", "")
+            dt = parse_date(published)
+            link = clean_url(getattr(e, "link", ""))
+            if not title or not link:
+                continue
+            out.append({
+                "title": title,
+                "link": link,
+                "source": source_label,
+                "timestamp": dt.timestamp(),
+                "date": published,
                 "source_type": "news",
+                "tags": ["Model Releases"],
             })
+        return out
 
+    try:
+        raw_release_items.extend(ingest_release_feed(OPENAI_NEWS_RSS, "OpenAI"))
     except Exception as ex:
-        errors["dev_releases"] = str(ex)
+        errors["dev_releases_openai_rss"] = str(ex)
 
-    report["sections"]["dev_releases"].sort(key=lambda x: x.get("timestamp", 0), reverse=True)
+    try:
+        raw_release_items.extend(ingest_release_feed(RUNDOWN_RSS, "The Rundown AI"))
+    except Exception as ex:
+        errors["dev_releases_rundown_rss"] = str(ex)
 
-    # Release overview summary
-    rel_titles = [r["title"] for r in report["sections"]["dev_releases"]]
-    report["summaries"]["releases_overview"] = summarize_list(rel_titles)
+    # Fallback: Google News (filtered to release-like)
+    try:
+        q = "new model released OR introducing model OR system card OR model card OR open weights"
+        feed = fetch_feed(google_rss_url(q, RELEASE_TIME_WINDOW), retries=3, base_sleep=1.0)
+        for e in feed.entries[:MAX_RELEASES]:
+            title = strip_source_suffix(getattr(e, "title", ""))
+            if not looks_like_release(title):
+                continue
+            published = getattr(e, "published", "")
+            dt = parse_date(published)
+            src = None
+            if hasattr(e, "source"):
+                src = getattr(getattr(e, "source", None), "title", None)
+            link = clean_url(getattr(e, "link", ""))
+            raw_release_items.append({
+                "title": title,
+                "link": link,
+                "source": src or "News",
+                "timestamp": dt.timestamp(),
+                "date": published,
+                "source_type": "news",
+                "tags": ["Model Releases"],
+            })
+    except Exception as ex:
+        errors["dev_releases_google"] = str(ex)
 
-    if SUMMARY_OPENAI_API_KEY and rel_titles:
-        prompt = (
-            "Write a short paragraph (max 80 words) summarising the latest *model releases* only. "
-            "Mention only what is in the headlines; do not invent features or dates. "
-            "Headlines:\n- " + "\n- ".join(rel_titles[:25])
-        )
-        txt = openai_chat_summary(prompt, errors)
-        if txt:
-            report["summaries"]["releases_overview_llm"] = txt
+    # Dedupe releases by fingerprint_title (cross-source duplicates collapse)
+    raw_release_items = dedupe_by_key(raw_release_items, lambda x: fingerprint_title(x.get("title")))
+    raw_release_items.sort(key=lambda x: x.get("timestamp", 0), reverse=True)
 
-    # 4) Incident DB (leave as-is for now; keep working)
-    # If you later provide a stable dataset endpoint, we can switch.
-    report["sections"]["aiid"] = []  # keep empty unless you later add a source
+    report["sections"]["dev_releases"] = [
+        {
+            "title": x["title"],
+            "link": x["link"],
+            "source": x["source"],
+            "timestamp": x["timestamp"],
+            "date": x["date"],
+        }
+        for x in raw_release_items[:MAX_RELEASES]
+    ]
 
-    # 5) Signals (cluster across harms + releases + forums)
+    report["summaries"]["releases_top"] = summarize_list([r["title"] for r in report["sections"]["dev_releases"]])
+
+    if SUMMARY_OPENAI_API_KEY and report["sections"]["dev_releases"]:
+        titles = [r["title"] for r in report["sections"]["dev_releases"]][:20]
+        prompt = "Summarise the following model release headlines into 3 bullet points for a policy audience:\n- " + "\n- ".join(titles)
+        llm = openai_summarise(prompt)
+        if llm:
+            report["summaries"]["releases_top"] = llm
+
+    # 4) SIGNALS (cluster across harms + harms-tagged forums + releases)
     all_for_signals = []
+    # Use raw objects for richer clustering + UK info
     all_for_signals.extend(raw_harm_items)
-    all_for_signals.extend(raw_release_items)
     all_for_signals.extend(raw_forum_items)
+    # Include releases as separate category so they don't pollute harms clusters
+    for r in raw_release_items:
+        all_for_signals.append({
+            "category": "Model Releases",
+            "primary_category": "Model Releases",
+            "title": r["title"],
+            "link": r["link"],
+            "source": r["source"],
+            "timestamp": r["timestamp"],
+            "date": r["date"],
+            "source_type": "news",
+            "tags": ["Model Releases"],
+            "uk_score": 0,
+        })
 
+    # Dedupe inputs into clustering
     all_for_signals = dedupe_by_key(
         all_for_signals,
-        lambda x: f"{x.get('source_type')}|{x.get('category','')}|{fingerprint_title(x.get('title'))}|{norm_text(x.get('source'))}"
+        lambda x: f"{x.get('category','')}|{fingerprint_title(x.get('title'))}|{norm_text(x.get('source'))}"
     )
 
     report["sections"]["signals"] = cluster_to_signals(all_for_signals)
 
-    # Optional: LLM enhance signal summaries (very lightweight; only top few)
+    report["summaries"]["signals_top"] = summarize_list([s["title"] for s in report["sections"]["signals"]])
+
     if SUMMARY_OPENAI_API_KEY and report["sections"]["signals"]:
-        top_signals = report["sections"]["signals"][:8]
-        for s in top_signals:
-            titles = [l["title"] for l in (s.get("links") or []) if l.get("title")]
-            prompt = (
-                "Summarise this emerging signal in 1 sentence (max 25 words). "
-                "Do not speculate; base it only on these headlines:\n- " + "\n- ".join(titles[:10])
-            )
-            txt = openai_chat_summary(prompt, errors)
-            if txt:
-                s["ai_summary_llm"] = txt
+        titles = [s["title"] for s in report["sections"]["signals"]][:15]
+        prompt = "Summarise these signal titles into 3 short bullets. Focus on harms/misuse patterns, not hype:\n- " + "\n- ".join(titles)
+        llm = openai_summarise(prompt)
+        if llm:
+            report["summaries"]["signals_top"] = llm
 
     if errors:
         report["meta"]["errors"] = errors
