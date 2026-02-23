@@ -14,6 +14,8 @@ import {
   ChevronRight,
 } from "lucide-react";
 
+/* ------------------------- small helpers ------------------------- */
+
 function fmtDateShort(d) {
   if (!d) return "";
   const t = Date.parse(d);
@@ -53,22 +55,30 @@ function catChip(cat) {
 }
 
 function viewTheme(view) {
-  // Colour-coded distinction across Harms / Signals / Forums / Releases
-  if (view === "harms") return { ring: "ring-rose-100", band: "from-rose-50 to-white", accent: "text-rose-700", border: "border-rose-100" };
-  if (view === "signals") return { ring: "ring-sky-100", band: "from-sky-50 to-white", accent: "text-sky-700", border: "border-sky-100" };
-  if (view === "forums") return { ring: "ring-fuchsia-100", band: "from-fuchsia-50 to-white", accent: "text-fuchsia-700", border: "border-fuchsia-100" };
-  if (view === "releases") return { ring: "ring-indigo-100", band: "from-indigo-50 to-white", accent: "text-indigo-700", border: "border-indigo-100" };
+  if (view === "harms")
+    return { ring: "ring-rose-100", band: "from-rose-50 to-white", accent: "text-rose-700", border: "border-rose-100" };
+  if (view === "signals")
+    return { ring: "ring-sky-100", band: "from-sky-50 to-white", accent: "text-sky-700", border: "border-sky-100" };
+  if (view === "forums")
+    return { ring: "ring-fuchsia-100", band: "from-fuchsia-50 to-white", accent: "text-fuchsia-700", border: "border-fuchsia-100" };
+  if (view === "releases")
+    return { ring: "ring-indigo-100", band: "from-indigo-50 to-white", accent: "text-indigo-700", border: "border-indigo-100" };
   return { ring: "ring-slate-100", band: "from-slate-50 to-white", accent: "text-slate-700", border: "border-slate-100" };
 }
 
+function pageBg(view) {
+  if (view === "harms") return "bg-gradient-to-b from-rose-50 via-slate-50 to-slate-50";
+  if (view === "signals") return "bg-gradient-to-b from-sky-50 via-slate-50 to-slate-50";
+  if (view === "forums") return "bg-gradient-to-b from-fuchsia-50 via-slate-50 to-slate-50";
+  if (view === "releases") return "bg-gradient-to-b from-indigo-50 via-slate-50 to-slate-50";
+  return "bg-gradient-to-b from-slate-50 to-slate-50";
+}
+
 function getItemDateISO(item, kind) {
-  // Robustly pull a comparable date string for filtering/sorting.
-  // Prefer explicit date strings; fall back to timestamp if available.
   const raw =
     (kind === "signals" ? (item?.latest_date || item?.date) : item?.date) ||
     (item?.timestamp ? new Date(item.timestamp * 1000).toISOString() : "");
-  const iso = fmtDateShort(raw);
-  return iso || "";
+  return fmtDateShort(raw) || "";
 }
 
 function compareDatesDesc(a, b) {
@@ -76,6 +86,7 @@ function compareDatesDesc(a, b) {
   const tb = Date.parse(b || "") || 0;
   return tb - ta;
 }
+
 function compareDatesAsc(a, b) {
   const ta = Date.parse(a || "") || 0;
   const tb = Date.parse(b || "") || 0;
@@ -88,6 +99,8 @@ function confidenceRank(label) {
   return 1;
 }
 
+/* ---------------------------- App ---------------------------- */
+
 export default function App() {
   const [payload, setPayload] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -99,7 +112,7 @@ export default function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [timeFilter, setTimeFilter] = useState("7d");
   const [dateFrom, setDateFrom] = useState(""); // YYYY-MM-DD
-  const [dateTo, setDateTo] = useState("");     // YYYY-MM-DD
+  const [dateTo, setDateTo] = useState(""); // YYYY-MM-DD
   const [sortBy, setSortBy] = useState("relevance"); // relevance | newest | oldest | uk | confidence
   const [minUkScore, setMinUkScore] = useState(0);
   const [categoryFilter, setCategoryFilter] = useState("All");
@@ -108,6 +121,10 @@ export default function App() {
   const [showAiSummaries, setShowAiSummaries] = useState(false);
   const [showN, setShowN] = useState(36);
   const [filtersOpen, setFiltersOpen] = useState(false);
+
+  // Navigation helpers (less sifting)
+  const [overviewKinds, setOverviewKinds] = useState(["Harms", "Signals", "Forums", "Model releases"]);
+  const [harmsFocusCat, setHarmsFocusCat] = useState("All");
 
   // Harm bucket UI state
   const [openBuckets, setOpenBuckets] = useState(() => ({}));
@@ -124,7 +141,9 @@ export default function App() {
     setLoading(false);
   }
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    load();
+  }, []);
 
   const sections = payload?.sections || {};
   const coverage = payload?.coverage || {};
@@ -133,12 +152,15 @@ export default function App() {
   const limits = meta?.limits || {};
   const errors = meta?.errors || {};
 
-  const counts = useMemo(() => ({
-    harms: (sections.harms || []).length,
-    signals: (sections.signals || []).length,
-    dev_releases: (sections.dev_releases || []).length,
-    forums: (sections.forums || []).length,
-  }), [sections]);
+  const counts = useMemo(
+    () => ({
+      harms: (sections.harms || []).length,
+      signals: (sections.signals || []).length,
+      dev_releases: (sections.dev_releases || []).length,
+      forums: (sections.forums || []).length,
+    }),
+    [sections]
+  );
 
   const allCategories = useMemo(() => {
     const cats = new Set();
@@ -174,18 +196,17 @@ export default function App() {
     if (dateFrom || dateTo) {
       if (!passesDateRange(item, kind)) return false;
     } else {
-      // time filter (if no timestamp, keep item)
       const ts = item?.timestamp;
       if (ts && !withinWindow(ts, timeFilter)) return false;
     }
 
-    // UK-only toggle: uses backend uk_relevance where available
+    // UK-only (strict)
     if (ukOnly) {
       const uk = item?.uk_relevance || (item?.uk_score >= 2);
       if (!uk) return false;
     }
 
-    // Min UK score (gentler than ukOnly)
+    // Min UK score (gentler)
     if (minUkScore > 0) {
       const score = item?.uk_score ?? (item?.uk_relevance ? 2 : 0);
       if (score < minUkScore) return false;
@@ -236,7 +257,10 @@ export default function App() {
       return copy;
     }
     if (sortBy === "uk") {
-      copy.sort((a, b) => ((b?.uk_score ?? (b?.uk_relevance ? 2 : 0)) - (a?.uk_score ?? (a?.uk_relevance ? 2 : 0))));
+      copy.sort(
+        (a, b) =>
+          (b?.uk_score ?? (b?.uk_relevance ? 2 : 0)) - (a?.uk_score ?? (a?.uk_relevance ? 2 : 0))
+      );
       return copy;
     }
     if (sortBy === "confidence" && kind === "signals") {
@@ -246,80 +270,160 @@ export default function App() {
     return copy;
   }
 
-  // Filtered + sorted lists per view
-  const harms = useMemo(() => sortItems((sections.harms || []).filter((x) => passesCommon(x, "harms")), "harms"), [sections.harms, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, sourceFilter, ukOnly, minUkScore, sortBy]);
-  const signals = useMemo(() => sortItems((sections.signals || []).filter((x) => passesCommon(x, "signals")), "signals"), [sections.signals, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, sourceFilter, ukOnly, minUkScore, sortBy]);
-  const forums = useMemo(() => sortItems((sections.forums || []).filter((x) => passesCommon(x, "forums")), "forums"), [sections.forums, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, sourceFilter, ukOnly, minUkScore, sortBy]);
-  const releases = useMemo(() => sortItems((sections.dev_releases || []).filter((x) => passesCommon(x, "releases")), "releases"), [sections.dev_releases, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, sourceFilter, ukOnly, minUkScore, sortBy]);
+  const harms = useMemo(
+    () => sortItems((sections.harms || []).filter((x) => passesCommon(x, "harms")), "harms"),
+    [
+      sections.harms,
+      searchTerm,
+      timeFilter,
+      dateFrom,
+      dateTo,
+      categoryFilter,
+      sourceFilter,
+      ukOnly,
+      minUkScore,
+      sortBy,
+    ]
+  );
 
-  // Overview: simple "Latest feed" (no metric cards)
+  const signals = useMemo(
+    () => sortItems((sections.signals || []).filter((x) => passesCommon(x, "signals")), "signals"),
+    [
+      sections.signals,
+      searchTerm,
+      timeFilter,
+      dateFrom,
+      dateTo,
+      categoryFilter,
+      sourceFilter,
+      ukOnly,
+      minUkScore,
+      sortBy,
+    ]
+  );
+
+  const forums = useMemo(
+    () => sortItems((sections.forums || []).filter((x) => passesCommon(x, "forums")), "forums"),
+    [
+      sections.forums,
+      searchTerm,
+      timeFilter,
+      dateFrom,
+      dateTo,
+      categoryFilter,
+      sourceFilter,
+      ukOnly,
+      minUkScore,
+      sortBy,
+    ]
+  );
+
+  const releases = useMemo(
+    () => sortItems((sections.dev_releases || []).filter((x) => passesCommon(x, "releases")), "releases"),
+    [
+      sections.dev_releases,
+      searchTerm,
+      timeFilter,
+      dateFrom,
+      dateTo,
+      categoryFilter,
+      sourceFilter,
+      ukOnly,
+      minUkScore,
+      sortBy,
+    ]
+  );
+
+  // Overview: merge recent items into a single pool, then apply same filters via a lightweight mapping
   const whatsNew = useMemo(() => {
     const pool = [];
-    (sections.harms || []).slice(0, 60).forEach((h) => pool.push({
-      kind: "Harms",
-      title: h.title,
-      link: h.link,
-      date: h.date,
-      category: h.category,
-      uk: !!h.uk_relevance,
-      uk_score: h.uk_score ?? 0,
-      source: h.source
-    }));
-    (sections.dev_releases || []).slice(0, 40).forEach((r) => pool.push({
-      kind: "Model releases",
-      title: r.title,
-      link: r.link,
-      date: r.date,
-      category: "Model Releases",
-      uk: !!r.uk_relevance,
-      uk_score: r.uk_score ?? 0,
-      source: r.source
-    }));
-    (sections.signals || []).slice(0, 40).forEach((s) => pool.push({
-      kind: "Signals",
-      title: s.title,
-      link: (s.links && s.links[0]?.link) || "",
-      date: s.latest_date,
-      category: s.primary_category,
-      uk: !!s.uk_relevance,
-      uk_score: s.uk_score ?? 0,
-      source: (s.links && s.links[0]?.source) || ""
-    }));
-    (sections.forums || []).slice(0, 40).forEach((f) => pool.push({
-      kind: "Forums",
-      title: f.title,
-      link: f.link,
-      date: f.date,
-      category: f.category,
-      uk: !!f.uk_relevance,
-      uk_score: f.uk_score ?? 0,
-      source: f.source
-    }));
+    (sections.harms || []).slice(0, 80).forEach((h) =>
+      pool.push({
+        kind: "Harms",
+        title: h.title,
+        link: h.link,
+        date: h.date,
+        category: h.category,
+        uk: !!h.uk_relevance,
+        uk_score: h.uk_score ?? 0,
+        source: h.source,
+        source_type: h.source_type || "news",
+      })
+    );
+    (sections.dev_releases || []).slice(0, 60).forEach((r) =>
+      pool.push({
+        kind: "Model releases",
+        title: r.title,
+        link: r.link,
+        date: r.date,
+        category: "Model Releases",
+        uk: !!r.uk_relevance,
+        uk_score: r.uk_score ?? 0,
+        source: r.source,
+        source_type: r.source_type || "news",
+      })
+    );
+    (sections.signals || []).slice(0, 60).forEach((s) =>
+      pool.push({
+        kind: "Signals",
+        title: s.title,
+        link: (s.links && s.links[0]?.link) || "",
+        date: s.latest_date,
+        category: s.primary_category,
+        uk: !!s.uk_relevance,
+        uk_score: s.uk_score ?? 0,
+        source: (s.links && s.links[0]?.source) || "",
+        // treat signals as mixed; source filter is derived in passesCommon for signals using links, so we emulate minimal
+        links: s.links || [],
+      })
+    );
+    (sections.forums || []).slice(0, 60).forEach((f) =>
+      pool.push({
+        kind: "Forums",
+        title: f.title,
+        link: f.link,
+        date: f.date,
+        category: f.category,
+        uk: !!f.uk_relevance,
+        uk_score: f.uk_score ?? 0,
+        source: f.source,
+        source_type: f.source_type || "forum",
+      })
+    );
 
-    // Apply the same common filters to the overview feed (so it's consistent)
     const filtered = pool.filter((x) => {
-      // Treat the pooled entry like an item for search/category/source/minUkScore/date/time
-      // Minimal mapping: pass kind-specific handling via "kind" label
-      const fakeKind = x.kind === "Signals" ? "signals" : x.kind === "Forums" ? "forums" : x.kind === "Model releases" ? "releases" : "harms";
-      const item = {
-        title: x.title,
-        source: x.source,
-        tags: [],
-        category: x.category,
-        primary_category: x.category,
-        date: x.date,
-        latest_date: x.date,
-        uk_relevance: x.uk,
-        uk_score: x.uk_score
-      };
+      const fakeKind =
+        x.kind === "Signals" ? "signals" : x.kind === "Forums" ? "forums" : x.kind === "Model releases" ? "releases" : "harms";
+
+      const item =
+        fakeKind === "signals"
+          ? {
+              title: x.title,
+              primary_category: x.category,
+              latest_date: x.date,
+              uk_relevance: x.uk,
+              uk_score: x.uk_score,
+              links: x.links || [],
+              tags: [],
+            }
+          : {
+              title: x.title,
+              category: x.category,
+              date: x.date,
+              uk_relevance: x.uk,
+              uk_score: x.uk_score,
+              source_type: x.source_type,
+              source: x.source,
+              tags: [],
+            };
+
       return passesCommon(item, fakeKind);
     });
 
     filtered.sort((a, b) => (Date.parse(b.date || "") || 0) - (Date.parse(a.date || "") || 0));
-    return filtered.slice(0, 30);
+    return filtered.slice(0, 60);
   }, [sections, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, sourceFilter, ukOnly, minUkScore]);
 
-  // Harm buckets
   const harmCategories = useMemo(() => {
     const cats = new Set((sections.harms || []).map((h) => h.category).filter(Boolean));
     const arr = Array.from(cats);
@@ -328,16 +432,19 @@ export default function App() {
   }, [sections.harms]);
 
   function toggleBucket(cat) {
+    // ✅ correct (and important) toggle
     setOpenBuckets((s) => ({ ...s, [cat]: !s[cat] }));
   }
 
-  const theme = viewTheme(view);
+  function toggleOverviewKind(k) {
+    setOverviewKinds((cur) => (cur.includes(k) ? cur.filter((x) => x !== k) : [...cur, k]));
+  }
 
   return (
-    <div className="min-h-screen">
+    <div className={`min-h-screen ${pageBg(view)}`}>
       <div className="max-w-7xl mx-auto px-5 py-5 animate-fadeUp">
         {/* Header */}
-        <div className="card p-5">
+        <div className="card p-5 bg-white/80 backdrop-blur border border-slate-200">
           <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
             <div>
               <div className="flex items-center gap-3">
@@ -354,8 +461,6 @@ export default function App() {
                 {payload?.disclaimer || "Proof-of-concept dashboard for harms-focused horizon scanning."}
               </div>
 
-              {/* Removed: top summary boxes to keep header uncluttered */}
-
               {errors && Object.keys(errors).length ? (
                 <div className="mt-3 text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2">
                   Some sources returned errors (see meta.errors in news_data.json): {Object.keys(errors).join(", ")}
@@ -366,7 +471,7 @@ export default function App() {
             <div className="flex items-center gap-2">
               <button
                 onClick={load}
-                className="pill px-4 py-2 text-sm hover:bg-white transition inline-flex items-center gap-2"
+                className="pill px-4 py-2 text-sm hover:bg-white transition inline-flex items-center gap-2 bg-white/70"
                 title="Refresh"
               >
                 <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
@@ -375,7 +480,7 @@ export default function App() {
 
               <button
                 onClick={() => setFiltersOpen((v) => !v)}
-                className="pill px-4 py-2 text-sm hover:bg-white transition inline-flex items-center gap-2"
+                className="pill px-4 py-2 text-sm hover:bg-white transition inline-flex items-center gap-2 bg-white/70"
                 title="Filters"
               >
                 <SlidersHorizontal size={16} />
@@ -386,7 +491,7 @@ export default function App() {
 
           {/* Filters drawer */}
           {filtersOpen ? (
-            <div className="mt-4 card p-4 bg-white/70">
+            <div className="mt-4 card p-4 bg-white/70 border border-slate-200">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-3">
                 <div className="lg:col-span-4">
                   <label className="text-xs text-[var(--muted)]">Search</label>
@@ -444,7 +549,11 @@ export default function App() {
                     value={showN}
                     onChange={(e) => setShowN(parseInt(e.target.value, 10))}
                   >
-                    {[24, 36, 48, 72, 100].map((n) => <option key={n} value={n}>{n}</option>)}
+                    {[24, 36, 48, 72, 100].map((n) => (
+                      <option key={n} value={n}>
+                        {n}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
@@ -455,7 +564,11 @@ export default function App() {
                     value={categoryFilter}
                     onChange={(e) => setCategoryFilter(e.target.value)}
                   >
-                    {allCategories.map((c) => <option key={c} value={c}>{c}</option>)}
+                    {allCategories.map((c) => (
+                      <option key={c} value={c}>
+                        {c}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
@@ -474,11 +587,7 @@ export default function App() {
 
                 <div className="lg:col-span-3">
                   <label className="text-xs text-[var(--muted)]">Sort</label>
-                  <select
-                    className="mt-1 w-full pill px-3 py-2 text-sm bg-white"
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value)}
-                  >
+                  <select className="mt-1 w-full pill px-3 py-2 text-sm bg-white" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
                     <option value="relevance">Relevance (default)</option>
                     <option value="newest">Newest first</option>
                     <option value="oldest">Oldest first</option>
@@ -512,7 +621,10 @@ export default function App() {
                   </label>
 
                   <button
-                    onClick={() => { setDateFrom(""); setDateTo(""); }}
+                    onClick={() => {
+                      setDateFrom("");
+                      setDateTo("");
+                    }}
                     className="pill px-3 py-2 text-sm hover:bg-white transition bg-white"
                     title="Clear date range"
                   >
@@ -528,21 +640,46 @@ export default function App() {
           ) : null}
         </div>
 
-        {/* Navigation */}
+        {/* Navigation + Content */}
         <div className="mt-5 grid grid-cols-1 lg:grid-cols-[260px,1fr] gap-4">
-          <aside className="card p-4">
-            <NavItem icon={<LayoutDashboard size={16} />} label="Overview (latest feed)" active={view === "overview"} onClick={() => setView("overview")} count={null} />
-            <NavItem icon={<Shield size={16} />} label="Harms (articles)" active={view === "harms"} onClick={() => setView("harms")} count={counts.harms} />
-            <NavItem icon={<TrendingUp size={16} />} label="Signals (clusters)" active={view === "signals"} onClick={() => setView("signals")} count={counts.signals} />
+          <aside className="card p-4 bg-white/70 backdrop-blur border border-slate-200 lg:sticky lg:top-4 lg:self-start">
+            <NavItem icon={<LayoutDashboard size={16} />} label="Overview" active={view === "overview"} onClick={() => setView("overview")} count={null} />
+            <NavItem icon={<Shield size={16} />} label="Harms" active={view === "harms"} onClick={() => setView("harms")} count={counts.harms} />
+            <NavItem icon={<TrendingUp size={16} />} label="Signals" active={view === "signals"} onClick={() => setView("signals")} count={counts.signals} />
+            <NavItem icon={<MessageSquare size={16} />} label="Forums" active={view === "forums"} onClick={() => setView("forums")} count={counts.forums} />
             <NavItem icon={<Cpu size={16} />} label="Model releases" active={view === "releases"} onClick={() => setView("releases")} count={counts.dev_releases} />
-            <NavItem icon={<MessageSquare size={16} />} label="Forums (posts)" active={view === "forums"} onClick={() => setView("forums")} count={counts.forums} />
+
+            <div className="hr my-3" />
+
+            {/* sticky-ish quick tabs inside sidebar too */}
+            <div className="text-xs text-[var(--muted)] mb-2">Quick switch</div>
+            <ViewTabs view={view} setView={setView} />
           </aside>
 
           <main className="space-y-4">
+            {/* Sticky top tabs in main content for fast navigation (less sifting) */}
+            <div className="sticky top-4 z-10">
+              <div className="card bg-white/80 backdrop-blur border border-slate-200 px-3 py-3">
+                <div className="flex items-center justify-between gap-3 flex-wrap">
+                  <ViewTabs view={view} setView={setView} />
+                  <div className="text-xs text-[var(--muted)] font-mono">
+                    {view === "harms" ? `${harms.length} matches` : null}
+                    {view === "signals" ? `${signals.length} matches` : null}
+                    {view === "forums" ? `${forums.length} matches` : null}
+                    {view === "releases" ? `${releases.length} matches` : null}
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {loading && !payload ? <SkeletonDashboard /> : null}
 
             {!loading && payload && view === "overview" ? (
-              <OverviewFeed whatsNew={whatsNew} />
+              <OverviewFeed
+                whatsNew={whatsNew}
+                overviewKinds={overviewKinds}
+                toggleKind={toggleOverviewKind}
+              />
             ) : null}
 
             {!loading && payload && view === "harms" ? (
@@ -555,6 +692,8 @@ export default function App() {
                 toggleBucket={toggleBucket}
                 showN={showN}
                 showAiSummaries={showAiSummaries}
+                harmsFocusCat={harmsFocusCat}
+                setHarmsFocusCat={setHarmsFocusCat}
               />
             ) : null}
 
@@ -562,22 +701,53 @@ export default function App() {
               <SignalsView items={signals.slice(0, showN)} showAiSummaries={showAiSummaries} />
             ) : null}
 
-            {!loading && payload && view === "releases" ? (
-              <ReleasesView items={releases.slice(0, showN)} />
-            ) : null}
-
             {!loading && payload && view === "forums" ? (
               <ForumsView items={forums.slice(0, showN)} />
             ) : null}
 
+            {!loading && payload && view === "releases" ? (
+              <ReleasesView items={releases.slice(0, showN)} />
+            ) : null}
+
             {!loading && !payload ? (
-              <div className="card p-4 text-sm">
+              <div className="card p-4 text-sm bg-white/80 backdrop-blur border border-slate-200">
                 Failed to load <span className="font-mono">news_data.json</span>.
               </div>
             ) : null}
           </main>
         </div>
       </div>
+    </div>
+  );
+}
+
+/* ---------------------------- components ---------------------------- */
+
+function ViewTabs({ view, setView }) {
+  const tabs = [
+    { k: "overview", label: "Overview" },
+    { k: "harms", label: "Harms" },
+    { k: "signals", label: "Signals" },
+    { k: "forums", label: "Forums" },
+    { k: "releases", label: "Releases" },
+  ];
+
+  return (
+    <div className="flex flex-wrap gap-2">
+      {tabs.map((t) => (
+        <button
+          key={t.k}
+          onClick={() => setView(t.k)}
+          className={`px-3 py-1.5 rounded-xl text-sm border transition ${
+            view === t.k
+              ? "bg-slate-900 text-white border-slate-900"
+              : "bg-white/70 hover:bg-white border-slate-200 text-slate-700"
+          }`}
+          aria-current={view === t.k ? "page" : undefined}
+        >
+          {t.label}
+        </button>
+      ))}
     </div>
   );
 }
@@ -604,7 +774,7 @@ function NavItem({ icon, label, active, onClick, count }) {
 function ViewHeader({ view, title, subtitle, right }) {
   const t = viewTheme(view);
   return (
-    <div className={`card p-4 bg-gradient-to-b ${t.band} border ${t.border} ring-1 ${t.ring}`}>
+    <div className={`card p-4 bg-gradient-to-b ${t.band} border ${t.border} ring-1 ${t.ring} bg-white/70 backdrop-blur`}>
       <div className="flex items-start justify-between gap-3">
         <div>
           <div className={`text-sm font-semibold ${t.accent}`}>{title}</div>
@@ -616,22 +786,47 @@ function ViewHeader({ view, title, subtitle, right }) {
   );
 }
 
-function OverviewFeed({ whatsNew }) {
+function OverviewFeed({ whatsNew, overviewKinds, toggleKind }) {
+  const kinds = ["Harms", "Signals", "Forums", "Model releases"];
+  const filtered = whatsNew.filter((x) => overviewKinds.includes(x.kind));
+
   return (
     <div className="space-y-4">
       <ViewHeader
         view="overview"
         title="Latest feed"
-        subtitle="A simple, cross-system list of the most recent items (no dashboards / no confusing number tiles)."
-        right={<span className="pill px-3 py-1 text-xs font-mono text-slate-600">{whatsNew.length} shown</span>}
+        subtitle="Most recent items across the system."
+        right={<span className="pill px-3 py-1 text-xs font-mono text-slate-600 bg-white/70">{filtered.length} shown</span>}
       />
 
-      <div className="card p-4">
-        {!whatsNew.length ? (
+      <div className="card p-4 bg-white/80 backdrop-blur border border-slate-200">
+        <div className="flex flex-wrap gap-2">
+          {kinds.map((k) => {
+            const on = overviewKinds.includes(k);
+            return (
+              <button
+                key={k}
+                type="button"
+                onClick={() => toggleKind(k)}
+                className={`text-sm px-3 py-1.5 rounded-full border transition ${
+                  on ? "bg-slate-900 text-white border-slate-900" : "bg-white/70 hover:bg-white border-slate-200 text-slate-700"
+                }`}
+                aria-pressed={on}
+                title="Toggle in feed"
+              >
+                {k}
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="hr my-4" />
+
+        {!filtered.length ? (
           <div className="text-sm text-[var(--muted)]">No items match your current filters.</div>
         ) : (
           <div className="space-y-2">
-            {whatsNew.map((x, i) => (
+            {filtered.slice(0, 40).map((x, i) => (
               <a
                 key={i}
                 href={x.link}
@@ -640,7 +835,7 @@ function OverviewFeed({ whatsNew }) {
                 className="block card-hover border border-slate-100 rounded-xl px-3 py-2 bg-white"
               >
                 <div className="flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <span className="text-xs font-mono text-slate-500">{x.kind}</span>
                     <span className={`text-xs px-2 py-1 rounded-full border ${catChip(x.category)}`}>{x.category}</span>
                     {x.uk ? (
@@ -662,7 +857,18 @@ function OverviewFeed({ whatsNew }) {
   );
 }
 
-function HarmsView({ categories, harms, coverage, summaries, openBuckets, toggleBucket, showN, showAiSummaries }) {
+function HarmsView({
+  categories,
+  harms,
+  coverage,
+  summaries,
+  openBuckets,
+  toggleBucket,
+  showN,
+  showAiSummaries,
+  harmsFocusCat,
+  setHarmsFocusCat,
+}) {
   const byCat = useMemo(() => {
     const m = new Map();
     for (const h of harms) {
@@ -673,42 +879,84 @@ function HarmsView({ categories, harms, coverage, summaries, openBuckets, toggle
     return m;
   }, [harms]);
 
+  const catsToRender = harmsFocusCat === "All" ? categories : [harmsFocusCat];
+
   return (
     <div className="space-y-4">
       <ViewHeader
         view="harms"
         title="Harms (articles)"
-        subtitle="Individual stories and incidents, bucketed by harm category. Use filters for date range, UK relevance, source type, etc."
-        right={<span className="pill px-3 py-1 text-xs font-mono text-slate-600">{harms.length} matches</span>}
+        subtitle="Pick a category to focus on (reduces scrolling), or switch back to All categories."
+        right={<span className="pill px-3 py-1 text-xs font-mono text-slate-600 bg-white/70">{harms.length} matches</span>}
       />
 
-      <div className="card p-4">
+      <div className="card p-4 bg-white/80 backdrop-blur border border-slate-200">
+        {/* Focus chips: big scroll-killer */}
+        <div className="flex flex-wrap gap-2 items-center">
+          <button
+            type="button"
+            onClick={() => setHarmsFocusCat("All")}
+            className={`text-sm px-3 py-1.5 rounded-full border transition ${
+              harmsFocusCat === "All"
+                ? "bg-rose-700 text-white border-rose-700"
+                : "bg-white/70 hover:bg-white border-slate-200 text-slate-700"
+            }`}
+            aria-pressed={harmsFocusCat === "All"}
+          >
+            All categories
+          </button>
+
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              type="button"
+              onClick={() => setHarmsFocusCat(cat)}
+              className={`text-sm px-3 py-1.5 rounded-full border ${catChip(cat)} ${
+                harmsFocusCat === cat ? "ring-2 ring-rose-200" : ""
+              }`}
+              aria-pressed={harmsFocusCat === cat}
+              title="Focus this category"
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        <div className="hr my-4" />
+
         <div className="space-y-3">
-          {categories.map((cat) => {
+          {catsToRender.map((cat) => {
             const items = (byCat.get(cat) || []).slice(0, showN);
             const cov = coverage?.by_harm?.[cat] || {};
             const isOpen = openBuckets[cat] ?? true;
 
             return (
-              <div key={cat} className="border border-slate-100 rounded-2xl overflow-hidden">
+              <div key={cat} className="border border-slate-100 rounded-2xl overflow-hidden bg-white">
                 <button
                   onClick={() => toggleBucket(cat)}
                   className="w-full px-4 py-3 bg-slate-50 flex items-center justify-between"
                 >
-                  <div className="flex items-center gap-2">
-                    {isOpen ? <ChevronDown size={16} className="text-slate-500" /> : <ChevronRight size={16} className="text-slate-500" />}
+                  <div className="flex items-center gap-2 flex-wrap">
+                    {isOpen ? (
+                      <ChevronDown size={16} className="text-slate-500" />
+                    ) : (
+                      <ChevronRight size={16} className="text-slate-500" />
+                    )}
                     <span className={`text-xs px-2 py-1 rounded-full border ${catChip(cat)}`}>{cat}</span>
                     <span className="text-xs font-mono text-slate-600">
-                      shown {items.length}{typeof cov.uk_count === "number" ? ` · UK ${cov.uk_count}` : ""}
+                      shown {items.length}
+                      {typeof cov.uk_count === "number" ? ` · UK ${cov.uk_count}` : ""}
                     </span>
                   </div>
-                  <span className="text-xs text-slate-500 font-mono">{showAiSummaries && summaries?.harms_by_category?.[cat] ? "summary" : ""}</span>
+                  <span className="text-xs text-slate-500 font-mono">
+                    {showAiSummaries && summaries?.harms_by_category?.[cat] ? "summary" : ""}
+                  </span>
                 </button>
 
                 {isOpen ? (
                   <div className="p-4 bg-white">
                     {showAiSummaries && summaries?.harms_by_category?.[cat] ? (
-                      <div className="pill px-3 py-2 mb-3">
+                      <div className="pill px-3 py-2 mb-3 bg-white/70">
                         <div className="text-xs text-[var(--muted)] flex items-center gap-2">
                           <Sparkles size={14} /> Category summary
                         </div>
@@ -769,11 +1017,11 @@ function SignalsView({ items, showAiSummaries }) {
       <ViewHeader
         view="signals"
         title="Signals (clusters)"
-        subtitle="Clusters of similar headlines within a category. This is not single articles: it’s a grouped ‘theme’ with sources underneath."
-        right={<span className="pill px-3 py-1 text-xs font-mono text-slate-600">{items.length} shown</span>}
+        subtitle="Grouped themes with multiple sources. Use Sort=Confidence or Date to change the ordering."
+        right={<span className="pill px-3 py-1 text-xs font-mono text-slate-600 bg-white/70">{items.length} shown</span>}
       />
 
-      <div className="card p-4">
+      <div className="card p-4 bg-white/80 backdrop-blur border border-slate-200">
         {!items.length ? (
           <div className="text-sm text-[var(--muted)]">No signals match your filters.</div>
         ) : (
@@ -797,9 +1045,7 @@ function SignalsView({ items, showAiSummaries }) {
                 <div className="mt-2 text-sm font-semibold leading-snug">{s.title}</div>
 
                 {showAiSummaries && s.ai_summary ? (
-                  <div className="mt-2 text-sm text-[var(--muted)] leading-relaxed">
-                    {s.ai_summary}
-                  </div>
+                  <div className="mt-2 text-sm text-[var(--muted)] leading-relaxed">{s.ai_summary}</div>
                 ) : null}
 
                 <div className="mt-2 text-xs text-slate-500 font-mono">
@@ -809,9 +1055,10 @@ function SignalsView({ items, showAiSummaries }) {
                 <div className="mt-3 space-y-1">
                   {(s.links || []).slice(0, 5).map((l, i) => {
                     const st = (l.source_type || "news").toLowerCase();
-                    const badge = st === "forum"
-                      ? "border-fuchsia-200 bg-fuchsia-50 text-fuchsia-900"
-                      : "border-slate-200 bg-slate-50 text-slate-700";
+                    const badge =
+                      st === "forum"
+                        ? "border-fuchsia-200 bg-fuchsia-50 text-fuchsia-900"
+                        : "border-slate-200 bg-slate-50 text-slate-700";
                     return (
                       <a key={i} href={l.link} target="_blank" rel="noreferrer" className="block text-sm text-blue-700 hover:underline">
                         <span className={`mr-2 inline-flex text-[10px] px-2 py-1 rounded-full border ${badge}`}>
@@ -831,17 +1078,63 @@ function SignalsView({ items, showAiSummaries }) {
   );
 }
 
+function ForumsView({ items }) {
+  return (
+    <div className="space-y-4">
+      <ViewHeader
+        view="forums"
+        title="Forums (posts)"
+        subtitle="Forum posts tagged to a harm category (via harm_queries keywords)."
+        right={<span className="pill px-3 py-1 text-xs font-mono text-slate-600 bg-white/70">{items.length} shown</span>}
+      />
+
+      <div className="card p-4 bg-white/80 backdrop-blur border border-slate-200">
+        {!items.length ? (
+          <div className="text-sm text-[var(--muted)]">No forum items match your filters.</div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+            {items.map((f, i) => (
+              <article key={`${f.link}-${i}`} className="card-hover border border-slate-100 rounded-2xl p-4 bg-white">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] uppercase tracking-wide font-semibold text-fuchsia-700 bg-fuchsia-50 border border-fuchsia-100 rounded-full px-2 py-1">
+                      Forum post
+                    </span>
+                    <span className={`text-xs px-2 py-1 rounded-full border ${catChip(f.category)}`}>{f.category}</span>
+                  </div>
+                  <span className="text-xs text-slate-500 font-mono">{fmtDateShort(f.date)}</span>
+                </div>
+
+                <a href={f.link} target="_blank" rel="noreferrer" className="mt-2 block text-sm font-semibold hover:underline">
+                  {f.title}
+                </a>
+
+                <div className="mt-2 text-xs text-slate-500">
+                  {f.source}
+                  {f.uk_relevance ? <span className="ml-2 text-indigo-700">UK‑relevant</span> : null}
+                </div>
+
+                {f.tags?.length ? <div className="mt-2 text-xs text-slate-500">{f.tags.join(" · ")}</div> : null}
+              </article>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function ReleasesView({ items }) {
   return (
     <div className="space-y-4">
       <ViewHeader
         view="releases"
         title="Model releases"
-        subtitle="Only items that look like new model releases / model cards / system cards are included."
-        right={<span className="pill px-3 py-1 text-xs font-mono text-slate-600">{items.length} shown</span>}
+        subtitle="Model releases / model cards / system cards."
+        right={<span className="pill px-3 py-1 text-xs font-mono text-slate-600 bg-white/70">{items.length} shown</span>}
       />
 
-      <div className="card p-4">
+      <div className="card p-4 bg-white/80 backdrop-blur border border-slate-200">
         {!items.length ? (
           <div className="text-sm text-[var(--muted)]">
             No model releases match your filters (try widening RELEASE_TIME_WINDOW or removing category filter).
@@ -876,59 +1169,13 @@ function ReleasesView({ items }) {
   );
 }
 
-function ForumsView({ items }) {
-  return (
-    <div className="space-y-4">
-      <ViewHeader
-        view="forums"
-        title="Forums (posts)"
-        subtitle="These are forum posts (not news). Included only if tagged to a harm category (via your harm_queries keywords)."
-        right={<span className="pill px-3 py-1 text-xs font-mono text-slate-600">{items.length} shown</span>}
-      />
-
-      <div className="card p-4">
-        {!items.length ? (
-          <div className="text-sm text-[var(--muted)]">No forum items match your filters.</div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
-            {items.map((f, i) => (
-              <article key={`${f.link}-${i}`} className="card-hover border border-slate-100 rounded-2xl p-4 bg-white">
-                <div className="flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] uppercase tracking-wide font-semibold text-fuchsia-700 bg-fuchsia-50 border border-fuchsia-100 rounded-full px-2 py-1">
-                      Forum post
-                    </span>
-                    <span className={`text-xs px-2 py-1 rounded-full border ${catChip(f.category)}`}>{f.category}</span>
-                  </div>
-                  <span className="text-xs text-slate-500 font-mono">{fmtDateShort(f.date)}</span>
-                </div>
-
-                <a href={f.link} target="_blank" rel="noreferrer" className="mt-2 block text-sm font-semibold hover:underline">
-                  {f.title}
-                </a>
-
-                <div className="mt-2 text-xs text-slate-500">
-                  {f.source}
-                  {f.uk_relevance ? <span className="ml-2 text-indigo-700">UK‑relevant</span> : null}
-                </div>
-
-                {f.tags?.length ? (
-                  <div className="mt-2 text-xs text-slate-500">{f.tags.join(" · ")}</div>
-                ) : null}
-              </article>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
 function SkeletonDashboard() {
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-        {[0, 1, 2, 3].map((i) => <div key={i} className="skeleton h-[120px]" />)}
+        {[0, 1, 2, 3].map((i) => (
+          <div key={i} className="skeleton h-[120px]" />
+        ))}
       </div>
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
         <div className="skeleton h-[280px]" />
