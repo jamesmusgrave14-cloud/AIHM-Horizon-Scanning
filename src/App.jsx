@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import {
-  LayoutDashboard,
   Shield,
   TrendingUp,
   Cpu,
@@ -32,10 +31,6 @@ function withinWindow(timestamp, windowKey) {
   if (windowKey === "7d") return age <= 7 * 24 * 3600;
   if (windowKey === "30d") return age <= 30 * 24 * 3600;
   return true; // "All"
-}
-
-function clamp(n, a, b) {
-  return Math.max(a, Math.min(b, n));
 }
 
 function confidenceChip(level) {
@@ -72,7 +67,7 @@ function pageBg(view) {
   if (view === "signals") return "bg-gradient-to-b from-sky-50 via-slate-50 to-slate-50";
   if (view === "forums") return "bg-gradient-to-b from-fuchsia-50 via-slate-50 to-slate-50";
   if (view === "releases") return "bg-gradient-to-b from-indigo-50 via-slate-50 to-slate-50";
-  return "bg-gradient-to-b from-slate-50 to-slate-50";
+  return "bg-gradient-to-b from-rose-50 via-slate-50 to-slate-50";
 }
 
 function getItemDateISO(item, kind) {
@@ -106,8 +101,8 @@ export default function App() {
   const [payload, setPayload] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Views
-  const [view, setView] = useState("overview"); // overview | harms | signals | releases | forums
+  // Views: landing page is Harms
+  const [view, setView] = useState("harms"); // harms | signals | releases | forums
 
   // Filters
   const [searchTerm, setSearchTerm] = useState("");
@@ -123,20 +118,19 @@ export default function App() {
   const [showN, setShowN] = useState(36);
   const [filtersOpen, setFiltersOpen] = useState(false);
 
-  // Navigation helpers
-  const [overviewKinds, setOverviewKinds] = useState(["Harms", "Signals", "Forums", "Model releases"]);
+  // Harms UI helpers
   const [harmsFocusCat, setHarmsFocusCat] = useState("All");
-
-  // Harm bucket UI state
   const [openBuckets, setOpenBuckets] = useState(() => ({}));
 
-  // Persist a few UX prefs (quality-of-life)
+  // Persist a few UX prefs
   useEffect(() => {
     try {
-      const raw = localStorage.getItem("aihm_ui_prefs_v1");
+      const raw = localStorage.getItem("aihm_ui_prefs_v2");
       if (raw) {
         const p = JSON.parse(raw);
-        if (p?.view) setView(p.view);
+        const allowedViews = new Set(["harms", "signals", "forums", "releases"]);
+        if (p?.view && allowedViews.has(p.view)) setView(p.view);
+        // If previously stored "overview" or anything else, we intentionally land on harms
         if (p?.showN) setShowN(p.showN);
         if (typeof p?.showAiSummaries === "boolean") setShowAiSummaries(p.showAiSummaries);
       }
@@ -148,7 +142,7 @@ export default function App() {
   useEffect(() => {
     try {
       localStorage.setItem(
-        "aihm_ui_prefs_v1",
+        "aihm_ui_prefs_v2",
         JSON.stringify({ view, showN, showAiSummaries })
       );
     } catch {
@@ -218,7 +212,6 @@ export default function App() {
   }
 
   function passesCommon(item, kind) {
-    // Date range overrides time window if set
     if (dateFrom || dateTo) {
       if (!passesDateRange(item, kind)) return false;
     } else {
@@ -226,19 +219,16 @@ export default function App() {
       if (ts && !withinWindow(ts, timeFilter)) return false;
     }
 
-    // UK-only (strict)
     if (ukOnly) {
       const uk = item?.uk_relevance || (item?.uk_score >= 2);
       if (!uk) return false;
     }
 
-    // Min UK score (gentler)
     if (minUkScore > 0) {
       const score = item?.uk_score ?? (item?.uk_relevance ? 2 : 0);
       if (score < minUkScore) return false;
     }
 
-    // category filter
     if (categoryFilter !== "All") {
       if (kind === "releases") {
         if (categoryFilter !== "Model Releases") return false;
@@ -251,7 +241,6 @@ export default function App() {
       }
     }
 
-    // source filter
     if (sourceFilter !== "All") {
       if (kind === "signals") {
         const links = item?.links || [];
@@ -271,7 +260,7 @@ export default function App() {
   }
 
   function sortItems(items, kind) {
-    if (sortBy === "relevance") return items; // keep backend sort
+    if (sortBy === "relevance") return items;
     const copy = items.slice();
 
     if (sortBy === "newest") {
@@ -313,34 +302,6 @@ export default function App() {
     [sections.dev_releases, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, sourceFilter, ukOnly, minUkScore, sortBy]
   );
 
-  const whatsNew = useMemo(() => {
-    const pool = [];
-    (sections.harms || []).slice(0, 80).forEach((h) =>
-      pool.push({ kind: "Harms", title: h.title, link: h.link, date: h.date, category: h.category, uk: !!h.uk_relevance, uk_score: h.uk_score ?? 0, source: h.source, source_type: h.source_type || "news" })
-    );
-    (sections.dev_releases || []).slice(0, 60).forEach((r) =>
-      pool.push({ kind: "Model releases", title: r.title, link: r.link, date: r.date, category: "Model Releases", uk: !!r.uk_relevance, uk_score: r.uk_score ?? 0, source: r.source, source_type: r.source_type || "news" })
-    );
-    (sections.signals || []).slice(0, 60).forEach((s) =>
-      pool.push({ kind: "Signals", title: s.title, link: (s.links && s.links[0]?.link) || "", date: s.latest_date, category: s.primary_category, uk: !!s.uk_relevance, uk_score: s.uk_score ?? 0, source: (s.links && s.links[0]?.source) || "", links: s.links || [] })
-    );
-    (sections.forums || []).slice(0, 60).forEach((f) =>
-      pool.push({ kind: "Forums", title: f.title, link: f.link, date: f.date, category: f.category, uk: !!f.uk_relevance, uk_score: f.uk_score ?? 0, source: f.source, source_type: f.source_type || "forum" })
-    );
-
-    const filtered = pool.filter((x) => {
-      const fakeKind = x.kind === "Signals" ? "signals" : x.kind === "Forums" ? "forums" : x.kind === "Model releases" ? "releases" : "harms";
-      const item =
-        fakeKind === "signals"
-          ? { title: x.title, primary_category: x.category, latest_date: x.date, uk_relevance: x.uk, uk_score: x.uk_score, links: x.links || [], tags: [] }
-          : { title: x.title, category: x.category, date: x.date, uk_relevance: x.uk, uk_score: x.uk_score, source_type: x.source_type, source: x.source, tags: [] };
-      return passesCommon(item, fakeKind);
-    });
-
-    filtered.sort((a, b) => (Date.parse(b.date || "") || 0) - (Date.parse(a.date || "") || 0));
-    return filtered.slice(0, 60);
-  }, [sections, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, sourceFilter, ukOnly, minUkScore]);
-
   const harmCategories = useMemo(() => {
     const cats = new Set((sections.harms || []).map((h) => h.category).filter(Boolean));
     const arr = Array.from(cats);
@@ -349,12 +310,7 @@ export default function App() {
   }, [sections.harms]);
 
   function toggleBucket(cat) {
-    // correct toggle
     setOpenBuckets((s) => ({ ...s, [cat]: !s[cat] }));
-  }
-
-  function toggleOverviewKind(k) {
-    setOverviewKinds((cur) => (cur.includes(k) ? cur.filter((x) => x !== k) : [...cur, k]));
   }
 
   // Active filters chips (so you don’t have to open the drawer to adjust)
@@ -396,7 +352,7 @@ export default function App() {
     setCategoryFilter("All");
     setSourceFilter("All");
     setUkOnly(false);
-    // keep showN and showAiSummaries as user prefs unless you want them cleared too
+    // keep showN + showAiSummaries as preference
   }
 
   return (
@@ -610,30 +566,18 @@ export default function App() {
 
         {/* Navigation + Content */}
         <div className="mt-5 grid grid-cols-1 lg:grid-cols-[260px,1fr] gap-4">
-          {/* Sidebar primary nav (only nav; no top tabs; no “quick switch”) */}
+          {/* Sidebar primary nav */}
           <aside className="card p-4 bg-white/70 backdrop-blur border border-slate-200 lg:sticky lg:top-4 lg:self-start">
-            <NavItem icon={<LayoutDashboard size={16} />} label="Overview" active={view === "overview"} onClick={() => setView("overview")} count={null} />
             <NavItem icon={<Shield size={16} />} label="Harms" active={view === "harms"} onClick={() => setView("harms")} count={counts.harms} />
             <NavItem icon={<TrendingUp size={16} />} label="Signals" active={view === "signals"} onClick={() => setView("signals")} count={counts.signals} />
             <NavItem icon={<MessageSquare size={16} />} label="Forums" active={view === "forums"} onClick={() => setView("forums")} count={counts.forums} />
             <NavItem icon={<Cpu size={16} />} label="Model releases" active={view === "releases"} onClick={() => setView("releases")} count={counts.dev_releases} />
-
             <div className="hr my-3" />
-            <div className="text-xs text-[var(--muted)]">
-              Tip: use Filters + “Active filters” chips to narrow quickly.
-            </div>
+            <div className="text-xs text-[var(--muted)]">Landing page is Harms. Use category focus chips to reduce scrolling.</div>
           </aside>
 
           <main className="space-y-4">
             {loading && !payload ? <SkeletonDashboard /> : null}
-
-            {!loading && payload && view === "overview" ? (
-              <OverviewFeed
-                whatsNew={whatsNew}
-                overviewKinds={overviewKinds}
-                toggleKind={toggleOverviewKind}
-              />
-            ) : null}
 
             {!loading && payload && view === "harms" ? (
               <HarmsView
@@ -710,77 +654,6 @@ function ViewHeader({ view, title, subtitle, right }) {
   );
 }
 
-function OverviewFeed({ whatsNew, overviewKinds, toggleKind }) {
-  const kinds = ["Harms", "Signals", "Forums", "Model releases"];
-  const filtered = whatsNew.filter((x) => overviewKinds.includes(x.kind));
-
-  return (
-    <div className="space-y-4">
-      <ViewHeader
-        view="overview"
-        title="Latest feed"
-        subtitle="Most recent items across the system."
-        right={<span className="pill px-3 py-1 text-xs font-mono text-slate-600 bg-white/70">{filtered.length} shown</span>}
-      />
-
-      <div className="card p-4 bg-white/80 backdrop-blur border border-slate-200">
-        <div className="flex flex-wrap gap-2">
-          {kinds.map((k) => {
-            const on = overviewKinds.includes(k);
-            return (
-              <button
-                key={k}
-                type="button"
-                onClick={() => toggleKind(k)}
-                className={`text-sm px-3 py-1.5 rounded-full border transition ${
-                  on ? "bg-slate-900 text-white border-slate-900" : "bg-white/70 hover:bg-white border-slate-200 text-slate-700"
-                }`}
-                aria-pressed={on}
-                title="Toggle in feed"
-              >
-                {k}
-              </button>
-            );
-          })}
-        </div>
-
-        <div className="hr my-4" />
-
-        {!filtered.length ? (
-          <div className="text-sm text-[var(--muted)]">No items match your current filters.</div>
-        ) : (
-          <div className="space-y-2">
-            {filtered.slice(0, 40).map((x, i) => (
-              <a
-                key={i}
-                href={x.link}
-                target="_blank"
-                rel="noreferrer"
-                className="block card-hover border border-slate-100 rounded-xl px-3 py-2 bg-white"
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-xs font-mono text-slate-500">{x.kind}</span>
-                    <span className={`text-xs px-2 py-1 rounded-full border ${catChip(x.category)}`}>{x.category}</span>
-                    {x.uk ? (
-                      <span className="text-xs px-2 py-1 rounded-full border border-indigo-200 bg-indigo-50 text-indigo-800">
-                        UK‑relevant
-                      </span>
-                    ) : null}
-                  </div>
-                  <div className="text-xs text-slate-500 font-mono">{fmtDateShort(x.date)}</div>
-                </div>
-                <div className="mt-1 text-sm font-medium">{x.title}</div>
-                {x.source ? <div className="mt-1 text-xs text-slate-500">{x.source}</div> : null}
-              </a>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
 function HarmsView({
   categories,
   harms,
@@ -810,7 +683,7 @@ function HarmsView({
       <ViewHeader
         view="harms"
         title="Harms (articles)"
-        subtitle="Focus a category to reduce scrolling. Use Filters to narrow further."
+        subtitle="Focus a category to reduce scrolling. Use Filters + Active filters chips to narrow further."
         right={<span className="pill px-3 py-1 text-xs font-mono text-slate-600 bg-white/70">{harms.length} matches</span>}
       />
 
