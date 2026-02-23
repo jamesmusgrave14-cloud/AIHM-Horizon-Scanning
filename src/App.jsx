@@ -12,6 +12,7 @@ import {
   Sparkles,
   ChevronDown,
   ChevronRight,
+  X,
 } from "lucide-react";
 
 /* ------------------------- small helpers ------------------------- */
@@ -122,12 +123,38 @@ export default function App() {
   const [showN, setShowN] = useState(36);
   const [filtersOpen, setFiltersOpen] = useState(false);
 
-  // Navigation helpers (less sifting)
+  // Navigation helpers
   const [overviewKinds, setOverviewKinds] = useState(["Harms", "Signals", "Forums", "Model releases"]);
   const [harmsFocusCat, setHarmsFocusCat] = useState("All");
 
   // Harm bucket UI state
   const [openBuckets, setOpenBuckets] = useState(() => ({}));
+
+  // Persist a few UX prefs (quality-of-life)
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("aihm_ui_prefs_v1");
+      if (raw) {
+        const p = JSON.parse(raw);
+        if (p?.view) setView(p.view);
+        if (p?.showN) setShowN(p.showN);
+        if (typeof p?.showAiSummaries === "boolean") setShowAiSummaries(p.showAiSummaries);
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(
+        "aihm_ui_prefs_v1",
+        JSON.stringify({ view, showN, showAiSummaries })
+      );
+    } catch {
+      // ignore
+    }
+  }, [view, showN, showAiSummaries]);
 
   async function load() {
     setLoading(true);
@@ -190,7 +217,6 @@ export default function App() {
     return true;
   }
 
-  // View-aware filter application
   function passesCommon(item, kind) {
     // Date range overrides time window if set
     if (dateFrom || dateTo) {
@@ -257,10 +283,7 @@ export default function App() {
       return copy;
     }
     if (sortBy === "uk") {
-      copy.sort(
-        (a, b) =>
-          (b?.uk_score ?? (b?.uk_relevance ? 2 : 0)) - (a?.uk_score ?? (a?.uk_relevance ? 2 : 0))
-      );
+      copy.sort((a, b) => (b?.uk_score ?? (b?.uk_relevance ? 2 : 0)) - (a?.uk_score ?? (a?.uk_relevance ? 2 : 0)));
       return copy;
     }
     if (sortBy === "confidence" && kind === "signals") {
@@ -272,151 +295,45 @@ export default function App() {
 
   const harms = useMemo(
     () => sortItems((sections.harms || []).filter((x) => passesCommon(x, "harms")), "harms"),
-    [
-      sections.harms,
-      searchTerm,
-      timeFilter,
-      dateFrom,
-      dateTo,
-      categoryFilter,
-      sourceFilter,
-      ukOnly,
-      minUkScore,
-      sortBy,
-    ]
+    [sections.harms, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, sourceFilter, ukOnly, minUkScore, sortBy]
   );
 
   const signals = useMemo(
     () => sortItems((sections.signals || []).filter((x) => passesCommon(x, "signals")), "signals"),
-    [
-      sections.signals,
-      searchTerm,
-      timeFilter,
-      dateFrom,
-      dateTo,
-      categoryFilter,
-      sourceFilter,
-      ukOnly,
-      minUkScore,
-      sortBy,
-    ]
+    [sections.signals, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, sourceFilter, ukOnly, minUkScore, sortBy]
   );
 
   const forums = useMemo(
     () => sortItems((sections.forums || []).filter((x) => passesCommon(x, "forums")), "forums"),
-    [
-      sections.forums,
-      searchTerm,
-      timeFilter,
-      dateFrom,
-      dateTo,
-      categoryFilter,
-      sourceFilter,
-      ukOnly,
-      minUkScore,
-      sortBy,
-    ]
+    [sections.forums, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, sourceFilter, ukOnly, minUkScore, sortBy]
   );
 
   const releases = useMemo(
     () => sortItems((sections.dev_releases || []).filter((x) => passesCommon(x, "releases")), "releases"),
-    [
-      sections.dev_releases,
-      searchTerm,
-      timeFilter,
-      dateFrom,
-      dateTo,
-      categoryFilter,
-      sourceFilter,
-      ukOnly,
-      minUkScore,
-      sortBy,
-    ]
+    [sections.dev_releases, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, sourceFilter, ukOnly, minUkScore, sortBy]
   );
 
-  // Overview: merge recent items into a single pool, then apply same filters via a lightweight mapping
   const whatsNew = useMemo(() => {
     const pool = [];
     (sections.harms || []).slice(0, 80).forEach((h) =>
-      pool.push({
-        kind: "Harms",
-        title: h.title,
-        link: h.link,
-        date: h.date,
-        category: h.category,
-        uk: !!h.uk_relevance,
-        uk_score: h.uk_score ?? 0,
-        source: h.source,
-        source_type: h.source_type || "news",
-      })
+      pool.push({ kind: "Harms", title: h.title, link: h.link, date: h.date, category: h.category, uk: !!h.uk_relevance, uk_score: h.uk_score ?? 0, source: h.source, source_type: h.source_type || "news" })
     );
     (sections.dev_releases || []).slice(0, 60).forEach((r) =>
-      pool.push({
-        kind: "Model releases",
-        title: r.title,
-        link: r.link,
-        date: r.date,
-        category: "Model Releases",
-        uk: !!r.uk_relevance,
-        uk_score: r.uk_score ?? 0,
-        source: r.source,
-        source_type: r.source_type || "news",
-      })
+      pool.push({ kind: "Model releases", title: r.title, link: r.link, date: r.date, category: "Model Releases", uk: !!r.uk_relevance, uk_score: r.uk_score ?? 0, source: r.source, source_type: r.source_type || "news" })
     );
     (sections.signals || []).slice(0, 60).forEach((s) =>
-      pool.push({
-        kind: "Signals",
-        title: s.title,
-        link: (s.links && s.links[0]?.link) || "",
-        date: s.latest_date,
-        category: s.primary_category,
-        uk: !!s.uk_relevance,
-        uk_score: s.uk_score ?? 0,
-        source: (s.links && s.links[0]?.source) || "",
-        // treat signals as mixed; source filter is derived in passesCommon for signals using links, so we emulate minimal
-        links: s.links || [],
-      })
+      pool.push({ kind: "Signals", title: s.title, link: (s.links && s.links[0]?.link) || "", date: s.latest_date, category: s.primary_category, uk: !!s.uk_relevance, uk_score: s.uk_score ?? 0, source: (s.links && s.links[0]?.source) || "", links: s.links || [] })
     );
     (sections.forums || []).slice(0, 60).forEach((f) =>
-      pool.push({
-        kind: "Forums",
-        title: f.title,
-        link: f.link,
-        date: f.date,
-        category: f.category,
-        uk: !!f.uk_relevance,
-        uk_score: f.uk_score ?? 0,
-        source: f.source,
-        source_type: f.source_type || "forum",
-      })
+      pool.push({ kind: "Forums", title: f.title, link: f.link, date: f.date, category: f.category, uk: !!f.uk_relevance, uk_score: f.uk_score ?? 0, source: f.source, source_type: f.source_type || "forum" })
     );
 
     const filtered = pool.filter((x) => {
-      const fakeKind =
-        x.kind === "Signals" ? "signals" : x.kind === "Forums" ? "forums" : x.kind === "Model releases" ? "releases" : "harms";
-
+      const fakeKind = x.kind === "Signals" ? "signals" : x.kind === "Forums" ? "forums" : x.kind === "Model releases" ? "releases" : "harms";
       const item =
         fakeKind === "signals"
-          ? {
-              title: x.title,
-              primary_category: x.category,
-              latest_date: x.date,
-              uk_relevance: x.uk,
-              uk_score: x.uk_score,
-              links: x.links || [],
-              tags: [],
-            }
-          : {
-              title: x.title,
-              category: x.category,
-              date: x.date,
-              uk_relevance: x.uk,
-              uk_score: x.uk_score,
-              source_type: x.source_type,
-              source: x.source,
-              tags: [],
-            };
-
+          ? { title: x.title, primary_category: x.category, latest_date: x.date, uk_relevance: x.uk, uk_score: x.uk_score, links: x.links || [], tags: [] }
+          : { title: x.title, category: x.category, date: x.date, uk_relevance: x.uk, uk_score: x.uk_score, source_type: x.source_type, source: x.source, tags: [] };
       return passesCommon(item, fakeKind);
     });
 
@@ -432,12 +349,54 @@ export default function App() {
   }, [sections.harms]);
 
   function toggleBucket(cat) {
-    // ✅ correct (and important) toggle
+    // correct toggle
     setOpenBuckets((s) => ({ ...s, [cat]: !s[cat] }));
   }
 
   function toggleOverviewKind(k) {
     setOverviewKinds((cur) => (cur.includes(k) ? cur.filter((x) => x !== k) : [...cur, k]));
+  }
+
+  // Active filters chips (so you don’t have to open the drawer to adjust)
+  const activeFilterChips = useMemo(() => {
+    const chips = [];
+    if (searchTerm.trim()) chips.push({ k: "search", label: `Search: ${searchTerm.trim()}` });
+    if (dateFrom) chips.push({ k: "dateFrom", label: `From: ${dateFrom}` });
+    if (dateTo) chips.push({ k: "dateTo", label: `To: ${dateTo}` });
+    if (!dateFrom && !dateTo && timeFilter !== "All") chips.push({ k: "time", label: `Time: ${timeFilter}` });
+    if (categoryFilter !== "All") chips.push({ k: "cat", label: `Category: ${categoryFilter}` });
+    if (sourceFilter !== "All") chips.push({ k: "src", label: `Source: ${sourceFilter}` });
+    if (sortBy !== "relevance") chips.push({ k: "sort", label: `Sort: ${sortBy}` });
+    if (minUkScore > 0) chips.push({ k: "minUk", label: `Min UK: ${minUkScore}` });
+    if (ukOnly) chips.push({ k: "ukOnly", label: "UK only" });
+    if (showAiSummaries) chips.push({ k: "aiSum", label: "AI summaries" });
+    return chips;
+  }, [searchTerm, dateFrom, dateTo, timeFilter, categoryFilter, sourceFilter, sortBy, minUkScore, ukOnly, showAiSummaries]);
+
+  function clearChip(k) {
+    if (k === "search") setSearchTerm("");
+    if (k === "dateFrom") setDateFrom("");
+    if (k === "dateTo") setDateTo("");
+    if (k === "time") setTimeFilter("7d");
+    if (k === "cat") setCategoryFilter("All");
+    if (k === "src") setSourceFilter("All");
+    if (k === "sort") setSortBy("relevance");
+    if (k === "minUk") setMinUkScore(0);
+    if (k === "ukOnly") setUkOnly(false);
+    if (k === "aiSum") setShowAiSummaries(false);
+  }
+
+  function clearAllFilters() {
+    setSearchTerm("");
+    setTimeFilter("7d");
+    setDateFrom("");
+    setDateTo("");
+    setSortBy("relevance");
+    setMinUkScore(0);
+    setCategoryFilter("All");
+    setSourceFilter("All");
+    setUkOnly(false);
+    // keep showN and showAiSummaries as user prefs unless you want them cleared too
   }
 
   return (
@@ -451,9 +410,7 @@ export default function App() {
                 <div className="h-2.5 w-2.5 rounded-full" style={{ background: "var(--a1)" }} />
                 <h1 className="text-lg font-semibold">AI Harms Horizon Scan</h1>
                 {payload?.last_updated ? (
-                  <span className="text-sm text-[var(--muted)] font-mono">
-                    updated {payload.last_updated.slice(0, 19)}
-                  </span>
+                  <span className="text-sm text-[var(--muted)] font-mono">updated {payload.last_updated.slice(0, 19)}</span>
                 ) : null}
               </div>
 
@@ -488,6 +445,33 @@ export default function App() {
               </button>
             </div>
           </div>
+
+          {/* Active filters row (when drawer closed) */}
+          {!filtersOpen && activeFilterChips.length ? (
+            <div className="mt-4">
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="text-xs text-[var(--muted)] mr-1">Active filters:</div>
+                {activeFilterChips.map((c) => (
+                  <button
+                    key={c.k}
+                    onClick={() => clearChip(c.k)}
+                    className="inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-full border border-slate-200 bg-white/70 hover:bg-white transition"
+                    title="Click to remove"
+                  >
+                    {c.label}
+                    <X size={14} className="text-slate-400" />
+                  </button>
+                ))}
+                <button
+                  onClick={clearAllFilters}
+                  className="text-sm px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:bg-slate-50 transition"
+                  title="Clear all filters"
+                >
+                  Clear all
+                </button>
+              </div>
+            </div>
+          ) : null}
 
           {/* Filters drawer */}
           {filtersOpen ? (
@@ -544,11 +528,7 @@ export default function App() {
 
                 <div className="lg:col-span-2">
                   <label className="text-xs text-[var(--muted)]">Show</label>
-                  <select
-                    className="mt-1 w-full pill px-3 py-2 text-sm bg-white"
-                    value={showN}
-                    onChange={(e) => setShowN(parseInt(e.target.value, 10))}
-                  >
+                  <select className="mt-1 w-full pill px-3 py-2 text-sm bg-white" value={showN} onChange={(e) => setShowN(parseInt(e.target.value, 10))}>
                     {[24, 36, 48, 72, 100].map((n) => (
                       <option key={n} value={n}>
                         {n}
@@ -559,11 +539,7 @@ export default function App() {
 
                 <div className="lg:col-span-3">
                   <label className="text-xs text-[var(--muted)]">Category</label>
-                  <select
-                    className="mt-1 w-full pill px-3 py-2 text-sm bg-white"
-                    value={categoryFilter}
-                    onChange={(e) => setCategoryFilter(e.target.value)}
-                  >
+                  <select className="mt-1 w-full pill px-3 py-2 text-sm bg-white" value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)}>
                     {allCategories.map((c) => (
                       <option key={c} value={c}>
                         {c}
@@ -574,11 +550,7 @@ export default function App() {
 
                 <div className="lg:col-span-3">
                   <label className="text-xs text-[var(--muted)]">Source type</label>
-                  <select
-                    className="mt-1 w-full pill px-3 py-2 text-sm bg-white"
-                    value={sourceFilter}
-                    onChange={(e) => setSourceFilter(e.target.value)}
-                  >
+                  <select className="mt-1 w-full pill px-3 py-2 text-sm bg-white" value={sourceFilter} onChange={(e) => setSourceFilter(e.target.value)}>
                     <option value="All">All</option>
                     <option value="News">News</option>
                     <option value="Forum">Forum</option>
@@ -598,15 +570,7 @@ export default function App() {
 
                 <div className="lg:col-span-3">
                   <label className="text-xs text-[var(--muted)]">Min UK score: {minUkScore}</label>
-                  <input
-                    type="range"
-                    min="0"
-                    max="3"
-                    step="1"
-                    value={minUkScore}
-                    onChange={(e) => setMinUkScore(parseInt(e.target.value, 10))}
-                    className="mt-2 w-full"
-                  />
+                  <input type="range" min="0" max="3" step="1" value={minUkScore} onChange={(e) => setMinUkScore(parseInt(e.target.value, 10))} className="mt-2 w-full" />
                 </div>
 
                 <div className="lg:col-span-12 flex flex-wrap gap-3 items-center mt-1">
@@ -631,6 +595,10 @@ export default function App() {
                     Clear dates
                   </button>
 
+                  <button onClick={clearAllFilters} className="pill px-3 py-2 text-sm hover:bg-white transition bg-white" title="Clear all filters">
+                    Clear all
+                  </button>
+
                   <div className="text-xs text-[var(--muted)] font-mono">
                     TIME_WINDOW={limits.TIME_WINDOW || "—"} · RELEASE_TIME_WINDOW={limits.RELEASE_TIME_WINDOW || "—"} · dedupe={meta.dedupe_mode || "—"}
                   </div>
@@ -642,6 +610,7 @@ export default function App() {
 
         {/* Navigation + Content */}
         <div className="mt-5 grid grid-cols-1 lg:grid-cols-[260px,1fr] gap-4">
+          {/* Sidebar primary nav (only nav; no top tabs; no “quick switch”) */}
           <aside className="card p-4 bg-white/70 backdrop-blur border border-slate-200 lg:sticky lg:top-4 lg:self-start">
             <NavItem icon={<LayoutDashboard size={16} />} label="Overview" active={view === "overview"} onClick={() => setView("overview")} count={null} />
             <NavItem icon={<Shield size={16} />} label="Harms" active={view === "harms"} onClick={() => setView("harms")} count={counts.harms} />
@@ -650,28 +619,12 @@ export default function App() {
             <NavItem icon={<Cpu size={16} />} label="Model releases" active={view === "releases"} onClick={() => setView("releases")} count={counts.dev_releases} />
 
             <div className="hr my-3" />
-
-            {/* sticky-ish quick tabs inside sidebar too */}
-            <div className="text-xs text-[var(--muted)] mb-2">Quick switch</div>
-            <ViewTabs view={view} setView={setView} />
+            <div className="text-xs text-[var(--muted)]">
+              Tip: use Filters + “Active filters” chips to narrow quickly.
+            </div>
           </aside>
 
           <main className="space-y-4">
-            {/* Sticky top tabs in main content for fast navigation (less sifting) */}
-            <div className="sticky top-4 z-10">
-              <div className="card bg-white/80 backdrop-blur border border-slate-200 px-3 py-3">
-                <div className="flex items-center justify-between gap-3 flex-wrap">
-                  <ViewTabs view={view} setView={setView} />
-                  <div className="text-xs text-[var(--muted)] font-mono">
-                    {view === "harms" ? `${harms.length} matches` : null}
-                    {view === "signals" ? `${signals.length} matches` : null}
-                    {view === "forums" ? `${forums.length} matches` : null}
-                    {view === "releases" ? `${releases.length} matches` : null}
-                  </div>
-                </div>
-              </div>
-            </div>
-
             {loading && !payload ? <SkeletonDashboard /> : null}
 
             {!loading && payload && view === "overview" ? (
@@ -722,35 +675,6 @@ export default function App() {
 }
 
 /* ---------------------------- components ---------------------------- */
-
-function ViewTabs({ view, setView }) {
-  const tabs = [
-    { k: "overview", label: "Overview" },
-    { k: "harms", label: "Harms" },
-    { k: "signals", label: "Signals" },
-    { k: "forums", label: "Forums" },
-    { k: "releases", label: "Releases" },
-  ];
-
-  return (
-    <div className="flex flex-wrap gap-2">
-      {tabs.map((t) => (
-        <button
-          key={t.k}
-          onClick={() => setView(t.k)}
-          className={`px-3 py-1.5 rounded-xl text-sm border transition ${
-            view === t.k
-              ? "bg-slate-900 text-white border-slate-900"
-              : "bg-white/70 hover:bg-white border-slate-200 text-slate-700"
-          }`}
-          aria-current={view === t.k ? "page" : undefined}
-        >
-          {t.label}
-        </button>
-      ))}
-    </div>
-  );
-}
 
 function NavItem({ icon, label, active, onClick, count }) {
   return (
@@ -886,12 +810,12 @@ function HarmsView({
       <ViewHeader
         view="harms"
         title="Harms (articles)"
-        subtitle="Pick a category to focus on (reduces scrolling), or switch back to All categories."
+        subtitle="Focus a category to reduce scrolling. Use Filters to narrow further."
         right={<span className="pill px-3 py-1 text-xs font-mono text-slate-600 bg-white/70">{harms.length} matches</span>}
       />
 
       <div className="card p-4 bg-white/80 backdrop-blur border border-slate-200">
-        {/* Focus chips: big scroll-killer */}
+        {/* Focus chips */}
         <div className="flex flex-wrap gap-2 items-center">
           <button
             type="button"
@@ -1017,7 +941,7 @@ function SignalsView({ items, showAiSummaries }) {
       <ViewHeader
         view="signals"
         title="Signals (clusters)"
-        subtitle="Grouped themes with multiple sources. Use Sort=Confidence or Date to change the ordering."
+        subtitle="Grouped themes with multiple sources."
         right={<span className="pill px-3 py-1 text-xs font-mono text-slate-600 bg-white/70">{items.length} shown</span>}
       />
 
@@ -1084,7 +1008,7 @@ function ForumsView({ items }) {
       <ViewHeader
         view="forums"
         title="Forums (posts)"
-        subtitle="Forum posts tagged to a harm category (via harm_queries keywords)."
+        subtitle="Forum posts tagged to a harm category."
         right={<span className="pill px-3 py-1 text-xs font-mono text-slate-600 bg-white/70">{items.length} shown</span>}
       />
 
