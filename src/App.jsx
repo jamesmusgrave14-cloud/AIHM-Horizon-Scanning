@@ -14,7 +14,7 @@ import {
   X,
 } from "lucide-react";
 
-/* ------------------------- small helpers ------------------------- */
+/* ------------------------- helpers ------------------------- */
 
 function fmtDateShort(d) {
   if (!d) return "";
@@ -101,8 +101,8 @@ export default function App() {
   const [payload, setPayload] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Views: landing page is Harms
-  const [view, setView] = useState("harms"); // harms | signals | releases | forums
+  // Landing page is Harms
+  const [view, setView] = useState("harms"); // harms | signals | forums | releases
 
   // Filters
   const [searchTerm, setSearchTerm] = useState("");
@@ -118,19 +118,18 @@ export default function App() {
   const [showN, setShowN] = useState(36);
   const [filtersOpen, setFiltersOpen] = useState(false);
 
-  // Harms UI helpers
+  // Harms UI state
   const [harmsFocusCat, setHarmsFocusCat] = useState("All");
   const [openBuckets, setOpenBuckets] = useState(() => ({}));
 
-  // Persist a few UX prefs
+  // Persist a few UX prefs (no overview allowed)
   useEffect(() => {
     try {
-      const raw = localStorage.getItem("aihm_ui_prefs_v2");
+      const raw = localStorage.getItem("aihm_ui_prefs_v3");
       if (raw) {
         const p = JSON.parse(raw);
-        const allowedViews = new Set(["harms", "signals", "forums", "releases"]);
-        if (p?.view && allowedViews.has(p.view)) setView(p.view);
-        // If previously stored "overview" or anything else, we intentionally land on harms
+        const allowed = new Set(["harms", "signals", "forums", "releases"]);
+        if (p?.view && allowed.has(p.view)) setView(p.view);
         if (p?.showN) setShowN(p.showN);
         if (typeof p?.showAiSummaries === "boolean") setShowAiSummaries(p.showAiSummaries);
       }
@@ -142,7 +141,7 @@ export default function App() {
   useEffect(() => {
     try {
       localStorage.setItem(
-        "aihm_ui_prefs_v2",
+        "aihm_ui_prefs_v3",
         JSON.stringify({ view, showN, showAiSummaries })
       );
     } catch {
@@ -212,6 +211,7 @@ export default function App() {
   }
 
   function passesCommon(item, kind) {
+    // Date range overrides time window if set
     if (dateFrom || dateTo) {
       if (!passesDateRange(item, kind)) return false;
     } else {
@@ -219,16 +219,19 @@ export default function App() {
       if (ts && !withinWindow(ts, timeFilter)) return false;
     }
 
+    // UK-only (strict)
     if (ukOnly) {
       const uk = item?.uk_relevance || (item?.uk_score >= 2);
       if (!uk) return false;
     }
 
+    // Min UK score (gentler)
     if (minUkScore > 0) {
       const score = item?.uk_score ?? (item?.uk_relevance ? 2 : 0);
       if (score < minUkScore) return false;
     }
 
+    // Category
     if (categoryFilter !== "All") {
       if (kind === "releases") {
         if (categoryFilter !== "Model Releases") return false;
@@ -241,6 +244,7 @@ export default function App() {
       }
     }
 
+    // Source type
     if (sourceFilter !== "All") {
       if (kind === "signals") {
         const links = item?.links || [];
@@ -260,7 +264,7 @@ export default function App() {
   }
 
   function sortItems(items, kind) {
-    if (sortBy === "relevance") return items;
+    if (sortBy === "relevance") return items; // keep backend ordering
     const copy = items.slice();
 
     if (sortBy === "newest") {
@@ -272,7 +276,10 @@ export default function App() {
       return copy;
     }
     if (sortBy === "uk") {
-      copy.sort((a, b) => (b?.uk_score ?? (b?.uk_relevance ? 2 : 0)) - (a?.uk_score ?? (a?.uk_relevance ? 2 : 0)));
+      copy.sort(
+        (a, b) =>
+          (b?.uk_score ?? (b?.uk_relevance ? 2 : 0)) - (a?.uk_score ?? (a?.uk_relevance ? 2 : 0))
+      );
       return copy;
     }
     if (sortBy === "confidence" && kind === "signals") {
@@ -309,11 +316,12 @@ export default function App() {
     return arr;
   }, [sections.harms]);
 
+  // ✅ FIXED: computed key update (build-safe)
   function toggleBucket(cat) {
-    setOpenBuckets((s) => ({ ...s, !s[cat] }));
+    setOpenBuckets((s) => ({ ...s, [cat]: !s[cat] }));
   }
 
-  // Active filters chips (so you don’t have to open the drawer to adjust)
+  // Active filter chips (quick remove)
   const activeFilterChips = useMemo(() => {
     const chips = [];
     if (searchTerm.trim()) chips.push({ k: "search", label: `Search: ${searchTerm.trim()}` });
@@ -352,7 +360,6 @@ export default function App() {
     setCategoryFilter("All");
     setSourceFilter("All");
     setUkOnly(false);
-    // keep showN + showAiSummaries as preference
   }
 
   return (
@@ -484,7 +491,11 @@ export default function App() {
 
                 <div className="lg:col-span-2">
                   <label className="text-xs text-[var(--muted)]">Show</label>
-                  <select className="mt-1 w-full pill px-3 py-2 text-sm bg-white" value={showN} onChange={(e) => setShowN(parseInt(e.target.value, 10))}>
+                  <select
+                    className="mt-1 w-full pill px-3 py-2 text-sm bg-white"
+                    value={showN}
+                    onChange={(e) => setShowN(parseInt(e.target.value, 10))}
+                  >
                     {[24, 36, 48, 72, 100].map((n) => (
                       <option key={n} value={n}>
                         {n}
@@ -495,7 +506,11 @@ export default function App() {
 
                 <div className="lg:col-span-3">
                   <label className="text-xs text-[var(--muted)]">Category</label>
-                  <select className="mt-1 w-full pill px-3 py-2 text-sm bg-white" value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)}>
+                  <select
+                    className="mt-1 w-full pill px-3 py-2 text-sm bg-white"
+                    value={categoryFilter}
+                    onChange={(e) => setCategoryFilter(e.target.value)}
+                  >
                     {allCategories.map((c) => (
                       <option key={c} value={c}>
                         {c}
@@ -506,7 +521,11 @@ export default function App() {
 
                 <div className="lg:col-span-3">
                   <label className="text-xs text-[var(--muted)]">Source type</label>
-                  <select className="mt-1 w-full pill px-3 py-2 text-sm bg-white" value={sourceFilter} onChange={(e) => setSourceFilter(e.target.value)}>
+                  <select
+                    className="mt-1 w-full pill px-3 py-2 text-sm bg-white"
+                    value={sourceFilter}
+                    onChange={(e) => setSourceFilter(e.target.value)}
+                  >
                     <option value="All">All</option>
                     <option value="News">News</option>
                     <option value="Forum">Forum</option>
@@ -515,7 +534,11 @@ export default function App() {
 
                 <div className="lg:col-span-3">
                   <label className="text-xs text-[var(--muted)]">Sort</label>
-                  <select className="mt-1 w-full pill px-3 py-2 text-sm bg-white" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                  <select
+                    className="mt-1 w-full pill px-3 py-2 text-sm bg-white"
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                  >
                     <option value="relevance">Relevance (default)</option>
                     <option value="newest">Newest first</option>
                     <option value="oldest">Oldest first</option>
@@ -526,7 +549,15 @@ export default function App() {
 
                 <div className="lg:col-span-3">
                   <label className="text-xs text-[var(--muted)]">Min UK score: {minUkScore}</label>
-                  <input type="range" min="0" max="3" step="1" value={minUkScore} onChange={(e) => setMinUkScore(parseInt(e.target.value, 10))} className="mt-2 w-full" />
+                  <input
+                    type="range"
+                    min="0"
+                    max="3"
+                    step="1"
+                    value={minUkScore}
+                    onChange={(e) => setMinUkScore(parseInt(e.target.value, 10))}
+                    className="mt-2 w-full"
+                  />
                 </div>
 
                 <div className="lg:col-span-12 flex flex-wrap gap-3 items-center mt-1">
@@ -536,7 +567,11 @@ export default function App() {
                   </label>
 
                   <label className="inline-flex items-center gap-2 text-sm pill px-3 py-2 bg-white">
-                    <input type="checkbox" checked={showAiSummaries} onChange={(e) => setShowAiSummaries(e.target.checked)} />
+                    <input
+                      type="checkbox"
+                      checked={showAiSummaries}
+                      onChange={(e) => setShowAiSummaries(e.target.checked)}
+                    />
                     Show AI summaries
                   </label>
 
@@ -551,7 +586,11 @@ export default function App() {
                     Clear dates
                   </button>
 
-                  <button onClick={clearAllFilters} className="pill px-3 py-2 text-sm hover:bg-white transition bg-white" title="Clear all filters">
+                  <button
+                    onClick={clearAllFilters}
+                    className="pill px-3 py-2 text-sm hover:bg-white transition bg-white"
+                    title="Clear all filters"
+                  >
                     Clear all
                   </button>
 
@@ -573,7 +612,7 @@ export default function App() {
             <NavItem icon={<MessageSquare size={16} />} label="Forums" active={view === "forums"} onClick={() => setView("forums")} count={counts.forums} />
             <NavItem icon={<Cpu size={16} />} label="Model releases" active={view === "releases"} onClick={() => setView("releases")} count={counts.dev_releases} />
             <div className="hr my-3" />
-            <div className="text-xs text-[var(--muted)]">Landing page is Harms. Use category focus chips to reduce scrolling.</div>
+            <div className="text-xs text-[var(--muted)]">Landing page is Harms. Use “focus category” chips to reduce scrolling.</div>
           </aside>
 
           <main className="space-y-4">
@@ -931,7 +970,7 @@ function ReleasesView({ items }) {
         right={<span className="pill px-3 py-1 text-xs font-mono text-slate-600 bg-white/70">{items.length} shown</span>}
       />
 
-      <div className="card p-4 bg-white/80 backdrop-blur border border-slate-200">
+     lassName="card p-4 bg-white/80 backdrop-blur border border-slate-200">
         {!items.length ? (
           <div className="text-sm text-[var(--muted)]">
             No model releases match your filters (try widening RELEASE_TIME_WINDOW or removing category filter).
