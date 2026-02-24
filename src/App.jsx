@@ -118,21 +118,20 @@ export default function App() {
   const [showN, setShowN] = useState(36);
   const [filtersOpen, setFiltersOpen] = useState(false);
 
-  // Harms UI state
+  // Harms view UI
   const [harmsFocusCat, setHarmsFocusCat] = useState("All");
-  const [openBuckets, setOpenBuckets] = useState(() => ({}));
+  const [openBuckets, setOpenBuckets] = useState({});
 
-  // Persist a few UX prefs (no overview allowed)
+  // Persist a few prefs (safe set)
   useEffect(() => {
     try {
-      const raw = localStorage.getItem("aihm_ui_prefs_v3");
-      if (raw) {
-        const p = JSON.parse(raw);
-        const allowed = new Set(["harms", "signals", "forums", "releases"]);
-        if (p?.view && allowed.has(p.view)) setView(p.view);
-        if (p?.showN) setShowN(p.showN);
-        if (typeof p?.showAiSummaries === "boolean") setShowAiSummaries(p.showAiSummaries);
-      }
+      const raw = localStorage.getItem("aihm_ui_prefs_v4");
+      if (!raw) return;
+      const p = JSON.parse(raw);
+      const allowed = new Set(["harms", "signals", "forums", "releases"]);
+      if (p?.view && allowed.has(p.view)) setView(p.view);
+      if (typeof p?.showN === "number") setShowN(p.showN);
+      if (typeof p?.showAiSummaries === "boolean") setShowAiSummaries(p.showAiSummaries);
     } catch {
       // ignore
     }
@@ -141,7 +140,7 @@ export default function App() {
   useEffect(() => {
     try {
       localStorage.setItem(
-        "aihm_ui_prefs_v3",
+        "aihm_ui_prefs_v4",
         JSON.stringify({ view, showN, showAiSummaries })
       );
     } catch {
@@ -191,6 +190,13 @@ export default function App() {
     return ["All", ...Array.from(cats).sort((a, b) => a.localeCompare(b))];
   }, [sections]);
 
+  const harmCategories = useMemo(() => {
+    const cats = new Set((sections.harms || []).map((h) => h.category).filter(Boolean));
+    const arr = Array.from(cats);
+    arr.sort((a, b) => (a === "Other" ? 1 : b === "Other" ? -1 : a.localeCompare(b)));
+    return arr;
+  }, [sections.harms]);
+
   function matchesSearch(item) {
     const q = searchTerm.toLowerCase().trim();
     if (!q) return true;
@@ -225,7 +231,7 @@ export default function App() {
       if (!uk) return false;
     }
 
-    // Min UK score (gentler)
+    // Min UK score
     if (minUkScore > 0) {
       const score = item?.uk_score ?? (item?.uk_relevance ? 2 : 0);
       if (score < minUkScore) return false;
@@ -259,12 +265,11 @@ export default function App() {
       }
     }
 
-    if (!matchesSearch(item)) return false;
-    return true;
+    return matchesSearch(item);
   }
 
   function sortItems(items, kind) {
-    if (sortBy === "relevance") return items; // keep backend ordering
+    if (sortBy === "relevance") return items;
     const copy = items.slice();
 
     if (sortBy === "newest") {
@@ -289,34 +294,27 @@ export default function App() {
     return copy;
   }
 
-  const harms = useMemo(
-    () => sortItems((sections.harms || []).filter((x) => passesCommon(x, "harms")), "harms"),
-    [sections.harms, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, sourceFilter, ukOnly, minUkScore, sortBy]
-  );
+  const harms = useMemo(() => {
+    const filtered = (sections.harms || []).filter((x) => passesCommon(x, "harms"));
+    return sortItems(filtered, "harms");
+  }, [sections.harms, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, sourceFilter, ukOnly, minUkScore, sortBy]);
 
-  const signals = useMemo(
-    () => sortItems((sections.signals || []).filter((x) => passesCommon(x, "signals")), "signals"),
-    [sections.signals, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, sourceFilter, ukOnly, minUkScore, sortBy]
-  );
+  const signals = useMemo(() => {
+    const filtered = (sections.signals || []).filter((x) => passesCommon(x, "signals"));
+    return sortItems(filtered, "signals");
+  }, [sections.signals, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, sourceFilter, ukOnly, minUkScore, sortBy]);
 
-  const forums = useMemo(
-    () => sortItems((sections.forums || []).filter((x) => passesCommon(x, "forums")), "forums"),
-    [sections.forums, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, sourceFilter, ukOnly, minUkScore, sortBy]
-  );
+  const forums = useMemo(() => {
+    const filtered = (sections.forums || []).filter((x) => passesCommon(x, "forums"));
+    return sortItems(filtered, "forums");
+  }, [sections.forums, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, sourceFilter, ukOnly, minUkScore, sortBy]);
 
-  const releases = useMemo(
-    () => sortItems((sections.dev_releases || []).filter((x) => passesCommon(x, "releases")), "releases"),
-    [sections.dev_releases, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, sourceFilter, ukOnly, minUkScore, sortBy]
-  );
+  const releases = useMemo(() => {
+    const filtered = (sections.dev_releases || []).filter((x) => passesCommon(x, "releases"));
+    return sortItems(filtered, "releases");
+  }, [sections.dev_releases, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, sourceFilter, ukOnly, minUkScore, sortBy]);
 
-  const harmCategories = useMemo(() => {
-    const cats = new Set((sections.harms || []).map((h) => h.category).filter(Boolean));
-    const arr = Array.from(cats);
-    arr.sort((a, b) => (a === "Other" ? 1 : b === "Other" ? -1 : a.localeCompare(b)));
-    return arr;
-  }, [sections.harms]);
-
-  // ✅ FIXED: computed key update (build-safe)
+  // ✅ FIXED toggleBucket (computed key)
   function toggleBucket(cat) {
     setOpenBuckets((s) => ({ ...s, [cat]: !s[cat] }));
   }
@@ -373,7 +371,9 @@ export default function App() {
                 <div className="h-2.5 w-2.5 rounded-full" style={{ background: "var(--a1)" }} />
                 <h1 className="text-lg font-semibold">AI Harms Horizon Scan</h1>
                 {payload?.last_updated ? (
-                  <span className="text-sm text-[var(--muted)] font-mono">updated {payload.last_updated.slice(0, 19)}</span>
+                  <span className="text-sm text-[var(--muted)] font-mono">
+                    updated {String(payload.last_updated).slice(0, 19)}
+                  </span>
                 ) : null}
               </div>
 
@@ -420,6 +420,7 @@ export default function App() {
                     onClick={() => clearChip(c.k)}
                     className="inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-full border border-slate-200 bg-white/70 hover:bg-white transition"
                     title="Click to remove"
+                    type="button"
                   >
                     {c.label}
                     <X size={14} className="text-slate-400" />
@@ -429,6 +430,7 @@ export default function App() {
                   onClick={clearAllFilters}
                   className="text-sm px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:bg-slate-50 transition"
                   title="Clear all filters"
+                  type="button"
                 >
                   Clear all
                 </button>
@@ -497,9 +499,7 @@ export default function App() {
                     onChange={(e) => setShowN(parseInt(e.target.value, 10))}
                   >
                     {[24, 36, 48, 72, 100].map((n) => (
-                      <option key={n} value={n}>
-                        {n}
-                      </option>
+                      <option key={n} value={n}>{n}</option>
                     ))}
                   </select>
                 </div>
@@ -512,9 +512,7 @@ export default function App() {
                     onChange={(e) => setCategoryFilter(e.target.value)}
                   >
                     {allCategories.map((c) => (
-                      <option key={c} value={c}>
-                        {c}
-                      </option>
+                      <option key={c} value={c}>{c}</option>
                     ))}
                   </select>
                 </div>
@@ -576,12 +574,10 @@ export default function App() {
                   </label>
 
                   <button
-                    onClick={() => {
-                      setDateFrom("");
-                      setDateTo("");
-                    }}
+                    onClick={() => { setDateFrom(""); setDateTo(""); }}
                     className="pill px-3 py-2 text-sm hover:bg-white transition bg-white"
                     title="Clear date range"
+                    type="button"
                   >
                     Clear dates
                   </button>
@@ -590,6 +586,7 @@ export default function App() {
                     onClick={clearAllFilters}
                     className="pill px-3 py-2 text-sm hover:bg-white transition bg-white"
                     title="Clear all filters"
+                    type="button"
                   >
                     Clear all
                   </button>
@@ -605,7 +602,6 @@ export default function App() {
 
         {/* Navigation + Content */}
         <div className="mt-5 grid grid-cols-1 lg:grid-cols-[260px,1fr] gap-4">
-          {/* Sidebar primary nav */}
           <aside className="card p-4 bg-white/70 backdrop-blur border border-slate-200 lg:sticky lg:top-4 lg:self-start">
             <NavItem icon={<Shield size={16} />} label="Harms" active={view === "harms"} onClick={() => setView("harms")} count={counts.harms} />
             <NavItem icon={<TrendingUp size={16} />} label="Signals" active={view === "signals"} onClick={() => setView("signals")} count={counts.signals} />
@@ -657,7 +653,7 @@ export default function App() {
   );
 }
 
-/* ---------------------------- components ---------------------------- */
+/* ---------------------------- UI components ---------------------------- */
 
 function NavItem({ icon, label, active, onClick, count }) {
   return (
@@ -666,6 +662,7 @@ function NavItem({ icon, label, active, onClick, count }) {
       className={`w-full text-left px-3 py-2 rounded-xl mb-1 transition flex items-center justify-between ${
         active ? "bg-indigo-50 border border-indigo-200" : "hover:bg-slate-50"
       }`}
+      type="button"
     >
       <span className="inline-flex items-center gap-2 text-sm">
         <span className="text-slate-500">{icon}</span>
@@ -727,7 +724,6 @@ function HarmsView({
       />
 
       <div className="card p-4 bg-white/80 backdrop-blur border border-slate-200">
-        {/* Focus chips */}
         <div className="flex flex-wrap gap-2 items-center">
           <button
             type="button"
@@ -771,6 +767,7 @@ function HarmsView({
                 <button
                   onClick={() => toggleBucket(cat)}
                   className="w-full px-4 py-3 bg-slate-50 flex items-center justify-between"
+                  type="button"
                 >
                   <div className="flex items-center gap-2 flex-wrap">
                     {isOpen ? (
@@ -950,7 +947,9 @@ function ForumsView({ items }) {
                   {f.uk_relevance ? <span className="ml-2 text-indigo-700">UK‑relevant</span> : null}
                 </div>
 
-                {f.tags?.length ? <div className="mt-2 text-xs text-slate-500">{f.tags.join(" · ")}</div> : null}
+                {f.tags?.length ? (
+                  <div className="mt-2 text-xs text-slate-500">{f.tags.join(" · ")}</div>
+                ) : null}
               </article>
             ))}
           </div>
@@ -970,7 +969,7 @@ function ReleasesView({ items }) {
         right={<span className="pill px-3 py-1 text-xs font-mono text-slate-600 bg-white/70">{items.length} shown</span>}
       />
 
-     lassName="card p-4 bg-white/80 backdrop-blur border border-slate-200">
+      <div className="card p-4 bg-white/80 backdrop-blur border border-slate-200">
         {!items.length ? (
           <div className="text-sm text-[var(--muted)]">
             No model releases match your filters (try widening RELEASE_TIME_WINDOW or removing category filter).
@@ -992,7 +991,7 @@ function ReleasesView({ items }) {
                     </span>
                     <span className={`text-xs px-2 py-1 rounded-full border ${catChip("Model Releases")}`}>Model release</span>
                   </div>
-                  <span className="text-xs text-slate-500 font-mono">{fmtDateShort(r.date)}</span>
+                  <span className="textt-slate-500 font-mono">{fmtDateShort(r.date)}</span>
                 </div>
                 <div className="mt-2 text-sm font-semibold">{r.title}</div>
                 <div className="mt-1 text-xs text-slate-500">{r.source}</div>
