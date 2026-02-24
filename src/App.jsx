@@ -310,7 +310,7 @@ export default function App() {
   }, [sections.harms]);
 
   function toggleBucket(cat) {
-    setOpenBuckets((s) => ({ ...s, [cat]: !s[cat] }));
+    setOpenBuckets((s) => ({ ...s, !s[cat] }));
   }
 
   // Active filters chips (so you don’t have to open the drawer to adjust)
