@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-03-01T17:49:22.723972",
+  "last_updated": "2026-03-01T19:01:37.543587",
   "disclaimer": "Automated horizon-scanning prototype. Items indicate emerging discussion, not verified risk, intent, or prevalence.",
   "meta": {
     "limits": {
@@ -14,17 +14,6 @@
   },
   "sections": {
     "harms": [
-      {
-        "category": "VAWG",
-        "title": "Scotland considering criminalising creation of deepfake images in bid to protect women and girls",
-        "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxPdkdSTHBjcTE1ZUZnakZDeDJMQnVhR09fd3pNMUxnMEVtS3dGaXhqc2lteXpsSkRzNmVCeXF6eVlhRUhBWHFUM1pZdGF4NVpHenVHZWY0TTV5OXBkRGliRnlaZDZjLUpfYlNqQkttT1pZMDlDZzlpYlFkTXk4dGtMRWJSVy1uWFY5ZXJiSEx2NEk2V1pEclVxS1JVM2FUWjdHdzZwcVRmd21yQ2ZjWGM2U3Q4N0NCNTgyaTRJdjJsQ1ZIR3htWDN1Znk4VlU?oc=5",
-        "source": "Sky News",
-        "timestamp": 1772151556.0,
-        "date": "Fri, 27 Feb 2026 00:19:16 GMT",
-        "relevance_score": 2,
-        "uk_score": 2,
-        "uk_relevance": true
-      },
       {
         "category": "Other",
         "title": "UK testing finds text-based AI models offer little help for fraud, cybercrime",
@@ -148,6 +137,17 @@
       },
       {
         "category": "CSAM",
+        "title": "Feds Arrest Squatty Potty Co-Inventor On Child Abuse *** Material Charges",
+        "link": "https://news.google.com/rss/articles/CBMifEFVX3lxTE5GRmJaVGJ3QUNwNTAzQWdzWnZCWEUxa285Z3hfNUVNbXU3UURiNVQwQlZ3Q2hsd1czc0gyMGpLSHVOMXJHbVJDZzh5ZWs1U1lVLUczN3dTY2ZRM1UzZGxLYmxsalBDRE5UZ3JkRk85TmtXeDE5TS1vM3ZOdUc?oc=5",
+        "source": "AOL.com",
+        "timestamp": 1771971307.0,
+        "date": "Tue, 24 Feb 2026 22:15:07 GMT",
+        "relevance_score": 3,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
+        "category": "CSAM",
         "title": ": AI-generated child sexual abuse case impacts former Cascade residents",
         "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQMjd1bU9NVmR4NU04akg3UHhPQVloWnh5Tmt0LW4zSHN3N0xZV2hZckZnZC05cHM1VjgzSV9fWHRUZ1UwZzlQT0gzbVdSN1dzdTJpNHRVT0J2aVBsN1JESkt5NTN6bHRSTWdkUXBwbjJ4RUxoRGIxUWkwT1Y2VXczSFNxVkg2Nk9FdS00V25QVzlXV3ZJYjhOZ0hPdkQtUW1zajQtRlhVcS1JWVB4S2ctUWpR?oc=5",
         "source": "KRTV",
@@ -180,17 +180,6 @@
         "uk_relevance": false
       },
       {
-        "category": "CSAM",
-        "title": "AI-generated CSAM case involving Cascade victims continues to unfold",
-        "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOVUs4NmNTelRFLVFyaVFFYklqbmZhVllOOWhIa2NVbmNFaDcwNldEM1JHTWo5bHhQbTU1azBUVWx3WEpFb09Gb0VGSlU2UWNPN2NhRE5vRUEzQ1Z6VlFNQzc5SHRPaTdNVk84UWxnVC1VU1lLT0FaYUJLQUxnVkVHVThEbU92RzhRQVA5cFlpVk5HaENQajdyUHBpNmxobVgtb1NJdkJfZjB5UHRKOEs3RlMtRWFlak5ObXVqWg?oc=5",
-        "source": "KRTV",
-        "timestamp": 1772210392.0,
-        "date": "Fri, 27 Feb 2026 16:39:52 GMT",
-        "relevance_score": 2,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
         "category": "Cyber",
         "title": "SafePrompt Launches Prompt Injection Protection API for AI Developers",
         "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQNnVWZjlMQ3gtT3lEeXBVd1lNSWZwX3F4dVI2ckFIUHh3OHNvcUg2My1rcjZEOFgzNGZKN3EtNkdpRnNMVnBjc0REVTlmUXMxZnhTeEJ0QjZPOW0xZTRFNFB1WjN3V2FSNUY4S3dZWGpybFhpeEdVbVEyT3FTbnFvQWxhQW0yN3lCZXlpNG9xR19FdG5MejU4OWNudTJZUTY0bmxxYk1mQXg1R1JraUE?oc=5",
@@ -215,7 +204,7 @@
       {
         "category": "CSAM",
         "title": "FCSO Arrests Man for AI-Generated Child Porn - WNDB",
-        "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQWDJiUVdGX3otNWprZHkwLUNEamlkbmxWZVB1RVQyb3dsMEFwSzFsM2ZveFNHYmFUbUdYOXpYRlllM2ZNb05DNHZJb05mUmRzUGZoTmY1NWswNy1SWlZMSEJjcHlUWmlrZzBaX2NvSTNNQ1RMOU50QVpUYXU0Y3laTGt6RmJNWnlPWktueHc3clhBZw?oc=5",
+        "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxOX0h1ZmpyOW9EaExsYjFvaXd5WDBzY2VYTUJLV3BLZWx0V2RFeXFUcW9sUXg1MGpvQlBUdmV0aGZzMWhKa3N2M1ZPdXB6YThhT044T2J1SnhVeWFsY0VkcmwxRjJka2NXUzl3aDhTNUNuQ1VqVlc1VExyTGE0SS1fSU81aWtRZXJ6SlJUZGEwQnV4SHpkeHBR?oc=5",
         "source": "WNDB - News Daytona Beach",
         "timestamp": 1772122329.0,
         "date": "Thu, 26 Feb 2026 16:12:09 GMT",
@@ -279,6 +268,17 @@
         "uk_relevance": false
       },
       {
+        "category": "VAWG",
+        "title": "The reason for the second daughter's verbal abuse is 'forgotten in-house sexual harassment'..\"I was beaten up by my dad\" a gradually increasing view [a family hell]",
+        "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQRHlxRUptMUJxQ0pfVTdNVzdiZGhaZjFycjhuRW9UN3pqeFUwYnoxcDFUYmVhUUtfTmplT01KVnJ4ZmF3SEVweWV1NzdoRlQzMGF4Ui1sb2IzSWM4dy15ODFyWC1SRGxCWmxHb1lMQUJGSW5JbmVCTWdWM0poTV92TE9TSlY?oc=5",
+        "source": "starnewskorea.com",
+        "timestamp": 1771888386.0,
+        "date": "Mon, 23 Feb 2026 23:13:06 GMT",
+        "relevance_score": 2,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
         "category": "Cyber",
         "title": "\u26a1 Weekly Recap: Double-Tap Skimmers, PromptSpy AI, 30Tbps DDoS, Docker Malware & More",
         "link": "https://news.google.com/rss/articles/CBMie0FVX3lxTE1FOWpqeU5sa2N5d2VXQWNNMHU2djFUZGV6TlJ1WkFkSERxbTNlM2ZBWTJIUEZXaDQxcXVmUlpXLVdHS1cwSS1JaTNkZzVzbV9sRlhZT3Q0aWdnWWk4UHdFelR2QXlndjBpREIwZUU2dDRzRTJVemhpWU9wQQ?oc=5",
@@ -336,10 +336,21 @@
       {
         "category": "Fraud",
         "title": "Love, lies and algorithms: How AI is fuelling romance scams in the Middle East",
-        "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOYVBhMng4MEFqYlQyOFBnV05MUVM5VXFsdmF4WFpJQjFuUnZXV2lqbDJyTXE0WXRHS3RLdTdPSFI1RFllTG9rSS10b1Z5SVpUWE9acDd1eEJKdWhVTVZxOUh4NGNRanIyN3k2S1ZSNmNqVUxUUkZXazBLSGlJWXM3bkM0eldOWTJZTFhTQkZMWXpQamd3T1R4VjBWR2JnNkg2aDZlUjJEZVBSWng3OHlwazhaaUxaVTUxMVBwU0JwN2cxNVJSeHlGTXVxcHbSAdQBQVVfeXFMTXNiUE91aUhiVC1yUE9nWTdSeTg0RGdSWTdsejREWWFFLTVYRWxfZ0JFS3l2OF82Sks3WDhBSVdEeW9TZEpxMUF4TTZHRGNXREMzTjdGa2lCbm94SDNid1FhN2E5aTJzMnlBaFhLQ3E5MFhSNjVqZGhXMThISjRnQmZvNFZMWEg4Z3pYTFRBcHN4Vk91OU9vYS1qRDUxVUxxVGttZ2RSWmx5U3lMWXoxRjNWejR0LWxzYjBtOWk3c0ZTZXJGMGoyUjg4b2dEVHFBamtacUU?oc=5",
+        "link": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxNc2JQT3VpSGJULXJQT2dZN1J5ODREZ1JZN2x6NERZYUUtNVhFbF9nQkVLeXY4XzZKSzdYOEFJV0R5b1NkSnExQXhNNkdEY1dEQzNON0ZraUJub3hIM2J3UWE3YTlpMnMyeUFoWEtDcTkwWFI2NWpkaFcxOEhKNGdCZm80VkxYSDhnelhMVEFwc3hWT3U5T29hLWpENTFVTHFUa21nZFJabHlTeUxZejFGM1Z6NHQtbHNiMG05aTdzRlNlckYwajJSODhvZ0RUcUFqa1pxRdIB1AFBVV95cUxNc2JQT3VpSGJULXJQT2dZN1J5ODREZ1JZN2x6NERZYUUtNVhFbF9nQkVLeXY4XzZKSzdYOEFJV0R5b1NkSnExQXhNNkdEY1dEQzNON0ZraUJub3hIM2J3UWE3YTlpMnMyeUFoWEtDcTkwWFI2NWpkaFcxOEhKNGdCZm80VkxYSDhnelhMVEFwc3hWT3U5T29hLWpENTFVTHFUa21nZFJabHlTeUxZejFGM1Z6NHQtbHNiMG05aTdzRlNlckYwajJSODhvZ0RUcUFqa1pxRQ?oc=5",
         "source": "Khaleej Times",
         "timestamp": 1772337600.0,
         "date": "Sun, 01 Mar 2026 04:00:00 GMT",
+        "relevance_score": 1,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
+        "category": "Fraud",
+        "title": "India's Digital Leap: AI Fraud Surge Outpaces Financial Literacy",
+        "link": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxNY3ZEQS16TFJ3N01BZVRhcDlscTVlaGZmNjJiT2RrY2lwN1RLNnVjQ1hHalJ1NHNMbVVJa3ZrMVpzYzRlWjVZS3BOWk9wcHJYLWRoTTVNZzFKcHRFUGFwek1GYlRyYjVqVkRVUDVnd0sxZGQ4a2tqV3E0NkpUUmpWa0x4UWxaNHNjUWJmMGpjcUNGa19XY09LX1JWdTU0UGl6Qnd1T1FzajhSRDFkeEtORVQxa2NPODVPRE5oSERza1NXSXVLQm5pbGVSa0cxQ3l5?oc=5",
+        "source": "Whalesbook",
+        "timestamp": 1772283426.0,
+        "date": "Sat, 28 Feb 2026 12:57:06 GMT",
         "relevance_score": 1,
         "uk_score": 0,
         "uk_relevance": false
@@ -395,6 +406,17 @@
         "source": "Bitcoin.com News",
         "timestamp": 1772213427.0,
         "date": "Fri, 27 Feb 2026 17:30:27 GMT",
+        "relevance_score": 1,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
+        "category": "VAWG",
+        "title": "Dutch PM Jetten pressing charges weekly over persistent anti-gay abuse, threats",
+        "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNbXE5M1BielFxMlpJd0hyWGtxT3k5OEwzMVZFNEp1dTdxRUktRWpCUDkzSjcyRDNLdk4waWlDRDl2WWpWVFdHc2FmaVZWSmZGbFV1VFc0NGxCRk9XWFltZ3dYOUFEakVKNjgwdDNXMUJxd0RpZXZLMDFXUWlabUszNGwwQk1pMm9ZYkZHYkJWUS1TdGV5a2JEejBrWTQxLTg5YVV5Rlp3?oc=5",
+        "source": "NL Times",
+        "timestamp": 1772211720.0,
+        "date": "Fri, 27 Feb 2026 17:02:00 GMT",
         "relevance_score": 1,
         "uk_score": 0,
         "uk_relevance": false
@@ -576,34 +598,12 @@
         "uk_relevance": false
       },
       {
-        "category": "VAWG",
-        "title": "30m Nigerian Women Could Face AI-Generated Deepfake Attacks By 2030 \u2014 Gatefield",
-        "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOcU1kTnBWTmNOZF9XY3dIQTllWDItbDBDLWw4czZxMDE3UFFwb0FxejhYdnRNb1RhVU5vN3U1bW80Y2NUNFhCSEtvcWR0bkZkMzJZMXZZWUFCWUFsaWpDVGxwZ2ZYaUhTdXJ3c3lkVG1CVHNjU1N3THlGX2l1dzZNblY4cU1SQmtPcmZsRDN1UmNKUWM4amhydXdNS0hHdUpZeEE?oc=5",
-        "source": "LEADERSHIP Newspapers",
-        "timestamp": 1772043328.0,
-        "date": "Wed, 25 Feb 2026 18:15:28 GMT",
-        "relevance_score": 1,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
         "category": "CSAM",
         "title": "Palm Coast man, 38, arrested, reportedly used AI to create child porn",
         "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNME9SVjZGTjhHVnFQTmFGT0YxMERWczlVSWNfdWtTTy0tX1BvWmdkejdCVzZyN3lISnhlOFEweGhiT2dLcUpkQWpzQ2dWRXo1dDlENGc0VHp1czBaYVJyVHlpaUZwUjhDdVk3dExoTmp0Wkw0c2dZQ1NRTEtaeXpzTHZvdHNwTDdteU51eG1lYWJwdm5jMmFQNGxuVlR2M2JoTEVFQnJ4QmhLRFpaSk0tRU1SSF9yUHlBUW84T0lkRGFTRXRY?oc=5",
         "source": "Daytona Beach News-Journal",
         "timestamp": 1772042340.0,
         "date": "Wed, 25 Feb 2026 17:59:00 GMT",
-        "relevance_score": 1,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
-        "category": "Fraud",
-        "title": "Defend your data: Be aware of tax season scams",
-        "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNZU5qZzVsMHRLMXlyOXl4aDB6LUZOZVBVN0xMeXhabHhYSEhkTTZfdU5zSDc4X0l0WUZqdlZYT3VvTmRXcFYyaTFYU2t2dkxrTFlYVDhYR1lMc3I1SExZaE5qeGxrMDNycGNwUl84YnZQUGRjcDRteC1NNWhhQjlaT1o0TTVuZW5XOHJrVWV5YUk?oc=5",
-        "source": "West Virginia University",
-        "timestamp": 1772024820.0,
-        "date": "Wed, 25 Feb 2026 13:07:00 GMT",
         "relevance_score": 1,
         "uk_score": 0,
         "uk_relevance": false
@@ -808,11 +808,11 @@
       },
       {
         "category": "CSAM",
-        "title": "Roblox will be the focus of new special with former To Catch a Predator host Chris Hansen",
-        "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxOWE5EcjhaRUkzZ0I4TDJVXzFjWE1OS1hrMk9fOGVMa2x6elZwbXZ1S2xESkZHZS0xb2VjaENPQ2pnLXY0T3NNVXRWeXlCRWl6cmY1SnZkaGZzc0xueTdwUU9Ra3h0djRRbFNHeUZrT25Cd0x3a0YweHF4X3VNZ2Z2Mkh2RQ?oc=5",
+        "title": "Navy Chief Who Illegally Filmed Teen Girl In Virginia Bathroom Learns Prison Fate",
+        "link": "https://news.google.com/rss/articles/CBMifEFVX3lxTE5xN3FacktpSlNLNVhzb3k2QlRBUnVfQU1nSk1RTmVBQ1hWNE1WNlpEbVE0V1lfR3ljS25zQ0plOXU0ck9hYnBvSG5qY25fU0RyMElaZ3lHQ1J5NVVPcnVCbnhmZ2hTNVpFQTRaOXdhTDhPTHdYZnZNWlR4ejQ?oc=5",
         "source": "AOL.com",
-        "timestamp": 1772381524.0,
-        "date": "Sun, 01 Mar 2026 16:12:04 GMT",
+        "timestamp": 1772382756.0,
+        "date": "Sun, 01 Mar 2026 16:32:36 GMT",
         "relevance_score": 0,
         "uk_score": 0,
         "uk_relevance": false
@@ -1105,6 +1105,17 @@
       },
       {
         "category": "Terrorism",
+        "title": "An \u2018Ode to Violence\u2019: Extremist Exploitation of Viggle AI",
+        "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQNldZRGlmdG9JV19LUHpaZWtxRXltMFh3VHlqMjA0OEw2QUVsNlg2ZkZHQm00MFFBcndvaVMzZG5iWWcyLXE0RTljYWNkN1VYMDRyWTlOMTFVdXh5dnMtNm5aTzlWMDVDVm9jRmgyZ3BNbkVqWGlXN1dpMjctbjVhcVRiQUpVSE5WMUpmZlJoWEpJdEJpY05r?oc=5",
+        "source": "Global Network on Extremism and Technology",
+        "timestamp": 1772114286.0,
+        "date": "Thu, 26 Feb 2026 13:58:06 GMT",
+        "relevance_score": 0,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
+        "category": "Terrorism",
         "title": "OpenAI Uncovers China's Covert Influence Ops Targeting Japanese Prime Minister",
         "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOdEcxME5jSEZfRkhqVVZZUmtPN21tUVl5b0dKRXY5ekgwSkxYVjFPWXRwOFo3SHk0X0thSjZPMHdrUHdrbmhYUThtSjBIUGZnWnZVdHJ5RE40UU9XbF9sQUljV0thN2NyaWk0QWtvb2ZYVFJLTFZJVWxTZjlPZmJ2cF94NVE1STdHNVdpcG9XVjdXMXBBZnRreFhSdE4yOEFGT3NOLUdB?oc=5",
         "source": "OpenTools",
@@ -1324,17 +1335,6 @@
         "uk_relevance": false
       },
       {
-        "category": "Other",
-        "title": "AI-armed ransomware gangs gained historic 2025 haul",
-        "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxQeHpyeTdmaGNsaWVicWVlMVc3Mk1jYWctWmZSU1pNR0V3VnVsS0VyR0dlbkw4SE5IcGFoZERYbTdObG5icE1mQ2QzRlplaE1iSFdFNEVPNjBjaHZUQXBtTmg0a2hBb1RiSU5vQi1LWlY0WGEzX3BvOUtienZ0TG5SaGZuNWhqYk0tZURIVUxiRmVaMmxLRjhBUGh6T0tkc2pyalRGbUN3?oc=5",
-        "source": "Digital Journal",
-        "timestamp": 1771969588.0,
-        "date": "Tue, 24 Feb 2026 21:46:28 GMT",
-        "relevance_score": 0,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
         "category": "Cyber",
         "title": "RoguePilot Flaw in GitHub Codespaces Enabled Copilot to Leak GITHUB_TOKEN",
         "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPdm1yMF9zV3BKMVZEc2hnNWQ0aml0SmNnQVFGR214RnpvOEs3T3hrNEt2alUwZVlTTnlZVlY2bWxGT0c0cVhKNDNSaVl6UnhUMVNyUDJ5VmFFN2dDeWNoZmxwSVhzSXdQdmxtMkptbl9LNDN3MXdyRUwwTUtIcFRJMw?oc=5",
@@ -1451,6 +1451,17 @@
         "source": "Center for the Study of Organized Hate (CSOH)",
         "timestamp": 1771875079.0,
         "date": "Mon, 23 Feb 2026 19:31:19 GMT",
+        "relevance_score": 0,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
+        "category": "Other",
+        "title": "How AI is Changing the Scale and Speed of Crypto Fraud | TRM Blog",
+        "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQa0tWRVlnZElGOGNCUFJkRlF2SVNoZ05wT0NKTG1DMTJva04wMC1CZXpONk1namZ4M1NscjJXZjl3N3BRcmZTS0ctSFlJRVc5VW12LTR1ZDBoYzU0SFJza0MzS29JR2pGWUtPb3JzNFNQRHFlMzRDc29OZXdmS3lsSm15eFo1Z2tPMmRxSnlCM24wdGc4TVU0dw?oc=5",
+        "source": "TRM Labs",
+        "timestamp": 1771870955.0,
+        "date": "Mon, 23 Feb 2026 18:22:35 GMT",
         "relevance_score": 0,
         "uk_score": 0,
         "uk_relevance": false
@@ -1579,23 +1590,53 @@
     ],
     "signals": [
       {
-        "signal_id": "9e407bd4f07b7666",
-        "title": "Roblox will be the focus of new special with former To Catch a Predator host Chris Hansen",
+        "signal_id": "36854859af279f74",
+        "title": "How are you testing AI agents for prompt injection vulnerabilities?",
+        "primary_category": "Cyber",
+        "tags": [
+          "Cyber",
+          "cyber",
+          "forum",
+          "reddit"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1772387961.0,
+        "last_seen": 1772387961.0,
+        "latest_date": "2026-03-01T17:59:21+00:00",
+        "links": [
+          {
+            "title": "How are you testing AI agents for prompt injection vulnerabilities?",
+            "link": "https://old.reddit.com/r/cybersecurity/comments/1ri41wt/how_are_you_testing_ai_agents_for_prompt/",
+            "source": "Reddit: cybersecurity (new)",
+            "date": "2026-03-01T17:59:21+00:00",
+            "source_type": "forum",
+            "category": "Cyber",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential Cyber harm: recurring themes include testing, agents, prompt, injection, vulnerabilities (1 sources)."
+      },
+      {
+        "signal_id": "a09742ef29291d13",
+        "title": "Navy Chief Who Illegally Filmed Teen Girl In Virginia Bathroom Learns Prison Fate",
         "primary_category": "CSAM",
         "tags": [
           "CSAM"
         ],
         "cluster_size": 1,
         "source_count": 1,
-        "first_seen": 1772381524.0,
-        "last_seen": 1772381524.0,
-        "latest_date": "Sun, 01 Mar 2026 16:12:04 GMT",
+        "first_seen": 1772382756.0,
+        "last_seen": 1772382756.0,
+        "latest_date": "Sun, 01 Mar 2026 16:32:36 GMT",
         "links": [
           {
-            "title": "Roblox will be the focus of new special with former To Catch a Predator host Chris Hansen",
-            "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxOWE5EcjhaRUkzZ0I4TDJVXzFjWE1OS1hrMk9fOGVMa2x6elZwbXZ1S2xESkZHZS0xb2VjaENPQ2pnLXY0T3NNVXRWeXlCRWl6cmY1SnZkaGZzc0xueTdwUU9Ra3h0djRRbFNHeUZrT25Cd0x3a0YweHF4X3VNZ2Z2Mkh2RQ?oc=5",
+            "title": "Navy Chief Who Illegally Filmed Teen Girl In Virginia Bathroom Learns Prison Fate",
+            "link": "https://news.google.com/rss/articles/CBMifEFVX3lxTE5xN3FacktpSlNLNVhzb3k2QlRBUnVfQU1nSk1RTmVBQ1hWNE1WNlpEbVE0V1lfR3ljS25zQ0plOXU0ck9hYnBvSG5qY25fU0RyMElaZ3lHQ1J5NVVPcnVCbnhmZ2hTNVpFQTRaOXdhTDhPTHdYZnZNWlR4ejQ?oc=5",
             "source": "AOL.com",
-            "date": "Sun, 01 Mar 2026 16:12:04 GMT",
+            "date": "Sun, 01 Mar 2026 16:32:36 GMT",
             "source_type": "news",
             "category": "CSAM",
             "uk_score": 0
@@ -1603,7 +1644,7 @@
         ],
         "confidence": 0.256,
         "confidence_label": "Low",
-        "ai_summary": "Potential CSAM harm: recurring themes include roblox, focus, special, former, catch, predator (1 sources)."
+        "ai_summary": "Potential CSAM harm: recurring themes include navy, chief, illegally, filmed, teen, girl (1 sources)."
       },
       {
         "signal_id": "9a4613c57fa770c4",
@@ -1869,7 +1910,7 @@
         "links": [
           {
             "title": "Love, lies and algorithms: How AI is fuelling romance scams in the Middle East",
-            "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOYVBhMng4MEFqYlQyOFBnV05MUVM5VXFsdmF4WFpJQjFuUnZXV2lqbDJyTXE0WXRHS3RLdTdPSFI1RFllTG9rSS10b1Z5SVpUWE9acDd1eEJKdWhVTVZxOUh4NGNRanIyN3k2S1ZSNmNqVUxUUkZXazBLSGlJWXM3bkM0eldOWTJZTFhTQkZMWXpQamd3T1R4VjBWR2JnNkg2aDZlUjJEZVBSWng3OHlwazhaaUxaVTUxMVBwU0JwN2cxNVJSeHlGTXVxcHbSAdQBQVVfeXFMTXNiUE91aUhiVC1yUE9nWTdSeTg0RGdSWTdsejREWWFFLTVYRWxfZ0JFS3l2OF82Sks3WDhBSVdEeW9TZEpxMUF4TTZHRGNXREMzTjdGa2lCbm94SDNid1FhN2E5aTJzMnlBaFhLQ3E5MFhSNjVqZGhXMThISjRnQmZvNFZMWEg4Z3pYTFRBcHN4Vk91OU9vYS1qRDUxVUxxVGttZ2RSWmx5U3lMWXoxRjNWejR0LWxzYjBtOWk3c0ZTZXJGMGoyUjg4b2dEVHFBamtacUU?oc=5",
+            "link": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxNc2JQT3VpSGJULXJQT2dZN1J5ODREZ1JZN2x6NERZYUUtNVhFbF9nQkVLeXY4XzZKSzdYOEFJV0R5b1NkSnExQXhNNkdEY1dEQzNON0ZraUJub3hIM2J3UWE3YTlpMnMyeUFoWEtDcTkwWFI2NWpkaFcxOEhKNGdCZm80VkxYSDhnelhMVEFwc3hWT3U5T29hLWpENTFVTHFUa21nZFJabHlTeUxZejFGM1Z6NHQtbHNiMG05aTdzRlNlckYwajJSODhvZ0RUcUFqa1pxRdIB1AFBVV95cUxNc2JQT3VpSGJULXJQT2dZN1J5ODREZ1JZN2x6NERZYUUtNVhFbF9nQkVLeXY4XzZKSzdYOEFJV0R5b1NkSnExQXhNNkdEY1dEQzNON0ZraUJub3hIM2J3UWE3YTlpMnMyeUFoWEtDcTkwWFI2NWpkaFcxOEhKNGdCZm80VkxYSDhnelhMVEFwc3hWT3U5T29hLWpENTFVTHFUa21nZFJabHlTeUxZejFGM1Z6NHQtbHNiMG05aTdzRlNlckYwajJSODhvZ0RUcUFqa1pxRQ?oc=5",
             "source": "Khaleej Times",
             "date": "Sun, 01 Mar 2026 04:00:00 GMT",
             "source_type": "news",
@@ -2045,6 +2086,33 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Potential CSAM harm: recurring themes include child, abuse, increasing, complex, police, crime (1 sources)."
+      },
+      {
+        "signal_id": "7457760b15df7ab4",
+        "title": "India's Digital Leap: AI Fraud Surge Outpaces Financial Literacy",
+        "primary_category": "Fraud",
+        "tags": [
+          "Fraud"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1772283426.0,
+        "last_seen": 1772283426.0,
+        "latest_date": "Sat, 28 Feb 2026 12:57:06 GMT",
+        "links": [
+          {
+            "title": "India's Digital Leap: AI Fraud Surge Outpaces Financial Literacy",
+            "link": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxNY3ZEQS16TFJ3N01BZVRhcDlscTVlaGZmNjJiT2RrY2lwN1RLNnVjQ1hHalJ1NHNMbVVJa3ZrMVpzYzRlWjVZS3BOWk9wcHJYLWRoTTVNZzFKcHRFUGFwek1GYlRyYjVqVkRVUDVnd0sxZGQ4a2tqV3E0NkpUUmpWa0x4UWxaNHNjUWJmMGpjcUNGa19XY09LX1JWdTU0UGl6Qnd1T1FzajhSRDFkeEtORVQxa2NPODVPRE5oSERza1NXSXVLQm5pbGVSa0cxQ3l5?oc=5",
+            "source": "Whalesbook",
+            "date": "Sat, 28 Feb 2026 12:57:06 GMT",
+            "source_type": "news",
+            "category": "Fraud",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential Fraud harm: recurring themes include india, digital, leap, fraud, surge, outpaces (1 sources)."
       },
       {
         "signal_id": "ab65cb4723d95d51",
@@ -2474,31 +2542,31 @@
         "ai_summary": "Potential Fraud harm: recurring themes include chainalysis, deploy, proactive, fraud, prevention (1 sources)."
       },
       {
-        "signal_id": "4d6c8ce006ecc563",
-        "title": "AI-generated CSAM case involving Cascade victims continues to unfold",
-        "primary_category": "CSAM",
+        "signal_id": "31ea5b647274d8e0",
+        "title": "Dutch PM Jetten pressing charges weekly over persistent anti-gay abuse, threats",
+        "primary_category": "VAWG",
         "tags": [
-          "CSAM"
+          "VAWG"
         ],
         "cluster_size": 1,
         "source_count": 1,
-        "first_seen": 1772210392.0,
-        "last_seen": 1772210392.0,
-        "latest_date": "Fri, 27 Feb 2026 16:39:52 GMT",
+        "first_seen": 1772211720.0,
+        "last_seen": 1772211720.0,
+        "latest_date": "Fri, 27 Feb 2026 17:02:00 GMT",
         "links": [
           {
-            "title": "AI-generated CSAM case involving Cascade victims continues to unfold",
-            "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOVUs4NmNTelRFLVFyaVFFYklqbmZhVllOOWhIa2NVbmNFaDcwNldEM1JHTWo5bHhQbTU1azBUVWx3WEpFb09Gb0VGSlU2UWNPN2NhRE5vRUEzQ1Z6VlFNQzc5SHRPaTdNVk84UWxnVC1VU1lLT0FaYUJLQUxnVkVHVThEbU92RzhRQVA5cFlpVk5HaENQajdyUHBpNmxobVgtb1NJdkJfZjB5UHRKOEs3RlMtRWFlak5ObXVqWg?oc=5",
-            "source": "KRTV",
-            "date": "Fri, 27 Feb 2026 16:39:52 GMT",
+            "title": "Dutch PM Jetten pressing charges weekly over persistent anti-gay abuse, threats",
+            "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNbXE5M1BielFxMlpJd0hyWGtxT3k5OEwzMVZFNEp1dTdxRUktRWpCUDkzSjcyRDNLdk4waWlDRDl2WWpWVFdHc2FmaVZWSmZGbFV1VFc0NGxCRk9XWFltZ3dYOUFEakVKNjgwdDNXMUJxd0RpZXZLMDFXUWlabUszNGwwQk1pMm9ZYkZHYkJWUS1TdGV5a2JEejBrWTQxLTg5YVV5Rlp3?oc=5",
+            "source": "NL Times",
+            "date": "Fri, 27 Feb 2026 17:02:00 GMT",
             "source_type": "news",
-            "category": "CSAM",
+            "category": "VAWG",
             "uk_score": 0
           }
         ],
         "confidence": 0.256,
         "confidence_label": "Low",
-        "ai_summary": "Potential CSAM harm: recurring themes include generated, csam, case, involving, cascade, victims (1 sources)."
+        "ai_summary": "Potential VAWG harm: recurring themes include dutch, jetten, pressing, charges, weekly, persistent (1 sources)."
       },
       {
         "signal_id": "bf1e50a8556d09b7",
@@ -2982,33 +3050,6 @@
         "ai_summary": "Potential CSAM harm: recurring themes include meta, floods, child, abuse, investigators, junk (1 sources)."
       },
       {
-        "signal_id": "be71c4019f680477",
-        "title": "Scotland considering criminalising creation of deepfake images in bid to protect women and girls",
-        "primary_category": "VAWG",
-        "tags": [
-          "VAWG"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1772151556.0,
-        "last_seen": 1772151556.0,
-        "latest_date": "Fri, 27 Feb 2026 00:19:16 GMT",
-        "links": [
-          {
-            "title": "Scotland considering criminalising creation of deepfake images in bid to protect women and girls",
-            "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxPdkdSTHBjcTE1ZUZnakZDeDJMQnVhR09fd3pNMUxnMEVtS3dGaXhqc2lteXpsSkRzNmVCeXF6eVlhRUhBWHFUM1pZdGF4NVpHenVHZWY0TTV5OXBkRGliRnlaZDZjLUpfYlNqQkttT1pZMDlDZzlpYlFkTXk4dGtMRWJSVy1uWFY5ZXJiSEx2NEk2V1pEclVxS1JVM2FUWjdHdzZwcVRmd21yQ2ZjWGM2U3Q4N0NCNTgyaTRJdjJsQ1ZIR3htWDN1Znk4VlU?oc=5",
-            "source": "Sky News",
-            "date": "Fri, 27 Feb 2026 00:19:16 GMT",
-            "source_type": "news",
-            "category": "VAWG",
-            "uk_score": 2
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential VAWG harm: recurring themes include scotland, considering, criminalising, creation, deepfake, images (1 sources)."
-      },
-      {
         "signal_id": "669eeb91693991ee",
         "title": "Deepfake laws have now been used for the first time. What are they?",
         "primary_category": "VAWG",
@@ -3215,7 +3256,7 @@
         "links": [
           {
             "title": "FCSO Arrests Man for AI-Generated Child Porn - WNDB",
-            "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQWDJiUVdGX3otNWprZHkwLUNEamlkbmxWZVB1RVQyb3dsMEFwSzFsM2ZveFNHYmFUbUdYOXpYRlllM2ZNb05DNHZJb05mUmRzUGZoTmY1NWswNy1SWlZMSEJjcHlUWmlrZzBaX2NvSTNNQ1RMOU50QVpUYXU0Y3laTGt6RmJNWnlPWktueHc3clhBZw?oc=5",
+            "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxOX0h1ZmpyOW9EaExsYjFvaXd5WDBzY2VYTUJLV3BLZWx0V2RFeXFUcW9sUXg1MGpvQlBUdmV0aGZzMWhKa3N2M1ZPdXB6YThhT044T2J1SnhVeWFsY0VkcmwxRjJka2NXUzl3aDhTNUNuQ1VqVlc1VExyTGE0SS1fSU81aWtRZXJ6SlJUZGEwQnV4SHpkeHBR?oc=5",
             "source": "WNDB - News Daytona Beach",
             "date": "Thu, 26 Feb 2026 16:12:09 GMT",
             "source_type": "news",
@@ -3310,6 +3351,33 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Potential Other harm: recurring themes include powered, launched, help, fight, rural, criminals (1 sources)."
+      },
+      {
+        "signal_id": "6fc16c7d50741dfa",
+        "title": "An \u2018Ode to Violence\u2019: Extremist Exploitation of Viggle AI",
+        "primary_category": "Terrorism",
+        "tags": [
+          "Terrorism"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1772114286.0,
+        "last_seen": 1772114286.0,
+        "latest_date": "Thu, 26 Feb 2026 13:58:06 GMT",
+        "links": [
+          {
+            "title": "An \u2018Ode to Violence\u2019: Extremist Exploitation of Viggle AI",
+            "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQNldZRGlmdG9JV19LUHpaZWtxRXltMFh3VHlqMjA0OEw2QUVsNlg2ZkZHQm00MFFBcndvaVMzZG5iWWcyLXE0RTljYWNkN1VYMDRyWTlOMTFVdXh5dnMtNm5aTzlWMDVDVm9jRmgyZ3BNbkVqWGlXN1dpMjctbjVhcVRiQUpVSE5WMUpmZlJoWEpJdEJpY05r?oc=5",
+            "source": "Global Network on Extremism and Technology",
+            "date": "Thu, 26 Feb 2026 13:58:06 GMT",
+            "source_type": "news",
+            "category": "Terrorism",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential Terrorism harm: recurring themes include violence, extremist, exploitation, viggle (1 sources)."
       },
       {
         "signal_id": "ca95cb655bbbbf89",
@@ -3943,33 +4011,6 @@
         "ai_summary": "Potential Other harm: recurring themes include column, scammers, using, deepfakes, steal, money (1 sources)."
       },
       {
-        "signal_id": "7b8e12b3c1c256bd",
-        "title": "30m Nigerian Women Could Face AI-Generated Deepfake Attacks By 2030 \u2014 Gatefield",
-        "primary_category": "VAWG",
-        "tags": [
-          "VAWG"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1772043328.0,
-        "last_seen": 1772043328.0,
-        "latest_date": "Wed, 25 Feb 2026 18:15:28 GMT",
-        "links": [
-          {
-            "title": "30m Nigerian Women Could Face AI-Generated Deepfake Attacks By 2030 \u2014 Gatefield",
-            "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOcU1kTnBWTmNOZF9XY3dIQTllWDItbDBDLWw4czZxMDE3UFFwb0FxejhYdnRNb1RhVU5vN3U1bW80Y2NUNFhCSEtvcWR0bkZkMzJZMXZZWUFCWUFsaWpDVGxwZ2ZYaUhTdXJ3c3lkVG1CVHNjU1N3THlGX2l1dzZNblY4cU1SQmtPcmZsRDN1UmNKUWM4amhydXdNS0hHdUpZeEE?oc=5",
-            "source": "LEADERSHIP Newspapers",
-            "date": "Wed, 25 Feb 2026 18:15:28 GMT",
-            "source_type": "news",
-            "category": "VAWG",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential VAWG harm: recurring themes include nigerian, women, face, generated, deepfake, attacks (1 sources)."
-      },
-      {
         "signal_id": "7da5f1e914e09fb4",
         "title": "Palm Coast man, 38, arrested, reportedly used AI to create child porn",
         "primary_category": "CSAM",
@@ -4076,33 +4117,6 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Potential Terrorism harm: recurring themes include inside, gaza, slop, machine, fakes, fooled (1 sources)."
-      },
-      {
-        "signal_id": "29333a51ca10fe0d",
-        "title": "Defend your data: Be aware of tax season scams",
-        "primary_category": "Fraud",
-        "tags": [
-          "Fraud"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1772024820.0,
-        "last_seen": 1772024820.0,
-        "latest_date": "Wed, 25 Feb 2026 13:07:00 GMT",
-        "links": [
-          {
-            "title": "Defend your data: Be aware of tax season scams",
-            "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNZU5qZzVsMHRLMXlyOXl4aDB6LUZOZVBVN0xMeXhabHhYSEhkTTZfdU5zSDc4X0l0WUZqdlZYT3VvTmRXcFYyaTFYU2t2dkxrTFlYVDhYR1lMc3I1SExZaE5qeGxrMDNycGNwUl84YnZQUGRjcDRteC1NNWhhQjlaT1o0TTVuZW5XOHJrVWV5YUk?oc=5",
-            "source": "West Virginia University",
-            "date": "Wed, 25 Feb 2026 13:07:00 GMT",
-            "source_type": "news",
-            "category": "Fraud",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential Fraud harm: recurring themes include defend, data, aware, season, scams (1 sources)."
       },
       {
         "signal_id": "ffbb113c3ca2b316",
@@ -4466,31 +4480,31 @@
         "ai_summary": "Potential VAWG harm: recurring themes include missouri, considers, taylor, swift, target, generated (1 sources)."
       },
       {
-        "signal_id": "733ada5a6971c122",
-        "title": "AI-armed ransomware gangs gained historic 2025 haul",
-        "primary_category": "Other",
+        "signal_id": "9883d5d364223e0b",
+        "title": "Feds Arrest Squatty Potty Co-Inventor On Child Abuse *** Material Charges",
+        "primary_category": "CSAM",
         "tags": [
-          "Other"
+          "CSAM"
         ],
         "cluster_size": 1,
         "source_count": 1,
-        "first_seen": 1771969588.0,
-        "last_seen": 1771969588.0,
-        "latest_date": "Tue, 24 Feb 2026 21:46:28 GMT",
+        "first_seen": 1771971307.0,
+        "last_seen": 1771971307.0,
+        "latest_date": "Tue, 24 Feb 2026 22:15:07 GMT",
         "links": [
           {
-            "title": "AI-armed ransomware gangs gained historic 2025 haul",
-            "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxQeHpyeTdmaGNsaWVicWVlMVc3Mk1jYWctWmZSU1pNR0V3VnVsS0VyR0dlbkw4SE5IcGFoZERYbTdObG5icE1mQ2QzRlplaE1iSFdFNEVPNjBjaHZUQXBtTmg0a2hBb1RiSU5vQi1LWlY0WGEzX3BvOUtienZ0TG5SaGZuNWhqYk0tZURIVUxiRmVaMmxLRjhBUGh6T0tkc2pyalRGbUN3?oc=5",
-            "source": "Digital Journal",
-            "date": "Tue, 24 Feb 2026 21:46:28 GMT",
+            "title": "Feds Arrest Squatty Potty Co-Inventor On Child Abuse *** Material Charges",
+            "link": "https://news.google.com/rss/articles/CBMifEFVX3lxTE5GRmJaVGJ3QUNwNTAzQWdzWnZCWEUxa285Z3hfNUVNbXU3UURiNVQwQlZ3Q2hsd1czc0gyMGpLSHVOMXJHbVJDZzh5ZWs1U1lVLUczN3dTY2ZRM1UzZGxLYmxsalBDRE5UZ3JkRk85TmtXeDE5TS1vM3ZOdUc?oc=5",
+            "source": "AOL.com",
+            "date": "Tue, 24 Feb 2026 22:15:07 GMT",
             "source_type": "news",
-            "category": "Other",
+            "category": "CSAM",
             "uk_score": 0
           }
         ],
         "confidence": 0.256,
         "confidence_label": "Low",
-        "ai_summary": "Potential Other harm: recurring themes include armed, ransomware, gangs, gained, historic, haul (1 sources)."
+        "ai_summary": "Potential CSAM harm: recurring themes include feds, arrest, squatty, potty, inventor, child (1 sources)."
       },
       {
         "signal_id": "2a5e559f5aeec4df",
@@ -5033,6 +5047,33 @@
         "ai_summary": "Potential CSAM harm: recurring themes include generated, child, sexual, abuse, case, impacts (1 sources)."
       },
       {
+        "signal_id": "26de8577676086c4",
+        "title": "The reason for the second daughter's verbal abuse is 'forgotten in-house sexual harassment'..\"I was beaten up by my dad\" a gradually increasing view [a family hell]",
+        "primary_category": "VAWG",
+        "tags": [
+          "VAWG"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1771888386.0,
+        "last_seen": 1771888386.0,
+        "latest_date": "Mon, 23 Feb 2026 23:13:06 GMT",
+        "links": [
+          {
+            "title": "The reason for the second daughter's verbal abuse is 'forgotten in-house sexual harassment'..\"I was beaten up by my dad\" a gradually increasing view [a family hell]",
+            "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQRHlxRUptMUJxQ0pfVTdNVzdiZGhaZjFycjhuRW9UN3pqeFUwYnoxcDFUYmVhUUtfTmplT01KVnJ4ZmF3SEVweWV1NzdoRlQzMGF4Ui1sb2IzSWM4dy15ODFyWC1SRGxCWmxHb1lMQUJGSW5JbmVCTWdWM0poTV92TE9TSlY?oc=5",
+            "source": "starnewskorea.com",
+            "date": "Mon, 23 Feb 2026 23:13:06 GMT",
+            "source_type": "news",
+            "category": "VAWG",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential VAWG harm: recurring themes include reason, second, daughter, verbal, abuse, forgotten (1 sources)."
+      },
+      {
         "signal_id": "669dc09a05ccee3a",
         "title": "AI, Power, and the Next Great Silencing of Women",
         "primary_category": "VAWG",
@@ -5112,6 +5153,33 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Potential VAWG harm: recurring themes include algorithmic, design, tech, platforms, normalizes, gendered (1 sources)."
+      },
+      {
+        "signal_id": "997370d8880567d8",
+        "title": "How AI is Changing the Scale and Speed of Crypto Fraud | TRM Blog",
+        "primary_category": "Other",
+        "tags": [
+          "Other"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1771870955.0,
+        "last_seen": 1771870955.0,
+        "latest_date": "Mon, 23 Feb 2026 18:22:35 GMT",
+        "links": [
+          {
+            "title": "How AI is Changing the Scale and Speed of Crypto Fraud | TRM Blog",
+            "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQa0tWRVlnZElGOGNCUFJkRlF2SVNoZ05wT0NKTG1DMTJva04wMC1CZXpONk1namZ4M1NscjJXZjl3N3BRcmZTS0ctSFlJRVc5VW12LTR1ZDBoYzU0SFJza0MzS29JR2pGWUtPb3JzNFNQRHFlMzRDc29OZXdmS3lsSm15eFo1Z2tPMmRxSnlCM24wdGc4TVU0dw?oc=5",
+            "source": "TRM Labs",
+            "date": "Mon, 23 Feb 2026 18:22:35 GMT",
+            "source_type": "news",
+            "category": "Other",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential Other harm: recurring themes include changing, scale, speed, crypto, fraud, blog (1 sources)."
       },
       {
         "signal_id": "abbf28c27cfad8a5",
@@ -6326,23 +6394,23 @@
         "ai_summary": "Potential VAWG harm: recurring themes include mother, elon, musk, sues, deepfake, images (1 sources)."
       },
       {
-        "signal_id": "3d7592ca80e0b6af",
-        "title": "The best Chinese open-weight models \u2014 and the strongest US rivals",
+        "signal_id": "4892dcd6b71f2aa3",
+        "title": "Mistral closes in on Big AI rivals with new open-weight frontier and small models",
         "primary_category": "Model Releases",
         "tags": [
           "Model Releases"
         ],
         "cluster_size": 1,
         "source_count": 1,
-        "first_seen": 1765785600.0,
-        "last_seen": 1765785600.0,
-        "latest_date": "Mon, 15 Dec 2025 08:00:00 GMT",
+        "first_seen": 1764662400.0,
+        "last_seen": 1764662400.0,
+        "latest_date": "Tue, 02 Dec 2025 08:00:00 GMT",
         "links": [
           {
-            "title": "The best Chinese open-weight models \u2014 and the strongest US rivals",
-            "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE5aRUUtRDNyd05CNlRPU1JDN2lPcEU3RkZVOTU0UkN4T1Vzb0hvMjhWTGJLUzlwcW83dWxsY1pVTFlHNjlnLUt1N0JJVnB1dGtqdTQxNjd1R2U4OW14RWhUVVZkVlFUVDExWWx5QjJ2U1ZFSlVKS0s5RA?oc=5",
-            "source": "understandingai.org",
-            "date": "Mon, 15 Dec 2025 08:00:00 GMT",
+            "title": "Mistral closes in on Big AI rivals with new open-weight frontier and small models",
+            "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxQNl9HMmlTN0tYN3JPYWxIVl9XMFNSNF9NMHBaS01TaElvSXBncFlzOVJOazJMekVQbm40V1B2eml1ellkLVdBRER1Q2RycjUwZjZ2cWhDdGdITkZBRzNXRDhCUTMwdDRQb3pRZE44cjFVWmVMNFdEbHZNdUQzcXpfb2pDcG54WHU4SmZhSjNSY1YyUzZjLTNjdGwtZ3VtbWhqWVlpa0hndmZfVmNvZzJjdEtlT1dUY2dxUVpNUTBFcw?oc=5",
+            "source": "TechCrunch",
+            "date": "Tue, 02 Dec 2025 08:00:00 GMT",
             "source_type": "news",
             "category": "Model Releases",
             "uk_score": 0
@@ -6350,7 +6418,7 @@
         ],
         "confidence": 0.256,
         "confidence_label": "Low",
-        "ai_summary": "Model Releases: recurring themes include best, chinese, open, weight, models, strongest (1 sources)."
+        "ai_summary": "Model Releases: recurring themes include mistral, closes, rivals, open, weight, frontier (1 sources)."
       },
       {
         "signal_id": "883eefbb632db06b",
@@ -6378,6 +6446,33 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Model Releases: recurring themes include kimi, thinking, leading, open, weights, model (1 sources)."
+      },
+      {
+        "signal_id": "bd02deb5d1130d90",
+        "title": "5 Thoughts on Kimi K2 Thinking - by Nathan Lambert",
+        "primary_category": "Model Releases",
+        "tags": [
+          "Model Releases"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1762416000.0,
+        "last_seen": 1762416000.0,
+        "latest_date": "Thu, 06 Nov 2025 08:00:00 GMT",
+        "links": [
+          {
+            "title": "5 Thoughts on Kimi K2 Thinking - by Nathan Lambert",
+            "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5nV1VITFdtQ21VUkpNTy1MOHNWUjYtTkJkVC1NWGdXWUY0NUQzalktZ1lDRUUzNkM4YmRLYmVhLWdmSUQwU2dPYnNWVFd4N0NobUVQZG0xaU9TSXhwdWUyMjl3bzlfa2w3b2VNRVFB?oc=5",
+            "source": "Interconnects AI",
+            "date": "Thu, 06 Nov 2025 08:00:00 GMT",
+            "source_type": "news",
+            "category": "Model Releases",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Model Releases: recurring themes include thoughts, kimi, thinking, nathan, lambert (1 sources)."
       },
       {
         "signal_id": "ae3dca7a47fa6386",
@@ -6432,33 +6527,6 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Model Releases: recurring themes include nvidia, launches, open, models, data, accelerate (1 sources)."
-      },
-      {
-        "signal_id": "9ea265a8383d46c1",
-        "title": "Anthropic fights tooth and nail to keep their AI model weights secret",
-        "primary_category": "Model Releases",
-        "tags": [
-          "Model Releases"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1759489664.0,
-        "last_seen": 1759489664.0,
-        "latest_date": "Fri, 03 Oct 2025 11:07:44 GMT",
-        "links": [
-          {
-            "title": "Anthropic fights tooth and nail to keep their AI model weights secret",
-            "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOZU1Eb082Q1RndGRoQmdFUzZYMVhSYUtxUGRsN29ObXkzOHVsNlhMQmdaSUNLdFJTTGEwR1gzMzh4dEVEQkpPQ3dldFVDaXphclVfazZBbkNLNm5kUU9mVDR6UWJJbFV0d08zaF9EQ2xzUFJMTklLZ1FLelZIZkoxMzFqUlBmV3Q3TnlmZUk2SkJBeHlydEk0NUFyZHZMZ1NBUnJKdFJpLWZabURLQ0ROQzJn?oc=5",
-            "source": "fanaticalfuturist.com",
-            "date": "Fri, 03 Oct 2025 11:07:44 GMT",
-            "source_type": "news",
-            "category": "Model Releases",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Model Releases: recurring themes include anthropic, fights, tooth, nail, keep, model (1 sources)."
       },
       {
         "signal_id": "5965d3745c224e10",
@@ -6596,6 +6664,33 @@
         "ai_summary": "Model Releases: recurring themes include model, researcher, turned, openai, open, weights (1 sources)."
       },
       {
+        "signal_id": "244169cec72c835b",
+        "title": "OpenAI\u2019s GPT-OSS Challenges Meta\u2019s Leadership in Open-Weight AI",
+        "primary_category": "Model Releases",
+        "tags": [
+          "Model Releases"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1755180972.0,
+        "last_seen": 1755180972.0,
+        "latest_date": "Thu, 14 Aug 2025 14:16:12 GMT",
+        "links": [
+          {
+            "title": "OpenAI\u2019s GPT-OSS Challenges Meta\u2019s Leadership in Open-Weight AI",
+            "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5MOXRtLUVZb1F3UWJSN3lHRVZBdEFacWxXV2FuOWhPZW5IMHpMTDkzaFVEU2xhWks1LUlnVWtXTXAySGh2NGVPaGZPZDgwZm1uSmfSAWZBVV95cUxOWVFWenY3MFZpQlFjbU43VXpPdnFYRVJxWmsxT3Rhc3VDeVh4VFQ5QUlzQ0lrVFVmV293M28zbTNfb2w0Q1JGT2pLQlRHMnNJOGx3QzAwdVA1MTk0eHlKX0Vnc3hRaVE?oc=5",
+            "source": "IEEE Spectrum",
+            "date": "Thu, 14 Aug 2025 14:16:12 GMT",
+            "source_type": "news",
+            "category": "Model Releases",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Model Releases: recurring themes include openai, challenges, meta, leadership, open, weight (1 sources)."
+      },
+      {
         "signal_id": "3f6f256f1764da6c",
         "title": "OpenAI launches new GPT-5 model for all ChatGPT users",
         "primary_category": "Model Releases",
@@ -6621,6 +6716,33 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Model Releases: recurring themes include openai, launches, model, chatgpt, users (1 sources)."
+      },
+      {
+        "signal_id": "d43e4634a56f6615",
+        "title": "OpenAI releases GPT-5, calling it a \u2018team of Ph.D. level experts in your pocket\u2019",
+        "primary_category": "Model Releases",
+        "tags": [
+          "Model Releases"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1754550000.0,
+        "last_seen": 1754550000.0,
+        "latest_date": "Thu, 07 Aug 2025 07:00:00 GMT",
+        "links": [
+          {
+            "title": "OpenAI releases GPT-5, calling it a \u2018team of Ph.D. level experts in your pocket\u2019",
+            "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPdk8yMDBkbjdvNzN2dkt6cnhUWkhTallGWWhkWk9xRkpPbEhzV1RxTElBRjI2YUZfSEF4bGpSUEhVdDREMmFoUW0wS1AzMjhsS0gySzR1LTRGekNXR2liWXN0c0MxTndDRFVyT29kUTlva1ZGZ1daYjB5UER1LVkxcg?oc=5",
+            "source": "NBC News",
+            "date": "Thu, 07 Aug 2025 07:00:00 GMT",
+            "source_type": "news",
+            "category": "Model Releases",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Model Releases: recurring themes include openai, releases, calling, team, level, experts (1 sources)."
       },
       {
         "signal_id": "af93f69b7a229fbc",
@@ -6758,33 +6880,6 @@
         "ai_summary": "Model Releases: recurring themes include openai, finally, released, open, weight, language (1 sources)."
       },
       {
-        "signal_id": "1ca11bcdc1af3ef3",
-        "title": "OpenAI launches two \u2018open\u2019 AI reasoning models",
-        "primary_category": "Model Releases",
-        "tags": [
-          "Model Releases"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1754377200.0,
-        "last_seen": 1754377200.0,
-        "latest_date": "Tue, 05 Aug 2025 07:00:00 GMT",
-        "links": [
-          {
-            "title": "OpenAI launches two \u2018open\u2019 AI reasoning models",
-            "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPVFJENE8tZlFpbUtScThyNmxaVkxJa0NhVmlkOHZUY0JQVTU0RHFVNWw2QzM4T1ZCS3l3c05MRWJGZGI0VXpzRUhwWlFlWjE0ZjRTbG1JdDNibVlBT2RfeDFaVDVxbkM4SmlwWGEyczNlQTFrd2x3ZUFnTVNWaDkxMUIxOGlLQQ?oc=5",
-            "source": "TechCrunch",
-            "date": "Tue, 05 Aug 2025 07:00:00 GMT",
-            "source_type": "news",
-            "category": "Model Releases",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Model Releases: recurring themes include openai, launches, open, reasoning, models (1 sources)."
-      },
-      {
         "signal_id": "c7ba4e44f0c6654c",
         "title": "OpenAI releases lower-cost models to rival Meta, Mistral and DeepSeek",
         "primary_category": "Model Releases",
@@ -6866,8 +6961,8 @@
         "ai_summary": "Model Releases: recurring themes include openai, releases, open, models, deepseek, success (1 sources)."
       },
       {
-        "signal_id": "4162634c21abdcb8",
-        "title": "OpenAI Just Released Its First Open-Weight Models Since GPT-2",
+        "signal_id": "aff4aafe939bbc75",
+        "title": "OpenAI's New Models Aren't Really Open: What to Know About Open-Weights AI",
         "primary_category": "Model Releases",
         "tags": [
           "Model Releases"
@@ -6879,9 +6974,9 @@
         "latest_date": "Tue, 05 Aug 2025 07:00:00 GMT",
         "links": [
           {
-            "title": "OpenAI Just Released Its First Open-Weight Models Since GPT-2",
-            "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPaXYtTDVWVmNMa2RmT2pYWjNlYy1JS3NiZTBFWDJjczd0b1V1SnRBcVBDeXJyY1YwVGhjT2hma0dJVGk5WC00WHRyRGtDamlOY3NvWGd0ckx4NFJZcldpc2IzdXZXb29QR0JZT2RuRnBoUVdWcVVNRVdvQzZpazE4VDNuOEdwWlBYWmRIV0RRTjdqalU4?oc=5",
-            "source": "WIRED",
+            "title": "OpenAI's New Models Aren't Really Open: What to Know About Open-Weights AI",
+            "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNc2VaX0h3Wnl4OU5xWkZ2LUd4dHpPYmI3OTd5OHJpY1A3Y3E0clRsaVJ6SFBwU0hwZnRtSndUOHVuaFREUDVWeGNtdkItMEh6bmg1NmVXVlVYeDNhdjl3UmszbjluUmNrQ09PQmxjSlY4R1ZFdktvVXJOX1YyZGJMTklhN09QTkstRnRZWkdoLXFpM2VMdmVMUm00eXlDb3EyREJCdzFQYUhmam5GcklkMjBnTG12LUk2TUpfNw?oc=5",
+            "source": "CNET",
             "date": "Tue, 05 Aug 2025 07:00:00 GMT",
             "source_type": "news",
             "category": "Model Releases",
@@ -6890,7 +6985,7 @@
         ],
         "confidence": 0.256,
         "confidence_label": "Low",
-        "ai_summary": "Model Releases: recurring themes include openai, released, first, open, weight, models (1 sources)."
+        "ai_summary": "Model Releases: recurring themes include open, openai, models, aren, really, know (1 sources)."
       },
       {
         "signal_id": "4286bb91cc90319b",
@@ -6945,6 +7040,87 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Model Releases: recurring themes include openai, releases, open, weight, models, compete (1 sources)."
+      },
+      {
+        "signal_id": "2a627cba6658908a",
+        "title": "OpenAI returns to open source roots with new models gpt-oss-120b and gpt-oss-20b",
+        "primary_category": "Model Releases",
+        "tags": [
+          "Model Releases"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1754377200.0,
+        "last_seen": 1754377200.0,
+        "latest_date": "Tue, 05 Aug 2025 07:00:00 GMT",
+        "links": [
+          {
+            "title": "OpenAI returns to open source roots with new models gpt-oss-120b and gpt-oss-20b",
+            "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOekJtSzB0MUlFUU5XMFpSbEZxMEhCS2I0TTk5U0JhUDd4b2NsZzhROHJ0WVlPcktPTTZNVUI1NXZXVHJsck1nYy1Idm9wbnZ6eE5MNGloc0VXYWZhTG5feWFvUUR0dzlWRlFEMXhCM2dsREI0eTczLXlCRVdROFpGMlRCRE1YSGYwaDNoNUtnbnF4bEs3cmk3ZkxfbE0yNHRPLW9vdERXNU1yVkU?oc=5",
+            "source": "VentureBeat",
+            "date": "Tue, 05 Aug 2025 07:00:00 GMT",
+            "source_type": "news",
+            "category": "Model Releases",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Model Releases: recurring themes include openai, returns, open, source, roots, models (1 sources)."
+      },
+      {
+        "signal_id": "b465e423aa45df21",
+        "title": "OpenAI publishes first open-weight AI models",
+        "primary_category": "Model Releases",
+        "tags": [
+          "Model Releases"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1754377200.0,
+        "last_seen": 1754377200.0,
+        "latest_date": "Tue, 05 Aug 2025 07:00:00 GMT",
+        "links": [
+          {
+            "title": "OpenAI publishes first open-weight AI models",
+            "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNZ3dSYm1xYzlmNTZhUDBKdFEwai1lemRZaEptcVlIXzZvVms5ak93VHBhcWx4SU5EZHl1QVRmalFrUFdKRkc3dEc3Y29xUTdJVUVNSlhDLWprbW5NU1EzMy1vTjlQaW0xdW51Q0dWRUNMVTJSTFJnYkJSYzNuSzFzdG5xM1NBTFV0NGplQV8zWmZNWWhsYzFjR1dYTUI4TS1RMUtkdA?oc=5",
+            "source": "it-daily",
+            "date": "Tue, 05 Aug 2025 07:00:00 GMT",
+            "source_type": "news",
+            "category": "Model Releases",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Model Releases: recurring themes include openai, publishes, first, open, weight, models (1 sources)."
+      },
+      {
+        "signal_id": "97d291f9ef6660b0",
+        "title": "OpenAI Takes on Rivals Meta, DeepSeek With 2 New Models",
+        "primary_category": "Model Releases",
+        "tags": [
+          "Model Releases"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1754377200.0,
+        "last_seen": 1754377200.0,
+        "latest_date": "Tue, 05 Aug 2025 07:00:00 GMT",
+        "links": [
+          {
+            "title": "OpenAI Takes on Rivals Meta, DeepSeek With 2 New Models",
+            "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOYUtNXzh2YWtJbnp5RDFBR1J5dU9janY1VkxORUhwdzhraldqMldoNUYtU2FxdEROLWdlSXFJT0hSUnBVNDk1VTVpNEplYUU1M3dPVWpzczlYZnVRRUY3MXdjZFJ0ZzFrbnd3NXc5a21CQUo3ZWxUSHJkM1ZwbWxEenNkVHlnOVlkRVozSEprREthazVQbU9VYUh3aFU2ekRRU1B1eEEzcWNjekxqVnc?oc=5",
+            "source": "PYMNTS.com",
+            "date": "Tue, 05 Aug 2025 07:00:00 GMT",
+            "source_type": "news",
+            "category": "Model Releases",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Model Releases: recurring themes include openai, takes, rivals, meta, deepseek, models (1 sources)."
       },
       {
         "signal_id": "33800f61daff81a4",
@@ -7028,6 +7204,33 @@
         "ai_summary": "Model Releases: recurring themes include deepseek, release, open, weight, frontier, model (1 sources)."
       },
       {
+        "signal_id": "da18a52e8b24b346",
+        "title": "Qwen 3: The new open standard",
+        "primary_category": "Model Releases",
+        "tags": [
+          "Model Releases"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1745823600.0,
+        "last_seen": 1745823600.0,
+        "latest_date": "Mon, 28 Apr 2025 07:00:00 GMT",
+        "links": [
+          {
+            "title": "Qwen 3: The new open standard",
+            "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTFByLUVQSFVSWFRxaS13NmJJb3ZjSTJSajY4MWVoT3JWRFFCNm1Ldzkwbm1zWGpYYTZhS3JwX0ZIanF0aHpMa1VOTjF2OEdMSUs0RXJjN2FHZFN5NlVrVC1OdGM3VFRQMDBaVDVB?oc=5",
+            "source": "Interconnects AI",
+            "date": "Mon, 28 Apr 2025 07:00:00 GMT",
+            "source_type": "news",
+            "category": "Model Releases",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Model Releases: recurring themes include qwen, open, standard (1 sources)."
+      },
+      {
         "signal_id": "25b528935ee9e652",
         "title": "OpenAI\u2019s New Open-Weight Model Could Be Huge for Governments and Banks",
         "primary_category": "Model Releases",
@@ -7055,60 +7258,6 @@
         "ai_summary": "Model Releases: recurring themes include openai, open, weight, model, huge, governments (1 sources)."
       },
       {
-        "signal_id": "252f9765e3e4db94",
-        "title": "OpenAI To Release Open-Weight AI Model",
-        "primary_category": "Model Releases",
-        "tags": [
-          "Model Releases"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1743490800.0,
-        "last_seen": 1743490800.0,
-        "latest_date": "Tue, 01 Apr 2025 07:00:00 GMT",
-        "links": [
-          {
-            "title": "OpenAI To Release Open-Weight AI Model",
-            "link": "https://news.google.com/rss/articles/CBMibEFVX3lxTFB2S25DQUdPMXN0Q2hFS3dFeS1IaGpJektELUxuR2FYVTBFUFQtV3NTYjhhYTRtcHdiYngyVURXeEppUHVMS05iMnUyQnU3X1B0MmNqSnRvM0dYWnBOSUVldnpGWXkwMDAwMzZQa9IBckFVX3lxTE1LNmJWR0pZNVpCQVY3NkxjZ1dOb3Jab1dUSXlZZnhDZ3BlMVJORk5fSVh3ZDhlTnMtb1F5ZTRFeWZLS1d5Mkc4U205SEQ3SFNwalZuUXJxcG1RT0VlRkRibWJObnFJSW9RZ215TVhUNlVwZw?oc=5",
-            "source": "Silicon UK",
-            "date": "Tue, 01 Apr 2025 07:00:00 GMT",
-            "source_type": "news",
-            "category": "Model Releases",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Model Releases: recurring themes include openai, release, open, weight, model (1 sources)."
-      },
-      {
-        "signal_id": "547d2eafa12afa40",
-        "title": "OpenAI Just Teased a New 'Open-Weights' AI Model: Here's What That Means",
-        "primary_category": "Model Releases",
-        "tags": [
-          "Model Releases"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1743404400.0,
-        "last_seen": 1743404400.0,
-        "latest_date": "Mon, 31 Mar 2025 07:00:00 GMT",
-        "links": [
-          {
-            "title": "OpenAI Just Teased a New 'Open-Weights' AI Model: Here's What That Means",
-            "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOdTZZWlNfWVcwOGxuMDdPSERsM2FtdUp5Y04td3BzMUhPUEpxVk1pTDluaWdEMGI0ZDJrV2lLb2dfSU9rdDdVV1dKYW5MRzFzVEpiOVdSOEQyWjlCM1RpMXI0NmVTSElhdFRfVExtTWxOck1ZdjF2RE9fTjNNYUtTWkhvT2cwV1lTWUJJblBNZ2tIVFNyVGpIaG9CYTNXamJFd2RFSm9taVd3VzdSUnU0alU4R0xVTGdy?oc=5",
-            "source": "CNET",
-            "date": "Mon, 31 Mar 2025 07:00:00 GMT",
-            "source_type": "news",
-            "category": "Model Releases",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Model Releases: recurring themes include openai, teased, open, weights, model, here (1 sources)."
-      },
-      {
         "signal_id": "cf2fb6fc30a89bdd",
         "title": "Gemma 3, OLMo 2 32B, and the growing potential of open-source AI",
         "primary_category": "Model Releases",
@@ -7134,63 +7283,26 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Model Releases: recurring themes include gemma, olmo, growing, potential, open, source (1 sources)."
-      },
-      {
-        "signal_id": "7276c2310fbb451b",
-        "title": "Introducing Gemma 3: The most capable model you can run on a single GPU or TPU",
-        "primary_category": "Model Releases",
-        "tags": [
-          "Model Releases"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1741762800.0,
-        "last_seen": 1741762800.0,
-        "latest_date": "Wed, 12 Mar 2025 07:00:00 GMT",
-        "links": [
-          {
-            "title": "Introducing Gemma 3: The most capable model you can run on a single GPU or TPU",
-            "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE8teEVUcVJjSjh1X2NKeWhINkM2aV9Zcl9QWEFiY1FpTkRCY2EzS2I5S0VCWEhEQ1d4UHlQek9EVFRfYm9LM1R3eGROTTh3QWVscTlNYlN6U25JTGxUcE1WQkNfVW9fcDBXRThrVTNlb0IyMjkwSjd6QnRWTzA5SUk?oc=5",
-            "source": "blog.google",
-            "date": "Wed, 12 Mar 2025 07:00:00 GMT",
-            "source_type": "news",
-            "category": "Model Releases",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Model Releases: recurring themes include introducing, gemma, capable, model, single (1 sources)."
-      },
-      {
-        "signal_id": "8ca9b21f65bd3339",
-        "title": "Alibaba\u2019s New Model Adds Fuel to China\u2019s AI Race",
-        "primary_category": "Model Releases",
-        "tags": [
-          "Model Releases"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1741248000.0,
-        "last_seen": 1741248000.0,
-        "latest_date": "Thu, 06 Mar 2025 08:00:00 GMT",
-        "links": [
-          {
-            "title": "Alibaba\u2019s New Model Adds Fuel to China\u2019s AI Race",
-            "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE15LXpEZDV4cXRQVU02d2dmTERja21yTXdpbFF5eUlmZDA0aWQ2bTlzZjU2UWVZWlJTcW5LU2JveVVfOUZxMHFWbFkzUGh2aHk4Sy1maGtiMEFXSm5Ja1lzdVdrVUpidExE?oc=5",
-            "source": "Time Magazine",
-            "date": "Thu, 06 Mar 2025 08:00:00 GMT",
-            "source_type": "news",
-            "category": "Model Releases",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Model Releases: recurring themes include alibaba, model, adds, fuel, china, race (1 sources)."
       }
     ],
     "forums": [
+      {
+        "category": "Cyber",
+        "title": "How are you testing AI agents for prompt injection vulnerabilities?",
+        "link": "https://old.reddit.com/r/cybersecurity/comments/1ri41wt/how_are_you_testing_ai_agents_for_prompt/",
+        "source": "Reddit: cybersecurity (new)",
+        "timestamp": 1772387961.0,
+        "date": "2026-03-01T17:59:21+00:00",
+        "tags": [
+          "forum",
+          "Cyber",
+          "cyber",
+          "reddit"
+        ],
+        "source_type": "forum",
+        "uk_score": 0,
+        "uk_relevance": false
+      },
       {
         "category": "Fraud",
         "title": "AnySpeech \u2013 AI Voice Cloning and Text to Speech Tool",
@@ -7199,10 +7311,10 @@
         "timestamp": 1772376215.0,
         "date": "Sun, 01 Mar 2026 14:43:35 +0000",
         "tags": [
-          "hn",
           "forum",
           "supply-chain",
-          "Fraud"
+          "Fraud",
+          "hn"
         ],
         "source_type": "forum",
         "uk_score": 0,
@@ -7216,10 +7328,10 @@
         "timestamp": 1772375056.0,
         "date": "2026-03-01T14:24:16+00:00",
         "tags": [
-          "model-safety",
           "forum",
           "Cyber",
-          "reddit"
+          "reddit",
+          "model-safety"
         ],
         "source_type": "forum",
         "uk_score": 0,
@@ -7233,8 +7345,8 @@
         "timestamp": 1772320627.0,
         "date": "2026-02-28T23:17:07+00:00",
         "tags": [
-          "Cyber",
           "forum",
+          "Cyber",
           "cyber",
           "reddit"
         ],
@@ -7250,10 +7362,10 @@
         "timestamp": 1772215084.0,
         "date": "Fri, 27 Feb 2026 17:58:04 +0000",
         "tags": [
-          "hn",
           "forum",
           "model-safety",
-          "Cyber"
+          "Cyber",
+          "hn"
         ],
         "source_type": "forum",
         "uk_score": 0,
@@ -7267,10 +7379,10 @@
         "timestamp": 1772208726.0,
         "date": "Fri, 27 Feb 2026 16:12:06 +0000",
         "tags": [
-          "hn",
           "forum",
           "model-safety",
-          "Cyber"
+          "Cyber",
+          "hn"
         ],
         "source_type": "forum",
         "uk_score": 0,
@@ -7284,10 +7396,10 @@
         "timestamp": 1772133669.0,
         "date": "Thu, 26 Feb 2026 19:21:09 +0000",
         "tags": [
-          "hn",
           "forum",
           "model-safety",
-          "Cyber"
+          "Cyber",
+          "hn"
         ],
         "source_type": "forum",
         "uk_score": 0,
@@ -7301,10 +7413,10 @@
         "timestamp": 1772118616.0,
         "date": "Thu, 26 Feb 2026 15:10:16 +0000",
         "tags": [
-          "hn",
           "forum",
           "model-safety",
-          "Cyber"
+          "Cyber",
+          "hn"
         ],
         "source_type": "forum",
         "uk_score": 0,
@@ -7318,10 +7430,10 @@
         "timestamp": 1769535291.0,
         "date": "Tue, 27 Jan 2026 17:34:51 +0000",
         "tags": [
-          "VAWG",
-          "hn",
           "forum",
-          "provenance"
+          "provenance",
+          "VAWG",
+          "hn"
         ],
         "source_type": "forum",
         "uk_score": 0,
@@ -7335,10 +7447,10 @@
         "timestamp": 1768818840.0,
         "date": "Mon, 19 Jan 2026 10:34:00 +0000",
         "tags": [
-          "VAWG",
-          "hn",
           "forum",
-          "provenance"
+          "provenance",
+          "VAWG",
+          "hn"
         ],
         "source_type": "forum",
         "uk_score": 0,
@@ -7550,11 +7662,11 @@
         "date": "Thu, 22 Jan 2026 00:00:00 GMT"
       },
       {
-        "title": "The best Chinese open-weight models \u2014 and the strongest US rivals",
-        "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE5aRUUtRDNyd05CNlRPU1JDN2lPcEU3RkZVOTU0UkN4T1Vzb0hvMjhWTGJLUzlwcW83dWxsY1pVTFlHNjlnLUt1N0JJVnB1dGtqdTQxNjd1R2U4OW14RWhUVVZkVlFUVDExWWx5QjJ2U1ZFSlVKS0s5RA?oc=5",
-        "source": "understandingai.org",
-        "timestamp": 1765785600.0,
-        "date": "Mon, 15 Dec 2025 08:00:00 GMT"
+        "title": "Mistral closes in on Big AI rivals with new open-weight frontier and small models",
+        "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxQNl9HMmlTN0tYN3JPYWxIVl9XMFNSNF9NMHBaS01TaElvSXBncFlzOVJOazJMekVQbm40V1B2eml1ellkLVdBRER1Q2RycjUwZjZ2cWhDdGdITkZBRzNXRDhCUTMwdDRQb3pRZE44cjFVWmVMNFdEbHZNdUQzcXpfb2pDcG54WHU4SmZhSjNSY1YyUzZjLTNjdGwtZ3VtbWhqWVlpa0hndmZfVmNvZzJjdEtlT1dUY2dxUVpNUTBFcw?oc=5",
+        "source": "TechCrunch",
+        "timestamp": 1764662400.0,
+        "date": "Tue, 02 Dec 2025 08:00:00 GMT"
       },
       {
         "title": "Kimi K2 Thinking is the new leading open weights model",
@@ -7562,6 +7674,13 @@
         "source": "LinkedIn",
         "timestamp": 1762502400.0,
         "date": "Fri, 07 Nov 2025 08:00:00 GMT"
+      },
+      {
+        "title": "5 Thoughts on Kimi K2 Thinking - by Nathan Lambert",
+        "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE5nV1VITFdtQ21VUkpNTy1MOHNWUjYtTkJkVC1NWGdXWUY0NUQzalktZ1lDRUUzNkM4YmRLYmVhLWdmSUQwU2dPYnNWVFd4N0NobUVQZG0xaU9TSXhwdWUyMjl3bzlfa2w3b2VNRVFB?oc=5",
+        "source": "Interconnects AI",
+        "timestamp": 1762416000.0,
+        "date": "Thu, 06 Nov 2025 08:00:00 GMT"
       },
       {
         "title": "Moonshot's open source Kimi K2 Thinking outperforms GPT-5, Claude Sonnet 4.5",
@@ -7576,13 +7695,6 @@
         "source": "NVIDIA Blog",
         "timestamp": 1761634800.0,
         "date": "Tue, 28 Oct 2025 07:00:00 GMT"
-      },
-      {
-        "title": "Anthropic fights tooth and nail to keep their AI model weights secret",
-        "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOZU1Eb082Q1RndGRoQmdFUzZYMVhSYUtxUGRsN29ObXkzOHVsNlhMQmdaSUNLdFJTTGEwR1gzMzh4dEVEQkpPQ3dldFVDaXphclVfazZBbkNLNm5kUU9mVDR6UWJJbFV0d08zaF9EQ2xzUFJMTklLZ1FLelZIZkoxMzFqUlBmV3Q3TnlmZUk2SkJBeHlydEk0NUFyZHZMZ1NBUnJKdFJpLWZabURLQ0ROQzJn?oc=5",
-        "source": "fanaticalfuturist.com",
-        "timestamp": 1759489664.0,
-        "date": "Fri, 03 Oct 2025 11:07:44 GMT"
       },
       {
         "title": "Secrets of DeepSeek AI model revealed in landmark paper",
@@ -7620,9 +7732,23 @@
         "date": "Fri, 15 Aug 2025 07:00:00 GMT"
       },
       {
+        "title": "OpenAI\u2019s GPT-OSS Challenges Meta\u2019s Leadership in Open-Weight AI",
+        "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5MOXRtLUVZb1F3UWJSN3lHRVZBdEFacWxXV2FuOWhPZW5IMHpMTDkzaFVEU2xhWks1LUlnVWtXTXAySGh2NGVPaGZPZDgwZm1uSmfSAWZBVV95cUxOWVFWenY3MFZpQlFjbU43VXpPdnFYRVJxWmsxT3Rhc3VDeVh4VFQ5QUlzQ0lrVFVmV293M28zbTNfb2w0Q1JGT2pLQlRHMnNJOGx3QzAwdVA1MTk0eHlKX0Vnc3hRaVE?oc=5",
+        "source": "IEEE Spectrum",
+        "timestamp": 1755180972.0,
+        "date": "Thu, 14 Aug 2025 14:16:12 GMT"
+      },
+      {
         "title": "OpenAI launches new GPT-5 model for all ChatGPT users",
         "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOWnR2RHQ2WU0tZGlYT3dWalhMclNqLXNabDJGR1Q3UHRWaUdGRDhOczVSdzJ3OU9GVUtMWGltUTBQQ3BfM2N0QUltd1I1c3YxanY4Ql9WRDdUX09QUWNfNUJUOG9OTVNkSjgtdFY5cWR3ZVZ2bTU4OVluY29pT0sxOXIwMjNuTG1vQlN0SGc2b9IBlAFBVV95cUxOVURRa1FURFRNbHpwMnZUQ0ZnZ1YzQnl4ZkpHalJfVFZtelM4VXYycktCUVlOT2c4b0FCMXd6Y3RDLVRQMFk0QWpGc011eTBaOVlHX3ZVV0U3bXNFRkVNcXhYalRKNWktTHY4Y3MtN0ZOUFhHM2RGa1JTM3RXVzJzVHlBZWttMWZBNlVqN2NXLWRuSkxh?oc=5",
         "source": "CNBC",
+        "timestamp": 1754550000.0,
+        "date": "Thu, 07 Aug 2025 07:00:00 GMT"
+      },
+      {
+        "title": "OpenAI releases GPT-5, calling it a \u2018team of Ph.D. level experts in your pocket\u2019",
+        "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPdk8yMDBkbjdvNzN2dkt6cnhUWkhTallGWWhkWk9xRkpPbEhzV1RxTElBRjI2YUZfSEF4bGpSUEhVdDREMmFoUW0wS1AzMjhsS0gySzR1LTRGekNXR2liWXN0c0MxTndDRFVyT29kUTlva1ZGZ1daYjB5UER1LVkxcg?oc=5",
+        "source": "NBC News",
         "timestamp": 1754550000.0,
         "date": "Thu, 07 Aug 2025 07:00:00 GMT"
       },
@@ -7662,13 +7788,6 @@
         "date": "Tue, 05 Aug 2025 07:00:00 GMT"
       },
       {
-        "title": "OpenAI launches two \u2018open\u2019 AI reasoning models",
-        "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPVFJENE8tZlFpbUtScThyNmxaVkxJa0NhVmlkOHZUY0JQVTU0RHFVNWw2QzM4T1ZCS3l3c05MRWJGZGI0VXpzRUhwWlFlWjE0ZjRTbG1JdDNibVlBT2RfeDFaVDVxbkM4SmlwWGEyczNlQTFrd2x3ZUFnTVNWaDkxMUIxOGlLQQ?oc=5",
-        "source": "TechCrunch",
-        "timestamp": 1754377200.0,
-        "date": "Tue, 05 Aug 2025 07:00:00 GMT"
-      },
-      {
         "title": "OpenAI releases lower-cost models to rival Meta, Mistral and DeepSeek",
         "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPTGZNZmJtRzRNNXk2VzNnbXBXY1g4aWdnS0JlZFhRcUZuLWNRNW54ZE80RUstTnRscmM1OTlEVGNZUVE2U29paFd0T2oycHQ2dHloV09FTGM1TUt3TmJXZXJKUUhOQzBNb250aXlxdVA4MmNvYkNUS2lnUTMzLWlyQ0V0UHF5dmfSAYwBQVVfeXFMTzA3ZmJkVDNPTmI3OW9nNHlETTh0ZC1XVDRKdjJIWlRvODFWUTh3SkdLancwSFBwOXU4Tm5uaEpGNUNPY05oUmI3dnVmLUdCdTQ2U2l4alRJZ2xCUlNZMW11eVVWRGpyd3FmOEdmLWQwdko2eEh2THFGbjR0emo4VDlKUHBTdzZoNjVZcE0?oc=5",
         "source": "CNBC",
@@ -7688,23 +7807,11 @@
         "source": "Bloomberg.com",
         "timestamp": 1754377200.0,
         "date": "Tue, 05 Aug 2025 07:00:00 GMT"
-      },
-      {
-        "title": "OpenAI Just Released Its First Open-Weight Models Since GPT-2",
-        "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPaXYtTDVWVmNMa2RmT2pYWjNlYy1JS3NiZTBFWDJjczd0b1V1SnRBcVBDeXJyY1YwVGhjT2hma0dJVGk5WC00WHRyRGtDamlOY3NvWGd0ckx4NFJZcldpc2IzdXZXb29QR0JZT2RuRnBoUVdWcVVNRVdvQzZpazE4VDNuOEdwWlBYWmRIV0RRTjdqalU4?oc=5",
-        "source": "WIRED",
-        "timestamp": 1754377200.0,
-        "date": "Tue, 05 Aug 2025 07:00:00 GMT"
       }
     ]
   },
   "coverage": {
     "by_harm": {
-      "VAWG": {
-        "count": 25,
-        "uk_count": 1,
-        "last_seen": 1772370614.0
-      },
       "Other": {
         "count": 25,
         "uk_count": 2,
@@ -7718,7 +7825,12 @@
       "CSAM": {
         "count": 25,
         "uk_count": 0,
-        "last_seen": 1772381524.0
+        "last_seen": 1772382756.0
+      },
+      "VAWG": {
+        "count": 25,
+        "uk_count": 0,
+        "last_seen": 1772370614.0
       },
       "Cyber": {
         "count": 25,
@@ -7726,7 +7838,7 @@
         "last_seen": 1772346155.0
       },
       "Terrorism": {
-        "count": 17,
+        "count": 18,
         "uk_count": 0,
         "last_seen": 1772312771.0
       }
@@ -7734,14 +7846,14 @@
   },
   "summaries": {
     "harms_by_category": {
-      "Fraud": "Recurring themes: scams, fraud, voice, scam, calls, deepfake, lehi.",
+      "Fraud": "Recurring themes: fraud, scams, voice, scam, calls, deepfake, lehi.",
       "Cyber": "Recurring themes: security, models, github, claude, copilot, prompt, injection.",
       "Terrorism": "Recurring themes: openai, reality, spot, faces, advantage, crisis, deepfakes.",
-      "VAWG": "Recurring themes: deepfake, women, images, abuse, grok, child, generated.",
+      "VAWG": "Recurring themes: deepfake, abuse, women, sexual, grok, child, deepfakes.",
       "CSAM": "Recurring themes: child, abuse, generated, sexual, material, report, alaska.",
-      "Other": "Recurring themes: help, crime, criminal, police, cyber, criminals, fraud."
+      "Other": "Recurring themes: help, crime, criminal, fraud, police, cyber, criminals."
     },
-    "signals_top": "Recurring themes: child, abuse, scams, sexual, alaska, tool, injection.",
+    "signals_top": "Recurring themes: child, abuse, injection, scams, sexual, alaska, agents.",
     "releases_top": "Recurring themes: introducing, codex, chatgpt, openai, agents, scaling, access."
   }
 }
