@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-03-21T15:35:08.293839",
+  "last_updated": "2026-03-21T16:35:34.737409",
   "disclaimer": "Automated horizon-scanning prototype. Items indicate emerging discussion, not verified risk, intent, or prevalence.",
   "meta": {
     "limits": {
@@ -14,17 +14,6 @@
   },
   "sections": {
     "harms": [
-      {
-        "category": "VAWG",
-        "title": "North Wales Police join female running groups to tackle street harassment",
-        "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE80c3Y5WWw4NzBNVUlmTXJ6bjViUEQ1MW9hamtHeDJaSi05RDF1YkZvUU9wVEpScnV1NHl2VjhkOEh2X0s5QnU3dWdvUHlXZWpLa3M0VXhWdXBiUQ?oc=5",
-        "source": "BBC",
-        "timestamp": 1773901028.0,
-        "date": "Thu, 19 Mar 2026 06:17:08 GMT",
-        "relevance_score": 1,
-        "uk_score": 2,
-        "uk_relevance": true
-      },
       {
         "category": "Terrorism",
         "title": "The Israeli Strike Metres From a British Journalist That Turned Out to Be Real",
@@ -46,6 +35,17 @@
         "relevance_score": 0,
         "uk_score": 2,
         "uk_relevance": true
+      },
+      {
+        "category": "Cyber",
+        "title": "HackerOne unveils live agentic AI prompt injection tests",
+        "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxONnY0UVYtbXcxRFRqSUVQR05pOWswWHo5YWZZc3dFT2R5T2UtcFI3Z1c5TnQwbUIzVkxPOGhya0JYQVp5N2duWDdaVko5RmhzOE1CLWVKcjlOLXAxTjd2SUFyWDZYbW1fX0NfUXZTRGZIMXZhS1NFZlhsVkJaOU9UZnNVYi13U3BYUnl4LQ?oc=5",
+        "source": "IT Brief UK",
+        "timestamp": 1773908100.0,
+        "date": "Thu, 19 Mar 2026 08:15:00 GMT",
+        "relevance_score": 2,
+        "uk_score": 1,
+        "uk_relevance": false
       },
       {
         "category": "Terrorism",
@@ -109,6 +109,17 @@
         "source": "WRDW",
         "timestamp": 1773779940.0,
         "date": "Tue, 17 Mar 2026 20:39:00 GMT",
+        "relevance_score": 4,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
+        "category": "CSAM",
+        "title": "Tennessee teens sue Elon Musk's xAI over AI-generated child sexual abuse material",
+        "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQR1RieW9nZVhaS3VaTFN3dEQ1ZEhHRHpMdjBIX0g3YmJEd2g5ZWdDenNoN3RleUtPVmNiSUxHbWZCZUtIRDFnX3d4eU1jNzFySnRDblhRampjUG9Cb01pdHdsc1ZMMDIxelhBUG01R2lrU09uaXdNSzA0ODQxdmtraFhR?oc=5",
+        "source": "NPR",
+        "timestamp": 1773709357.0,
+        "date": "Tue, 17 Mar 2026 01:02:37 GMT",
         "relevance_score": 4,
         "uk_score": 0,
         "uk_relevance": false
@@ -213,6 +224,28 @@
         "uk_relevance": false
       },
       {
+        "category": "VAWG",
+        "title": "When justice fails: Why women can\u2019t get protection from AI deepfake abuse",
+        "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE5kUk9QREg3Yjlvb2Fqei04YmJoWktKaFpjQkprVEpRTGlQNjc0MHRoUzhMM0JFVlRYT0tvb0hYTExjby1ZQjlTa3NVWW5Ya1dTVmd2cDhCdw?oc=5",
+        "source": "UN News",
+        "timestamp": 1774110683.0,
+        "date": "Sat, 21 Mar 2026 16:31:23 GMT",
+        "relevance_score": 2,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
+        "category": "Cyber",
+        "title": "HackerOne Introduces Agentic Prompt Injection Testing as AI Security Risks Accelerate",
+        "link": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNUFVJQnNTX2VnVEZCWXZUZ1Q1QVlJWWtFV0tVLVNnSkVDdFcyWWx0ZDRha0hDUWZIbWdXWEZnb3Y1WGlSdDJtdDVSWWtZdE53RTg3U083cXdRVjlHbFZCeFRxS2pqV0g0aEFmck9NdWxvY3BSNGh3TmdKX1Z2MmxKQ2VMNTN3a2N0Smp5c3FJNG5ybzZkVXFiRXdJUmNWd1A2SmJPT29pdTFORWNpaWp4T0hzTGlUdnJrTC1nM3RUTGJ5UEE?oc=5",
+        "source": "Cybersecurity Insiders",
+        "timestamp": 1774101162.0,
+        "date": "Sat, 21 Mar 2026 13:52:42 GMT",
+        "relevance_score": 2,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
         "category": "Cyber",
         "title": "OpenAI Drops IH-Challenge Dataset to Harden AI Against Prompt Injection Attacks",
         "link": "https://news.google.com/rss/articles/CBMiR0FVX3lxTE5tSTFjNmE2VDRlbWJpMURRcWpjS25GVFpIb2Uzd1cxSjNlRUh3ZkxzdHIxQ01TM0FSc29vb2tvWXA1OWlnYzhB?oc=5",
@@ -257,17 +290,6 @@
         "uk_relevance": false
       },
       {
-        "category": "Cyber",
-        "title": "HackerOne unveils live agentic AI prompt injection tests",
-        "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOV2dvSjVrSHlLLU84QUt6M1lMNnpLUk40dy1ERWxVTTRmNjEzei0zR0I2cEhVTUQtbTVwUlZ5ZDM1bUVDdFlYb01GeWhSRFY2UTd2Y1RwQVRmRHY2V3BXVk9BNXJ3TWhXVm45VWVkWU96NWtwd2stV2hIWmlHcWlMTTRkc241cXRNSDY4di16MnE2Vl9QMkE?oc=5",
-        "source": "SecurityBrief Australia",
-        "timestamp": 1773908100.0,
-        "date": "Thu, 19 Mar 2026 08:15:00 GMT",
-        "relevance_score": 2,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
         "category": "Fraud",
         "title": "AI education could be crucial in tackling rising voice scams",
         "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNSlU1VEpDLXhyX21uZmk4cV9EZ1llc0h3NDltRHkwdEw1NEp6SWdLMXA5ZU5kLWFnTHFLNHFvZkxzN2stbDg2ZzdJX3hiOTFTVHZ3Y2UxSllQZ3h3bG5JekdFRHZaWE85cnlTbWk1U0VVajFBUEZzc0laazlZNnRmT245SU42QTNoZGtPVjRidF9EN3MzdllZaS15UkxSZ3lvMmlSZUxGN244a2RmNmh4TUFPbEs?oc=5",
@@ -280,22 +302,22 @@
       },
       {
         "category": "Fraud",
-        "title": "Montana mom nearly got duped after scammer 'kidnapped' her daughter \u2014 used AI to clone her voice. Here are the red flags every parent should know",
-        "link": "https://news.google.com/rss/articles/CBMimAJBVV95cUxNeTRtalNQenFBUjloa0dFNEl3aEhfLTJ3eGUwTDB1UXNpUm1kWGFyMkJrYUZVZ0dLYkJ2YWF3UmJYdS1QcXJwZzR6Ui0xQ2VWdHB4MlpzZXRySkktWXNMcmlkVU5nWGoxOFFRMTdzSDZ1MTNLUDJRTU5mQ0xMdC1xNUc0bTNyZkJZam1WQ2lWdnV0RnVRaTdJNThod0ZtZm1OeWNYamVkanI3aU85OFhKenRqVHpfXzZ1MTAxWk9tcGt3dC11TVZaWXFSTERsTVJFUFByMnVfbHpCalJMYlo2VlRmRkdUaXJkTHNZeEExMzFJa0NaYmhIbG1Cd2pkcVRIMGtOa2xQMXduWFJraVhzd2dvQWZDTV9u?oc=5",
-        "source": "MSN",
-        "timestamp": 1773861853.0,
-        "date": "Wed, 18 Mar 2026 19:24:13 GMT",
-        "relevance_score": 2,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
-        "category": "Fraud",
         "title": "That voice on the phone may not be real: RCMP warn of AI scams in Alberta",
         "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOSzlfa0d5RmtzMlNZMjVSTXF2XzRQTWxWeTNuN20tQTlxMzZScnExTTNuVXJ6RHVDS0dHc2E0QmpWUDlBZHhjcVBKOVQtMHhiNWFJa0phYzQyV2IyNFZTQjFhUDdtTmRpM2p6N1ZKTXRxdkg5MEFKSDNldUUxcEJqbS1IbFAtNFdhQ1RLOW5jZEp0eVpQajNDREpQQ2hmcDY2UTNna1BQYkpJclFpd2c?oc=5",
         "source": "DiscoverAirdrie",
         "timestamp": 1773836007.0,
         "date": "Wed, 18 Mar 2026 12:13:27 GMT",
+        "relevance_score": 2,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
+        "category": "VAWG",
+        "title": "xAI Sued Over Grok AI Child Abuse Image Claims",
+        "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxNbUIyY1FoMzd0QnRGNHdMa19ZeTEzVksyMHJOWmlnQ0FIc1R6NUY2VDZ1VUFtd1lXa1lFUDRKX2RnRzBTVVR1ZzNGR0lJMVNpa2lqY19pektFYldwbzRpbTRrblM3bWtCODhRMGxmZTYtWUpUWGkybzNwcHkzeFFFQi05RlA1Qm8?oc=5",
+        "source": "MediaNama",
+        "timestamp": 1773818064.0,
+        "date": "Wed, 18 Mar 2026 07:14:24 GMT",
         "relevance_score": 2,
         "uk_score": 0,
         "uk_relevance": false
@@ -379,6 +401,17 @@
       },
       {
         "category": "VAWG",
+        "title": "Teens sue Elon Musk\u2019s Grok chatbot for turning their photos into \u2018child abuse images\u2019",
+        "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxOQWFsTTF2NGFfS0RlZ1p4Mm1BZ2hIbUd5RWRmdnRCNFo4VWc4NWtkMmpJTXlGM3lHckZ5ZWRMUk95LWFBbGZMVGkweVBwbUY5d1VBMGdvWWZ5WDI3endCSkRxcVFtUGltQklWNTU5c1o4bFZ3bm5FWEpkekV3b0FSWEhLYmQxWEYtMlZ5QUZTclBQZ0Jpd2dF?oc=5",
+        "source": "The Independent",
+        "timestamp": 1773709620.0,
+        "date": "Tue, 17 Mar 2026 01:07:00 GMT",
+        "relevance_score": 2,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
+        "category": "VAWG",
         "title": "Explosive Lawsuit: Elon Musk\u2019s xAI Sued Over Grok AI\u2019s Alleged Creation of Child Sexual Abuse Imagery",
         "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxQZWdQS1Zwb09sVEc3QVAyZ1pGZ1Z2SE1sUjhybkhiX1pIaUo4eHVzQmFHSE14MEplbDcwQ3JkTG9VTjhmUlBwTXc1dVlBeWlWeFZWU2NOSEJ2YkZ4ejNhSURDcFFOcFBSZmE2dU40Nmx2Sm9rMEhrYlh6WlFZUDQ0ZQ?oc=5",
         "source": "CryptoRank",
@@ -400,23 +433,23 @@
         "uk_relevance": false
       },
       {
-        "category": "Cyber",
-        "title": "OpenClaw AI Agent Flaws Could Enable Prompt Injection and Data Exfiltration",
-        "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPWmt6bVp2b0lwcGd0UG1KV2FaSV9qbFpKdXZIUGZkY2phUjZWdXJDcF9oNnl1M2otZkNxdllnZUxrSVFXVGFIRlpVblNNYkJ2dVJKOENpOUpzMjc0RzJlSjBwYTdJR0JvcFVzR3dFWlRHaFVrU01FeHppV2UtVXVQYQ?oc=5",
-        "source": "The Hacker News",
-        "timestamp": 1773505020.0,
-        "date": "Sat, 14 Mar 2026 16:17:00 GMT",
-        "relevance_score": 2,
+        "category": "VAWG",
+        "title": "Germany to target pornographic deepfakes amid celebrity case",
+        "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPNkdBZUp2c0hpOVpyZjVvYXpzbFphMFpma3VUMUhxX0lnc3ViNTA0V2RSemZZMjZ5eV9kMWVES09PU0xlRmY5VHFzR1B0UnVYNEUtRjUyaTNReGxIcEdEWE4zLUVXZWR2QkpKQXVIQjZKSmd5bkc0ZUc4MFlkV09pcVNFOG9BeDY2LW1wMV9HNDNLQ1JhZTU3M9IBmAFBVV95cUxQbFJMUXdqdVVDUHZ6OTVrTmtteDlPc0dmbTMySnNDeW4xWTFKYzJzSmRKUWdoUS1vMnlMMndrMG43Q1lIYVl2Ykg3cWhTMjhDR2p2d3lfV2xGSFpzcTZqa2ZKVTUyMW9KNURTS3dQZmVOaXdoOHdKeldXcGdoZWNBeU5oUHdSTUI4ZWcyRmw3OUp4ZTJyVGlWNQ?oc=5",
+        "source": "DW.com",
+        "timestamp": 1774074327.0,
+        "date": "Sat, 21 Mar 2026 06:25:27 GMT",
+        "relevance_score": 1,
         "uk_score": 0,
         "uk_relevance": false
       },
       {
-        "category": "VAWG",
-        "title": "Germany to target pornographic deepfakes amid celebrity case",
-        "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPNkdBZUp2c0hpOVpyZjVvYXpzbFphMFpma3VUMUhxX0lnc3ViNTA0V2RSemZZMjZ5eV9kMWVES09PU0xlRmY5VHFzR1B0UnVYNEUtRjUyaTNReGxIcEdEWE4zLUVXZWR2QkpKQXVIQjZKSmd5bkc0ZUc4MFlkV09pcVNFOG9BeDY2LW1wMV9HNDNLQ1JhZTU3M9IBmAFBVV95cUxQbFJMUXdqdVVDUHZ6OTVrTmtteDlPc0dmbTMySnNDeW4xWTFKYzJzSmRKUWdoUS1vMnlMMndrMG43Q1lIYVl2Ykg3cWhTMjhDR2p2d3lfV2xGSFpzcTZqa2ZKVTUyMW9KNURTS3dQZmVOaXdoOHdKeldXcGdoZWNBeU5oUHdSTUI4ZWcyRmw3OUp4ZTJyVGlWNQ?oc=5",
-        "source": "dw.com",
-        "timestamp": 1774074327.0,
-        "date": "Sat, 21 Mar 2026 06:25:27 GMT",
+        "category": "Fraud",
+        "title": "ElevenLabs pledges to restore 1 million voices with AI at SXSW 2026",
+        "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOdkxXLTdBRWJJaThYZTNjeENaMlhDUGdrM2IzRU5mMWMwakgzd2kwM21GZVpWV1R5SlpSM3ZkUHRnOElYT250VUdadFZlaW1HT1FjMnhsMmxob0dUejhyZjJxTXFyWFRnd0lBbVRSMVZNQ2dJZHdPNGVYcmFhQzQzcmk0ZjVMaFBrQmtZVmREWkY?oc=5",
+        "source": "Mashable",
+        "timestamp": 1774037464.0,
+        "date": "Fri, 20 Mar 2026 20:11:04 GMT",
         "relevance_score": 1,
         "uk_score": 0,
         "uk_relevance": false
@@ -488,6 +521,17 @@
         "uk_relevance": false
       },
       {
+        "category": "VAWG",
+        "title": "Interpersonal Violence: What is Technology Assisted Abuse",
+        "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNSWtFMFNOWmFHdS00RjNYTDRzSHJwaVJrTGZIVVp0NWpuaFR0aG8zRkV1Tm5RV0FSN0VNcDcyck9DRnRfSUhMVi1ZM1FoSTc2a0g3WVNhYUdjU1RfbVVjbXhYNV93RzZGbncwaTFxc29UVVFlLS1VbkI3UXdIV1RoQnBOVk5xWURfdEs0TG94SjM4dWpnc1Jn0gGcAUFVX3lxTE51bDdzVFdvclRfVVc3RTVJSEVycGJsdVFOSzJOWldVc2JOYmh2bW13UFRrUExTUXNjUDhpbjNMeGxvVUpXUVpzeXMwSGJtV3ItRWR0UmRBRG9HaXdCYy1RRHdxVzZ3LUN3MGlHSXRDZ0FYdXZRUVVfQlhFWU5tOUo2bWdnZjIxQXVRT0pMQkJOMDY5UlVVaHVCdDlSQQ?oc=5",
+        "source": "army.mil",
+        "timestamp": 1774008057.0,
+        "date": "Fri, 20 Mar 2026 12:00:57 GMT",
+        "relevance_score": 1,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
         "category": "Other",
         "title": "Eight in 10 AI chatbots would help users plan violent crimes, study finds",
         "link": "https://news.google.com/rss/articles/CBMic0FVX3lxTE1HS3AwX0o3TS0yT3hBWGYybWlEY2p1ZGdnOVl6T3NnXzBrVVNUUmVKdWpnMlI5MlI5OUJhSE5oZ0RIamZ5Y2xIRkp3eWZlWnkwaW13bW82ZUItYk9wVUxHZFc5aUtwMVh4QVF5VTBhUkFxT3c?oc=5",
@@ -500,33 +544,11 @@
       },
       {
         "category": "Other",
-        "title": "DOD Cyber Crime Center official warns industry about AI-boosted cyberattack \u2018kill chain\u2019",
-        "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNSUlIajlwOGtWRUNZQnZNN0YwWENvWkRFbDZMeFR1RTZyNU1NYl9Nc3VLd3ZHc294eFNaNkZGa3YtSzVMTDFjb0p3YkRXR3RGNHJieVgxYmlJakF3T2ItaEhWNl9jNlJUTmNwMl90dk9KQ3JCSVFJaDV6cXFpVE1HZkdVOGZlR2oweldpYUxfWkpSMEZj?oc=5",
-        "source": "DefenseScoop",
-        "timestamp": 1773952629.0,
-        "date": "Thu, 19 Mar 2026 20:37:09 GMT",
-        "relevance_score": 1,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
-        "category": "Other",
         "title": "AI in Crypto Crime Investigations: Why Human Judgment Still Defines the Case | TRM Blog",
         "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQc0l5R1dIV19QREFVYVFieFRPN210NTNxa3dMZ1VYQlU0X3pMbS1mSnd4NmtaTW5ydW9oNFpxczJxS2xOZDA3UmEtRGZpcXljLTFFN3MzLVhKMHNhWk5oRTdyS084X0oxRDdoTTJsMkFSMXFQNy1pZ1QzS1FoS2w3RGdRZWpoVVM2WUF6c1RzOTlpTXBlTnVJLVVPN25xSERacDJiOGVJeWdUTnNjX0tQLWxIVG4?oc=5",
         "source": "TRM Labs",
         "timestamp": 1773943627.0,
         "date": "Thu, 19 Mar 2026 18:07:07 GMT",
-        "relevance_score": 1,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
-        "category": "Fraud",
-        "title": "Police urge caution as AI scams grow more sophisticated in Alberta",
-        "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNclVDSXpZbDFhSjRVaXpkMFJHekRfYzZHcmotUDBZV0dqSThEWmlKOTJUUjZRQ0xZaEFzVV9XVWVCYm1SUkZvMnpRdmJBOUtabnNCcGY3WjRsUFRnT2pFTjRCZWczUG9QaWxBaTVrbHFybXBYd0VPWWpTeFdTeHV3ZHgxMjJlQXJrS2dFYzRja1QxbTk4bi1saDVjYzI0Q05tWl9XZQ?oc=5",
-        "source": "play 103.7",
-        "timestamp": 1773933361.0,
-        "date": "Thu, 19 Mar 2026 15:16:01 GMT",
         "relevance_score": 1,
         "uk_score": 0,
         "uk_relevance": false
@@ -560,17 +582,6 @@
         "source": "PR Newswire",
         "timestamp": 1773925200.0,
         "date": "Thu, 19 Mar 2026 13:00:00 GMT",
-        "relevance_score": 1,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
-        "category": "VAWG",
-        "title": "Call for Urgent Action to Prevent Child Abuse in Bangladesh - Pressenza",
-        "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPSlEzbXBySFNjN1NxbUEwbmtuMVdEeWtqSzY2QXFBbHlJYnVPRENTc1JVSGF6UjNnM1BBcXR2b1lSZmstN1M3Wkw0X182TTRDcVpjVmtCdDBEVXBpZFVoekVRZHk3VTRrWlpuVHBOb3RpYnVQak9YTnRtWUNFR04ySHViSkZXZ0JVa09vUWIwM3JqZUZqS0FTUE9B?oc=5",
-        "source": "Pressenza - International Press Agency",
-        "timestamp": 1773901573.0,
-        "date": "Thu, 19 Mar 2026 06:26:13 GMT",
         "relevance_score": 1,
         "uk_score": 0,
         "uk_relevance": false
@@ -688,7 +699,7 @@
       {
         "category": "VAWG",
         "title": "Developing technology creates dangers of AI-generated child sex abuse material",
-        "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPTDNuYWtoWnFQaXZRYTZWekZZdVBQeUVfSG9pdVVKcWZUVVlBUGlra09kZjBqbXJRQmd0QTdhLU1HWDZUbXdRMXJrYjR0Si1Pd0tNUnJMSUVtTnVjUzhNd0luTG1hMlRjR0F6aEtIdTgzVGUydE9SSkF3Smo4ZlJhYVNoS1R1akZlV2l5aEttS3EtaF9zREpQN045TEFOWlRMZHJGOFVOUlJVdGNNVW1uRGt3NjYtejVrel9XYnhrUGfSAcABQVVfeXFMT0wzbmFraFpxUGl2UWE2VnpGWXVQUHlFX0hvaXVVSnFmVFVZQVBpa2tPZGYwam1yUUJndEE3YS1NR1g2VG13UTFya2I0dEotT3dLTVJyTElFbU51Y1M4TXdJbkxtYTJUY0dBemhLSHU4M1RlMnRPUkpBd0pqOGZSYWFTaEtUdWpGZVdpeWhLbUtxLWhfc0RKUDdOOUxBTlpUTGRyRjhVTlJSVXRjTVVtbkRrdzY2LXo1a3pfV2J4a1Bn?oc=5",
+        "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQR3lEX0lsekpfR0h4eFNpR3cydm41SngxMkpSd1dyeUJNclRhTGxjSEhiVWpuUEZKaG9WclVOREcyWldQcVBLLWJnNXJQMEJremNJSkJUa1E3d3JudmJ5c2tEWjhfYUNkSnNDUTJXR0pydTNlTHBIMXBVcXR5cnpCd0pYeEduVjZwR1g0STc3akMzdmRmdG1paXk4M0RBNzVfMWk0OGRXTDR6TlZP0gHAAUFVX3lxTE9MM25ha2hacVBpdlFhNlZ6Rll1UFB5RV9Ib2l1VUpxZlRVWUFQaWtrT2RmMGptclFCZ3RBN2EtTUdYNlRtd1ExcmtiNHRKLU93S01SckxJRW1OdWNTOE13SW5MbWEyVGNHQXpoS0h1ODNUZTJ0T1JKQXdKajhmUmFhU2hLVHVqRmVXaXloS21LcS1oX3NESlA3TjlMQU5aVExkckY4VU5SUlV0Y01VbW5Ea3c2Ni16NWt6X1dieGtQZw?oc=5",
         "source": "WRDW",
         "timestamp": 1773779940.0,
         "date": "Tue, 17 Mar 2026 20:39:00 GMT",
@@ -719,12 +730,12 @@
         "uk_relevance": false
       },
       {
-        "category": "CSAM",
-        "title": "\u201cDepicted her actual face, body but morphed into sexually explicit poses\u201d Minors allege Grok AI generated sexual images of them and hurt their image; lawsuit filed against X",
-        "link": "https://news.google.com/rss/articles/CBMipwJBVV95cUxQQnlHYnlrSE5NY1hjR3duY0hIUGFUNFNoREtUYTFUME92MnVjYmpRcndvb0dyTFFKTDdiMm42cDg4ZV9GdzNKZENCMkRQUG0yUUF0cDlsUVJwNVVoQ0huTFM4d1kyeFhhMVA1NjMta0lKNjhITW1ETDZCNTMzM0F3ZTNEVWxpUXJOOXhjcFdJd2RhczVaRWlCaFNoM3RqbVNTRUtlZndJSEdQZmo1TXJPd3ZlYVh4TXdseHhzSWlOdlV0RnpuMW45cjVwamFtRmYzNncxU2JhVEIwSjNrZG0tUFowYnJkdmhIZEVmWEpqRS11OTUySzFEN1hJaFNoREpJaWZNUVR6T0JSTDcyY2F3dEpkdkFWZG5BQ1ZVbllzelBZQjZVTGRz0gGnAkFVX3lxTFBCeUdieWtITk1jWGNHd25jSEhQYVQ0U2hES1RhMVQwT3YydWNialFyd29vR3JMUUpMN2IybjZwODhlX0Z3M0pkQ0IyRFBQbTJRQXRwOWxRUnA1VWhDSG5MUzh3WTJ4WGExUDU2My1rSUo2OEhNbURMNkI1MzMzQXdlM0RVbGlRck45eGNwV0l3ZGFzNVpFaUJoU2gzdGptU1NFS2Vmd0lIR1BmajVNck93dmVhWHhNd2x4eHNJaU52VXRGem4xbjlyNXBqYW1GZjM2dzFTYmFUQjBKM2tkbS1QWjBicmR2aEhkRWZYSmpFLXU5NTJLMUQ3WEloU2hESklpZk1RVHpPQlJMNzJjYXd0SmR2QVZkbkFDVlVuWXN6UFlCNlVMZHM?oc=5",
-        "source": "WTRF",
-        "timestamp": 1773770373.0,
-        "date": "Tue, 17 Mar 2026 17:59:33 GMT",
+        "category": "Fraud",
+        "title": "Cybercriminals using AI for fraud are making far more profit, Interpol claims",
+        "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPWmxmRHNQSVBqNjFfeTJHa3pobVlBdFliaWg0MFFJS2lmOG5ud0dfMl9WWTNFekNYbjdSeVBUZmdzd1hodlhRMVVDX25mY2pUZGZfRzJ2Q05GQXZ3OFdheDVqaWZxR0paYzBXT0llUkpuZlRJOHNpQ2JLX01fR3ZISU9nZmVvYzkxT1N1S0EzcFdFSmdPc1JTbjNXa3dqdUV5dU43U053SF82T29SUHFCdm9KOTU?oc=5",
+        "source": "TechRadar",
+        "timestamp": 1773761400.0,
+        "date": "Tue, 17 Mar 2026 15:30:00 GMT",
         "relevance_score": 1,
         "uk_score": 0,
         "uk_relevance": false
@@ -796,6 +807,17 @@
         "uk_relevance": false
       },
       {
+        "category": "Fraud",
+        "title": "Interpol: Fraud up by 70% and will escalate further due to AI",
+        "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5Xd05lMUpDM25BTU5KUVktbWE1TXE5UEpxY1d2ZmttUlBuTUR6bGFPZ3hlTzFEWGdMN0cyekhQSnl4bC1NLTkzQXFyM3VKQU13dmlTYTJ0Z1B3ek5QUG1LMDB6NVRfaldrNmxWZTlJUGIzSGhMc0E?oc=5",
+        "source": "Irish Examiner",
+        "timestamp": 1773709500.0,
+        "date": "Tue, 17 Mar 2026 01:05:00 GMT",
+        "relevance_score": 1,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
         "category": "VAWG",
         "title": "Teenage girls sue Musk\u2019s xAI, accusing Grok tool of creating child sexual abuse material | Grok AI",
         "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPWlBULTd6VENMdVhjUVc5dFVWcDY3aUE2SENERUx4bGl3Q0ExVVhzLUV1MUEwams1V0ZibUp3T25JTFBtNUtsREk1OVVOYmZMeU1JLU5kSVdRZ1Vrams0Y1dfV1dsOTZVRUhCbWJzcmJpd190YnR5b3QzWUowVlpnOHZqVkRSRl9hY3h2TC1KWWFBc2JLd0tBZC13MA?oc=5",
@@ -809,7 +831,7 @@
       {
         "category": "CSAM",
         "title": "Elon Musk\u2019s xAI is facing a growing number of lawsuits over AI-generated deepfakes",
-        "link": "https://news.google.com/rss/articles/CBMixwNBVV95cUxOZFlLR09HQnVnUnJRdnhXcVlTN1g5TlVWaDliVkx2X2hqVDlwN002ZkY0MGI1OE1IY0pQaTZCaS1YRWtDSVV1OWZDaEpsVFZ2WUF2Z2c2ZllQcEdiNjU5NmZNdTRhTmdHSmpldVYwWjJrRHRfYnl5Rm5yZ00tTEJZUmo4TFlrWkR3ajlOQWtTVlJXTWtHYVY0S1I0a2ptdXBRaEJESlBhWVRRQ1JFa2c2Ti1WbVF6RGI0NkZwYjdES1lMWDBUMktMLWlWZXRQdUJjMGg3UEs0QjczSTNyOTJnREdqVmpNblRHS2ZnQUFneXl1bUlYclR2N1pFZUtOb2g0eXlvUThOc2taRTh5RlVNU3VmVWRnR2J4RkJfcmVBSDBlRlpoS2d2Y2Q0R1BUQk5jM0J3THJHeTQtM3RaeHg3VzhvNGdHS2NkTmFVQU5rSUFnWmtraXVsQnhzV0p4ajA1RXhXN2xoQm1rbTgwUXZGejFrR2g0MHdUeW0tb0hZOGJ0WFRMS2gxMDFRelBxZHB5ZGRYLUphSGFkbHhsZVFoVmZKaC1PeEhKNTMtT1lJVDlMWFVDN3lxQ1dxRktEREpVNkJ0OEN5UQ?oc=5",
+        "link": "https://news.google.com/rss/articles/CBMixwNBVV95cUxOOHB0bVdfY1ZVSzdQT3cySnJxR1dpeEwzWEdGZ3dNUkptQ19KVU1MQmxxMjFYc0RkVW1qVmFveVlqVUphMFhZQV9JaW5vUlQyaXN5dG43ZmFqQlMySHpvczAwUENoc3RtbjRaSjdjcjh1SkQ5TDZaQ1lHVmpMaHhFRWFPaEN2bzBsZkhldGZObEVnbFBYb3F6RkpCZnc2Wkh4NW9BTW9zTTRxdkVZbHNHeEk0R2t6dElFSl9aQi1yZ0FtbGFtdUpFUmc2QTZ4VXpmNi1TSHpWeEJDX3dRUWVCRUVtcHdCYnV6VU80aDhMaDFCeWl1LU14QUZ5cDA4TlVDNm9XdHhxZjktcVpyQjlFUHlra1RmbmlUMnNKdHlzb0R6REVPYXBOeGZ2OXl1aFBzbTRKYUdOS0tmSFo1WTFqZndJWnNfZlFjS2dqRkVXV2szaTV2Smlia0VyTXh3OEU3cVNSR0E2SXFzczBWYXVEZC03dmZ2WVJUWEZYRGxFeHY5MEN0SE9URlA4XzVIMThUaDVOVmh5enFDb2JEY1phQlpzVk4xSWRhdmt6eWNBWFd6NVZXdDIweFpSYlZsUS1NaU9jZlVqYw?oc=5",
         "source": "MarketWatch",
         "timestamp": 1773693540.0,
         "date": "Mon, 16 Mar 2026 20:39:00 GMT",
@@ -824,17 +846,6 @@
         "source": "prismreports.org",
         "timestamp": 1773681606.0,
         "date": "Mon, 16 Mar 2026 17:20:06 GMT",
-        "relevance_score": 1,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
-        "category": "Cyber",
-        "title": "IBM Links Suspected AI-Generated \u2018Slopoly\u2019 Malware To Hive0163 Ransomware Operation",
-        "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE83bGU3dXV3Wlo2dHVUZDRPOWZSUVM0bHlRQmQ0TVA2ZmhVcmhoNkZVT3NQa1EwbTNrbEM4anZjTXFpa185OXVPSFVFbHRJY2FycU1zNENqcmVsZGtY?oc=5",
-        "source": "cyberpress.org",
-        "timestamp": 1773648833.0,
-        "date": "Mon, 16 Mar 2026 08:13:53 GMT",
         "relevance_score": 1,
         "uk_score": 0,
         "uk_relevance": false
@@ -961,17 +972,6 @@
         "uk_relevance": false
       },
       {
-        "category": "VAWG",
-        "title": "UNESCO promotes safe AI use and gender equality in Caribbean workshop",
-        "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPUUFQX09BdTZDM2Foa2hMQUVxLUp2Z0VFakVlV3dQQ1dHODFGNzJKaVJOR1B0WGxDV0lMaTFGLWg1MktXYm9xSHBBcF9jU0hKTmFUVkthc0tjYzl3bUN2VWxnd0dZSnk4NTZOdk05VGJYVXA1d3prSFBXeXpkWVhlY2JSYTZ3Yk9QQlZFcEhVZjhqOEN6WXU0eEVpTQ?oc=5",
-        "source": "Digital Watch Observatory",
-        "timestamp": 1774000855.0,
-        "date": "Fri, 20 Mar 2026 10:00:55 GMT",
-        "relevance_score": 0,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
         "category": "Other",
         "title": "AI agents are creating new identity security risks: 1Password wants to solve that",
         "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPMjBQUlU2UzBQSFQzMG1QcFJfekkxbm41dTBtYjNmSmxxa0YyTWZPaW9FTXNTTmxsZTlIVDBmb2FxZDJaN1o1U2VCckhEU242WnAwZzlIMUN3OXBmdXhzWUVpRndxd3lnOVZIdHJFOVp2T3RVSThqMkNzYTRSMEJzODFkb1p1UQ?oc=5",
@@ -989,6 +989,17 @@
         "source": "Foundation for Defense of Democracies",
         "timestamp": 1773971346.0,
         "date": "Fri, 20 Mar 2026 01:49:06 GMT",
+        "relevance_score": 0,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
+        "category": "Cyber",
+        "title": "AI Conundrum: Why MCP Security Can't Be Patched Away",
+        "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE9VZ2R3NWc3a0VXLXEzWnZ6Y2dOdi0yMWVtb1pXWVZFUVgzVEJPRnEzUmZDZDFOZy1XcU51al9SLUZ6UnJwVEF3Z1FLeUM1YTBvZFB4c3JYQ1V4UlZLNXV0dWFHZmh3VTdPVUd4dGxfbDJhSGJZLUFFLQ?oc=5",
+        "source": "Dark Reading",
+        "timestamp": 1773957532.0,
+        "date": "Thu, 19 Mar 2026 21:58:52 GMT",
         "relevance_score": 0,
         "uk_score": 0,
         "uk_relevance": false
@@ -1038,12 +1049,23 @@
         "uk_relevance": false
       },
       {
-        "category": "Fraud",
-        "title": "Is seeing really believing anymore? The rise of AI video generation apps.",
-        "link": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQelhXSGw1YmlSOFNiT2RVekE0MXUxVEZ2ZU9uWFZLOE9mSWJ4U19yRXU4NjVJTjV5UHJuekFud3ZNWWl1b0pKRHJYTGVjdTZHTDlsWEkzTDVHeDY0d0d2bTdiRWxvMVV2UTBxYWlYZTBMNDF6bkR0NjhSVjFtUXpTWHdoXzlFaFNWLUN3SWtaUmtJT2VZWUVuUUVuMWMzaDJSTks4UERWVUJFU1FRWnBJZ1BxMWxjSW1GeWtaV3FSNzBSdw?oc=5",
-        "source": "TELUS",
-        "timestamp": 1773940416.0,
-        "date": "Thu, 19 Mar 2026 17:13:36 GMT",
+        "category": "Cyber",
+        "title": "Harness Launches AI Security Covering Code to Runtime Stage",
+        "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOT3FlR05tN0h0ODJOMW40eDA0dmt2T2dSWFBwRDc1OURXYWZnVDlaQUR6a0dZUVVzZER2YTFwQklGaFRXVWJ4U0EwM3ZzallBUm43Y1FoVEZrSG55ajlvdU9fWS1kTDBnbG11WVlwb3o2R1V0SUFBSkFlMmVxZGs4RzhXVlU0TXBVUGFBNWVwY3N3bW9aTm1wbE9sUWhrcXFQOUM2c1dR?oc=5",
+        "source": "Channel Insider",
+        "timestamp": 1773943836.0,
+        "date": "Thu, 19 Mar 2026 18:10:36 GMT",
+        "relevance_score": 0,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
+        "category": "Other",
+        "title": "Recruitment Risk in the Age of AI and Fraud",
+        "link": "https://news.google.com/rss/articles/CBMifEFVX3lxTFBaRTVGUVp6bE5kUlVYRmRpc09TbncxelRnQnQ5aTVoZ2hGa3AtWGExS3JJamtkbE5aZi1wM1BBNVFOOERMRXJ2WjhJSnBCNTB6TUJNSDdGeHdMeENlamgxYURLWWtub0RDdUNhai1tdERWcGNTV1BUU1FZQnE?oc=5",
+        "source": "Dealer Support",
+        "timestamp": 1773936225.0,
+        "date": "Thu, 19 Mar 2026 16:03:45 GMT",
         "relevance_score": 0,
         "uk_score": 0,
         "uk_relevance": false
@@ -1082,6 +1104,17 @@
         "uk_relevance": false
       },
       {
+        "category": "Other",
+        "title": "'AI-generated phishing became the baseline' for hackers last year \u2013 Kaseya warns it's going to get worse in 2026",
+        "link": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxOaFN6RFAwam5wS2hUc0tVQ3IyS2JRMVhQUnk4RUUtdVhwWXkxaDIweUZBdnk3Sk91S19Ucm9qTXJPUlVqZVAxdUpFNmhmdHdSVFFOZEo0XzBvN2ZNWFpaRnB1S2R4SUMyWUpDZnNVY1Q1Y0pHS0ZsN0M0Ym1vcklndWR6bkpPTUFhR0RLY201UkxqV2hRUzJseFg3N3JsdFlJVUxieHdjWlI2SmtwLTRtVVVJeFhHRmgzVThjSG9JeWNKRENVazJhaDRUQ0ZsV2hTa29GRFpJQkZabFJKZ1hHMw?oc=5",
+        "source": "IT Pro",
+        "timestamp": 1773920183.0,
+        "date": "Thu, 19 Mar 2026 11:36:23 GMT",
+        "relevance_score": 0,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
         "category": "Cyber",
         "title": "Die unsichtbare Bedrohung im Datei-Anhang: Wie manipulierte PDFs und Bilder KI-Systeme zum Werkzeug von Angreifern machen - Xpert.Digital",
         "link": "https://news.google.com/rss/articles/CBMibEFVX3lxTE9vZ2U1U2hwU21xQkxPdjRCY080dzZIZW5fNURNMmZORXlFb0E0MWs1NmRFWFdRV0JmRzZ4RnNQOFpzYjNPNnRhRXdiazZVVWZqcE1JUUxjRHgtR0VlRUo4V3FJU3NxZ3plQ2lHb9IBdEFVX3lxTE1mM3MtV3VKUXFrV3lwNmVSODFDVFZFUC1lT3lfRUJyTHBwTXVKNFRoQ25rMTNpMG5aZDFyckRCUnlkRkhYNDM0aG1yOFhvV1JOenR6amMyem50R24tQ1dKeExrNTdBdlo0REVPcVJWMDVWSU1K?oc=5",
@@ -1104,17 +1137,6 @@
         "uk_relevance": false
       },
       {
-        "category": "Other",
-        "title": "SymphonyAI AI Platforms Deployed for Compliance Environment at Munich Re",
-        "link": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxPRkJta3owdzFielI0V3F4eE85N291Y0RxTGx4TXNwbHA4MlFyRzJUX25rbDZWY0pDY25lX1ZJTHM5bFhuemNGWEQtc2d0Y0V4NG5oUlh2U25DX3JpSzJqZjZXbFhnWWc4LXNMLU41OWFDOHV4a2N5TlNwWU1QOHZPbGREeU1hdjQ5Z0w4dVFKWnJvVi0waEhJSEc2TXBZRzNwalFDMWZYVWdaS2V5TEdFaE91cGM2Qk5nNXlGRFpNekpZZ2tXZXdQczdZOVRBa05WYlhidE1ONWU?oc=5",
-        "source": "STT Info",
-        "timestamp": 1773901920.0,
-        "date": "Thu, 19 Mar 2026 06:32:00 GMT",
-        "relevance_score": 0,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
         "category": "Terrorism",
         "title": "Iran-Israel-US war: AI images and videos intensifying fog of war in Middle East",
         "link": "https://news.google.com/rss/articles/CBMiiAJBVV95cUxQSFN0X1ZUSGdpUExfXzN3cUlsSzVYSl8wUlZmbWx4TWx1c1hwX1hSRFE2NTRvNTZpVVVLVmZxMm1lZXVtenBaR2RQeHItSzFZN2doLXJaa1ludThqUUF6VzV6TGFrRllNd3BEZk5TRFVtbWZaS1ZyX2U2NUNjRGV4d2xjYVRYN1IybklpaG5OT3E1aTlEUGFYQXA4RjJPOVFMTldVUDl3alJFdHpvaWw2cWZzR3ZwNTVTa21MUTN2SDZsVG43cmVaN0gzSGk3UTNMNlNLQ216QURsSzVzTmtFM0l6aGpQWVM3N1VEQjYycHl1cFUwWGdjbER6aTNxX3VKYWw3WU5LSFE?oc=5",
@@ -1132,17 +1154,6 @@
         "source": "MSN",
         "timestamp": 1773892042.0,
         "date": "Thu, 19 Mar 2026 03:47:22 GMT",
-        "relevance_score": 0,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
-        "category": "Cyber",
-        "title": "Prisma AIRS unveils secure by design Singapore Cloud to meet data residency needs",
-        "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPOGwyc3BTSHdhNGpiYUpLQXpRRmZOenRiNWtWMXBlVjVVYXJfQkJkandEdXZXa2pnUzItN193VVNVendjbTlIejY3akF1RHZCV3VRRF9ZaFByclRzS2NCUlBPUVdPcEpvOEZuNzZnajhNcGFVX240OWk2YmdnN2otNGNrNV9oQmx1M0FicVQtSVdSbUp2N0ZtVTMtVFAtLWd3SmZGVDVvVk0?oc=5",
-        "source": "FutureCIO",
-        "timestamp": 1773882000.0,
-        "date": "Thu, 19 Mar 2026 01:00:00 GMT",
         "relevance_score": 0,
         "uk_score": 0,
         "uk_relevance": false
@@ -1236,12 +1247,12 @@
         "uk_relevance": false
       },
       {
-        "category": "Other",
-        "title": "I tested 3 city AI chatbots. Here's what they actually do.",
-        "link": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxNcmFtZGUxMGJEbEpZNEdxUjZnYVAxZzdrRU5vWlJ4MjVVVkJGSUNIbk96c21nTHVfdDA1bHNwdndJYXEyQ0RJemhaVUVpMnNYc2ZhOUN4NXJIZTNtcVBqeW9LM3FLZGpCa2hIaVpFSkl1eVBGV2p5aFFGYndaeFNpdElXdVp3VFE1TmlQcWlpUlFaNmU0VDBUYkd6MjI1YzM3NG43TXF3c1lJYXlFa1BxRmJmMmFFbXZpdFI2ZmZvS3MxdXYzOHdSWm5FQUpScUFBNWNwTWd6d2NXb21tS3BV?oc=5",
-        "source": "Route Fifty",
-        "timestamp": 1773842400.0,
-        "date": "Wed, 18 Mar 2026 14:00:00 GMT",
+        "category": "Fraud",
+        "title": "How to Help Your Business Stay Ahead of Proliferating AI Schemes",
+        "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxQMGdfZEhSeVRXRmZ1VGRzdldPTmV3cFd4RE40Y1hKbms2QzJKOWw0d2N0aENuXzlqVHpLd3l1SVFLSlF1N2tlalZkYWRkSVhscWNab3ZGWmN6dVNCN2EtQjk2aTNxN0FoZ1FSMl9BdlhBc2dNWks3SVNJRE5hdVBuN0Z3dkEwUTFJWlk0MlQzakVZdVRxNy1UUWRIWnUwZw?oc=5",
+        "source": "San Diego Business Journal",
+        "timestamp": 1773835209.0,
+        "date": "Wed, 18 Mar 2026 12:00:09 GMT",
         "relevance_score": 0,
         "uk_score": 0,
         "uk_relevance": false
@@ -1264,6 +1275,17 @@
         "source": "Durham University",
         "timestamp": 1773834930.0,
         "date": "Wed, 18 Mar 2026 11:55:30 GMT",
+        "relevance_score": 0,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
+        "category": "Fraud",
+        "title": "Mastercard survey reveals new concerns among consumers in Latin America and the Caribbean",
+        "link": "https://news.google.com/rss/articles/CBMihgJBVV95cUxQNEZNb2hOMGNiYWV4M1pfVTgtX1Q0N3BDOVVLRWNRSGZwNmJPYXlScXFOZV9IeFhDczNCcWhvYXFxREdDQUVfN3cyZXVzYXYzRi1PNGh1eGRMdTJjajFEX0lnWmVSb3BSYU1XYVhlUHpvZ3RzNWkyLUxjcHk1LXpQSlNObWp5a1c1TEU5LTNGMVNXbWVDUEh4QnR1WDJSYjZXa295bktMWE11ZXpMMFFNb3V3M2ZnRVM5NUFldEZNbEg4OVdiTEdOS3JXUGdHSWgtQVJTMVhVQ3RGSGhjUDdIenlHUkcydTV5d2RGeHJwSGlnTnNSdHFvX3dCT0NvRkxDNktSdWxn?oc=5",
+        "source": "WJournalpr",
+        "timestamp": 1773828000.0,
+        "date": "Wed, 18 Mar 2026 10:00:00 GMT",
         "relevance_score": 0,
         "uk_score": 0,
         "uk_relevance": false
@@ -1302,12 +1324,12 @@
         "uk_relevance": false
       },
       {
-        "category": "Cyber",
-        "title": "Building Composable Safety and Performance Layers for Agents in Rust",
-        "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOQ3psdGtDaGp6SUtSTl9ZMmtaSWFxSTNUREswQVN6MVBSM1lTMXlwa0NQeEtXanozeDFZd3Rhb0VoRGQyRnFlaHJHQ21RVC11RzA0OGFkZDN5SGNNLUlnd1hrT29DT0ZhVnVtNmN6STZlbHg5UjlvSk1YY3hmdF8yOXZLZW1ITlVTNnBYZkNUbWVOSDJNcEE?oc=5",
-        "source": "HackerNoon",
-        "timestamp": 1773815679.0,
-        "date": "Wed, 18 Mar 2026 06:34:39 GMT",
+        "category": "Fraud",
+        "title": "Boards aren\u2019t ready for the AI age: What happens when your CEO gets deepfaked?",
+        "link": "https://news.google.com/rss/articles/CBMic0FVX3lxTFBpaURjcUl6cDg0RV9HX3hZWUs3bVVnRUs0ZERGRndBY2kxcEx5VkxULVF1THFUYUc5QjB1VFpHUlYzMGkwVnE2Ym00YlRhZDN4Qml6YmdoYXowSXZVTlIwZTR3MDUtam5VZHlPaTA4WFI4ZUU?oc=5",
+        "source": "AOL.com",
+        "timestamp": 1773802683.0,
+        "date": "Wed, 18 Mar 2026 02:58:03 GMT",
         "relevance_score": 0,
         "uk_score": 0,
         "uk_relevance": false
@@ -1324,23 +1346,23 @@
         "uk_relevance": false
       },
       {
-        "category": "Fraud",
-        "title": "MUST DRAFT PITCHERS ! Target These Pitchers To Win Your 2026 Fantasy Baseball League",
-        "link": "https://news.google.com/rss/articles/CBMiqAJBVV95cUxNT1dvS19DalNsUElGbnlCSEFnSmdqWVd4ZGpmTVMwNktINnNEM3NkbzlVS003MDdoYmFSUzhvQjFpYklHUHZ3eFZnRnBTMllrS0p2XzgybGFEeVFYeExlVDR4MW5oWmVMVWFrQ0hvSkU3OGlxRFRGQjlyV1dmZzlZMWdJcTVLTVNOajRWS1h1czl3MTU5T0JUSzhwVFYyRmYzZzFzZVhRZUZscUFJLW1mdERRWmRvUm50NU5TSC12WXlVWGZVZlZPQ21lX2VCSm5pcEVVd1dOTlJfRy1aVmVTRHFsdlMwQlZxRmJWTmw4dndfblkxNVZtVDVMenAxZDQ0bTFoemJ3bHduOWxTaC10a3ZYb1Y1RlZSVGNKTHp0TVF1ZW5XRzlXYQ?oc=5",
-        "source": "KVUE",
-        "timestamp": 1773799800.0,
-        "date": "Wed, 18 Mar 2026 02:10:00 GMT",
-        "relevance_score": 0,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
         "category": "Cyber",
         "title": "Netskope Unveils Netskope One AI Security to Protect and Accelerate the AI Era",
         "link": "https://news.google.com/rss/articles/CBMizgFBVV95cUxNdDdVNHkwRHFpWXFoMlNrQjlEZXZKQUwzZXE0Um9UZ3RjZlFXTzltR0c5SnliNzFGNktHNU5XQWNFb0tMWXloVTBTcU9Da0I4NU1VeW1tbzItRG93UXlqLUpKS1E0MjBiMnAxLUFIYkhiOXlpN3JWUC1tQklhYmE5cTRxQzlKSVJycV9DVFhnUlFJZ2pEV2k3N2tDS3BZeWZVRU9JX2xFVUJoUThnMFNRakFqOWw0WENmRDIxcnpnY0hHUEQyeVpsSVh5SHFvUQ?oc=5",
         "source": "The Fast Mode",
         "timestamp": 1773796142.0,
         "date": "Wed, 18 Mar 2026 01:09:02 GMT",
+        "relevance_score": 0,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
+        "category": "CSAM",
+        "title": "Women and girls are taking Grok to court over sexualized AI deepfakes",
+        "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBJaVpHVnJfYmlLbmtSY2E5WEplYk5qaklvY3RfSUtyYnBIMlNXbndLWEx1SlQ5dzNFaG5Cd3E5VGp3U21wVUJPR2NRY1JKQzQ1MEY4Q3lMTDJkMnZYZzJfa0xnYkdFMlloWXF1WEhtTGtSblpHOEE?oc=5",
+        "source": "The 19th News",
+        "timestamp": 1773783315.0,
+        "date": "Tue, 17 Mar 2026 21:35:15 GMT",
         "relevance_score": 0,
         "uk_score": 0,
         "uk_relevance": false
@@ -1368,6 +1390,28 @@
         "uk_relevance": false
       },
       {
+        "category": "Other",
+        "title": "AI deepfake nudes cases raise urgent legal, safety questions",
+        "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE9EVzRybWNmT0YwZVNUTGZ1UEtmN1pZMVl4QnhRcG9mZktxYjJLOGhCRDIyZkctaE9yZ2VxQ3paT2JQcHhWWHZoc2M3b3ZTdzBRcmF2NnQ4blVHTE53bmtmVUstNnhmbW5wV1daMkZR?oc=5",
+        "source": "WHYY",
+        "timestamp": 1773774273.0,
+        "date": "Tue, 17 Mar 2026 19:04:33 GMT",
+        "relevance_score": 0,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
+        "category": "Cyber",
+        "title": "Harness Extends AI Security Reach Across Entire DevOps Workflow",
+        "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNRnNqZm5HVGRod0xEeUFha3FnWjZuck4ySXNPSU15REtoRkF5OVNUc08wS2Jnbm50SlNiZG5OMTVrRFJtUmpqWTRfdUt3QUhtRkZRWkFCUlphcExuNnc3Q1ZsNFktLThIc2Q2cXFtQmZJUm94OHBQdWNFc0d5cTgyeWFJanVHMkliMXFMdzJsbw?oc=5",
+        "source": "DevOps.com",
+        "timestamp": 1773762864.0,
+        "date": "Tue, 17 Mar 2026 15:54:24 GMT",
+        "relevance_score": 0,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
         "category": "Cyber",
         "title": "Harness secures AI code and AI apps with two new modules",
         "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNXzdrN2lJUU1PR3J5NDlLaVlmeEoxZDFkeEtCNjQzUU05bmR0dWlTQkV0dy1nUVoxSG55Wl9pU0hQam9FZEc5TDU1Q01PTzhjaENMREx1WHE3Zl9nQzEwNGdOU2E0Z1FJeTNJMk1BNnJpeVJLd21vTkhtMHRXVEpPa2xIOFU5QkJVelc3aThDVUFId1JrNVlVTVVNa3d3dGtQS1ppTg?oc=5",
@@ -1390,23 +1434,23 @@
         "uk_relevance": false
       },
       {
+        "category": "Cyber",
+        "title": "Varonis Launches Atlas to Secure AI and the Data That Powers It",
+        "link": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE4tWi0teVdmcVEyVUt3ZENFSjRFVzg5bjZjejZJQm1PVmhlLTB6VmM4VzFya0k2LXZEX05yekdzVHpLd1NQV1pwSVQzN2pxMkNhRy1yNEpSNW5IQ1l3TFhISkItc9IBY0FVX3lxTE4tWi0teVdmcVEyVUt3ZENFSjRFVzg5bjZjejZJQm1PVmhlLTB6VmM4VzFya0k2LXZEX05yekdzVHpLd1NQV1pwSVQzN2pxMkNhRy1yNEpSNW5IQ1l3TFhISkItcw?oc=5",
+        "source": "Bitget",
+        "timestamp": 1773753163.0,
+        "date": "Tue, 17 Mar 2026 13:12:43 GMT",
+        "relevance_score": 0,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
         "category": "Terrorism",
         "title": "How Is AI Shaping the Battlefield and Narrative War in the Israel-Iran-US Conflict?",
         "link": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxOdVVSMm0xQXhranFOdWhvbl9SWHRVS0tfaTI0ZkE5T2g2emhBemFoRDVBTnJLM1VoNFBCcF8zNzcwaDhCYmZkNGhheUtzZWNQcDZxVmpnUzNmNmVRTERadXA3Tms2LWFQU0hucFM3SVUxUXVjaEQxbXZLUWR6UGNSeVNreF9DZy1wWDkwenBRbnFNb19ZajJ4cVBmdU5la2k2WnFSZDNYNU1KNGYzODRoSWptOWNWYVRQUzk4?oc=5",
         "source": "The Media Line",
         "timestamp": 1773747433.0,
         "date": "Tue, 17 Mar 2026 11:37:13 GMT",
-        "relevance_score": 0,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
-        "category": "Fraud",
-        "title": "Canadians lack AI privacy awareness",
-        "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTFBZRTZHZ05oUFJBc3RTNDRHaElzYWNILXgyRnZkRkVvUW5mWmNMbEU1RXZDYksxZ0ppZ0stRExlS1ZiZEp0UUI5UTllb0x0WUhOMW5KMFZHaXZsZGZ6aWNwR2ttMG9oT0NaNnFqWm8tdUpvWXFSbVVmcA?oc=5",
-        "source": "Auto Service World",
-        "timestamp": 1773742500.0,
-        "date": "Tue, 17 Mar 2026 10:15:00 GMT",
         "relevance_score": 0,
         "uk_score": 0,
         "uk_relevance": false
@@ -1457,6 +1501,17 @@
       },
       {
         "category": "Other",
+        "title": "AI Email Summaries Create a New Phishing Attack Surface",
+        "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNQW9FTjZPeUYtbHJYUkVkRzVBMkNaSHktaDRsdk9BQlk5WnZoeWFOTGpIbV9VMEdFTnpGTEJUU0RBZmpadnFLazVvc1ltOVFDSWVJZHI1TWNoNmlNR2c3TnpsZUFiZEFhaUZFb0UydDFQTG11bjV3MEVhZDFqbFpRVzItTWxKVURreTBVdHJld3lEbmExVW04cWpyaS1mUkFIT3BBemRvOTM4ejd4dzhlNXdn?oc=5",
+        "source": "eSecurity Planet",
+        "timestamp": 1773698123.0,
+        "date": "Mon, 16 Mar 2026 21:55:23 GMT",
+        "relevance_score": 0,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
+        "category": "Other",
         "title": "Napier Unveils Insights AI to Enhance AML Screening",
         "link": "https://news.google.com/rss/articles/CBMifkFVX3lxTFB3d3NvMjFCZ0tLRHJ5LXZJS2p4YndpWmRyLU92OERCUFhCRm9NVXpfaGpwN1p6NnluSXdRT2ozRVE3M3dDbUl4eDZPZVgwcTJLVEJFX08yaWp5dnlvbGkzWkRBX0lUcEVQaE9qbVd1QTh6dWdrVTkyTkxIbThYZw?oc=5",
         "source": "Finovate",
@@ -1500,45 +1555,12 @@
         "uk_relevance": false
       },
       {
-        "category": "Fraud",
-        "title": "'Who Owns Me?:' Spike in Legal Disputes Over AI and Identity",
-        "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQOEtTbUthdmVNY2ZNQTVoTXdZLXU2TFh1VXRLXzc2UXlLQ0hzOVpDb3NCQVlXS3NGSHVaZ0wzZXducVRuSE9rbDVEVTJjSjV1V3A2UmRFc2FzQnYxQXJUa1FtV2ZSYmFWVnZBOHNtTXA2UmFBbkpURzRFWmRNOW1VeGp4SHhGVEgxTFMwUUVPems0RW03TzlUelhGckpnSFUxaUE?oc=5",
-        "source": "Law.com",
-        "timestamp": 1773678000.0,
-        "date": "Mon, 16 Mar 2026 16:20:00 GMT",
-        "relevance_score": 0,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
         "category": "Other",
         "title": "Fraudster used AI to deepfake 'Danish entrepreneur' persona in huge romance scam",
         "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOR1RselAzaGE2bXAyazhMemo3TnJhd2lwNW12emZaamFNcXI3VWxLV3NrbDNsZE14SU5xazdjQS03U2RERlYwTDFGY0dqUWNYT1I0NXQ4RUppSkUzUTI4VW02YWFLRDFqRldVQ3NFYWQ0V2d2VXQ5UXB2WWZ2Wm1XX055WkxLMnBiWFVtT1JPUXlHdU04UHdoZlFoNkRSa2ZCWEtPSkdqQ2xUY2dSbmc?oc=5",
         "source": "Basingstoke Gazette",
         "timestamp": 1773672752.0,
         "date": "Mon, 16 Mar 2026 14:52:32 GMT",
-        "relevance_score": 0,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
-        "category": "Terrorism",
-        "title": "AI, social media fueling new wave of disinformation, warn speakers at AJCONF",
-        "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNR2t0Ump3RG5nYmxRVkJZUndOQzNGNnJkSVdROW84bnpOQWpPNTh4eGFHNmNickkxNFdKRUhIT19xRlJERU1JTWxBN0hqcG5qV190dGYza2tTQzNSekx6VGpDUGNwRnVUZGVWZTZWbEQwbW94N2JMaEI3V2Z3eEZnVnZ6WFQ5YkZxa3Uza1R4S0RhOC1sT1ZDUS1sd3o2OTY2QmljRmZB?oc=5",
-        "source": "Voicepk.net",
-        "timestamp": 1773667984.0,
-        "date": "Mon, 16 Mar 2026 13:33:04 GMT",
-        "relevance_score": 0,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
-        "category": "Other",
-        "title": "INTERPOL report warns of increasingly sophisticated global financial fraud threat",
-        "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxQMGliTFJ0RUxJRUJRYndtV2Zvbm9mSTA3N2Ytcl96NHd1akMzSmpFSVJ3Q25KYWlHLTN4TmdTak91LXNNdTFJSHRremNLRVpScmU4eXhFa1ZjZTBCbVQza3VfVWtsd05Zdkt2OTBhSVBKcGdsMzRZd2FhYmFhZjhsNTR2TTVxeFctRFd1RGVZc3R1QTNBYk1QbG5yS0ZGd3o2R3ItMERaaEhqcEJMLVpWYm9heWJqbncwbjN5VmJ6ZWtOcWxnNG85bXRSeWo?oc=5",
-        "source": "Interpol",
-        "timestamp": 1773655411.0,
-        "date": "Mon, 16 Mar 2026 10:03:31 GMT",
         "relevance_score": 0,
         "uk_score": 0,
         "uk_relevance": false
@@ -1555,12 +1577,12 @@
         "uk_relevance": false
       },
       {
-        "category": "Cyber",
-        "title": "5 WordPress Plugins Compromised; Millions of Websites at Risk",
-        "link": "https://news.google.com/rss/articles/CBMifkFVX3lxTE56SjR4cUNQU0l6LTl1MWQ0ckxGSTZtQUJSbFgwR25EMk1PWWxMUEtGWHBBMERlNWdrR1ZOLTF3WnhhQi1MUExmN2FocTQxbGl3XzlwT2N1UzI2RDAxRDdIb1hnd2ktWnZualUyV1BaeHVrNzR4NDJqQ1czeG9pdw?oc=5",
-        "source": "eSecurity Planet",
-        "timestamp": 1773644400.0,
-        "date": "Mon, 16 Mar 2026 07:00:00 GMT",
+        "category": "Terrorism",
+        "title": "19 Indians arrested in UAE over misleading US-Iran war videos",
+        "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxObGhRYTFlNGlLdk9saWRKNGYzZFhsUXFJSFFiWkUtbFNubF9ESU40Z2J5V0dPdUdqNGZJUUZ0TkFjYVgzYXZaandHOG9sUjdjYkkxcWI1MG1OLVlvZXUzbjBLMkFoWGtuaFoyWWxwOHU0YlEydkIwYnZBUTQzeWtLbHVqWFpZMG15ZGNLQ0JwdXZHaXowRkNPMFdhbnl2d1E0OGFfWXB3LUlaUXJ0bUt6enB3?oc=5",
+        "source": "NewsBytes",
+        "timestamp": 1773639127.0,
+        "date": "Mon, 16 Mar 2026 05:32:07 GMT",
         "relevance_score": 0,
         "uk_score": 0,
         "uk_relevance": false
@@ -1583,17 +1605,6 @@
         "source": "ProPakistani",
         "timestamp": 1773614675.0,
         "date": "Sun, 15 Mar 2026 22:44:35 GMT",
-        "relevance_score": 0,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
-        "category": "VAWG",
-        "title": "Gender Inequality In Digital Technologies And Online Violence",
-        "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOTzhOUHZMWVBTM1lrbzhmRm11SmpjN1hMZUZHeEp4UWZZVGI5V29XYzF1WWc4M3c3UjZ1N1NzNnNBUjBfYk1TbTB1NXNhS3k2RVo0WTlsWFlQRGZQWGhTN1NkX1VNTm5CZzMtSXd4YXhtaFdmYVRYTGZGWjFDLWtJMFI3Y2l1UE5yV1dGbFZrMUNWY0U?oc=5",
-        "source": "Bloomsbury Intelligence and Security Institute (BISI)",
-        "timestamp": 1773587009.0,
-        "date": "Sun, 15 Mar 2026 15:03:29 GMT",
         "relevance_score": 0,
         "uk_score": 0,
         "uk_relevance": false
@@ -1633,6 +1644,60 @@
       }
     ],
     "signals": [
+      {
+        "signal_id": "7c210840292e1b14",
+        "title": "When justice fails: Why women can\u2019t get protection from AI deepfake abuse",
+        "primary_category": "VAWG",
+        "tags": [
+          "VAWG"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1774110683.0,
+        "last_seen": 1774110683.0,
+        "latest_date": "Sat, 21 Mar 2026 16:31:23 GMT",
+        "links": [
+          {
+            "title": "When justice fails: Why women can\u2019t get protection from AI deepfake abuse",
+            "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE5kUk9QREg3Yjlvb2Fqei04YmJoWktKaFpjQkprVEpRTGlQNjc0MHRoUzhMM0JFVlRYT0tvb0hYTExjby1ZQjlTa3NVWW5Ya1dTVmd2cDhCdw?oc=5",
+            "source": "UN News",
+            "date": "Sat, 21 Mar 2026 16:31:23 GMT",
+            "source_type": "news",
+            "category": "VAWG",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential VAWG harm: recurring themes include justice, fails, women, protection, deepfake, abuse (1 sources)."
+      },
+      {
+        "signal_id": "e03433f91818ccac",
+        "title": "HackerOne Introduces Agentic Prompt Injection Testing as AI Security Risks Accelerate",
+        "primary_category": "Cyber",
+        "tags": [
+          "Cyber"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1774101162.0,
+        "last_seen": 1774101162.0,
+        "latest_date": "Sat, 21 Mar 2026 13:52:42 GMT",
+        "links": [
+          {
+            "title": "HackerOne Introduces Agentic Prompt Injection Testing as AI Security Risks Accelerate",
+            "link": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNUFVJQnNTX2VnVEZCWXZUZ1Q1QVlJWWtFV0tVLVNnSkVDdFcyWWx0ZDRha0hDUWZIbWdXWEZnb3Y1WGlSdDJtdDVSWWtZdE53RTg3U083cXdRVjlHbFZCeFRxS2pqV0g0aEFmck9NdWxvY3BSNGh3TmdKX1Z2MmxKQ2VMNTN3a2N0Smp5c3FJNG5ybzZkVXFiRXdJUmNWd1A2SmJPT29pdTFORWNpaWp4T0hzTGlUdnJrTC1nM3RUTGJ5UEE?oc=5",
+            "source": "Cybersecurity Insiders",
+            "date": "Sat, 21 Mar 2026 13:52:42 GMT",
+            "source_type": "news",
+            "category": "Cyber",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential Cyber harm: recurring themes include hackerone, introduces, agentic, prompt, injection, testing (1 sources)."
+      },
       {
         "signal_id": "3d7292cf56d3d23a",
         "title": "Russia Scales Up Disinformation Operations with AI, New Report Shows",
@@ -1703,7 +1768,7 @@
           {
             "title": "Germany to target pornographic deepfakes amid celebrity case",
             "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPNkdBZUp2c0hpOVpyZjVvYXpzbFphMFpma3VUMUhxX0lnc3ViNTA0V2RSemZZMjZ5eV9kMWVES09PU0xlRmY5VHFzR1B0UnVYNEUtRjUyaTNReGxIcEdEWE4zLUVXZWR2QkpKQXVIQjZKSmd5bkc0ZUc4MFlkV09pcVNFOG9BeDY2LW1wMV9HNDNLQ1JhZTU3M9IBmAFBVV95cUxQbFJMUXdqdVVDUHZ6OTVrTmtteDlPc0dmbTMySnNDeW4xWTFKYzJzSmRKUWdoUS1vMnlMMndrMG43Q1lIYVl2Ykg3cWhTMjhDR2p2d3lfV2xGSFpzcTZqa2ZKVTUyMW9KNURTS3dQZmVOaXdoOHdKeldXcGdoZWNBeU5oUHdSTUI4ZWcyRmw3OUp4ZTJyVGlWNQ?oc=5",
-            "source": "dw.com",
+            "source": "DW.com",
             "date": "Sat, 21 Mar 2026 06:25:27 GMT",
             "source_type": "news",
             "category": "VAWG",
@@ -1821,6 +1886,33 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Potential CSAM harm: recurring themes include idaho, sentenced, child, abuse, material, including (1 sources)."
+      },
+      {
+        "signal_id": "9e247641f9d60044",
+        "title": "ElevenLabs pledges to restore 1 million voices with AI at SXSW 2026",
+        "primary_category": "Fraud",
+        "tags": [
+          "Fraud"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1774037464.0,
+        "last_seen": 1774037464.0,
+        "latest_date": "Fri, 20 Mar 2026 20:11:04 GMT",
+        "links": [
+          {
+            "title": "ElevenLabs pledges to restore 1 million voices with AI at SXSW 2026",
+            "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOdkxXLTdBRWJJaThYZTNjeENaMlhDUGdrM2IzRU5mMWMwakgzd2kwM21GZVpWV1R5SlpSM3ZkUHRnOElYT250VUdadFZlaW1HT1FjMnhsMmxob0dUejhyZjJxTXFyWFRnd0lBbVRSMVZNQ2dJZHdPNGVYcmFhQzQzcmk0ZjVMaFBrQmtZVmREWkY?oc=5",
+            "source": "Mashable",
+            "date": "Fri, 20 Mar 2026 20:11:04 GMT",
+            "source_type": "news",
+            "category": "Fraud",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential Fraud harm: recurring themes include elevenlabs, pledges, restore, million, voices, sxsw (1 sources)."
       },
       {
         "signal_id": "9483934ecf433564",
@@ -2166,6 +2258,33 @@
         "ai_summary": "Potential Cyber harm: recurring themes include months, prompt, injection (1 sources)."
       },
       {
+        "signal_id": "332b2ee39d4df06b",
+        "title": "Interpersonal Violence: What is Technology Assisted Abuse",
+        "primary_category": "VAWG",
+        "tags": [
+          "VAWG"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1774008057.0,
+        "last_seen": 1774008057.0,
+        "latest_date": "Fri, 20 Mar 2026 12:00:57 GMT",
+        "links": [
+          {
+            "title": "Interpersonal Violence: What is Technology Assisted Abuse",
+            "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNSWtFMFNOWmFHdS00RjNYTDRzSHJwaVJrTGZIVVp0NWpuaFR0aG8zRkV1Tm5RV0FSN0VNcDcyck9DRnRfSUhMVi1ZM1FoSTc2a0g3WVNhYUdjU1RfbVVjbXhYNV93RzZGbncwaTFxc29UVVFlLS1VbkI3UXdIV1RoQnBOVk5xWURfdEs0TG94SjM4dWpnc1Jn0gGcAUFVX3lxTE51bDdzVFdvclRfVVc3RTVJSEVycGJsdVFOSzJOWldVc2JOYmh2bW13UFRrUExTUXNjUDhpbjNMeGxvVUpXUVpzeXMwSGJtV3ItRWR0UmRBRG9HaXdCYy1RRHdxVzZ3LUN3MGlHSXRDZ0FYdXZRUVVfQlhFWU5tOUo2bWdnZjIxQXVRT0pMQkJOMDY5UlVVaHVCdDlSQQ?oc=5",
+            "source": "army.mil",
+            "date": "Fri, 20 Mar 2026 12:00:57 GMT",
+            "source_type": "news",
+            "category": "VAWG",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential VAWG harm: recurring themes include interpersonal, violence, technology, assisted, abuse (1 sources)."
+      },
+      {
         "signal_id": "215b2c8291c1ec25",
         "title": "Fake AI songs streamed billions of times, netting fraudster $10 million",
         "primary_category": "Other",
@@ -2191,33 +2310,6 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Potential Other harm: recurring themes include fake, songs, streamed, billions, times, netting (1 sources)."
-      },
-      {
-        "signal_id": "d7fceb1cf6226638",
-        "title": "UNESCO promotes safe AI use and gender equality in Caribbean workshop",
-        "primary_category": "VAWG",
-        "tags": [
-          "VAWG"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1774000855.0,
-        "last_seen": 1774000855.0,
-        "latest_date": "Fri, 20 Mar 2026 10:00:55 GMT",
-        "links": [
-          {
-            "title": "UNESCO promotes safe AI use and gender equality in Caribbean workshop",
-            "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPUUFQX09BdTZDM2Foa2hMQUVxLUp2Z0VFakVlV3dQQ1dHODFGNzJKaVJOR1B0WGxDV0lMaTFGLWg1MktXYm9xSHBBcF9jU0hKTmFUVkthc0tjYzl3bUN2VWxnd0dZSnk4NTZOdk05VGJYVXA1d3prSFBXeXpkWVhlY2JSYTZ3Yk9QQlZFcEhVZjhqOEN6WXU0eEVpTQ?oc=5",
-            "source": "Digital Watch Observatory",
-            "date": "Fri, 20 Mar 2026 10:00:55 GMT",
-            "source_type": "news",
-            "category": "VAWG",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential VAWG harm: recurring themes include unesco, promotes, safe, gender, equality, caribbean (1 sources)."
       },
       {
         "signal_id": "c3956dde9cc29a18",
@@ -2328,6 +2420,33 @@
         "ai_summary": "Potential Terrorism harm: recurring themes include deepfakes, front, lines, iran, disinformation, campaign (1 sources)."
       },
       {
+        "signal_id": "cfa27241a095f7f0",
+        "title": "AI Conundrum: Why MCP Security Can't Be Patched Away",
+        "primary_category": "Cyber",
+        "tags": [
+          "Cyber"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1773957532.0,
+        "last_seen": 1773957532.0,
+        "latest_date": "Thu, 19 Mar 2026 21:58:52 GMT",
+        "links": [
+          {
+            "title": "AI Conundrum: Why MCP Security Can't Be Patched Away",
+            "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE9VZ2R3NWc3a0VXLXEzWnZ6Y2dOdi0yMWVtb1pXWVZFUVgzVEJPRnEzUmZDZDFOZy1XcU51al9SLUZ6UnJwVEF3Z1FLeUM1YTBvZFB4c3JYQ1V4UlZLNXV0dWFHZmh3VTdPVUd4dGxfbDJhSGJZLUFFLQ?oc=5",
+            "source": "Dark Reading",
+            "date": "Thu, 19 Mar 2026 21:58:52 GMT",
+            "source_type": "news",
+            "category": "Cyber",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential Cyber harm: recurring themes include conundrum, security, patched, away (1 sources)."
+      },
+      {
         "signal_id": "1d1fb454d2b621be",
         "title": "Los Angeles Courts Pilot AI Tool to Help Judges Draft Rulings",
         "primary_category": "Other",
@@ -2353,33 +2472,6 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Potential Other harm: recurring themes include angeles, courts, pilot, tool, help, judges (1 sources)."
-      },
-      {
-        "signal_id": "aefcdb1e1eb67a9f",
-        "title": "DOD Cyber Crime Center official warns industry about AI-boosted cyberattack \u2018kill chain\u2019",
-        "primary_category": "Other",
-        "tags": [
-          "Other"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1773952629.0,
-        "last_seen": 1773952629.0,
-        "latest_date": "Thu, 19 Mar 2026 20:37:09 GMT",
-        "links": [
-          {
-            "title": "DOD Cyber Crime Center official warns industry about AI-boosted cyberattack \u2018kill chain\u2019",
-            "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNSUlIajlwOGtWRUNZQnZNN0YwWENvWkRFbDZMeFR1RTZyNU1NYl9Nc3VLd3ZHc294eFNaNkZGa3YtSzVMTDFjb0p3YkRXR3RGNHJieVgxYmlJakF3T2ItaEhWNl9jNlJUTmNwMl90dk9KQ3JCSVFJaDV6cXFpVE1HZkdVOGZlR2oweldpYUxfWkpSMEZj?oc=5",
-            "source": "DefenseScoop",
-            "date": "Thu, 19 Mar 2026 20:37:09 GMT",
-            "source_type": "news",
-            "category": "Other",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential Other harm: recurring themes include cyber, crime, center, official, warns, industry (1 sources)."
       },
       {
         "signal_id": "659d73253f06c6cf",
@@ -2517,6 +2609,33 @@
         "ai_summary": "Potential CSAM harm: recurring themes include live, deep, dive, episode, laws, struggle (1 sources)."
       },
       {
+        "signal_id": "b824f5cd59c295c6",
+        "title": "Harness Launches AI Security Covering Code to Runtime Stage",
+        "primary_category": "Cyber",
+        "tags": [
+          "Cyber"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1773943836.0,
+        "last_seen": 1773943836.0,
+        "latest_date": "Thu, 19 Mar 2026 18:10:36 GMT",
+        "links": [
+          {
+            "title": "Harness Launches AI Security Covering Code to Runtime Stage",
+            "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOT3FlR05tN0h0ODJOMW40eDA0dmt2T2dSWFBwRDc1OURXYWZnVDlaQUR6a0dZUVVzZER2YTFwQklGaFRXVWJ4U0EwM3ZzallBUm43Y1FoVEZrSG55ajlvdU9fWS1kTDBnbG11WVlwb3o2R1V0SUFBSkFlMmVxZGs4RzhXVlU0TXBVUGFBNWVwY3N3bW9aTm1wbE9sUWhrcXFQOUM2c1dR?oc=5",
+            "source": "Channel Insider",
+            "date": "Thu, 19 Mar 2026 18:10:36 GMT",
+            "source_type": "news",
+            "category": "Cyber",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential Cyber harm: recurring themes include harness, launches, security, covering, code, runtime (1 sources)."
+      },
+      {
         "signal_id": "579b22cf2ebf9d41",
         "title": "AI in Crypto Crime Investigations: Why Human Judgment Still Defines the Case | TRM Blog",
         "primary_category": "Other",
@@ -2544,31 +2663,31 @@
         "ai_summary": "Potential Other harm: recurring themes include crypto, crime, investigations, human, judgment, still (1 sources)."
       },
       {
-        "signal_id": "bad1a6ea2db88728",
-        "title": "Is seeing really believing anymore? The rise of AI video generation apps.",
-        "primary_category": "Fraud",
+        "signal_id": "f720ae326873476f",
+        "title": "Recruitment Risk in the Age of AI and Fraud",
+        "primary_category": "Other",
         "tags": [
-          "Fraud"
+          "Other"
         ],
         "cluster_size": 1,
         "source_count": 1,
-        "first_seen": 1773940416.0,
-        "last_seen": 1773940416.0,
-        "latest_date": "Thu, 19 Mar 2026 17:13:36 GMT",
+        "first_seen": 1773936225.0,
+        "last_seen": 1773936225.0,
+        "latest_date": "Thu, 19 Mar 2026 16:03:45 GMT",
         "links": [
           {
-            "title": "Is seeing really believing anymore? The rise of AI video generation apps.",
-            "link": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQelhXSGw1YmlSOFNiT2RVekE0MXUxVEZ2ZU9uWFZLOE9mSWJ4U19yRXU4NjVJTjV5UHJuekFud3ZNWWl1b0pKRHJYTGVjdTZHTDlsWEkzTDVHeDY0d0d2bTdiRWxvMVV2UTBxYWlYZTBMNDF6bkR0NjhSVjFtUXpTWHdoXzlFaFNWLUN3SWtaUmtJT2VZWUVuUUVuMWMzaDJSTks4UERWVUJFU1FRWnBJZ1BxMWxjSW1GeWtaV3FSNzBSdw?oc=5",
-            "source": "TELUS",
-            "date": "Thu, 19 Mar 2026 17:13:36 GMT",
+            "title": "Recruitment Risk in the Age of AI and Fraud",
+            "link": "https://news.google.com/rss/articles/CBMifEFVX3lxTFBaRTVGUVp6bE5kUlVYRmRpc09TbncxelRnQnQ5aTVoZ2hGa3AtWGExS3JJamtkbE5aZi1wM1BBNVFOOERMRXJ2WjhJSnBCNTB6TUJNSDdGeHdMeENlamgxYURLWWtub0RDdUNhai1tdERWcGNTV1BUU1FZQnE?oc=5",
+            "source": "Dealer Support",
+            "date": "Thu, 19 Mar 2026 16:03:45 GMT",
             "source_type": "news",
-            "category": "Fraud",
+            "category": "Other",
             "uk_score": 0
           }
         ],
         "confidence": 0.256,
         "confidence_label": "Low",
-        "ai_summary": "Potential Fraud harm: recurring themes include seeing, really, believing, anymore, rise, video (1 sources)."
+        "ai_summary": "Potential Other harm: recurring themes include recruitment, risk, fraud (1 sources)."
       },
       {
         "signal_id": "86c1402f7591b0f8",
@@ -2682,33 +2801,6 @@
         "ai_summary": "Potential Cyber harm: recurring themes include exploiting, object, injection, profile, builder (1 sources)."
       },
       {
-        "signal_id": "0dd5ce116126fbec",
-        "title": "Police urge caution as AI scams grow more sophisticated in Alberta",
-        "primary_category": "Fraud",
-        "tags": [
-          "Fraud"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1773933361.0,
-        "last_seen": 1773933361.0,
-        "latest_date": "Thu, 19 Mar 2026 15:16:01 GMT",
-        "links": [
-          {
-            "title": "Police urge caution as AI scams grow more sophisticated in Alberta",
-            "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNclVDSXpZbDFhSjRVaXpkMFJHekRfYzZHcmotUDBZV0dqSThEWmlKOTJUUjZRQ0xZaEFzVV9XVWVCYm1SUkZvMnpRdmJBOUtabnNCcGY3WjRsUFRnT2pFTjRCZWczUG9QaWxBaTVrbHFybXBYd0VPWWpTeFdTeHV3ZHgxMjJlQXJrS2dFYzRja1QxbTk4bi1saDVjYzI0Q05tWl9XZQ?oc=5",
-            "source": "play 103.7",
-            "date": "Thu, 19 Mar 2026 15:16:01 GMT",
-            "source_type": "news",
-            "category": "Fraud",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential Fraud harm: recurring themes include police, urge, caution, scams, grow, sophisticated (1 sources)."
-      },
-      {
         "signal_id": "bf732f3acfe5750b",
         "title": "KeyBank Alerts: AI-Driven Impersonation Scams Are Making It Harder to Distinguish Between Genuine and Fake \u2014 Tips to Identify Warning Signs Today",
         "primary_category": "Fraud",
@@ -2817,6 +2909,33 @@
         "ai_summary": "Potential Cyber harm: recurring themes include votal, launches, rlhf, trained, adversarial, attacker (1 sources)."
       },
       {
+        "signal_id": "24c100c69c87d69c",
+        "title": "'AI-generated phishing became the baseline' for hackers last year \u2013 Kaseya warns it's going to get worse in 2026",
+        "primary_category": "Other",
+        "tags": [
+          "Other"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1773920183.0,
+        "last_seen": 1773920183.0,
+        "latest_date": "Thu, 19 Mar 2026 11:36:23 GMT",
+        "links": [
+          {
+            "title": "'AI-generated phishing became the baseline' for hackers last year \u2013 Kaseya warns it's going to get worse in 2026",
+            "link": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxOaFN6RFAwam5wS2hUc0tVQ3IyS2JRMVhQUnk4RUUtdVhwWXkxaDIweUZBdnk3Sk91S19Ucm9qTXJPUlVqZVAxdUpFNmhmdHdSVFFOZEo0XzBvN2ZNWFpaRnB1S2R4SUMyWUpDZnNVY1Q1Y0pHS0ZsN0M0Ym1vcklndWR6bkpPTUFhR0RLY201UkxqV2hRUzJseFg3N3JsdFlJVUxieHdjWlI2SmtwLTRtVVVJeFhHRmgzVThjSG9JeWNKRENVazJhaDRUQ0ZsV2hTa29GRFpJQkZabFJKZ1hHMw?oc=5",
+            "source": "IT Pro",
+            "date": "Thu, 19 Mar 2026 11:36:23 GMT",
+            "source_type": "news",
+            "category": "Other",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential Other harm: recurring themes include generated, phishing, became, baseline, hackers, last (1 sources)."
+      },
+      {
         "signal_id": "8e01c6e28d1d14ae",
         "title": "HackerOne unveils live agentic AI prompt injection tests",
         "primary_category": "Cyber",
@@ -2831,12 +2950,12 @@
         "links": [
           {
             "title": "HackerOne unveils live agentic AI prompt injection tests",
-            "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOV2dvSjVrSHlLLU84QUt6M1lMNnpLUk40dy1ERWxVTTRmNjEzei0zR0I2cEhVTUQtbTVwUlZ5ZDM1bUVDdFlYb01GeWhSRFY2UTd2Y1RwQVRmRHY2V3BXVk9BNXJ3TWhXVm45VWVkWU96NWtwd2stV2hIWmlHcWlMTTRkc241cXRNSDY4di16MnE2Vl9QMkE?oc=5",
-            "source": "SecurityBrief Australia",
+            "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxONnY0UVYtbXcxRFRqSUVQR05pOWswWHo5YWZZc3dFT2R5T2UtcFI3Z1c5TnQwbUIzVkxPOGhya0JYQVp5N2duWDdaVko5RmhzOE1CLWVKcjlOLXAxTjd2SUFyWDZYbW1fX0NfUXZTRGZIMXZhS1NFZlhsVkJaOU9UZnNVYi13U3BYUnl4LQ?oc=5",
+            "source": "IT Brief UK",
             "date": "Thu, 19 Mar 2026 08:15:00 GMT",
             "source_type": "news",
             "category": "Cyber",
-            "uk_score": 0
+            "uk_score": 1
           }
         ],
         "confidence": 0.256,
@@ -2898,87 +3017,6 @@
         "ai_summary": "Potential Terrorism harm: recurring themes include gardai, help, uncover, chilling, terror, audio (1 sources)."
       },
       {
-        "signal_id": "8c6edd36dca54001",
-        "title": "SymphonyAI AI Platforms Deployed for Compliance Environment at Munich Re",
-        "primary_category": "Other",
-        "tags": [
-          "Other"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1773901920.0,
-        "last_seen": 1773901920.0,
-        "latest_date": "Thu, 19 Mar 2026 06:32:00 GMT",
-        "links": [
-          {
-            "title": "SymphonyAI AI Platforms Deployed for Compliance Environment at Munich Re",
-            "link": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxPRkJta3owdzFielI0V3F4eE85N291Y0RxTGx4TXNwbHA4MlFyRzJUX25rbDZWY0pDY25lX1ZJTHM5bFhuemNGWEQtc2d0Y0V4NG5oUlh2U25DX3JpSzJqZjZXbFhnWWc4LXNMLU41OWFDOHV4a2N5TlNwWU1QOHZPbGREeU1hdjQ5Z0w4dVFKWnJvVi0waEhJSEc2TXBZRzNwalFDMWZYVWdaS2V5TEdFaE91cGM2Qk5nNXlGRFpNekpZZ2tXZXdQczdZOVRBa05WYlhidE1ONWU?oc=5",
-            "source": "STT Info",
-            "date": "Thu, 19 Mar 2026 06:32:00 GMT",
-            "source_type": "news",
-            "category": "Other",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential Other harm: recurring themes include symphonyai, platforms, deployed, compliance, environment, munich (1 sources)."
-      },
-      {
-        "signal_id": "b8a7c8e2e143329a",
-        "title": "Call for Urgent Action to Prevent Child Abuse in Bangladesh - Pressenza",
-        "primary_category": "VAWG",
-        "tags": [
-          "VAWG"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1773901573.0,
-        "last_seen": 1773901573.0,
-        "latest_date": "Thu, 19 Mar 2026 06:26:13 GMT",
-        "links": [
-          {
-            "title": "Call for Urgent Action to Prevent Child Abuse in Bangladesh - Pressenza",
-            "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPSlEzbXBySFNjN1NxbUEwbmtuMVdEeWtqSzY2QXFBbHlJYnVPRENTc1JVSGF6UjNnM1BBcXR2b1lSZmstN1M3Wkw0X182TTRDcVpjVmtCdDBEVXBpZFVoekVRZHk3VTRrWlpuVHBOb3RpYnVQak9YTnRtWUNFR04ySHViSkZXZ0JVa09vUWIwM3JqZUZqS0FTUE9B?oc=5",
-            "source": "Pressenza - International Press Agency",
-            "date": "Thu, 19 Mar 2026 06:26:13 GMT",
-            "source_type": "news",
-            "category": "VAWG",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential VAWG harm: recurring themes include call, urgent, action, prevent, child, abuse (1 sources)."
-      },
-      {
-        "signal_id": "e65a764b5698fc7c",
-        "title": "North Wales Police join female running groups to tackle street harassment",
-        "primary_category": "VAWG",
-        "tags": [
-          "VAWG"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1773901028.0,
-        "last_seen": 1773901028.0,
-        "latest_date": "Thu, 19 Mar 2026 06:17:08 GMT",
-        "links": [
-          {
-            "title": "North Wales Police join female running groups to tackle street harassment",
-            "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE80c3Y5WWw4NzBNVUlmTXJ6bjViUEQ1MW9hamtHeDJaSi05RDF1YkZvUU9wVEpScnV1NHl2VjhkOEh2X0s5QnU3dWdvUHlXZWpLa3M0VXhWdXBiUQ?oc=5",
-            "source": "BBC",
-            "date": "Thu, 19 Mar 2026 06:17:08 GMT",
-            "source_type": "news",
-            "category": "VAWG",
-            "uk_score": 2
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential VAWG harm: recurring themes include north, wales, police, join, female, running (1 sources)."
-      },
-      {
         "signal_id": "f5bed7c19fddb4c2",
         "title": "Iran-Israel-US war: AI images and videos intensifying fog of war in Middle East",
         "primary_category": "Terrorism",
@@ -3031,33 +3069,6 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Potential Terrorism harm: recurring themes include centre, plans, sweeping, online, blocking, powers (1 sources)."
-      },
-      {
-        "signal_id": "4865a69586b13996",
-        "title": "Prisma AIRS unveils secure by design Singapore Cloud to meet data residency needs",
-        "primary_category": "Cyber",
-        "tags": [
-          "Cyber"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1773882000.0,
-        "last_seen": 1773882000.0,
-        "latest_date": "Thu, 19 Mar 2026 01:00:00 GMT",
-        "links": [
-          {
-            "title": "Prisma AIRS unveils secure by design Singapore Cloud to meet data residency needs",
-            "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPOGwyc3BTSHdhNGpiYUpLQXpRRmZOenRiNWtWMXBlVjVVYXJfQkJkandEdXZXa2pnUzItN193VVNVendjbTlIejY3akF1RHZCV3VRRF9ZaFByclRzS2NCUlBPUVdPcEpvOEZuNzZnajhNcGFVX240OWk2YmdnN2otNGNrNV9oQmx1M0FicVQtSVdSbUp2N0ZtVTMtVFAtLWd3SmZGVDVvVk0?oc=5",
-            "source": "FutureCIO",
-            "date": "Thu, 19 Mar 2026 01:00:00 GMT",
-            "source_type": "news",
-            "category": "Cyber",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential Cyber harm: recurring themes include prisma, airs, unveils, secure, design, singapore (1 sources)."
       },
       {
         "signal_id": "37cfe1c2f3b9efdd",
@@ -3193,33 +3204,6 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Potential Cyber harm: recurring themes include arcjet, extends, runtime, policy, engine, block (1 sources)."
-      },
-      {
-        "signal_id": "1a4421ecc3f1c388",
-        "title": "Montana mom nearly got duped after scammer 'kidnapped' her daughter \u2014 used AI to clone her voice. Here are the red flags every parent should know",
-        "primary_category": "Fraud",
-        "tags": [
-          "Fraud"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1773861853.0,
-        "last_seen": 1773861853.0,
-        "latest_date": "Wed, 18 Mar 2026 19:24:13 GMT",
-        "links": [
-          {
-            "title": "Montana mom nearly got duped after scammer 'kidnapped' her daughter \u2014 used AI to clone her voice. Here are the red flags every parent should know",
-            "link": "https://news.google.com/rss/articles/CBMimAJBVV95cUxNeTRtalNQenFBUjloa0dFNEl3aEhfLTJ3eGUwTDB1UXNpUm1kWGFyMkJrYUZVZ0dLYkJ2YWF3UmJYdS1QcXJwZzR6Ui0xQ2VWdHB4MlpzZXRySkktWXNMcmlkVU5nWGoxOFFRMTdzSDZ1MTNLUDJRTU5mQ0xMdC1xNUc0bTNyZkJZam1WQ2lWdnV0RnVRaTdJNThod0ZtZm1OeWNYamVkanI3aU85OFhKenRqVHpfXzZ1MTAxWk9tcGt3dC11TVZaWXFSTERsTVJFUFByMnVfbHpCalJMYlo2VlRmRkdUaXJkTHNZeEExMzFJa0NaYmhIbG1Cd2pkcVRIMGtOa2xQMXduWFJraVhzd2dvQWZDTV9u?oc=5",
-            "source": "MSN",
-            "date": "Wed, 18 Mar 2026 19:24:13 GMT",
-            "source_type": "news",
-            "category": "Fraud",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential Fraud harm: recurring themes include montana, nearly, duped, scammer, kidnapped, daughter (1 sources)."
       },
       {
         "signal_id": "e97875ffb4734a40",
@@ -3475,33 +3459,6 @@
         "ai_summary": "Potential CSAM harm: recurring themes include flood, fueled, child, sexual, abuse, material (1 sources)."
       },
       {
-        "signal_id": "b944b321c2a3a88e",
-        "title": "I tested 3 city AI chatbots. Here's what they actually do.",
-        "primary_category": "Other",
-        "tags": [
-          "Other"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1773842400.0,
-        "last_seen": 1773842400.0,
-        "latest_date": "Wed, 18 Mar 2026 14:00:00 GMT",
-        "links": [
-          {
-            "title": "I tested 3 city AI chatbots. Here's what they actually do.",
-            "link": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxNcmFtZGUxMGJEbEpZNEdxUjZnYVAxZzdrRU5vWlJ4MjVVVkJGSUNIbk96c21nTHVfdDA1bHNwdndJYXEyQ0RJemhaVUVpMnNYc2ZhOUN4NXJIZTNtcVBqeW9LM3FLZGpCa2hIaVpFSkl1eVBGV2p5aFFGYndaeFNpdElXdVp3VFE1TmlQcWlpUlFaNmU0VDBUYkd6MjI1YzM3NG43TXF3c1lJYXlFa1BxRmJmMmFFbXZpdFI2ZmZvS3MxdXYzOHdSWm5FQUpScUFBNWNwTWd6d2NXb21tS3BV?oc=5",
-            "source": "Route Fifty",
-            "date": "Wed, 18 Mar 2026 14:00:00 GMT",
-            "source_type": "news",
-            "category": "Other",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential Other harm: recurring themes include tested, city, chatbots, here, actually (1 sources)."
-      },
-      {
         "signal_id": "0579ba0790370f5a",
         "title": "Financial Crime Has Crossed $4.4 Trillion \u2013 AI Can Level the Playing Field",
         "primary_category": "Other",
@@ -3583,6 +3540,33 @@
         "ai_summary": "Potential Fraud harm: recurring themes include voice, phone, real, rcmp, warn, scams (1 sources)."
       },
       {
+        "signal_id": "4caf7b03920aa647",
+        "title": "How to Help Your Business Stay Ahead of Proliferating AI Schemes",
+        "primary_category": "Fraud",
+        "tags": [
+          "Fraud"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1773835209.0,
+        "last_seen": 1773835209.0,
+        "latest_date": "Wed, 18 Mar 2026 12:00:09 GMT",
+        "links": [
+          {
+            "title": "How to Help Your Business Stay Ahead of Proliferating AI Schemes",
+            "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxQMGdfZEhSeVRXRmZ1VGRzdldPTmV3cFd4RE40Y1hKbms2QzJKOWw0d2N0aENuXzlqVHpLd3l1SVFLSlF1N2tlalZkYWRkSVhscWNab3ZGWmN6dVNCN2EtQjk2aTNxN0FoZ1FSMl9BdlhBc2dNWks3SVNJRE5hdVBuN0Z3dkEwUTFJWlk0MlQzakVZdVRxNy1UUWRIWnUwZw?oc=5",
+            "source": "San Diego Business Journal",
+            "date": "Wed, 18 Mar 2026 12:00:09 GMT",
+            "source_type": "news",
+            "category": "Fraud",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential Fraud harm: recurring themes include help, business, stay, ahead, proliferating, schemes (1 sources)."
+      },
+      {
         "signal_id": "0c12ce9ed5425bdb",
         "title": "What holds up in court? Alan Parfery on AI, evidence and the discipline of the courtroom",
         "primary_category": "Other",
@@ -3635,6 +3619,33 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Potential VAWG harm: recurring themes include research, shows, chatbots, driving, violence, against (1 sources)."
+      },
+      {
+        "signal_id": "92027cedaa3de72a",
+        "title": "Mastercard survey reveals new concerns among consumers in Latin America and the Caribbean",
+        "primary_category": "Fraud",
+        "tags": [
+          "Fraud"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1773828000.0,
+        "last_seen": 1773828000.0,
+        "latest_date": "Wed, 18 Mar 2026 10:00:00 GMT",
+        "links": [
+          {
+            "title": "Mastercard survey reveals new concerns among consumers in Latin America and the Caribbean",
+            "link": "https://news.google.com/rss/articles/CBMihgJBVV95cUxQNEZNb2hOMGNiYWV4M1pfVTgtX1Q0N3BDOVVLRWNRSGZwNmJPYXlScXFOZV9IeFhDczNCcWhvYXFxREdDQUVfN3cyZXVzYXYzRi1PNGh1eGRMdTJjajFEX0lnWmVSb3BSYU1XYVhlUHpvZ3RzNWkyLUxjcHk1LXpQSlNObWp5a1c1TEU5LTNGMVNXbWVDUEh4QnR1WDJSYjZXa295bktMWE11ZXpMMFFNb3V3M2ZnRVM5NUFldEZNbEg4OVdiTEdOS3JXUGdHSWgtQVJTMVhVQ3RGSGhjUDdIenlHUkcydTV5d2RGeHJwSGlnTnNSdHFvX3dCT0NvRkxDNktSdWxn?oc=5",
+            "source": "WJournalpr",
+            "date": "Wed, 18 Mar 2026 10:00:00 GMT",
+            "source_type": "news",
+            "category": "Fraud",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential Fraud harm: recurring themes include mastercard, survey, reveals, concerns, among, consumers (1 sources)."
       },
       {
         "signal_id": "e6be72da6a78edc2",
@@ -3772,13 +3783,14 @@
         "ai_summary": "Potential Cyber harm: recurring themes include rewriting, rules, application, security, organizations, aren (1 sources)."
       },
       {
-        "signal_id": "0eddc280d4e515e0",
+        "signal_id": "e3574a26dd39297c",
         "title": "xAI Sued Over Grok AI Child Abuse Image Claims",
-        "primary_category": "CSAM",
+        "primary_category": "VAWG",
         "tags": [
-          "CSAM"
+          "CSAM",
+          "VAWG"
         ],
-        "cluster_size": 1,
+        "cluster_size": 2,
         "source_count": 1,
         "first_seen": 1773818064.0,
         "last_seen": 1773818064.0,
@@ -3790,40 +3802,22 @@
             "source": "MediaNama",
             "date": "Wed, 18 Mar 2026 07:14:24 GMT",
             "source_type": "news",
+            "category": "VAWG",
+            "uk_score": 0
+          },
+          {
+            "title": "xAI Sued Over Grok AI Child Abuse Image Claims",
+            "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxNbUIyY1FoMzd0QnRGNHdMa19ZeTEzVksyMHJOWmlnQ0FIc1R6NUY2VDZ1VUFtd1lXa1lFUDRKX2RnRzBTVVR1ZzNGR0lJMVNpa2lqY19pektFYldwbzRpbTRrblM3bWtCODhRMGxmZTYtWUpUWGkybzNwcHkzeFFFQi05RlA1Qm8?oc=5",
+            "source": "MediaNama",
+            "date": "Wed, 18 Mar 2026 07:14:24 GMT",
+            "source_type": "news",
             "category": "CSAM",
             "uk_score": 0
           }
         ],
-        "confidence": 0.256,
+        "confidence": 0.311,
         "confidence_label": "Low",
-        "ai_summary": "Potential CSAM harm: recurring themes include sued, grok, child, abuse, image, claims (1 sources)."
-      },
-      {
-        "signal_id": "dccf0ba7c3bcc2ab",
-        "title": "Building Composable Safety and Performance Layers for Agents in Rust",
-        "primary_category": "Cyber",
-        "tags": [
-          "Cyber"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1773815679.0,
-        "last_seen": 1773815679.0,
-        "latest_date": "Wed, 18 Mar 2026 06:34:39 GMT",
-        "links": [
-          {
-            "title": "Building Composable Safety and Performance Layers for Agents in Rust",
-            "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOQ3psdGtDaGp6SUtSTl9ZMmtaSWFxSTNUREswQVN6MVBSM1lTMXlwa0NQeEtXanozeDFZd3Rhb0VoRGQyRnFlaHJHQ21RVC11RzA0OGFkZDN5SGNNLUlnd1hrT29DT0ZhVnVtNmN6STZlbHg5UjlvSk1YY3hmdF8yOXZLZW1ITlVTNnBYZkNUbWVOSDJNcEE?oc=5",
-            "source": "HackerNoon",
-            "date": "Wed, 18 Mar 2026 06:34:39 GMT",
-            "source_type": "news",
-            "category": "Cyber",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential Cyber harm: recurring themes include building, composable, safety, performance, layers, agents (1 sources)."
+        "ai_summary": "Potential VAWG harm: recurring themes include sued, grok, child, abuse, image, claims (1 sources)."
       },
       {
         "signal_id": "3a72fffd1161d73e",
@@ -3853,6 +3847,33 @@
         "ai_summary": "Potential Cyber harm: recurring themes include openai, reveals, chatgpt, fights, prompt, injection (1 sources)."
       },
       {
+        "signal_id": "240b256e16d1f828",
+        "title": "Boards aren\u2019t ready for the AI age: What happens when your CEO gets deepfaked?",
+        "primary_category": "Fraud",
+        "tags": [
+          "Fraud"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1773802683.0,
+        "last_seen": 1773802683.0,
+        "latest_date": "Wed, 18 Mar 2026 02:58:03 GMT",
+        "links": [
+          {
+            "title": "Boards aren\u2019t ready for the AI age: What happens when your CEO gets deepfaked?",
+            "link": "https://news.google.com/rss/articles/CBMic0FVX3lxTFBpaURjcUl6cDg0RV9HX3hZWUs3bVVnRUs0ZERGRndBY2kxcEx5VkxULVF1THFUYUc5QjB1VFpHUlYzMGkwVnE2Ym00YlRhZDN4Qml6YmdoYXowSXZVTlIwZTR3MDUtam5VZHlPaTA4WFI4ZUU?oc=5",
+            "source": "AOL.com",
+            "date": "Wed, 18 Mar 2026 02:58:03 GMT",
+            "source_type": "news",
+            "category": "Fraud",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential Fraud harm: recurring themes include boards, aren, ready, happens, gets, deepfaked (1 sources)."
+      },
+      {
         "signal_id": "5cd0c9207772dbfd",
         "title": "Israeli PM shares \u2018proof of life\u2019 video after rumours of his death. Not everyone is convinced",
         "primary_category": "Terrorism",
@@ -3878,33 +3899,6 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Potential Terrorism harm: recurring themes include israeli, shares, proof, life, video, rumours (1 sources)."
-      },
-      {
-        "signal_id": "72f460fe075e6106",
-        "title": "MUST DRAFT PITCHERS ! Target These Pitchers To Win Your 2026 Fantasy Baseball League",
-        "primary_category": "Fraud",
-        "tags": [
-          "Fraud"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1773799800.0,
-        "last_seen": 1773799800.0,
-        "latest_date": "Wed, 18 Mar 2026 02:10:00 GMT",
-        "links": [
-          {
-            "title": "MUST DRAFT PITCHERS ! Target These Pitchers To Win Your 2026 Fantasy Baseball League",
-            "link": "https://news.google.com/rss/articles/CBMiqAJBVV95cUxNT1dvS19DalNsUElGbnlCSEFnSmdqWVd4ZGpmTVMwNktINnNEM3NkbzlVS003MDdoYmFSUzhvQjFpYklHUHZ3eFZnRnBTMllrS0p2XzgybGFEeVFYeExlVDR4MW5oWmVMVWFrQ0hvSkU3OGlxRFRGQjlyV1dmZzlZMWdJcTVLTVNOajRWS1h1czl3MTU5T0JUSzhwVFYyRmYzZzFzZVhRZUZscUFJLW1mdERRWmRvUm50NU5TSC12WXlVWGZVZlZPQ21lX2VCSm5pcEVVd1dOTlJfRy1aVmVTRHFsdlMwQlZxRmJWTmw4dndfblkxNVZtVDVMenAxZDQ0bTFoemJ3bHduOWxTaC10a3ZYb1Y1RlZSVGNKTHp0TVF1ZW5XRzlXYQ?oc=5",
-            "source": "KVUE",
-            "date": "Wed, 18 Mar 2026 02:10:00 GMT",
-            "source_type": "news",
-            "category": "Fraud",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential Fraud harm: recurring themes include pitchers, must, draft, target, fantasy, baseball (1 sources)."
       },
       {
         "signal_id": "d21ceacd0b7b2a27",
@@ -3992,9 +3986,10 @@
         "title": "Women and girls are taking Grok to court over sexualized AI deepfakes",
         "primary_category": "VAWG",
         "tags": [
+          "CSAM",
           "VAWG"
         ],
-        "cluster_size": 1,
+        "cluster_size": 2,
         "source_count": 1,
         "first_seen": 1773783315.0,
         "last_seen": 1773783315.0,
@@ -4008,9 +4003,18 @@
             "source_type": "news",
             "category": "VAWG",
             "uk_score": 0
+          },
+          {
+            "title": "Women and girls are taking Grok to court over sexualized AI deepfakes",
+            "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTFBJaVpHVnJfYmlLbmtSY2E5WEplYk5qaklvY3RfSUtyYnBIMlNXbndLWEx1SlQ5dzNFaG5Cd3E5VGp3U21wVUJPR2NRY1JKQzQ1MEY4Q3lMTDJkMnZYZzJfa0xnYkdFMlloWXF1WEhtTGtSblpHOEE?oc=5",
+            "source": "The 19th News",
+            "date": "Tue, 17 Mar 2026 21:35:15 GMT",
+            "source_type": "news",
+            "category": "CSAM",
+            "uk_score": 0
           }
         ],
-        "confidence": 0.256,
+        "confidence": 0.311,
         "confidence_label": "Low",
         "ai_summary": "Potential VAWG harm: recurring themes include women, girls, taking, grok, court, sexualized (1 sources)."
       },
@@ -4039,7 +4043,7 @@
           },
           {
             "title": "Developing technology creates dangers of AI-generated child sex abuse material",
-            "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPTDNuYWtoWnFQaXZRYTZWekZZdVBQeUVfSG9pdVVKcWZUVVlBUGlra09kZjBqbXJRQmd0QTdhLU1HWDZUbXdRMXJrYjR0Si1Pd0tNUnJMSUVtTnVjUzhNd0luTG1hMlRjR0F6aEtIdTgzVGUydE9SSkF3Smo4ZlJhYVNoS1R1akZlV2l5aEttS3EtaF9zREpQN045TEFOWlRMZHJGOFVOUlJVdGNNVW1uRGt3NjYtejVrel9XYnhrUGfSAcABQVVfeXFMT0wzbmFraFpxUGl2UWE2VnpGWXVQUHlFX0hvaXVVSnFmVFVZQVBpa2tPZGYwam1yUUJndEE3YS1NR1g2VG13UTFya2I0dEotT3dLTVJyTElFbU51Y1M4TXdJbkxtYTJUY0dBemhLSHU4M1RlMnRPUkpBd0pqOGZSYWFTaEtUdWpGZVdpeWhLbUtxLWhfc0RKUDdOOUxBTlpUTGRyRjhVTlJSVXRjTVVtbkRrdzY2LXo1a3pfV2J4a1Bn?oc=5",
+            "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQR3lEX0lsekpfR0h4eFNpR3cydm41SngxMkpSd1dyeUJNclRhTGxjSEhiVWpuUEZKaG9WclVOREcyWldQcVBLLWJnNXJQMEJremNJSkJUa1E3d3JudmJ5c2tEWjhfYUNkSnNDUTJXR0pydTNlTHBIMXBVcXR5cnpCd0pYeEduVjZwR1g0STc3akMzdmRmdG1paXk4M0RBNzVfMWk0OGRXTDR6TlZP0gHAAUFVX3lxTE9MM25ha2hacVBpdlFhNlZ6Rll1UFB5RV9Ib2l1VUpxZlRVWUFQaWtrT2RmMGptclFCZ3RBN2EtTUdYNlRtd1ExcmtiNHRKLU93S01SckxJRW1OdWNTOE13SW5MbWEyVGNHQXpoS0h1ODNUZTJ0T1JKQXdKajhmUmFhU2hLVHVqRmVXaXloS21LcS1oX3NESlA3TjlMQU5aVExkckY4VU5SUlV0Y01VbW5Ea3c2Ni16NWt6X1dieGtQZw?oc=5",
             "source": "WRDW",
             "date": "Tue, 17 Mar 2026 20:39:00 GMT",
             "source_type": "news",
@@ -4183,9 +4187,10 @@
         "title": "AI deepfake nudes cases raise urgent legal, safety questions",
         "primary_category": "VAWG",
         "tags": [
+          "Other",
           "VAWG"
         ],
-        "cluster_size": 1,
+        "cluster_size": 2,
         "source_count": 1,
         "first_seen": 1773774273.0,
         "last_seen": 1773774273.0,
@@ -4199,38 +4204,20 @@
             "source_type": "news",
             "category": "VAWG",
             "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential VAWG harm: recurring themes include deepfake, nudes, cases, raise, urgent, legal (1 sources)."
-      },
-      {
-        "signal_id": "39d5908d5e646349",
-        "title": "\u201cDepicted her actual face, body but morphed into sexually explicit poses\u201d Minors allege Grok AI generated sexual images of them and hurt their image; lawsuit filed against X",
-        "primary_category": "CSAM",
-        "tags": [
-          "CSAM"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1773770373.0,
-        "last_seen": 1773770373.0,
-        "latest_date": "Tue, 17 Mar 2026 17:59:33 GMT",
-        "links": [
+          },
           {
-            "title": "\u201cDepicted her actual face, body but morphed into sexually explicit poses\u201d Minors allege Grok AI generated sexual images of them and hurt their image; lawsuit filed against X",
-            "link": "https://news.google.com/rss/articles/CBMipwJBVV95cUxQQnlHYnlrSE5NY1hjR3duY0hIUGFUNFNoREtUYTFUME92MnVjYmpRcndvb0dyTFFKTDdiMm42cDg4ZV9GdzNKZENCMkRQUG0yUUF0cDlsUVJwNVVoQ0huTFM4d1kyeFhhMVA1NjMta0lKNjhITW1ETDZCNTMzM0F3ZTNEVWxpUXJOOXhjcFdJd2RhczVaRWlCaFNoM3RqbVNTRUtlZndJSEdQZmo1TXJPd3ZlYVh4TXdseHhzSWlOdlV0RnpuMW45cjVwamFtRmYzNncxU2JhVEIwSjNrZG0tUFowYnJkdmhIZEVmWEpqRS11OTUySzFEN1hJaFNoREpJaWZNUVR6T0JSTDcyY2F3dEpkdkFWZG5BQ1ZVbllzelBZQjZVTGRz0gGnAkFVX3lxTFBCeUdieWtITk1jWGNHd25jSEhQYVQ0U2hES1RhMVQwT3YydWNialFyd29vR3JMUUpMN2IybjZwODhlX0Z3M0pkQ0IyRFBQbTJRQXRwOWxRUnA1VWhDSG5MUzh3WTJ4WGExUDU2My1rSUo2OEhNbURMNkI1MzMzQXdlM0RVbGlRck45eGNwV0l3ZGFzNVpFaUJoU2gzdGptU1NFS2Vmd0lIR1BmajVNck93dmVhWHhNd2x4eHNJaU52VXRGem4xbjlyNXBqYW1GZjM2dzFTYmFUQjBKM2tkbS1QWjBicmR2aEhkRWZYSmpFLXU5NTJLMUQ3WEloU2hESklpZk1RVHpPQlJMNzJjYXd0SmR2QVZkbkFDVlVuWXN6UFlCNlVMZHM?oc=5",
-            "source": "WTRF",
-            "date": "Tue, 17 Mar 2026 17:59:33 GMT",
+            "title": "AI deepfake nudes cases raise urgent legal, safety questions",
+            "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE9EVzRybWNmT0YwZVNUTGZ1UEtmN1pZMVl4QnhRcG9mZktxYjJLOGhCRDIyZkctaE9yZ2VxQ3paT2JQcHhWWHZoc2M3b3ZTdzBRcmF2NnQ4blVHTE53bmtmVUstNnhmbW5wV1daMkZR?oc=5",
+            "source": "WHYY",
+            "date": "Tue, 17 Mar 2026 19:04:33 GMT",
             "source_type": "news",
-            "category": "CSAM",
+            "category": "Other",
             "uk_score": 0
           }
         ],
-        "confidence": 0.256,
+        "confidence": 0.311,
         "confidence_label": "Low",
-        "ai_summary": "Potential CSAM harm: recurring themes include depicted, actual, face, body, morphed, sexually (1 sources)."
+        "ai_summary": "Potential VAWG harm: recurring themes include deepfake, nudes, cases, raise, urgent, legal (1 sources)."
       },
       {
         "signal_id": "55c2851937d35e92",
@@ -4261,6 +4248,60 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Potential Cyber harm: recurring themes include show, fireclaw, open, source, proxy, defending (1 sources)."
+      },
+      {
+        "signal_id": "8bbf700d2c42ab1d",
+        "title": "Harness Extends AI Security Reach Across Entire DevOps Workflow",
+        "primary_category": "Cyber",
+        "tags": [
+          "Cyber"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1773762864.0,
+        "last_seen": 1773762864.0,
+        "latest_date": "Tue, 17 Mar 2026 15:54:24 GMT",
+        "links": [
+          {
+            "title": "Harness Extends AI Security Reach Across Entire DevOps Workflow",
+            "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNRnNqZm5HVGRod0xEeUFha3FnWjZuck4ySXNPSU15REtoRkF5OVNUc08wS2Jnbm50SlNiZG5OMTVrRFJtUmpqWTRfdUt3QUhtRkZRWkFCUlphcExuNnc3Q1ZsNFktLThIc2Q2cXFtQmZJUm94OHBQdWNFc0d5cTgyeWFJanVHMkliMXFMdzJsbw?oc=5",
+            "source": "DevOps.com",
+            "date": "Tue, 17 Mar 2026 15:54:24 GMT",
+            "source_type": "news",
+            "category": "Cyber",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential Cyber harm: recurring themes include harness, extends, security, reach, across, entire (1 sources)."
+      },
+      {
+        "signal_id": "4d19fbd1c5854b05",
+        "title": "Cybercriminals using AI for fraud are making far more profit, Interpol claims",
+        "primary_category": "Fraud",
+        "tags": [
+          "Fraud"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1773761400.0,
+        "last_seen": 1773761400.0,
+        "latest_date": "Tue, 17 Mar 2026 15:30:00 GMT",
+        "links": [
+          {
+            "title": "Cybercriminals using AI for fraud are making far more profit, Interpol claims",
+            "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPWmxmRHNQSVBqNjFfeTJHa3pobVlBdFliaWg0MFFJS2lmOG5ud0dfMl9WWTNFekNYbjdSeVBUZmdzd1hodlhRMVVDX25mY2pUZGZfRzJ2Q05GQXZ3OFdheDVqaWZxR0paYzBXT0llUkpuZlRJOHNpQ2JLX01fR3ZISU9nZmVvYzkxT1N1S0EzcFdFSmdPc1JTbjNXa3dqdUV5dU43U053SF82T29SUHFCdm9KOTU?oc=5",
+            "source": "TechRadar",
+            "date": "Tue, 17 Mar 2026 15:30:00 GMT",
+            "source_type": "news",
+            "category": "Fraud",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential Fraud harm: recurring themes include cybercriminals, using, fraud, making, profit, interpol (1 sources)."
       },
       {
         "signal_id": "e9dd9197f573e5a7",
@@ -4344,6 +4385,33 @@
         "ai_summary": "Potential Fraud harm: recurring themes include instagram, longer, encrypted, meta, reversing, course (1 sources)."
       },
       {
+        "signal_id": "2e3f6bb36af2afb1",
+        "title": "Varonis Launches Atlas to Secure AI and the Data That Powers It",
+        "primary_category": "Cyber",
+        "tags": [
+          "Cyber"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1773753163.0,
+        "last_seen": 1773753163.0,
+        "latest_date": "Tue, 17 Mar 2026 13:12:43 GMT",
+        "links": [
+          {
+            "title": "Varonis Launches Atlas to Secure AI and the Data That Powers It",
+            "link": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE4tWi0teVdmcVEyVUt3ZENFSjRFVzg5bjZjejZJQm1PVmhlLTB6VmM4VzFya0k2LXZEX05yekdzVHpLd1NQV1pwSVQzN2pxMkNhRy1yNEpSNW5IQ1l3TFhISkItc9IBY0FVX3lxTE4tWi0teVdmcVEyVUt3ZENFSjRFVzg5bjZjejZJQm1PVmhlLTB6VmM4VzFya0k2LXZEX05yekdzVHpLd1NQV1pwSVQzN2pxMkNhRy1yNEpSNW5IQ1l3TFhISkItcw?oc=5",
+            "source": "Bitget",
+            "date": "Tue, 17 Mar 2026 13:12:43 GMT",
+            "source_type": "news",
+            "category": "Cyber",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential Cyber harm: recurring themes include varonis, launches, atlas, secure, data, powers (1 sources)."
+      },
+      {
         "signal_id": "dcddb5e211c40db7",
         "title": "INTERPOL Warns That AI Is Turbocharging Scams Worldwide",
         "primary_category": "Fraud",
@@ -4423,33 +4491,6 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Potential CSAM harm: recurring themes include tennessee, teens, grok, turned, school, photos (1 sources)."
-      },
-      {
-        "signal_id": "13710b4ee06004d6",
-        "title": "Canadians lack AI privacy awareness",
-        "primary_category": "Fraud",
-        "tags": [
-          "Fraud"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1773742500.0,
-        "last_seen": 1773742500.0,
-        "latest_date": "Tue, 17 Mar 2026 10:15:00 GMT",
-        "links": [
-          {
-            "title": "Canadians lack AI privacy awareness",
-            "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTFBZRTZHZ05oUFJBc3RTNDRHaElzYWNILXgyRnZkRkVvUW5mWmNMbEU1RXZDYksxZ0ppZ0stRExlS1ZiZEp0UUI5UTllb0x0WUhOMW5KMFZHaXZsZGZ6aWNwR2ttMG9oT0NaNnFqWm8tdUpvWXFSbVVmcA?oc=5",
-            "source": "Auto Service World",
-            "date": "Tue, 17 Mar 2026 10:15:00 GMT",
-            "source_type": "news",
-            "category": "Fraud",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential Fraud harm: recurring themes include canadians, lack, privacy, awareness (1 sources)."
       },
       {
         "signal_id": "84cc28b50c8ac175",
@@ -4705,6 +4746,87 @@
         "ai_summary": "Potential VAWG harm: recurring themes include teens, musk, arguing, grok, made, child (1 sources)."
       },
       {
+        "signal_id": "30e017bb803f45bc",
+        "title": "Teens sue Elon Musk\u2019s Grok chatbot for turning their photos into \u2018child abuse images\u2019",
+        "primary_category": "VAWG",
+        "tags": [
+          "VAWG"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1773709620.0,
+        "last_seen": 1773709620.0,
+        "latest_date": "Tue, 17 Mar 2026 01:07:00 GMT",
+        "links": [
+          {
+            "title": "Teens sue Elon Musk\u2019s Grok chatbot for turning their photos into \u2018child abuse images\u2019",
+            "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxOQWFsTTF2NGFfS0RlZ1p4Mm1BZ2hIbUd5RWRmdnRCNFo4VWc4NWtkMmpJTXlGM3lHckZ5ZWRMUk95LWFBbGZMVGkweVBwbUY5d1VBMGdvWWZ5WDI3endCSkRxcVFtUGltQklWNTU5c1o4bFZ3bm5FWEpkekV3b0FSWEhLYmQxWEYtMlZ5QUZTclBQZ0Jpd2dF?oc=5",
+            "source": "The Independent",
+            "date": "Tue, 17 Mar 2026 01:07:00 GMT",
+            "source_type": "news",
+            "category": "VAWG",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential VAWG harm: recurring themes include teens, elon, musk, grok, chatbot, turning (1 sources)."
+      },
+      {
+        "signal_id": "5a50b512772eb02f",
+        "title": "Interpol: Fraud up by 70% and will escalate further due to AI",
+        "primary_category": "Fraud",
+        "tags": [
+          "Fraud"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1773709500.0,
+        "last_seen": 1773709500.0,
+        "latest_date": "Tue, 17 Mar 2026 01:05:00 GMT",
+        "links": [
+          {
+            "title": "Interpol: Fraud up by 70% and will escalate further due to AI",
+            "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5Xd05lMUpDM25BTU5KUVktbWE1TXE5UEpxY1d2ZmttUlBuTUR6bGFPZ3hlTzFEWGdMN0cyekhQSnl4bC1NLTkzQXFyM3VKQU13dmlTYTJ0Z1B3ek5QUG1LMDB6NVRfaldrNmxWZTlJUGIzSGhMc0E?oc=5",
+            "source": "Irish Examiner",
+            "date": "Tue, 17 Mar 2026 01:05:00 GMT",
+            "source_type": "news",
+            "category": "Fraud",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential Fraud harm: recurring themes include interpol, fraud, escalate, further (1 sources)."
+      },
+      {
+        "signal_id": "e2e6492b04274ac2",
+        "title": "Tennessee teens sue Elon Musk's xAI over AI-generated child sexual abuse material",
+        "primary_category": "CSAM",
+        "tags": [
+          "CSAM"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1773709357.0,
+        "last_seen": 1773709357.0,
+        "latest_date": "Tue, 17 Mar 2026 01:02:37 GMT",
+        "links": [
+          {
+            "title": "Tennessee teens sue Elon Musk's xAI over AI-generated child sexual abuse material",
+            "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQR1RieW9nZVhaS3VaTFN3dEQ1ZEhHRHpMdjBIX0g3YmJEd2g5ZWdDenNoN3RleUtPVmNiSUxHbWZCZUtIRDFnX3d4eU1jNzFySnRDblhRampjUG9Cb01pdHdsc1ZMMDIxelhBUG01R2lrU09uaXdNSzA0ODQxdmtraFhR?oc=5",
+            "source": "NPR",
+            "date": "Tue, 17 Mar 2026 01:02:37 GMT",
+            "source_type": "news",
+            "category": "CSAM",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential CSAM harm: recurring themes include tennessee, teens, elon, musk, generated, child (1 sources)."
+      },
+      {
         "signal_id": "2cbeed01318b620d",
         "title": "Elon Musk's X is the worst major social media platform for child sexual abuse material: eSafety",
         "primary_category": "CSAM",
@@ -4811,6 +4933,33 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Potential CSAM harm: recurring themes include child, abuse, material, systemic, elon, musk (1 sources)."
+      },
+      {
+        "signal_id": "9a2d80f5df88c5f5",
+        "title": "AI Email Summaries Create a New Phishing Attack Surface",
+        "primary_category": "Other",
+        "tags": [
+          "Other"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1773698123.0,
+        "last_seen": 1773698123.0,
+        "latest_date": "Mon, 16 Mar 2026 21:55:23 GMT",
+        "links": [
+          {
+            "title": "AI Email Summaries Create a New Phishing Attack Surface",
+            "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNQW9FTjZPeUYtbHJYUkVkRzVBMkNaSHktaDRsdk9BQlk5WnZoeWFOTGpIbV9VMEdFTnpGTEJUU0RBZmpadnFLazVvc1ltOVFDSWVJZHI1TWNoNmlNR2c3TnpsZUFiZEFhaUZFb0UydDFQTG11bjV3MEVhZDFqbFpRVzItTWxKVURreTBVdHJld3lEbmExVW04cWpyaS1mUkFIT3BBemRvOTM4ejd4dzhlNXdn?oc=5",
+            "source": "eSecurity Planet",
+            "date": "Mon, 16 Mar 2026 21:55:23 GMT",
+            "source_type": "news",
+            "category": "Other",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential Other harm: recurring themes include email, summaries, create, phishing, attack, surface (1 sources)."
       },
       {
         "signal_id": "6370aa4ce4529cbb",
@@ -4972,7 +5121,7 @@
         "links": [
           {
             "title": "Elon Musk\u2019s xAI is facing a growing number of lawsuits over AI-generated deepfakes",
-            "link": "https://news.google.com/rss/articles/CBMixwNBVV95cUxOZFlLR09HQnVnUnJRdnhXcVlTN1g5TlVWaDliVkx2X2hqVDlwN002ZkY0MGI1OE1IY0pQaTZCaS1YRWtDSVV1OWZDaEpsVFZ2WUF2Z2c2ZllQcEdiNjU5NmZNdTRhTmdHSmpldVYwWjJrRHRfYnl5Rm5yZ00tTEJZUmo4TFlrWkR3ajlOQWtTVlJXTWtHYVY0S1I0a2ptdXBRaEJESlBhWVRRQ1JFa2c2Ti1WbVF6RGI0NkZwYjdES1lMWDBUMktMLWlWZXRQdUJjMGg3UEs0QjczSTNyOTJnREdqVmpNblRHS2ZnQUFneXl1bUlYclR2N1pFZUtOb2g0eXlvUThOc2taRTh5RlVNU3VmVWRnR2J4RkJfcmVBSDBlRlpoS2d2Y2Q0R1BUQk5jM0J3THJHeTQtM3RaeHg3VzhvNGdHS2NkTmFVQU5rSUFnWmtraXVsQnhzV0p4ajA1RXhXN2xoQm1rbTgwUXZGejFrR2g0MHdUeW0tb0hZOGJ0WFRMS2gxMDFRelBxZHB5ZGRYLUphSGFkbHhsZVFoVmZKaC1PeEhKNTMtT1lJVDlMWFVDN3lxQ1dxRktEREpVNkJ0OEN5UQ?oc=5",
+            "link": "https://news.google.com/rss/articles/CBMixwNBVV95cUxOOHB0bVdfY1ZVSzdQT3cySnJxR1dpeEwzWEdGZ3dNUkptQ19KVU1MQmxxMjFYc0RkVW1qVmFveVlqVUphMFhZQV9JaW5vUlQyaXN5dG43ZmFqQlMySHpvczAwUENoc3RtbjRaSjdjcjh1SkQ5TDZaQ1lHVmpMaHhFRWFPaEN2bzBsZkhldGZObEVnbFBYb3F6RkpCZnc2Wkh4NW9BTW9zTTRxdkVZbHNHeEk0R2t6dElFSl9aQi1yZ0FtbGFtdUpFUmc2QTZ4VXpmNi1TSHpWeEJDX3dRUWVCRUVtcHdCYnV6VU80aDhMaDFCeWl1LU14QUZ5cDA4TlVDNm9XdHhxZjktcVpyQjlFUHlra1RmbmlUMnNKdHlzb0R6REVPYXBOeGZ2OXl1aFBzbTRKYUdOS0tmSFo1WTFqZndJWnNfZlFjS2dqRkVXV2szaTV2Smlia0VyTXh3OEU3cVNSR0E2SXFzczBWYXVEZC03dmZ2WVJUWEZYRGxFeHY5MEN0SE9URlA4XzVIMThUaDVOVmh5enFDb2JEY1phQlpzVk4xSWRhdmt6eWNBWFd6NVZXdDIweFpSYlZsUS1NaU9jZlVqYw?oc=5",
             "source": "MarketWatch",
             "date": "Mon, 16 Mar 2026 20:39:00 GMT",
             "source_type": "news",
@@ -5093,33 +5242,6 @@
         "ai_summary": "Potential Other harm: recurring themes include driven, fraud, profitable, interpol, warns (1 sources)."
       },
       {
-        "signal_id": "7acacc9712275ede",
-        "title": "'Who Owns Me?:' Spike in Legal Disputes Over AI and Identity",
-        "primary_category": "Fraud",
-        "tags": [
-          "Fraud"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1773678000.0,
-        "last_seen": 1773678000.0,
-        "latest_date": "Mon, 16 Mar 2026 16:20:00 GMT",
-        "links": [
-          {
-            "title": "'Who Owns Me?:' Spike in Legal Disputes Over AI and Identity",
-            "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQOEtTbUthdmVNY2ZNQTVoTXdZLXU2TFh1VXRLXzc2UXlLQ0hzOVpDb3NCQVlXS3NGSHVaZ0wzZXducVRuSE9rbDVEVTJjSjV1V3A2UmRFc2FzQnYxQXJUa1FtV2ZSYmFWVnZBOHNtTXA2UmFBbkpURzRFWmRNOW1VeGp4SHhGVEgxTFMwUUVPems0RW03TzlUelhGckpnSFUxaUE?oc=5",
-            "source": "Law.com",
-            "date": "Mon, 16 Mar 2026 16:20:00 GMT",
-            "source_type": "news",
-            "category": "Fraud",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential Fraud harm: recurring themes include owns, spike, legal, disputes, identity (1 sources)."
-      },
-      {
         "signal_id": "bb1691a12467e6f8",
         "title": "Fraudster used AI to deepfake 'Danish entrepreneur' persona in huge romance scam",
         "primary_category": "Other",
@@ -5145,33 +5267,6 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Potential Other harm: recurring themes include fraudster, used, deepfake, danish, entrepreneur, persona (1 sources)."
-      },
-      {
-        "signal_id": "c53cabfb5d007ba6",
-        "title": "AI, social media fueling new wave of disinformation, warn speakers at AJCONF",
-        "primary_category": "Terrorism",
-        "tags": [
-          "Terrorism"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1773667984.0,
-        "last_seen": 1773667984.0,
-        "latest_date": "Mon, 16 Mar 2026 13:33:04 GMT",
-        "links": [
-          {
-            "title": "AI, social media fueling new wave of disinformation, warn speakers at AJCONF",
-            "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNR2t0Ump3RG5nYmxRVkJZUndOQzNGNnJkSVdROW84bnpOQWpPNTh4eGFHNmNickkxNFdKRUhIT19xRlJERU1JTWxBN0hqcG5qV190dGYza2tTQzNSekx6VGpDUGNwRnVUZGVWZTZWbEQwbW94N2JMaEI3V2Z3eEZnVnZ6WFQ5YkZxa3Uza1R4S0RhOC1sT1ZDUS1sd3o2OTY2QmljRmZB?oc=5",
-            "source": "Voicepk.net",
-            "date": "Mon, 16 Mar 2026 13:33:04 GMT",
-            "source_type": "news",
-            "category": "Terrorism",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential Terrorism harm: recurring themes include social, media, fueling, wave, disinformation, warn (1 sources)."
       },
       {
         "signal_id": "dad803efa71179c6",
@@ -5201,60 +5296,6 @@
         "ai_summary": "Potential Other harm: recurring themes include publishes, fraud, strategy, tackles, crypto, risks (1 sources)."
       },
       {
-        "signal_id": "f16ed260ae009be7",
-        "title": "INTERPOL report warns of increasingly sophisticated global financial fraud threat",
-        "primary_category": "Other",
-        "tags": [
-          "Other"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1773655411.0,
-        "last_seen": 1773655411.0,
-        "latest_date": "Mon, 16 Mar 2026 10:03:31 GMT",
-        "links": [
-          {
-            "title": "INTERPOL report warns of increasingly sophisticated global financial fraud threat",
-            "link": "https://news.google.com/rss/articles/CBMizAFBVV95cUxQMGliTFJ0RUxJRUJRYndtV2Zvbm9mSTA3N2Ytcl96NHd1akMzSmpFSVJ3Q25KYWlHLTN4TmdTak91LXNNdTFJSHRremNLRVpScmU4eXhFa1ZjZTBCbVQza3VfVWtsd05Zdkt2OTBhSVBKcGdsMzRZd2FhYmFhZjhsNTR2TTVxeFctRFd1RGVZc3R1QTNBYk1QbG5yS0ZGd3o2R3ItMERaaEhqcEJMLVpWYm9heWJqbncwbjN5VmJ6ZWtOcWxnNG85bXRSeWo?oc=5",
-            "source": "Interpol",
-            "date": "Mon, 16 Mar 2026 10:03:31 GMT",
-            "source_type": "news",
-            "category": "Other",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential Other harm: recurring themes include interpol, report, warns, increasingly, sophisticated, global (1 sources)."
-      },
-      {
-        "signal_id": "5c4b0f676d2b0c92",
-        "title": "IBM Links Suspected AI-Generated \u2018Slopoly\u2019 Malware To Hive0163 Ransomware Operation",
-        "primary_category": "Cyber",
-        "tags": [
-          "Cyber"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1773648833.0,
-        "last_seen": 1773648833.0,
-        "latest_date": "Mon, 16 Mar 2026 08:13:53 GMT",
-        "links": [
-          {
-            "title": "IBM Links Suspected AI-Generated \u2018Slopoly\u2019 Malware To Hive0163 Ransomware Operation",
-            "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE83bGU3dXV3Wlo2dHVUZDRPOWZSUVM0bHlRQmQ0TVA2ZmhVcmhoNkZVT3NQa1EwbTNrbEM4anZjTXFpa185OXVPSFVFbHRJY2FycU1zNENqcmVsZGtY?oc=5",
-            "source": "cyberpress.org",
-            "date": "Mon, 16 Mar 2026 08:13:53 GMT",
-            "source_type": "news",
-            "category": "Cyber",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential Cyber harm: recurring themes include links, suspected, generated, slopoly, malware, hive (1 sources)."
-      },
-      {
         "signal_id": "66b6005806bbc30a",
         "title": "The Ultimate Guide to LLM Security in 2026",
         "primary_category": "Cyber",
@@ -5282,31 +5323,31 @@
         "ai_summary": "Potential Cyber harm: recurring themes include ultimate, guide, security (1 sources)."
       },
       {
-        "signal_id": "498eb285eb55c6a9",
-        "title": "5 WordPress Plugins Compromised; Millions of Websites at Risk",
-        "primary_category": "Cyber",
+        "signal_id": "e0a9a0e6fdabd0d9",
+        "title": "19 Indians arrested in UAE over misleading US-Iran war videos",
+        "primary_category": "Terrorism",
         "tags": [
-          "Cyber"
+          "Terrorism"
         ],
         "cluster_size": 1,
         "source_count": 1,
-        "first_seen": 1773644400.0,
-        "last_seen": 1773644400.0,
-        "latest_date": "Mon, 16 Mar 2026 07:00:00 GMT",
+        "first_seen": 1773639127.0,
+        "last_seen": 1773639127.0,
+        "latest_date": "Mon, 16 Mar 2026 05:32:07 GMT",
         "links": [
           {
-            "title": "5 WordPress Plugins Compromised; Millions of Websites at Risk",
-            "link": "https://news.google.com/rss/articles/CBMifkFVX3lxTE56SjR4cUNQU0l6LTl1MWQ0ckxGSTZtQUJSbFgwR25EMk1PWWxMUEtGWHBBMERlNWdrR1ZOLTF3WnhhQi1MUExmN2FocTQxbGl3XzlwT2N1UzI2RDAxRDdIb1hnd2ktWnZualUyV1BaeHVrNzR4NDJqQ1czeG9pdw?oc=5",
-            "source": "eSecurity Planet",
-            "date": "Mon, 16 Mar 2026 07:00:00 GMT",
+            "title": "19 Indians arrested in UAE over misleading US-Iran war videos",
+            "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxObGhRYTFlNGlLdk9saWRKNGYzZFhsUXFJSFFiWkUtbFNubF9ESU40Z2J5V0dPdUdqNGZJUUZ0TkFjYVgzYXZaandHOG9sUjdjYkkxcWI1MG1OLVlvZXUzbjBLMkFoWGtuaFoyWWxwOHU0YlEydkIwYnZBUTQzeWtLbHVqWFpZMG15ZGNLQ0JwdXZHaXowRkNPMFdhbnl2d1E0OGFfWXB3LUlaUXJ0bUt6enB3?oc=5",
+            "source": "NewsBytes",
+            "date": "Mon, 16 Mar 2026 05:32:07 GMT",
             "source_type": "news",
-            "category": "Cyber",
+            "category": "Terrorism",
             "uk_score": 0
           }
         ],
         "confidence": 0.256,
         "confidence_label": "Low",
-        "ai_summary": "Potential Cyber harm: recurring themes include wordpress, plugins, compromised, millions, websites, risk (1 sources)."
+        "ai_summary": "Potential Terrorism harm: recurring themes include indians, arrested, misleading, iran, videos (1 sources)."
       },
       {
         "signal_id": "5760725f055557d4",
@@ -5498,33 +5539,6 @@
         "ai_summary": "Potential CSAM harm: recurring themes include flood, fueled, child, pornography, overwhelms, enforcement (1 sources)."
       },
       {
-        "signal_id": "b1b46db815d3dc6f",
-        "title": "Gender Inequality In Digital Technologies And Online Violence",
-        "primary_category": "VAWG",
-        "tags": [
-          "VAWG"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1773587009.0,
-        "last_seen": 1773587009.0,
-        "latest_date": "Sun, 15 Mar 2026 15:03:29 GMT",
-        "links": [
-          {
-            "title": "Gender Inequality In Digital Technologies And Online Violence",
-            "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOTzhOUHZMWVBTM1lrbzhmRm11SmpjN1hMZUZHeEp4UWZZVGI5V29XYzF1WWc4M3c3UjZ1N1NzNnNBUjBfYk1TbTB1NXNhS3k2RVo0WTlsWFlQRGZQWGhTN1NkX1VNTm5CZzMtSXd4YXhtaFdmYVRYTGZGWjFDLWtJMFI3Y2l1UE5yV1dGbFZrMUNWY0U?oc=5",
-            "source": "Bloomsbury Intelligence and Security Institute (BISI)",
-            "date": "Sun, 15 Mar 2026 15:03:29 GMT",
-            "source_type": "news",
-            "category": "VAWG",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential VAWG harm: recurring themes include gender, inequality, digital, technologies, online, violence (1 sources)."
-      },
-      {
         "signal_id": "0e47eca04ee53910",
         "title": "Chinese regulators sound alarm over OpenClaw",
         "primary_category": "Cyber",
@@ -5658,33 +5672,6 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Potential Terrorism harm: recurring themes include arrests, spreading, misleading, content, defence, military (1 sources)."
-      },
-      {
-        "signal_id": "b4a14e7eb69ac077",
-        "title": "OpenClaw AI Agent Flaws Could Enable Prompt Injection and Data Exfiltration",
-        "primary_category": "Cyber",
-        "tags": [
-          "Cyber"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1773505020.0,
-        "last_seen": 1773505020.0,
-        "latest_date": "Sat, 14 Mar 2026 16:17:00 GMT",
-        "links": [
-          {
-            "title": "OpenClaw AI Agent Flaws Could Enable Prompt Injection and Data Exfiltration",
-            "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxPWmt6bVp2b0lwcGd0UG1KV2FaSV9qbFpKdXZIUGZkY2phUjZWdXJDcF9oNnl1M2otZkNxdllnZUxrSVFXVGFIRlpVblNNYkJ2dVJKOENpOUpzMjc0RzJlSjBwYTdJR0JvcFVzR3dFWlRHaFVrU01FeHppV2UtVXVQYQ?oc=5",
-            "source": "The Hacker News",
-            "date": "Sat, 14 Mar 2026 16:17:00 GMT",
-            "source_type": "news",
-            "category": "Cyber",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential Cyber harm: recurring themes include openclaw, agent, flaws, enable, prompt, injection (1 sources)."
       },
       {
         "signal_id": "ca23e553c8aa3d74",
@@ -6272,33 +6259,6 @@
         "ai_summary": "Model Releases: recurring themes include launches, sovereign, open, model, counter, chinese (1 sources)."
       },
       {
-        "signal_id": "d0d134e657c18641",
-        "title": "Moonshot\u2019s Kimi K2.5 is the new leading open weights model, now closer than ever to the frontier - with only OpenAI, Anthropic and Google models ahead",
-        "primary_category": "Model Releases",
-        "tags": [
-          "Model Releases"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1769500800.0,
-        "last_seen": 1769500800.0,
-        "latest_date": "Tue, 27 Jan 2026 08:00:00 GMT",
-        "links": [
-          {
-            "title": "Moonshot\u2019s Kimi K2.5 is the new leading open weights model, now closer than ever to the frontier - with only OpenAI, Anthropic and Google models ahead",
-            "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQdVZCWVk0ZVltSXA5dk1zZ3JiRFlBODV1cTJqQy0xcjhvMk5sSElvS0FjVlJlR2JXUHdPd3p5MmRMaHJSUHZjVk9PQ1NmVW1SNXBZcEJjVUYyQ1JNRUpSOXA2UkJJcGczNVU2aV9RLVNzV1h2c3NsRWlwVjB4WVpVdzBtcU4wd0p6RUxnUXd0NA?oc=5",
-            "source": "LinkedIn",
-            "date": "Tue, 27 Jan 2026 08:00:00 GMT",
-            "source_type": "news",
-            "category": "Model Releases",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Model Releases: recurring themes include moonshot, kimi, leading, open, weights, model (1 sources)."
-      },
-      {
         "signal_id": "7e4a131327d4783e",
         "title": "Beyond DeepSeek: China's Diverse Open-Weight AI Ecosystem and Its Policy Implications",
         "primary_category": "Model Releases",
@@ -6351,6 +6311,33 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Model Releases: recurring themes include best, chinese, open, weight, models, strongest (1 sources)."
+      },
+      {
+        "signal_id": "c6bd5e6a6ad654ea",
+        "title": "Introducing the Artificial Analysis Openness Index: a standardized and independently assessed measure of AI model openness",
+        "primary_category": "Model Releases",
+        "tags": [
+          "Model Releases"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1764576000.0,
+        "last_seen": 1764576000.0,
+        "latest_date": "Mon, 01 Dec 2025 08:00:00 GMT",
+        "links": [
+          {
+            "title": "Introducing the Artificial Analysis Openness Index: a standardized and independently assessed measure of AI model openness",
+            "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQdzBaalVJR1JZQWFKYzBqNWlza09oTENJNUF1NV9PTDNJNFJ0ampNMkRORWpQMktLT0QtY0QwQkpZTW9LTTJ6Z3dmRFQwdGkzUHl0d3A2ZTg2Q3FyUHRva21QNDBiVGtiM19CMjRrRkg1cngtSFEySVRWeGhsVmNkSXlSRjd2RnNVbXFvS2Njc2FoR0lqaDJXTFI5Vk8?oc=5",
+            "source": "LinkedIn",
+            "date": "Mon, 01 Dec 2025 08:00:00 GMT",
+            "source_type": "news",
+            "category": "Model Releases",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Model Releases: recurring themes include openness, introducing, artificial, analysis, index, standardized (1 sources)."
       },
       {
         "signal_id": "883eefbb632db06b",
@@ -6594,6 +6581,33 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Model Releases: recurring themes include altman, reason, openai, released, open, weight (1 sources)."
+      },
+      {
+        "signal_id": "d48b80debb2d390f",
+        "title": "This researcher turned OpenAI's open weights model gpt-oss-20b into a non-reasoning 'base' model with less alignment, more freedom",
+        "primary_category": "Model Releases",
+        "tags": [
+          "Model Releases"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1755241200.0,
+        "last_seen": 1755241200.0,
+        "latest_date": "Fri, 15 Aug 2025 07:00:00 GMT",
+        "links": [
+          {
+            "title": "This researcher turned OpenAI's open weights model gpt-oss-20b into a non-reasoning 'base' model with less alignment, more freedom",
+            "link": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxOY2F2eXJjZGFPZnJrWVdNcEY0eWQ1YnlYVzJpSmlpMTdFRW9iT01RN1ktNnp2dXVLTmR0RUM4NUN4alpFU1Q0WUVLUHBEcUlDZzd0QTJ6MmVxdklENTBWN2tyWGF3Q0JwWVFnWE0xVEYwMlJwMmd1STNZOGw2Q1ZDaUpZbGxYYnNjbGt3NXg4bTN1akFRcUpUbVJrSHBEcnhjT1UtZThJc3RJd0RlTEFFdzFzWE5EQjBfaWpDeWRSSFFWbTZZdHFoSWEwRHhKM0I4SW9OVGI5NGFLNkNDLWp1YThucjlmM2t4cUEzUldCa3M?oc=5",
+            "source": "VentureBeat",
+            "date": "Fri, 15 Aug 2025 07:00:00 GMT",
+            "source_type": "news",
+            "category": "Model Releases",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Model Releases: recurring themes include model, researcher, turned, openai, open, weights (1 sources)."
       },
       {
         "signal_id": "244169cec72c835b",
@@ -7118,10 +7132,10 @@
         "timestamp": 1774028822.0,
         "date": "2026-03-20T17:47:02+00:00",
         "tags": [
-          "forum",
-          "reddit",
+          "Cyber",
           "general-ai",
-          "Cyber"
+          "reddit",
+          "forum"
         ],
         "source_type": "forum",
         "uk_score": 0,
@@ -7137,8 +7151,8 @@
         "tags": [
           "Cyber",
           "forum",
-          "hn",
-          "model-safety"
+          "model-safety",
+          "hn"
         ],
         "source_type": "forum",
         "uk_score": 0,
@@ -7154,8 +7168,8 @@
         "tags": [
           "Cyber",
           "forum",
-          "hn",
-          "model-safety"
+          "model-safety",
+          "hn"
         ],
         "source_type": "forum",
         "uk_score": 0,
@@ -7169,10 +7183,10 @@
         "timestamp": 1773934340.0,
         "date": "2026-03-19T15:32:20+00:00",
         "tags": [
-          "forum",
+          "Cyber",
           "reddit",
-          "cyber",
-          "Cyber"
+          "forum",
+          "cyber"
         ],
         "source_type": "forum",
         "uk_score": 0,
@@ -7188,8 +7202,8 @@
         "tags": [
           "Cyber",
           "forum",
-          "hn",
-          "model-safety"
+          "model-safety",
+          "hn"
         ],
         "source_type": "forum",
         "uk_score": 0,
@@ -7366,13 +7380,6 @@
         "date": "Tue, 27 Jan 2026 08:00:00 GMT"
       },
       {
-        "title": "Moonshot\u2019s Kimi K2.5 is the new leading open weights model, now closer than ever to the frontier - with only OpenAI, Anthropic and Google models ahead",
-        "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQdVZCWVk0ZVltSXA5dk1zZ3JiRFlBODV1cTJqQy0xcjhvMk5sSElvS0FjVlJlR2JXUHdPd3p5MmRMaHJSUHZjVk9PQ1NmVW1SNXBZcEJjVUYyQ1JNRUpSOXA2UkJJcGczNVU2aV9RLVNzV1h2c3NsRWlwVjB4WVpVdzBtcU4wd0p6RUxnUXd0NA?oc=5",
-        "source": "LinkedIn",
-        "timestamp": 1769500800.0,
-        "date": "Tue, 27 Jan 2026 08:00:00 GMT"
-      },
-      {
         "title": "Introducing gpt-oss",
         "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTFBvLTl3Q3VvVGNYaWNHNllzSFFzZGNCV01XNjZGYnVsc2owbnFCLUNlOVF3ZHl2enFkSWppYTNwWWFLNm5MTTJBVmtHclRkQ2JSZlRtUU03Zkg3b3VMaWVnTg?oc=5",
         "source": "OpenAI",
@@ -7392,6 +7399,13 @@
         "source": "understandingai.org",
         "timestamp": 1765785600.0,
         "date": "Mon, 15 Dec 2025 08:00:00 GMT"
+      },
+      {
+        "title": "Introducing the Artificial Analysis Openness Index: a standardized and independently assessed measure of AI model openness",
+        "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQdzBaalVJR1JZQWFKYzBqNWlza09oTENJNUF1NV9PTDNJNFJ0ampNMkRORWpQMktLT0QtY0QwQkpZTW9LTTJ6Z3dmRFQwdGkzUHl0d3A2ZTg2Q3FyUHRva21QNDBiVGtiM19CMjRrRkg1cngtSFEySVRWeGhsVmNkSXlSRjd2RnNVbXFvS2Njc2FoR0lqaDJXTFI5Vk8?oc=5",
+        "source": "LinkedIn",
+        "timestamp": 1764576000.0,
+        "date": "Mon, 01 Dec 2025 08:00:00 GMT"
       },
       {
         "title": "Kimi K2 Thinking is the new leading open weights model",
@@ -7455,6 +7469,13 @@
         "source": "Business Insider",
         "timestamp": 1755500400.0,
         "date": "Mon, 18 Aug 2025 07:00:00 GMT"
+      },
+      {
+        "title": "This researcher turned OpenAI's open weights model gpt-oss-20b into a non-reasoning 'base' model with less alignment, more freedom",
+        "link": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxOY2F2eXJjZGFPZnJrWVdNcEY0eWQ1YnlYVzJpSmlpMTdFRW9iT01RN1ktNnp2dXVLTmR0RUM4NUN4alpFU1Q0WUVLUHBEcUlDZzd0QTJ6MmVxdklENTBWN2tyWGF3Q0JwWVFnWE0xVEYwMlJwMmd1STNZOGw2Q1ZDaUpZbGxYYnNjbGt3NXg4bTN1akFRcUpUbVJrSHBEcnhjT1UtZThJc3RJd0RlTEFFdzFzWE5EQjBfaWpDeWRSSFFWbTZZdHFoSWEwRHhKM0I4SW9OVGI5NGFLNkNDLWp1YThucjlmM2t4cUEzUldCa3M?oc=5",
+        "source": "VentureBeat",
+        "timestamp": 1755241200.0,
+        "date": "Fri, 15 Aug 2025 07:00:00 GMT"
       },
       {
         "title": "OpenAI\u2019s GPT-OSS Challenges Meta\u2019s Leadership in Open-Weight AI",
@@ -7539,23 +7560,11 @@
         "source": "Databricks",
         "timestamp": 1754377200.0,
         "date": "Tue, 05 Aug 2025 07:00:00 GMT"
-      },
-      {
-        "title": "gpt-oss: OpenAI validates the open ecosystem (finally)",
-        "link": "https://news.google.com/rss/articles/CBMickFVX3lxTE1lR2FKbmxWT2hVUk1FTzl6RUtHME13SnROckl4Z0E1X1p5SThVd2ltVkpMZjRWLVVqYm1mbUpwaXZ5Q2FTejRPem9JaWI2WW9UR2NVYW8wemxtLWFtNWZOMXJOQk1CZk9lNGExSlVhalktZw?oc=5",
-        "source": "Interconnects AI",
-        "timestamp": 1754377200.0,
-        "date": "Tue, 05 Aug 2025 07:00:00 GMT"
       }
     ]
   },
   "coverage": {
     "by_harm": {
-      "VAWG": {
-        "count": 25,
-        "uk_count": 1,
-        "last_seen": 1774074327.0
-      },
       "Terrorism": {
         "count": 25,
         "uk_count": 1,
@@ -7566,33 +7575,38 @@
         "uk_count": 1,
         "last_seen": 1774032288.0
       },
+      "Cyber": {
+        "count": 25,
+        "uk_count": 0,
+        "last_seen": 1774101162.0
+      },
       "CSAM": {
-        "count": 22,
+        "count": 23,
         "uk_count": 0,
         "last_seen": 1774040526.0
       },
       "Fraud": {
         "count": 25,
         "uk_count": 0,
-        "last_seen": 1774032288.0
+        "last_seen": 1774037464.0
       },
-      "Cyber": {
+      "VAWG": {
         "count": 25,
         "uk_count": 0,
-        "last_seen": 1774074675.0
+        "last_seen": 1774110683.0
       }
     }
   },
   "summaries": {
     "harms_by_category": {
-      "Fraud": "Recurring themes: scams, fraud, voice, global, africa, deepfake, alberta.",
-      "Cyber": "Recurring themes: prompt, security, injection, unveils, attacks, data, tools.",
-      "Terrorism": "Recurring themes: iran, fake, disinformation, video, content, israel, israeli.",
-      "VAWG": "Recurring themes: abuse, sexual, grok, child, deepfake, girls, women.",
-      "CSAM": "Recurring themes: child, abuse, generated, material, sexual, grok, musk.",
-      "Other": "Recurring themes: crime, fraud, crypto, investigations, help, warns, financial."
+      "Fraud": "Recurring themes: scams, fraud, interpol, voice, global, africa, deepfake.",
+      "Cyber": "Recurring themes: security, prompt, injection, harness, unveils, attacks, tools.",
+      "Terrorism": "Recurring themes: iran, fake, video, content, indians, disinformation, israel.",
+      "VAWG": "Recurring themes: abuse, grok, sexual, child, women, deepfake, girls.",
+      "CSAM": "Recurring themes: child, abuse, material, generated, sexual, grok, musk.",
+      "Other": "Recurring themes: crime, fraud, crypto, investigations, help, risks, role."
     },
-    "signals_top": "Recurring themes: abuse, generated, prompt, injection, deepfake, fake, shows.",
-    "releases_top": "Recurring themes: introducing, codex, open, model, chatgpt, thinking, openai."
+    "signals_top": "Recurring themes: abuse, prompt, injection, deepfake, security, generated, fake.",
+    "releases_top": "Recurring themes: introducing, codex, open, model, chatgpt, thinking, security."
   }
 }
