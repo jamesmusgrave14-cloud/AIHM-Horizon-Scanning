@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-06T16:59:41.339160",
+  "last_updated": "2026-04-06T17:55:29.605278",
   "disclaimer": "Automated horizon-scanning prototype. Items indicate emerging discussion, not verified risk, intent, or prevalence.",
   "meta": {
     "limits": {
@@ -14,28 +14,6 @@
   },
   "sections": {
     "harms": [
-      {
-        "category": "Other",
-        "title": "Grandmother mistakenly jailed for 5 months after AI linked her to crime",
-        "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQTmtpMmFWclFVRlJVSlJLWVctVHBvVU5lRHo3M1FZZ3F0MUlWbDB0V0xQZmU0Z04wZzBaTXNDaUVza2ZVSlJQQlN2WUlhcW5SSzF3TjNXX0hSRXByckVidW5YTE5VWjN5b2FPVVh2S3U0NTBjTFpFWVVYZXMwRTkzbk9vb3gybUlZcnNOdTQ2Nm1DZWdoM3pyXzFIRVlJdzVmT3pQVw?oc=5",
-        "source": "telegraph.co.uk",
-        "timestamp": 1774894860.0,
-        "date": "Mon, 30 Mar 2026 18:21:00 GMT",
-        "relevance_score": 1,
-        "uk_score": 1,
-        "uk_relevance": false
-      },
-      {
-        "category": "CSAM",
-        "title": "Behind the screens: The hidden crime epidemic swamping police",
-        "link": "https://news.google.com/rss/articles/CBMiugFBVV95cUxORDl5ZlVPbVZXZWRoamRzRFQ4cmlEUzc5eU04WlMyNEc0a2hESkotUURaeHZONUZ6TE5Ec2hDemE5MFgzT2xHWnBVSWRMdkRQcjA3dWtyLVNtYXkzc01JVGVFejFpYmllaDhPc3Jmb3JuZ2JhcXB6TEVDSVRVSHdzLWpwZEE0U2h6NXZLOWJiTFJkZVg3V2REeFFuTUF1Y3lhSEpNaHpWNlktZHE0eVVzRGJtelp6STJKTlHSAboBQVVfeXFMTkQ5eWZVT21WV2VkaGpkc0RUOHJpRFM3OXlNOFpTMjRHNGtoREpKLVFEWnh2TjVGekxORHNoQ3phOTBYM09sR1pwVUlkTHZEUHIwN3Vrci1TbWF5M3NNSVRlRXoxaWJpZWg4T3NyZm9ybmdiYXFwekxFQ0lUVUh3cy1qcGRBNFNoejV2SzliYkxSZGVYN1dkRHhRbk1BdWN5YUhKTWh6VjZZLWRxNHlVc0RibXpaekkySk5R?oc=5",
-        "source": "manchestereveningnews.co.uk",
-        "timestamp": 1775019360.0,
-        "date": "Wed, 01 Apr 2026 04:56:00 GMT",
-        "relevance_score": 0,
-        "uk_score": 1,
-        "uk_relevance": false
-      },
       {
         "category": "CSAM",
         "title": "Louisiana law to combat rise in AI-generated child sexual abuse material",
@@ -202,17 +180,6 @@
         "uk_relevance": false
       },
       {
-        "category": "CSAM",
-        "title": "Scottish trans activist pleads guilty to child abuse",
-        "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPZXZYbnVqRE9nTktELUpQeHRveWdlZUdnUC1Hc3hkSmd4S3ZDOFJSOVJBZ24tRjAxWjNYYTlwZDR3QkNfREpxSUtXLTVScndDUGZGaWdzMUlieUQ1Vk9vcUY5MW5LcFEwb0kwRXFJTmlpbF9FMVZVZi0xQ2Y0eHVzRml30gGHAUFVX3lxTE1pbElTRXhhZTBhNkdLeUdfUzdhSE5iRmNqQWNlQ3RhR3FPazd5dGw5WWpUUWI1alY3RzlwNkF3WGhXbDNCa3lnUXV3b2ZwU211VEg2V1N6VGFlOUVvWE84Y3hpVktXOGppZWdCTE9pbjVIRlQxQ3lSSVNrekgydk5RNkYyMGlyTQ?oc=5",
-        "source": "ifamnews.com",
-        "timestamp": 1775224800.0,
-        "date": "Fri, 03 Apr 2026 14:00:00 GMT",
-        "relevance_score": 2,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
         "category": "Fraud",
         "title": "Think it\u2019s your family calling? Why AI voice scams are getting harder to spot",
         "link": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxPRXFFdS1qSUdmWEZiLW1LLU5RaXlfTkJrVHJVM2F0eWdEdmtNV0V1eUVyVjRydm9DOG54Y19qRlpERlN6SEZ1V3ZvazAzRFBhTVhjSDk1cjd2Q0Z6M19URjlweTNmUHBQeVl6ak5NZ2RERFYzNTFPVmEtQW00TjUxT1YzTUliWnp2V2cyN1ZxbzBxMGVjdVV5cHpFUk85Zk45aHlRTHJQaFJVcmhQOVd3TndibkVaNmpEM2VwcVMxOGgxY2gwR1hPV01ndmpzbGpSYjFRZmF1Nkl0dGRFODVUbnc5MHDSAeoBQVVfeXFMTjhZS1pnYU1iWFlTSXRkYndIU1VDRlh0TGpPWnVodXJFUUcwWWJwLW9kRnhfTVZDb3lQWWhXeHRyUlI0TjJhNEtpTnVwLV9qc0lNWFJMazdZWFgyVUIxZWJZZHcyYTRuNWZoQmZLdTFaRGw1N0pReENTVURUOWExYlpiUkJxeTVSTTlFZVFyVGpFR3dBVE5QcmoyVGU2M0NDZGxuZXg4cUptU3didklobDkwdW9PR0p3ZzlUOFFWLVNxaUktX0tBRUVUUVg3V3Z1cy1oWFhYN29tNUZFdUNpLVotbUFwMTd0Mm9B?oc=5",
@@ -293,7 +260,7 @@
         "category": "Fraud",
         "title": "Elder fraud rises as scammers use AI",
         "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQLTFhLUVsS1hOdFpUNS1JZ183OThqVFpTN0dfWi1zT1ZwQmxBbVFBV0NSSVNiajQ1YlpvWEhNUlhTT0N0LW9xUlN2YVh3blMwMVlaTmhsVERCRzVMVWxUTFRDcjBVV0RmcF9aWnZhLXJybkR1OG5icElrc21zb0h1WGo0TXVRdWNtNDRoQ2RtSGp2cEtu?oc=5",
-        "source": "Journal of Accountancy",
+        "source": "journalofaccountancy.com",
         "timestamp": 1775041239.0,
         "date": "Wed, 01 Apr 2026 11:00:39 GMT",
         "relevance_score": 2,
@@ -315,7 +282,7 @@
         "category": "Cyber",
         "title": "Guarding LLMs With a Layered Prompt Injection Representation",
         "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQNWhFYnV3LWpmSkxtME5vQkdHczRUZ2hJcGFNUktSTF9JVFRvUnNUQ3dkZnFEX3VaTjdSa3VlMm9tZ1ktdi00UkpOSjhvTk9fRmtHemdEZG02SFphRFBXQTFHNzE0aVQzWnpSNFA1SVFpcnUzWWJ5NFZ5UVRpNG9CdzhWWGxoQW1mUXVESHFmVGI4TnhKc0RvcWZJYmZ2MXliWjE3UDJQSTZuLUhJV19ldHVOWUo4WlF6cWI2d0dpN3J2aURHaWxPdllR?oc=5",
-        "source": "TrendMicro",
+        "source": "www.trendmicro.com",
         "timestamp": 1774946251.0,
         "date": "Tue, 31 Mar 2026 08:37:31 GMT",
         "relevance_score": 2,
@@ -381,7 +348,7 @@
         "category": "Fraud",
         "title": "Key rules to prevent online fraud",
         "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1xWVdLQ09KcXdOZ3FRWVlLRjdyUEZpQS1ZUV8zd3A3VkFfWVZISnJ0LVJpb2N1NEFsSGdqRUZDZlo0Q2tZNkZla1ByQVk3OXZzdXJ2YVZCMWRJd3BtUUMxdk5wUUhualg3X255Rk9pNXZ0NGYtclUtSTZYeDlSV2s?oc=5",
-        "source": "Vietnam+ (VietnamPlus)",
+        "source": "en.vietnamplus.vn",
         "timestamp": 1775350800.0,
         "date": "Sun, 05 Apr 2026 01:00:00 GMT",
         "relevance_score": 1,
@@ -480,20 +447,9 @@
         "category": "Other",
         "title": "True Crime: The AI Algorithm That Stole Angela Lipps\u2019 Freedom",
         "link": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1xaEF3R3FtZ05qOXA5VXBNOFo4aE42dWZWQzdLZHdJelAwWC03MTN1Q3p1ZElJMm1UeHZITHFIRHZTWmh4UFBVVFp5T2d2MVQ5alltQ1JfRUt1TVZNYloxM0hJdDVzRlE?oc=5",
-        "source": "IMDb",
+        "source": "imdb.com",
         "timestamp": 1775172416.0,
         "date": "Thu, 02 Apr 2026 23:26:56 GMT",
-        "relevance_score": 1,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
-        "category": "VAWG",
-        "title": "Deepfake porn scandal leaves PA school reeling",
-        "link": "https://news.google.com/rss/articles/CBMifEFVX3lxTE1NdUVGMTVCOWQ0TEt1T2ZCS1pCem95ZTRYeHROYjhqVnU2UzRvVWltcjhHMGpNY1Z4SkdiaWVrZFdZZ3UtWEluZ0l5NElSNzhIWWlQdS0xdk9KWkpUTWVZNVVaWkpNS2w3aWdZVTZzbnVfSVAtN3hzY0syYnY?oc=5",
-        "source": "PressReader",
-        "timestamp": 1775169924.0,
-        "date": "Thu, 02 Apr 2026 22:45:24 GMT",
         "relevance_score": 1,
         "uk_score": 0,
         "uk_relevance": false
@@ -609,10 +565,21 @@
         "uk_relevance": false
       },
       {
+        "category": "VAWG",
+        "title": "Keir Starmer slams 'vile online abuse' and backs Mirror Missed campaign",
+        "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOWDU5RU9iQW1tS2xRbGE0UUtydllPbElPU2RHZzVycmdSWVNOUjNMZ0F3THV4dnZ5blVFNEVKLTRHaGtuUlFWSHBIamNtNEVXQXhDUnBXR2MyU3h2Z1Jtek9oWkFrNDFBcElMSndoWm02YzJGX2FYZ2t2dU91dDBVV003TWRGQ2haSXM2MXpvY9IBlAFBVV95cUxNbkcyTjRtcll2c1N5c0w5VFVXNmNET3E3V1NJaVpYaTFTVTFwVXg5UnlCSENfZjBSMnZiT2toX0hDSjN4X19TVld1ejZoWFU2RmRfekpyaFVMN1lERWNjeXZzSUh1bTBMRDN0N1VlNEpXRVNLWDZuMXAxa2FHZUlxQ2pFaHQxbm9QbWEyb0pmRk1wOG9w?oc=5",
+        "source": "The Mirror",
+        "timestamp": 1775065680.0,
+        "date": "Wed, 01 Apr 2026 17:48:00 GMT",
+        "relevance_score": 1,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
         "category": "Other",
         "title": "Why agentic AI is closing the financial crime gap",
         "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNbGRPSlktVy1weXRqV01NYzA5Q2lvNjBRN1l5QVVhVUhSSFRzbndGOEhEdllQeUFSUUM5dWdZZG81alVnQ3QzREZfSnVLREtLb0xybEhYLUhOQlA0dElNMXh3RVhUbWVNT3Z5UmV2NEVjcXpZTXdzMzdOT0VkaHlLN0Rvbm04Ukk2ekpIXw?oc=5",
-        "source": "fintech.global",
+        "source": "FinTech Global",
         "timestamp": 1775060647.0,
         "date": "Wed, 01 Apr 2026 16:24:07 GMT",
         "relevance_score": 1,
@@ -643,9 +610,20 @@
       },
       {
         "category": "VAWG",
+        "title": "AI deepfake nude scandal rocks elite school",
+        "link": "https://news.google.com/rss/articles/CBMiiAJBVV95cUxOQUxwU2ZrdW91UU9OUDdLZHViNy1oci1pdVF5Qi05QjBpWUJJZkNheXZOMVR4QUhVU1hMekZ2Rk5DWWhmYzBmbXhpdGgzMUNoQjFaVURqc1JTVGdRQjZsbFFjWk5pRjJXTElWWW1KMXJweWdZbmpaTXRfXzAybHRRMkh0cjVWcDlwZm41VFFWWEZWSzRKV3B3VjQ2dFpOOUh3ZGFKSkdUTGdVbnRaSE55QVc0OGRiRmliQXAtdHFkOF83bmE5YTB1ZW1idG5aZVNsa0RpMkM0SE5VVTVObElhc0NaNDA3OEQ2ODFkS3hiQWZiWjhXWUhsaWk2ak1NMUVtRzBxYjAyUjDSAY4CQVVfeXFMTWp5MWNHcEJjYkt2XzVZM3U2dnpQdVlxaXdOTHJvSG52UEVCV2toemNBcUhqMHczOGt4V0t0aFdyZm5WWEJINTBCOWZyaWVvX0E3UWRSY2Z3TzNFdmtYcFoweWVwei1mUURkdy1kaWRsbUZlWDRMa3BwOC1jeUZXSHY4VkxFWFE5N25sdVBGdHJfd3FjSzFITVVaRlJ4MWpzQ0wyZDVzeWtESENLSG5vLS04ck9EZnZCM2ZNR1dSQnkydm41LUlDTjJnSlJXbTRRdU8tcTZEd0Y1ZGFiY3BWM213R080bWNVenpTcmlHWkhrT3RNMTlrN1pQNUIxMFUybkQzREEta1h0YjVBOWNB?oc=5",
+        "source": "dailytelegraph.com.au",
+        "timestamp": 1775027615.0,
+        "date": "Wed, 01 Apr 2026 07:13:35 GMT",
+        "relevance_score": 1,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
+        "category": "VAWG",
         "title": "Campaigner hopes new law will stop sexist street abuse",
         "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5tUl9NWGkzQzhyNF9UNUpBVFNRNk9kNWRSeVNCY3dJN3RWYmFUdlZ6M3FieE9QQWNiMU00ampGT2FjVkFhSy1mRnhNbm90ZHJIbUdITExTSms3UQ?oc=5",
-        "source": "bbc.com",
+        "source": "BBC",
         "timestamp": 1775020081.0,
         "date": "Wed, 01 Apr 2026 05:08:01 GMT",
         "relevance_score": 1,
@@ -656,7 +634,7 @@
         "category": "Other",
         "title": "Chainalysis Launches AI Agents for Crypto Crime Investigations",
         "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNRnpTMUxkQ3VxeXVTVTF3cmlBNmdNaGEwZkxTVnFnTzB1NGUxWGhzcm9CcmJYNHhKc0dQaHgwdFpNVkJ5aEtQRlYzQVQxMElTTG9jRENCT1dQdFI2NE5MLTRPb3Y4TTJ3bWNvZ2t0YTRyaC1EZjVKZlBoWHBnWDEtcWY1QkxIYTZ5WHJKaTBPRnBINGR2UnJGaUU5ZVk4YmE3WHMwUkoxNTRtVTJjQkhr?oc=5",
-        "source": "PYMNTS.com",
+        "source": "pymnts.com",
         "timestamp": 1774984328.0,
         "date": "Tue, 31 Mar 2026 19:12:08 GMT",
         "relevance_score": 1,
@@ -675,21 +653,10 @@
         "uk_relevance": false
       },
       {
-        "category": "CSAM",
-        "title": "DeSantis signs \u2018Missy\u2019s Law,\u2019 toughens penalties for child exploitation and calls for impeachment of Leon County judge",
-        "link": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxQeEZ1RXFQVElYUFZJb1hIdVoyUHpNWHpxTTkyQ1E0YlJKLXltTFFHME8tRFRza25QdnREcS1IdEp6Q2Eydk5EVFBZbTE1N2xmcXQ2SVhtdF9uT2h0dDBQOVRVTXRJTDBjT1lZTU1CZ215TEVJdWRZaTlQLWFOVE5lLWRWbTF5THllekt0NWxQYVBaV2NVeVo5MEZiTEhkNWVfTWpETGJucXNhUXAxdWt3WXEtaTBXSFRaTWJvZjNTcG9vMlBJbWVYMXJfRTQ5TlhTN05RWDBn?oc=5",
-        "source": "Florida\u2019s Voice",
-        "timestamp": 1774978440.0,
-        "date": "Tue, 31 Mar 2026 17:34:00 GMT",
-        "relevance_score": 1,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
         "category": "Other",
         "title": "AI gone wrong, again: 50-year-old woman arrested for crimes in a state she had never been to",
         "link": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxQcnluSFc2NG4wazBYVDdUQ29DSUcyWElFbU5EM1pKRlRiaHB1RUxYUHA2VXBWSHBSbzJ2Qk9GaDR6cnpMWFBOV28tcjhra2M2RGNrbTdXT25mRFlZUXdXSjRoMzhDbGlpUzR6dk9saEsyajUyZDFWLXV0NmNFc0ZFQjNKRlJxSFRxVlNRZ01tZndFc2lhdWxrdWJ4VjV5U1huMk0zZmlnQk1EeUFFeDlwWWF0dG9sRmdNc1VObUt2SVFlTDFzUnVGYktIUFA5ZFVWTmNZ0gHYAUFVX3lxTE9uaWpGTlZOXzF2SEptbWxaaThMZENrb3JhVXRFRjN5VmJFLUduOFBTRWNnUEJYcDdHYmt0U29qamdqYUZGV2lqQkV4MThvNDFLMFkwRnh2ejYwNDVSX3ZXeEducWV0MS1MM2UyUVFOem03a3V0TEhmaXU4Q3JDNFg1b3NLa29ZZjZXTjdyZ2hsYlZsNFhaZmFGcWJ3VWxINF9xRWxaUE4zbVVJTkVpcXlEZGIyeW56czNfeDgwQVJmYnpmeElGSmQ0b05zUlJiVHRyQnE2SmNLTg?oc=5",
-        "source": "WION",
+        "source": "wionews.com",
         "timestamp": 1774954920.0,
         "date": "Tue, 31 Mar 2026 11:02:00 GMT",
         "relevance_score": 1,
@@ -730,35 +697,13 @@
         "uk_relevance": false
       },
       {
-        "category": "Fraud",
-        "title": "Scam campaigns target older Ohioans, but younger adults often fall prey",
-        "link": "https://news.google.com/rss/articles/CBMi2AJBVV95cUxONmE2YXV6Mm9WSWhUOTBPUzZ1ekNQdzNFbzhRY1pTU0JvQ3ZabVg3UVhwSk5tdlZ1UHg1M3NTdXpJOG9tMDhRNFp0dDdNVE5BcUE0ZTFnUXlILVdCeFV0eFpPeTByQ0N0STdaM0NRWHVJVGNnVmQ0Q0J0SS0ycURNVEF0RTJGS0Y1Q3pFMU1MMW1TbDVDeVFSUzlYUG9WdHk4cDhDWHVLeERydGtVWHRndktvdjlWVVREYUpMbXowdGpHX1lxdTc2Y21RbGZuWU5WZFJzaGd5UlBNcTFqOXRvWE5PRGU2VEhZb2RFWGk1Zm5XNHBqdG5sMjQ5LUZNVTV2NHRqbWpPMzFHTExBUEh2bVFjd3gyeVVFWU1iS05seDJwRnFLdldBNV9mb2FXYUk1LUhBcFUxT2pHSDZsYWhsTkFqd3NvbUhlbHl5a3FsVERLdTJINEZiOQ?oc=5",
-        "source": "MSN",
-        "timestamp": 1774895905.0,
-        "date": "Mon, 30 Mar 2026 18:38:25 GMT",
+        "category": "Other",
+        "title": "Grandmother mistakenly jailed for 5 months after AI linked her to crime",
+        "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQTmtpMmFWclFVRlJVSlJLWVctVHBvVU5lRHo3M1FZZ3F0MUlWbDB0V0xQZmU0Z04wZzBaTXNDaUVza2ZVSlJQQlN2WUlhcW5SSzF3TjNXX0hSRXByckVidW5YTE5VWjN5b2FPVVh2S3U0NTBjTFpFWVVYZXMwRTkzbk9vb3gybUlZcnNOdTQ2Nm1DZWdoM3pyXzFIRVlJdzVmT3pQVw?oc=5",
+        "source": "The Telegraph",
+        "timestamp": 1774894860.0,
+        "date": "Mon, 30 Mar 2026 18:21:00 GMT",
         "relevance_score": 1,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
-        "category": "Other",
-        "title": "AI search summaries can scam you without warning \u2014 here\u2019s how it happens and how to protect your money",
-        "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNakpjLXpsLVpqb0lia2gyb28wZ3lNYzVLSldaZmJUc2g5bFVMNHdmWWZRU0tzYVZxWXpMckJDYTJVeEpkWWFZZk9fQktKZ2c0ZVRGWkFMRndXUTJ5TFlhRm02SlNpZThjaU9qSlRyQUtkTEI0WWRCYkh4VmlNRkNzeQ?oc=5",
-        "source": "AOL.com",
-        "timestamp": 1775483730.0,
-        "date": "Mon, 06 Apr 2026 13:55:30 GMT",
-        "relevance_score": 0,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
-        "category": "Other",
-        "title": "The Coming of the Corporate Robo-Stooge",
-        "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE10eHRRQkp0bEZZMEZkLVJaMUxLNnl6WjVBVW15ZjJlXzdFR2R6alAxckJqcHBIVmU2LUhqN05mbDRJZktjTGxUTFNOVmwxblVSekZqd0ZhZmkwRFdwV2cyQnNoQWgxcmo0RkppTkJn?oc=5",
-        "source": "Unite.AI",
-        "timestamp": 1775482108.0,
-        "date": "Mon, 06 Apr 2026 13:28:28 GMT",
-        "relevance_score": 0,
         "uk_score": 0,
         "uk_relevance": false
       },
@@ -777,7 +722,7 @@
         "category": "Other",
         "title": "How the law is catching up with AI 'deepfakes'",
         "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNNko5UFZBeEJsUmpuOHA2U0F3U19uRFF4dDdPUGRtS1FxS0MxamVOejJnXzgydjFPMkNhQmNDdHhlS1JTb0JYZnExQ0lBeWxZTHpXVzZrVUdYNnA3MkhGNnJZX1hfb2xhTlZlNm5scUdrZnlJYjNDUXgzbWl2QUNIQzkxdGlBbHk4bF9fcjhnTQ?oc=5",
-        "source": "scotsman.com",
+        "source": "The Scotsman",
         "timestamp": 1775448000.0,
         "date": "Mon, 06 Apr 2026 04:00:00 GMT",
         "relevance_score": 0,
@@ -840,28 +785,6 @@
         "uk_relevance": false
       },
       {
-        "category": "CSAM",
-        "title": "Bill Gates predicts: Of all the things humans have ever created, the one that will change society the most is...",
-        "link": "https://news.google.com/rss/articles/CBMi0ANBVV95cUxNLVBXcTcxVXUzY1d3R3M0Q2l6S05ZSjEzckdsVFRndnFzNDAydXlJTXE3Y2xBVVBWZkFJUEVualdINmhpQ29RNWFuTlZJRFpUYUlKVVhyUG8zZWxBU3RwYXdQT0p3Tl9tcUVoYkVqcDlGU3hvd0dzNHZnV3N2cUtGWko2VkNIZGkzLVJJY2xyWFRsTGtXOWpYVzktQlFhV0p6MjFpTWZiSkEzS1BGTnl2YzRaUlNPLUQyNGJuMFpYbE1MNXRxUzBzQVkzVzVTTXBLWkR4dTFtdE5rMmRfVFBLdHo2emdjWHpvcDFRYjJ2bnIxRzNQaEE5V1IxUjZtUkFoQ29ZbDJ1aFJrcHFHQXp2NHhKaDJZTHhsTWFva2ZvV2dHcnBMcktsbk16NDFWcE0tcURoNHpBcVY2ckpEWmF6d1ctNllnelpFZmdhVTdtSXlQOTJPUnVmOGVPWjJCUE16Y2J6M1ljT2V6RFVoSmZnMXJyS3hzMDJiRzhSNk1DSnFraWlrMU02UXhrYk1VMTdXdXZqY0RCTUc0RDRUQ1hramlTM0JlWTBxVnppVUYtNWI2djktUUYzU1hXMzJmYUljOXJkYkFpazRFZ0NDNGhrTg?oc=5",
-        "source": "MSN",
-        "timestamp": 1775376585.0,
-        "date": "Sun, 05 Apr 2026 08:09:45 GMT",
-        "relevance_score": 0,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
-        "category": "Other",
-        "title": "Why AI-powered city cameras are sounding new privacy alarms",
-        "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQbi1DeFF4QlY1WnNKc0Rod2dLSE5qNFZiOXBqRlVyYjdTZE16SWFmSmg1MzhlR1paYW5ham5HdTQ5YWpZNlYzSng2TUZNaC16WWVGTVpUa1BjTlpkWkNJUm02NW5xYzE1QVJfZjdocFV5Q05GZ0xRQ2tXajhfVzlXZU1R?oc=5",
-        "source": "Fast Company",
-        "timestamp": 1775376345.0,
-        "date": "Sun, 05 Apr 2026 08:05:45 GMT",
-        "relevance_score": 0,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
         "category": "Cyber",
         "title": "AI Security 101: Threats and Defenses for ML Systems",
         "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOLVZ3ZWZkSDVUQWxUY19qZ3ZvUnFhQXRfSkY3bjZXd0RQQWtQdXZCbkl0QzdYb2lnajJxLTBFS0tXaWxJV1RWRi1hUDJtTi0wUlpVLXhTb0NmZ3hqZkw2aEZOa2FaaENELWxOc29KajhYcFZ0cEN3U2RhbDZNMnJyRUI2aTltaEc3WHVTeUg3MDBxX1dHcWt5Y2VkQ3FoRzRPN0RoYVZsTUY2aWtuN2xHcHZpaw?oc=5",
@@ -879,6 +802,17 @@
         "source": "Blockchain Council",
         "timestamp": 1775365532.0,
         "date": "Sun, 05 Apr 2026 05:05:32 GMT",
+        "relevance_score": 0,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
+        "category": "CSAM",
+        "title": "Bill Gates predicts: Of all the things humans have ever created, the one that will change society the most is...",
+        "link": "https://news.google.com/rss/articles/CBMiugJBVV95cUxQTHozbG0tVEQzNElKM0RqbmZIMDI2ZEFsMFRIakp5MHFjSVIwVWFINjY3SlFkNEpqSWlZYmRoSWZBNlJRQWhnX2hVUlBwV3Q2WVZMYUh0cUFDa2YtcS0wb1Y3dDZRcExMck1udEx0Wnc5MldBMTZVM2MybEttaWVrcFZHb1diQks2dUtKRlljWnA0dXR1cFlEVFNmRTVmNy1jVV96YW10TGUwd29RYlNqTFNHcks2aWtnSmVnOUc0bHczakJZbVZBLXhzeTlOSGRoQkFTX1JUZXNHaS1oemJPMWhzQmpETlN0WmRxbmxRMXVzUlpXUHhTc2dGaWxYNkZuSzB1aGRXNUlKSFpsSmpVNzdLTEVjMlV4UlpOUldQYmxCeW80V2VhVzhtdnltQm5PRHZnVXl1LXl0Zw?oc=5",
+        "source": "MSN",
+        "timestamp": 1775338382.0,
+        "date": "Sat, 04 Apr 2026 21:33:02 GMT",
         "relevance_score": 0,
         "uk_score": 0,
         "uk_relevance": false
@@ -920,7 +854,7 @@
         "category": "Cyber",
         "title": "When an Attacker Meets a Group of Agents: Navigating Amazon Bedrock's Multi-Agent Applications",
         "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxQWkw4dVVoTUFiTUYyNlZjbVprZjBienpIaUhEYlRnYWRJS0tuQ3JqdHJsOGJWRHZPUmlkZlVzbDRzMXpFTWpHQ0NyU2tjRzBCaENFRnZMbVhJR1lnTDVlRlBqQjJjVTZjS1d1UkJySUNlOHJxRXVHc1NsU0xEQTd2ZA?oc=5",
-        "source": "Unit 42",
+        "source": "unit42.paloaltonetworks.com",
         "timestamp": 1775253748.0,
         "date": "Fri, 03 Apr 2026 22:02:28 GMT",
         "relevance_score": 0,
@@ -967,6 +901,17 @@
         "source": "Chicago Tribune",
         "timestamp": 1775235353.0,
         "date": "Fri, 03 Apr 2026 16:55:53 GMT",
+        "relevance_score": 0,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
+        "category": "Other",
+        "title": "Inside India's courts, AI's growing role sparks concern",
+        "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQMS1yOVdhYWpRRmlDazRGOURWWkJweGVZX0tGcXZLa2tZSHVPWmd6Vno1SmpvN0pRa2lPMTA5bEhFVHNsa2s3NWpleWpIakJfc3JOUFozR0QwWmx2N3NKOEMyc1ZteWlEZzJyUTNxb29XdnFrNjZjZUp4UXk4TVRkeC1GZ0dBbDhzRVJSYkNn0gGOAUFVX3lxTFAxLXI5V2FhalFGaUNrNEY5RFZaQnB4ZVlfS0Zxdktra1lIdU9aZ3pWejVKam83SlFraU8xMDlsSEVUc2xrazc1amV5akhqQl9zck5QWjNHRDBabHY3c0o4QzJzVm15aURnMnJRM3Fvb1d2cWs2NmNlSnhReThNVGR4LUZnR0FsOHNFUlJiQ2c?oc=5",
+        "source": "dw.com",
+        "timestamp": 1775221910.0,
+        "date": "Fri, 03 Apr 2026 13:11:50 GMT",
         "relevance_score": 0,
         "uk_score": 0,
         "uk_relevance": false
@@ -1170,6 +1115,17 @@
         "uk_relevance": false
       },
       {
+        "category": "CSAM",
+        "title": "Eddie Dalton isn\u2019t real, but what does that mean?",
+        "link": "https://news.google.com/rss/articles/CBMidEFVX3lxTE1DbldRSjJ1eVdEeHRmZ0lSZDF0cTRuMHg5Z05QYlFxYmNXR3NiUTkyRlVLakh0ME0yVmladS0zVVZFNnpyZVl4VHpQSzBjSHpCOUpnZWhjRmkzZ3NCTVlDWlRlTnpqeEVzNlVpMHRsTjU1emxU?oc=5",
+        "source": "Flux | Matthew Sheffield",
+        "timestamp": 1775089453.0,
+        "date": "Thu, 02 Apr 2026 00:24:13 GMT",
+        "relevance_score": 0,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
         "category": "Other",
         "title": "AI recruiting biz Mercor says it was 'one of thousands' hit in LiteLLM supply-chain attack",
         "link": "https://news.google.com/rss/articles/CBMidEFVX3lxTE9YMWsxVXJpTUFqNWFhLWVWWW5JSkMxTi1mUHJzYmJVZ2x4RVcwdVg4QlN5TnFtZFZGTDlKbl93X09lMHRuWGF2N0FmdFF6dnh0RjhYRTk4bWZOTk5hQVByZDFCMWtnWlFnTEQ3OWZPcEt1VkFx?oc=5",
@@ -1184,7 +1140,7 @@
         "category": "VAWG",
         "title": "Watchdog group names Zuckerberg to 2026 list of top sex exploitation enablers",
         "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPX2cxVjZic2hRMmNESWVSZDdQSm9IS3QxRTRqZno4Qjlmd3hPS2lqSlFaR2Q5U0Y5NUdOUDJQMzFKVlVhUnE2Z0I5RkxCQ0xlcDVNN2JiR0MzYjZFRUZWRTI1NV90c3pfcEtqckRXNHZkMnFJc3Y5Y3FoRFRiTGhTWFc1Q3dnYVRCeXNNUU1ycG9OZXBtZHdxRkVJZFJsMzlhUldnSjRBQnY?oc=5",
-        "source": "brnow.org",
+        "source": "Biblical Recorder",
         "timestamp": 1775079385.0,
         "date": "Wed, 01 Apr 2026 21:36:25 GMT",
         "relevance_score": 0,
@@ -1204,22 +1160,22 @@
       },
       {
         "category": "Cyber",
-        "title": "The Hidden Danger in LLM-Powered Applications",
-        "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQQnZFSWEzYUUweDlkZVdrMGRVNVNBdThGT3Nwd2xfdU1fMVVZTm40YWdnMmNLaW84eDRLSWhMR1ZNNFRrZFE4SlNCOUZXenBFaDA2ZFFhZlIxZ2pNWUd2UDRLTE1HUE9xSVBxbnBWOTktZUtjdkpBZ1c5Q1pOMVl4aGw2WnN6OFRrVTFocjVGYnI4Q3VO?oc=5",
-        "source": "bankinfosecurity.com",
-        "timestamp": 1775066889.0,
-        "date": "Wed, 01 Apr 2026 18:08:09 GMT",
+        "title": "When AI agents go rogue",
+        "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE96TmdjREJwcm5KZnZvZEVQbG9rVWRiXzhFLVNMaXlPejlDYVZwWmZfNXN4WThtVks5cWVaNnpaTlFFQkJDN244UktfVTlRN2xfcjk0QlBVWXlrMHd2WmxRTQ?oc=5",
+        "source": "OpenText Blogs",
+        "timestamp": 1775071849.0,
+        "date": "Wed, 01 Apr 2026 19:30:49 GMT",
         "relevance_score": 0,
         "uk_score": 0,
         "uk_relevance": false
       },
       {
-        "category": "Fraud",
-        "title": "Why we\u2019re still not doing April Fools\u2019 Day",
-        "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPdDZzbkwwUXpaVUh4YnB4UUtCeHltYjBZLWFMUkhxZXNPUjRGVTFDQi1MV3dwUmh5VHpwYktOTmxOcF9Md1V3S1loeTVFTEFaLVUxdkZqTHhPS0N2d2dSZWJ4S1dJWkZMNERlT182dkY1YV9vcmxRVmVHQkZGVlJkUVVockt3dw?oc=5",
-        "source": "securityboulevard.com",
-        "timestamp": 1775066816.0,
-        "date": "Wed, 01 Apr 2026 18:06:56 GMT",
+        "category": "Cyber",
+        "title": "The Hidden Danger in LLM-Powered Applications",
+        "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQQnZFSWEzYUUweDlkZVdrMGRVNVNBdThGT3Nwd2xfdU1fMVVZTm40YWdnMmNLaW84eDRLSWhMR1ZNNFRrZFE4SlNCOUZXenBFaDA2ZFFhZlIxZ2pNWUd2UDRLTE1HUE9xSVBxbnBWOTktZUtjdkpBZ1c5Q1pOMVl4aGw2WnN6OFRrVTFocjVGYnI4Q3VO?oc=5",
+        "source": "Bank Info Security",
+        "timestamp": 1775066889.0,
+        "date": "Wed, 01 Apr 2026 18:08:09 GMT",
         "relevance_score": 0,
         "uk_score": 0,
         "uk_relevance": false
@@ -1258,12 +1214,12 @@
         "uk_relevance": false
       },
       {
-        "category": "Cyber",
-        "title": "Build an AI Shopping Assistant: Architecture Guide",
-        "link": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNUVR5a3p0RHhtVUtHcTAxaGYyN215N2xQalZuc3lCOUg3c1M2eDNFZXRsVkpPdEY4bUNuZi12U2JaV1R4Uk1odW1RSWZJRTI4a2ttenRKb1dVMlNIck5XSTZUdzhnNUZpdG90d1JNbkM5a0VFR1Nob2JfVU95MHBSZVRNQlNiNFhqeUdxWVdHMHZEdjE5TmhyMHQzcVpLRHBnNWZPS09kMjJzclQ1czVOQVktZ1kyVko2V2Q0V1d0NG4xZw?oc=5",
-        "source": "Blockchain Council",
-        "timestamp": 1775049305.0,
-        "date": "Wed, 01 Apr 2026 13:15:05 GMT",
+        "category": "Fraud",
+        "title": "Why we\u2019re still not doing April Fools\u2019 Day",
+        "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNVUo0eV9xYy1fVDg0QUxFeW9oQnExVVhGbDRTVEdvT0h1ZTJpR25UdlVhNkNhaDExYnlhX1lrczhmWlB0eDdLNkZvUElBMXdkMlV0cUpVLUJWanNpZHVwQ1JvSU14QVBIbzBUNmlHUUxBdEdXREZ2dlpGank1emt2dV81N01hRnVNOHBwaEFoOEdFQQ?oc=5",
+        "source": "Malwarebytes",
+        "timestamp": 1775050429.0,
+        "date": "Wed, 01 Apr 2026 13:33:49 GMT",
         "relevance_score": 0,
         "uk_score": 0,
         "uk_relevance": false
@@ -1291,23 +1247,23 @@
         "uk_relevance": false
       },
       {
-        "category": "VAWG",
-        "title": "Why every woman can see herself in the story of a German celebrity couple\u2019s split | Fatma Aydemir",
-        "link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxPNy1OSzVIc0psamxzMlB2eU9IbEJoSE51bGdKUHVOM1pOcWNGTVB3eXk2VzAtLTdZY1BXTU10cW9pMEN6Z3Bhb3pwQTRGRVd1SGQ0MjBNdUpmNUd5c3FnZDhDc0kwa3pCMXRLZndiVmdqSVZTLUZYanFsazNhaWVOU2RLT1BOUVd0Q21IS1ZsT0QyRmIxMlNTTUplaV9ZY2djVktXRG1FNkxseGtwLW13Rk13a2N1UFhoTGRMbmZhVDJxdmVLNFNub2d1MHRjMGs?oc=5",
-        "source": "The Guardian",
-        "timestamp": 1775031120.0,
-        "date": "Wed, 01 Apr 2026 08:12:00 GMT",
-        "relevance_score": 0,
-        "uk_score": 0,
-        "uk_relevance": false
-      },
-      {
         "category": "CSAM",
         "title": "The latest on the Digital Omnibus on AI",
         "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQVGpZQWpLTzhFMnZoU1V1QlJYU25fbWozTkRyb29mZFFVQXJQOExXcUdTblNBOElza1JGNVV2bS04Y3N2OFBhU2lxM2JhS2VKeFZHbE9wbE5NS3A4R2I1ZjBOU3dJZHBhRF9ST0ZuRVZnNGVrLUlKS1ZrLXJzRDQ3RXY5WGZUX05sZ3BySlFyMnJ3bWhVNVRCaTlZSQ?oc=5",
         "source": "Lewis Silkin LLP",
         "timestamp": 1775026091.0,
         "date": "Wed, 01 Apr 2026 06:48:11 GMT",
+        "relevance_score": 0,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
+        "category": "CSAM",
+        "title": "Behind the screens: The hidden crime epidemic swamping police",
+        "link": "https://news.google.com/rss/articles/CBMiugFBVV95cUxORDl5ZlVPbVZXZWRoamRzRFQ4cmlEUzc5eU04WlMyNEc0a2hESkotUURaeHZONUZ6TE5Ec2hDemE5MFgzT2xHWnBVSWRMdkRQcjA3dWtyLVNtYXkzc01JVGVFejFpYmllaDhPc3Jmb3JuZ2JhcXB6TEVDSVRVSHdzLWpwZEE0U2h6NXZLOWJiTFJkZVg3V2REeFFuTUF1Y3lhSEpNaHpWNlktZHE0eVVzRGJtelp6STJKTlHSAboBQVVfeXFMTkQ5eWZVT21WV2VkaGpkc0RUOHJpRFM3OXlNOFpTMjRHNGtoREpKLVFEWnh2TjVGekxORHNoQ3phOTBYM09sR1pwVUlkTHZEUHIwN3Vrci1TbWF5M3NNSVRlRXoxaWJpZWg4T3NyZm9ybmdiYXFwekxFQ0lUVUh3cy1qcGRBNFNoejV2SzliYkxSZGVYN1dkRHhRbk1BdWN5YUhKTWh6VjZZLWRxNHlVc0RibXpaekkySk5R?oc=5",
+        "source": "Manchester Evening News",
+        "timestamp": 1775019360.0,
+        "date": "Wed, 01 Apr 2026 04:56:00 GMT",
         "relevance_score": 0,
         "uk_score": 0,
         "uk_relevance": false
@@ -1336,11 +1292,33 @@
       },
       {
         "category": "Other",
+        "title": "NC Christian School Teacher Charged with Creating Porn Using AI and Students\u2019 Faces",
+        "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOeE5LNjFRVXQyb0s3TFZfcXF3UXJfVFJKZWhxU3VWRGZna3FrOFFSWGRlUzY2Mmo1bXZIcUVHN1ZMdUJIMkhlN2I1ckxNYzNXOWt1dGZidVBqR0xMYW5vOG9QQmN0ZVlfTDN2ell2bzJLUTBhcXBiRFI0SC1oVlNHQWczbWZ0XzVRcDgtYlhOZzFMSFV1a2ExLUc5aU5ETzZkSlBNN1BEYVlqbFEyMGc?oc=5",
+        "source": "MinistryWatch",
+        "timestamp": 1774994901.0,
+        "date": "Tue, 31 Mar 2026 22:08:21 GMT",
+        "relevance_score": 0,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
+        "category": "Other",
         "title": "Terminal B Deploys AI-Enhanced Cybersecurity Solutions to Shield Austin Businesses Against 2026 Phishing Surge",
         "link": "https://news.google.com/rss/articles/CBMi_gFBVV95cUxPQXdTUGpBdXFqMjdsbkt1c1BzUF80ZjdWTlJjYm1uLXBDd1ZSMTc1ZUM5N2NXU3FzRGs5bU5ZZVUwLU5vcmd5M2RGdGlXei1KQWFYaDBONWZiZGxJbUszVGFfSF93LV8xaDVha0ZjZ0JMTnpjUW16Unh3TjhsR2FuNVJidm9iSUtLT00tVXZoY0ZORV9OTjdJam1BZjRQOFp1VEJMemsxR1VpUVJrWU90RTk5enJHNkl6VmplNzVWcmxmN0dlWTFUQ3F0UXBNU01PU1NyT0p1MUZjRDE3dDhGbG9lY19mM0hVd1lpdVk5WjkwR0l1QkdpcUFYdXN1QQ?oc=5",
         "source": "markets.businessinsider.com",
         "timestamp": 1774988983.0,
         "date": "Tue, 31 Mar 2026 20:29:43 GMT",
+        "relevance_score": 0,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
+        "category": "Other",
+        "title": "Experts warn AI enables scammers to bypass passwords and take over accounts",
+        "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPNDMxcWk2T19FaGVLcGxvQzZ5UTdiakdEX2dwWTFJTlFTemNSRUhXcW9NeGcwZ09DUGRtbnJrcXhSWFRlbTNla1Z1Q0pPYWNqMERxSTIxRUpQZmRHNmF1RExPVWNBdmNIRmhCSW5Wd0pBYm9KMHBNQ0Y2aUlfa1ZjNWRQTzU4SGJVdWNtOXFIRVl3QlJMQmhmdDdxQnBQSDRtTk5F0gG3AUFVX3lxTE5nWnFWN3JGcEFkY3Q0MFJBZDRfdGIwdlRrQ0hYb3JYQk1iZXIyaDJSc3hSMzlxa05jVTZWdmpJVUo3MUg4ajNpdTM0ZVBVZXNrZGNOZ0N5N0VyVm4wazdORHdPekJMNWgxa3M5VUlDU1VQNzlCMm1oUlVfNTVCa2hSTUpVSHJYaS11aWJ0TEhtR3JxTll0U3hQWS1WVWdSbzRXM2ZaS1JUaWJLd0gyd2VKTHBJN0NBaw?oc=5",
+        "source": "WAFB",
+        "timestamp": 1774987500.0,
+        "date": "Tue, 31 Mar 2026 20:05:00 GMT",
         "relevance_score": 0,
         "uk_score": 0,
         "uk_relevance": false
@@ -1412,10 +1390,21 @@
         "uk_relevance": false
       },
       {
+        "category": "CSAM",
+        "title": "EU Moves to Regulate AI Nudification, But Key Challenges Remain",
+        "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxQc25PbGN2WV9jMUp0NjdRVVM4N0U0Rzhxc21ER0t5RjNDazZSQ1lDZllBaXRDX2VFNWJUWmNKRXVETEtHWDRiVFRwUU5GajNRNTlHNk5WLXBsSzlhbWxXQS1SVk05dkhWMG1NSlVrMl9zRU4xR0x6Qkw3dkEzT3Y1azNubWROc0tWTFVES1ZRZVI?oc=5",
+        "source": "Tech Policy Press",
+        "timestamp": 1774957680.0,
+        "date": "Tue, 31 Mar 2026 11:48:00 GMT",
+        "relevance_score": 0,
+        "uk_score": 0,
+        "uk_relevance": false
+      },
+      {
         "category": "Fraud",
         "title": "Does the \u201cthree-finger\u201d method to detect deepfakes actually work?",
         "link": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE42S0FaeS1HOGMzWjExS3VGMGdWQW5rOEhFekJzZTdJLUhKeTNhaXNiMWRKMVZndlNuVHU5N1l0ZmhteXdDUVZXLW5FazdIS0FMdDh6N09xenlHMGtJZjhFUmxSeFk?oc=5",
-        "source": "cybernews.com",
+        "source": "Cybernews",
         "timestamp": 1774952377.0,
         "date": "Tue, 31 Mar 2026 10:19:37 GMT",
         "relevance_score": 0,
@@ -1424,9 +1413,9 @@
       },
       {
         "category": "VAWG",
-        "title": "African Union: Combatting violence against women must account for online harms",
+        "title": "African Union: Combatting violence against women must account for online harms - ARTICLE 19",
         "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNU3FwTkFET3hPNDhCeWZkX0xkOU9DQVdVR2hkNGhEaXNiZ3lzQ3kyeWctN2luN0hmcVVTMWFCY1dBNm81VTlTZWg2UkprWUllaHNMY2dEaVFkMGJFdTdmendaUE9kMjJyQUVLOTFIZlJoRTRfbUdSdDB5bms0U2RzV1RxUGpzcDRESlpWa0RXSDRoRUFTenk3Vjg0LW9FNVRNTTBlWTdZWUVLZWZqTDRF?oc=5",
-        "source": "article19.org",
+        "source": "ARTICLE 19 - Defending freedom of expression and information.",
         "timestamp": 1774940400.0,
         "date": "Tue, 31 Mar 2026 07:00:00 GMT",
         "relevance_score": 0,
@@ -1481,7 +1470,7 @@
         "category": "VAWG",
         "title": "TV star\u2019s AI porn allegations spark national debate in Germany",
         "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNOEFaTXdmTjJSUDVJbWZqSU5UcEpZVkRmMXpxRXJZMzluTGVOSHhKYm4yNmtIVERfMFJSR094SUpxSWFPX0VHTnIxTXdYWFBTYzhvTTJGeEdmalZOSFQwWUhkYVNCVFFsT0hXdWNDYUU4T0ZZNE5vSl95NVBXV0ZvQjA4Yk1YbnhVR2Q1dzRjMVVYdUtyRUxueDY2U19iUkhVT3AxdjJoOU55Q1Bad1JKcnVQb2E3My1KZlJMNg?oc=5",
-        "source": "The Guardian",
+        "source": "theguardian.com",
         "timestamp": 1774901040.0,
         "date": "Mon, 30 Mar 2026 20:04:00 GMT",
         "relevance_score": 0,
@@ -1512,60 +1501,6 @@
       }
     ],
     "signals": [
-      {
-        "signal_id": "9fb0a54d73c3be7c",
-        "title": "AI search summaries can scam you without warning \u2014 here\u2019s how it happens and how to protect your money",
-        "primary_category": "Other",
-        "tags": [
-          "Other"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1775483730.0,
-        "last_seen": 1775483730.0,
-        "latest_date": "Mon, 06 Apr 2026 13:55:30 GMT",
-        "links": [
-          {
-            "title": "AI search summaries can scam you without warning \u2014 here\u2019s how it happens and how to protect your money",
-            "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNakpjLXpsLVpqb0lia2gyb28wZ3lNYzVLSldaZmJUc2g5bFVMNHdmWWZRU0tzYVZxWXpMckJDYTJVeEpkWWFZZk9fQktKZ2c0ZVRGWkFMRndXUTJ5TFlhRm02SlNpZThjaU9qSlRyQUtkTEI0WWRCYkh4VmlNRkNzeQ?oc=5",
-            "source": "AOL.com",
-            "date": "Mon, 06 Apr 2026 13:55:30 GMT",
-            "source_type": "news",
-            "category": "Other",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential Other harm: recurring themes include search, summaries, scam, without, warning, here (1 sources)."
-      },
-      {
-        "signal_id": "61e47dba86f87374",
-        "title": "The Coming of the Corporate Robo-Stooge",
-        "primary_category": "Other",
-        "tags": [
-          "Other"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1775482108.0,
-        "last_seen": 1775482108.0,
-        "latest_date": "Mon, 06 Apr 2026 13:28:28 GMT",
-        "links": [
-          {
-            "title": "The Coming of the Corporate Robo-Stooge",
-            "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE10eHRRQkp0bEZZMEZkLVJaMUxLNnl6WjVBVW15ZjJlXzdFR2R6alAxckJqcHBIVmU2LUhqN05mbDRJZktjTGxUTFNOVmwxblVSekZqd0ZhZmkwRFdwV2cyQnNoQWgxcmo0RkppTkJn?oc=5",
-            "source": "Unite.AI",
-            "date": "Mon, 06 Apr 2026 13:28:28 GMT",
-            "source_type": "news",
-            "category": "Other",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential Other harm: recurring themes include coming, corporate, robo, stooge (1 sources)."
-      },
       {
         "signal_id": "5f3b3bc854c97230",
         "title": "Traffic violation scams switch to QR codes in new phishing texts",
@@ -1676,7 +1611,7 @@
           {
             "title": "How the law is catching up with AI 'deepfakes'",
             "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNNko5UFZBeEJsUmpuOHA2U0F3U19uRFF4dDdPUGRtS1FxS0MxamVOejJnXzgydjFPMkNhQmNDdHhlS1JTb0JYZnExQ0lBeWxZTHpXVzZrVUdYNnA3MkhGNnJZX1hfb2xhTlZlNm5scUdrZnlJYjNDUXgzbWl2QUNIQzkxdGlBbHk4bF9fcjhnTQ?oc=5",
-            "source": "scotsman.com",
+            "source": "The Scotsman",
             "date": "Mon, 06 Apr 2026 04:00:00 GMT",
             "source_type": "news",
             "category": "Other",
@@ -1988,60 +1923,6 @@
         "ai_summary": "Potential Other harm: recurring themes include police, warn, parents, online, safety, risks (1 sources)."
       },
       {
-        "signal_id": "fde992615692e1ce",
-        "title": "Bill Gates predicts: Of all the things humans have ever created, the one that will change society the most is...",
-        "primary_category": "CSAM",
-        "tags": [
-          "CSAM"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1775376585.0,
-        "last_seen": 1775376585.0,
-        "latest_date": "Sun, 05 Apr 2026 08:09:45 GMT",
-        "links": [
-          {
-            "title": "Bill Gates predicts: Of all the things humans have ever created, the one that will change society the most is...",
-            "link": "https://news.google.com/rss/articles/CBMi0ANBVV95cUxNLVBXcTcxVXUzY1d3R3M0Q2l6S05ZSjEzckdsVFRndnFzNDAydXlJTXE3Y2xBVVBWZkFJUEVualdINmhpQ29RNWFuTlZJRFpUYUlKVVhyUG8zZWxBU3RwYXdQT0p3Tl9tcUVoYkVqcDlGU3hvd0dzNHZnV3N2cUtGWko2VkNIZGkzLVJJY2xyWFRsTGtXOWpYVzktQlFhV0p6MjFpTWZiSkEzS1BGTnl2YzRaUlNPLUQyNGJuMFpYbE1MNXRxUzBzQVkzVzVTTXBLWkR4dTFtdE5rMmRfVFBLdHo2emdjWHpvcDFRYjJ2bnIxRzNQaEE5V1IxUjZtUkFoQ29ZbDJ1aFJrcHFHQXp2NHhKaDJZTHhsTWFva2ZvV2dHcnBMcktsbk16NDFWcE0tcURoNHpBcVY2ckpEWmF6d1ctNllnelpFZmdhVTdtSXlQOTJPUnVmOGVPWjJCUE16Y2J6M1ljT2V6RFVoSmZnMXJyS3hzMDJiRzhSNk1DSnFraWlrMU02UXhrYk1VMTdXdXZqY0RCTUc0RDRUQ1hramlTM0JlWTBxVnppVUYtNWI2djktUUYzU1hXMzJmYUljOXJkYkFpazRFZ0NDNGhrTg?oc=5",
-            "source": "MSN",
-            "date": "Sun, 05 Apr 2026 08:09:45 GMT",
-            "source_type": "news",
-            "category": "CSAM",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential CSAM harm: recurring themes include bill, gates, predicts, things, humans, ever (1 sources)."
-      },
-      {
-        "signal_id": "93c6d6fef19fb060",
-        "title": "Why AI-powered city cameras are sounding new privacy alarms",
-        "primary_category": "Other",
-        "tags": [
-          "Other"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1775376345.0,
-        "last_seen": 1775376345.0,
-        "latest_date": "Sun, 05 Apr 2026 08:05:45 GMT",
-        "links": [
-          {
-            "title": "Why AI-powered city cameras are sounding new privacy alarms",
-            "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQbi1DeFF4QlY1WnNKc0Rod2dLSE5qNFZiOXBqRlVyYjdTZE16SWFmSmg1MzhlR1paYW5ham5HdTQ5YWpZNlYzSng2TUZNaC16WWVGTVpUa1BjTlpkWkNJUm02NW5xYzE1QVJfZjdocFV5Q05GZ0xRQ2tXajhfVzlXZU1R?oc=5",
-            "source": "Fast Company",
-            "date": "Sun, 05 Apr 2026 08:05:45 GMT",
-            "source_type": "news",
-            "category": "Other",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential Other harm: recurring themes include powered, city, cameras, sounding, privacy, alarms (1 sources)."
-      },
-      {
         "signal_id": "79c37fd4b831ee61",
         "title": "AI Security 101: Threats and Defenses for ML Systems",
         "primary_category": "Cyber",
@@ -2111,7 +1992,7 @@
           {
             "title": "Key rules to prevent online fraud",
             "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1xWVdLQ09KcXdOZ3FRWVlLRjdyUEZpQS1ZUV8zd3A3VkFfWVZISnJ0LVJpb2N1NEFsSGdqRUZDZlo0Q2tZNkZla1ByQVk3OXZzdXJ2YVZCMWRJd3BtUUMxdk5wUUhualg3X255Rk9pNXZ0NGYtclUtSTZYeDlSV2s?oc=5",
-            "source": "Vietnam+ (VietnamPlus)",
+            "source": "en.vietnamplus.vn",
             "date": "Sun, 05 Apr 2026 01:00:00 GMT",
             "source_type": "news",
             "category": "Fraud",
@@ -2148,6 +2029,33 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Potential CSAM harm: recurring themes include judge, rejects, mental, health, plea, woonona (1 sources)."
+      },
+      {
+        "signal_id": "fde992615692e1ce",
+        "title": "Bill Gates predicts: Of all the things humans have ever created, the one that will change society the most is...",
+        "primary_category": "CSAM",
+        "tags": [
+          "CSAM"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1775338382.0,
+        "last_seen": 1775338382.0,
+        "latest_date": "Sat, 04 Apr 2026 21:33:02 GMT",
+        "links": [
+          {
+            "title": "Bill Gates predicts: Of all the things humans have ever created, the one that will change society the most is...",
+            "link": "https://news.google.com/rss/articles/CBMiugJBVV95cUxQTHozbG0tVEQzNElKM0RqbmZIMDI2ZEFsMFRIakp5MHFjSVIwVWFINjY3SlFkNEpqSWlZYmRoSWZBNlJRQWhnX2hVUlBwV3Q2WVZMYUh0cUFDa2YtcS0wb1Y3dDZRcExMck1udEx0Wnc5MldBMTZVM2MybEttaWVrcFZHb1diQks2dUtKRlljWnA0dXR1cFlEVFNmRTVmNy1jVV96YW10TGUwd29RYlNqTFNHcks2aWtnSmVnOUc0bHczakJZbVZBLXhzeTlOSGRoQkFTX1JUZXNHaS1oemJPMWhzQmpETlN0WmRxbmxRMXVzUlpXUHhTc2dGaWxYNkZuSzB1aGRXNUlKSFpsSmpVNzdLTEVjMlV4UlpOUldQYmxCeW80V2VhVzhtdnltQm5PRHZnVXl1LXl0Zw?oc=5",
+            "source": "MSN",
+            "date": "Sat, 04 Apr 2026 21:33:02 GMT",
+            "source_type": "news",
+            "category": "CSAM",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential CSAM harm: recurring themes include bill, gates, predicts, things, humans, ever (1 sources)."
       },
       {
         "signal_id": "309c937a43891c08",
@@ -2337,7 +2245,7 @@
           {
             "title": "When an Attacker Meets a Group of Agents: Navigating Amazon Bedrock's Multi-Agent Applications",
             "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxQWkw4dVVoTUFiTUYyNlZjbVprZjBienpIaUhEYlRnYWRJS0tuQ3JqdHJsOGJWRHZPUmlkZlVzbDRzMXpFTWpHQ0NyU2tjRzBCaENFRnZMbVhJR1lnTDVlRlBqQjJjVTZjS1d1UkJySUNlOHJxRXVHc1NsU0xEQTd2ZA?oc=5",
-            "source": "Unit 42",
+            "source": "unit42.paloaltonetworks.com",
             "date": "Fri, 03 Apr 2026 22:02:28 GMT",
             "source_type": "news",
             "category": "Cyber",
@@ -2605,31 +2513,31 @@
         "ai_summary": "Potential Fraud harm: recurring themes include west, virginia, attorney, general, reports, scams (1 sources)."
       },
       {
-        "signal_id": "39e988b63b34c6ba",
-        "title": "Scottish trans activist pleads guilty to child abuse",
-        "primary_category": "CSAM",
+        "signal_id": "85cddfa82591de22",
+        "title": "Inside India's courts, AI's growing role sparks concern",
+        "primary_category": "Other",
         "tags": [
-          "CSAM"
+          "Other"
         ],
         "cluster_size": 1,
         "source_count": 1,
-        "first_seen": 1775224800.0,
-        "last_seen": 1775224800.0,
-        "latest_date": "Fri, 03 Apr 2026 14:00:00 GMT",
+        "first_seen": 1775221910.0,
+        "last_seen": 1775221910.0,
+        "latest_date": "Fri, 03 Apr 2026 13:11:50 GMT",
         "links": [
           {
-            "title": "Scottish trans activist pleads guilty to child abuse",
-            "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPZXZYbnVqRE9nTktELUpQeHRveWdlZUdnUC1Hc3hkSmd4S3ZDOFJSOVJBZ24tRjAxWjNYYTlwZDR3QkNfREpxSUtXLTVScndDUGZGaWdzMUlieUQ1Vk9vcUY5MW5LcFEwb0kwRXFJTmlpbF9FMVZVZi0xQ2Y0eHVzRml30gGHAUFVX3lxTE1pbElTRXhhZTBhNkdLeUdfUzdhSE5iRmNqQWNlQ3RhR3FPazd5dGw5WWpUUWI1alY3RzlwNkF3WGhXbDNCa3lnUXV3b2ZwU211VEg2V1N6VGFlOUVvWE84Y3hpVktXOGppZWdCTE9pbjVIRlQxQ3lSSVNrekgydk5RNkYyMGlyTQ?oc=5",
-            "source": "ifamnews.com",
-            "date": "Fri, 03 Apr 2026 14:00:00 GMT",
+            "title": "Inside India's courts, AI's growing role sparks concern",
+            "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxQMS1yOVdhYWpRRmlDazRGOURWWkJweGVZX0tGcXZLa2tZSHVPWmd6Vno1SmpvN0pRa2lPMTA5bEhFVHNsa2s3NWpleWpIakJfc3JOUFozR0QwWmx2N3NKOEMyc1ZteWlEZzJyUTNxb29XdnFrNjZjZUp4UXk4TVRkeC1GZ0dBbDhzRVJSYkNn0gGOAUFVX3lxTFAxLXI5V2FhalFGaUNrNEY5RFZaQnB4ZVlfS0Zxdktra1lIdU9aZ3pWejVKam83SlFraU8xMDlsSEVUc2xrazc1amV5akhqQl9zck5QWjNHRDBabHY3c0o4QzJzVm15aURnMnJRM3Fvb1d2cWs2NmNlSnhReThNVGR4LUZnR0FsOHNFUlJiQ2c?oc=5",
+            "source": "dw.com",
+            "date": "Fri, 03 Apr 2026 13:11:50 GMT",
             "source_type": "news",
-            "category": "CSAM",
+            "category": "Other",
             "uk_score": 0
           }
         ],
         "confidence": 0.256,
         "confidence_label": "Low",
-        "ai_summary": "Potential CSAM harm: recurring themes include scottish, trans, activist, pleads, guilty, child (1 sources)."
+        "ai_summary": "Potential Other harm: recurring themes include inside, india, courts, growing, role, sparks (1 sources)."
       },
       {
         "signal_id": "ecd97bd03b6714d7",
@@ -2944,7 +2852,7 @@
           {
             "title": "True Crime: The AI Algorithm That Stole Angela Lipps\u2019 Freedom",
             "link": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE1xaEF3R3FtZ05qOXA5VXBNOFo4aE42dWZWQzdLZHdJelAwWC03MTN1Q3p1ZElJMm1UeHZITHFIRHZTWmh4UFBVVFp5T2d2MVQ5alltQ1JfRUt1TVZNYloxM0hJdDVzRlE?oc=5",
-            "source": "IMDb",
+            "source": "imdb.com",
             "date": "Thu, 02 Apr 2026 23:26:56 GMT",
             "source_type": "news",
             "category": "Other",
@@ -2981,33 +2889,6 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Potential VAWG harm: recurring themes include mara, wilson, reveals, living, nightmare, image (1 sources)."
-      },
-      {
-        "signal_id": "6fd182f52bf105a6",
-        "title": "Deepfake porn scandal leaves PA school reeling",
-        "primary_category": "VAWG",
-        "tags": [
-          "VAWG"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1775169924.0,
-        "last_seen": 1775169924.0,
-        "latest_date": "Thu, 02 Apr 2026 22:45:24 GMT",
-        "links": [
-          {
-            "title": "Deepfake porn scandal leaves PA school reeling",
-            "link": "https://news.google.com/rss/articles/CBMifEFVX3lxTE1NdUVGMTVCOWQ0TEt1T2ZCS1pCem95ZTRYeHROYjhqVnU2UzRvVWltcjhHMGpNY1Z4SkdiaWVrZFdZZ3UtWEluZ0l5NElSNzhIWWlQdS0xdk9KWkpUTWVZNVVaWkpNS2w3aWdZVTZzbnVfSVAtN3hzY0syYnY?oc=5",
-            "source": "PressReader",
-            "date": "Thu, 02 Apr 2026 22:45:24 GMT",
-            "source_type": "news",
-            "category": "VAWG",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential VAWG harm: recurring themes include deepfake, porn, scandal, leaves, school, reeling (1 sources)."
       },
       {
         "signal_id": "c2198e217ef7caab",
@@ -3886,6 +3767,33 @@
         "ai_summary": "Potential Cyber harm: recurring themes include observability, applications, traditional, monitoring, misses (1 sources)."
       },
       {
+        "signal_id": "7029e3c4eb6074bd",
+        "title": "Eddie Dalton isn\u2019t real, but what does that mean?",
+        "primary_category": "CSAM",
+        "tags": [
+          "CSAM"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1775089453.0,
+        "last_seen": 1775089453.0,
+        "latest_date": "Thu, 02 Apr 2026 00:24:13 GMT",
+        "links": [
+          {
+            "title": "Eddie Dalton isn\u2019t real, but what does that mean?",
+            "link": "https://news.google.com/rss/articles/CBMidEFVX3lxTE1DbldRSjJ1eVdEeHRmZ0lSZDF0cTRuMHg5Z05QYlFxYmNXR3NiUTkyRlVLakh0ME0yVmladS0zVVZFNnpyZVl4VHpQSzBjSHpCOUpnZWhjRmkzZ3NCTVlDWlRlTnpqeEVzNlVpMHRsTjU1emxU?oc=5",
+            "source": "Flux | Matthew Sheffield",
+            "date": "Thu, 02 Apr 2026 00:24:13 GMT",
+            "source_type": "news",
+            "category": "CSAM",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential CSAM harm: recurring themes include eddie, dalton, real, does, mean (1 sources)."
+      },
+      {
         "signal_id": "5bdda85e9829d190",
         "title": "AI recruiting biz Mercor says it was 'one of thousands' hit in LiteLLM supply-chain attack",
         "primary_category": "Other",
@@ -4012,7 +3920,7 @@
           {
             "title": "Watchdog group names Zuckerberg to 2026 list of top sex exploitation enablers",
             "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPX2cxVjZic2hRMmNESWVSZDdQSm9IS3QxRTRqZno4Qjlmd3hPS2lqSlFaR2Q5U0Y5NUdOUDJQMzFKVlVhUnE2Z0I5RkxCQ0xlcDVNN2JiR0MzYjZFRUZWRTI1NV90c3pfcEtqckRXNHZkMnFJc3Y5Y3FoRFRiTGhTWFc1Q3dnYVRCeXNNUU1ycG9OZXBtZHdxRkVJZFJsMzlhUldnSjRBQnY?oc=5",
-            "source": "brnow.org",
+            "source": "Biblical Recorder",
             "date": "Wed, 01 Apr 2026 21:36:25 GMT",
             "source_type": "news",
             "category": "VAWG",
@@ -4088,6 +3996,33 @@
         "ai_summary": "Potential CSAM harm: recurring themes include former, swiss, president, filed, criminal, charges (1 sources)."
       },
       {
+        "signal_id": "838ffa5a7c7f7e1c",
+        "title": "When AI agents go rogue",
+        "primary_category": "Cyber",
+        "tags": [
+          "Cyber"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1775071849.0,
+        "last_seen": 1775071849.0,
+        "latest_date": "Wed, 01 Apr 2026 19:30:49 GMT",
+        "links": [
+          {
+            "title": "When AI agents go rogue",
+            "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTE96TmdjREJwcm5KZnZvZEVQbG9rVWRiXzhFLVNMaXlPejlDYVZwWmZfNXN4WThtVks5cWVaNnpaTlFFQkJDN244UktfVTlRN2xfcjk0QlBVWXlrMHd2WmxRTQ?oc=5",
+            "source": "OpenText Blogs",
+            "date": "Wed, 01 Apr 2026 19:30:49 GMT",
+            "source_type": "news",
+            "category": "Cyber",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential Cyber harm: recurring themes include agents, rogue (1 sources)."
+      },
+      {
         "signal_id": "a62abbdbd9ea83cc",
         "title": "The Hidden Danger in LLM-Powered Applications",
         "primary_category": "Cyber",
@@ -4103,7 +4038,7 @@
           {
             "title": "The Hidden Danger in LLM-Powered Applications",
             "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQQnZFSWEzYUUweDlkZVdrMGRVNVNBdThGT3Nwd2xfdU1fMVVZTm40YWdnMmNLaW84eDRLSWhMR1ZNNFRrZFE4SlNCOUZXenBFaDA2ZFFhZlIxZ2pNWUd2UDRLTE1HUE9xSVBxbnBWOTktZUtjdkpBZ1c5Q1pOMVl4aGw2WnN6OFRrVTFocjVGYnI4Q3VO?oc=5",
-            "source": "bankinfosecurity.com",
+            "source": "Bank Info Security",
             "date": "Wed, 01 Apr 2026 18:08:09 GMT",
             "source_type": "news",
             "category": "Cyber",
@@ -4115,31 +4050,31 @@
         "ai_summary": "Potential Cyber harm: recurring themes include hidden, danger, powered, applications (1 sources)."
       },
       {
-        "signal_id": "9361f51bd7bb65cc",
-        "title": "Why we\u2019re still not doing April Fools\u2019 Day",
-        "primary_category": "Fraud",
+        "signal_id": "28bd671980b8b625",
+        "title": "Keir Starmer slams 'vile online abuse' and backs Mirror Missed campaign",
+        "primary_category": "VAWG",
         "tags": [
-          "Fraud"
+          "VAWG"
         ],
         "cluster_size": 1,
         "source_count": 1,
-        "first_seen": 1775066816.0,
-        "last_seen": 1775066816.0,
-        "latest_date": "Wed, 01 Apr 2026 18:06:56 GMT",
+        "first_seen": 1775065680.0,
+        "last_seen": 1775065680.0,
+        "latest_date": "Wed, 01 Apr 2026 17:48:00 GMT",
         "links": [
           {
-            "title": "Why we\u2019re still not doing April Fools\u2019 Day",
-            "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPdDZzbkwwUXpaVUh4YnB4UUtCeHltYjBZLWFMUkhxZXNPUjRGVTFDQi1MV3dwUmh5VHpwYktOTmxOcF9Md1V3S1loeTVFTEFaLVUxdkZqTHhPS0N2d2dSZWJ4S1dJWkZMNERlT182dkY1YV9vcmxRVmVHQkZGVlJkUVVockt3dw?oc=5",
-            "source": "securityboulevard.com",
-            "date": "Wed, 01 Apr 2026 18:06:56 GMT",
+            "title": "Keir Starmer slams 'vile online abuse' and backs Mirror Missed campaign",
+            "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOWDU5RU9iQW1tS2xRbGE0UUtydllPbElPU2RHZzVycmdSWVNOUjNMZ0F3THV4dnZ5blVFNEVKLTRHaGtuUlFWSHBIamNtNEVXQXhDUnBXR2MyU3h2Z1Jtek9oWkFrNDFBcElMSndoWm02YzJGX2FYZ2t2dU91dDBVV003TWRGQ2haSXM2MXpvY9IBlAFBVV95cUxNbkcyTjRtcll2c1N5c0w5VFVXNmNET3E3V1NJaVpYaTFTVTFwVXg5UnlCSENfZjBSMnZiT2toX0hDSjN4X19TVld1ejZoWFU2RmRfekpyaFVMN1lERWNjeXZzSUh1bTBMRDN0N1VlNEpXRVNLWDZuMXAxa2FHZUlxQ2pFaHQxbm9QbWEyb0pmRk1wOG9w?oc=5",
+            "source": "The Mirror",
+            "date": "Wed, 01 Apr 2026 17:48:00 GMT",
             "source_type": "news",
-            "category": "Fraud",
+            "category": "VAWG",
             "uk_score": 0
           }
         ],
         "confidence": 0.256,
         "confidence_label": "Low",
-        "ai_summary": "Potential Fraud harm: recurring themes include still, doing, april, fools (1 sources)."
+        "ai_summary": "Potential VAWG harm: recurring themes include keir, starmer, slams, vile, online, abuse (1 sources)."
       },
       {
         "signal_id": "e97f7a440af41aec",
@@ -4184,7 +4119,7 @@
           {
             "title": "Why agentic AI is closing the financial crime gap",
             "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNbGRPSlktVy1weXRqV01NYzA5Q2lvNjBRN1l5QVVhVUhSSFRzbndGOEhEdllQeUFSUUM5dWdZZG81alVnQ3QzREZfSnVLREtLb0xybEhYLUhOQlA0dElNMXh3RVhUbWVNT3Z5UmV2NEVjcXpZTXdzMzdOT0VkaHlLN0Rvbm04Ukk2ekpIXw?oc=5",
-            "source": "fintech.global",
+            "source": "FinTech Global",
             "date": "Wed, 01 Apr 2026 16:24:07 GMT",
             "source_type": "news",
             "category": "Other",
@@ -4260,31 +4195,31 @@
         "ai_summary": "Potential Other harm: recurring themes include cracking, finance, problem, never, went, away (1 sources)."
       },
       {
-        "signal_id": "c3cff11e2c0314e5",
-        "title": "Build an AI Shopping Assistant: Architecture Guide",
-        "primary_category": "Cyber",
+        "signal_id": "9361f51bd7bb65cc",
+        "title": "Why we\u2019re still not doing April Fools\u2019 Day",
+        "primary_category": "Fraud",
         "tags": [
-          "Cyber"
+          "Fraud"
         ],
         "cluster_size": 1,
         "source_count": 1,
-        "first_seen": 1775049305.0,
-        "last_seen": 1775049305.0,
-        "latest_date": "Wed, 01 Apr 2026 13:15:05 GMT",
+        "first_seen": 1775050429.0,
+        "last_seen": 1775050429.0,
+        "latest_date": "Wed, 01 Apr 2026 13:33:49 GMT",
         "links": [
           {
-            "title": "Build an AI Shopping Assistant: Architecture Guide",
-            "link": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNUVR5a3p0RHhtVUtHcTAxaGYyN215N2xQalZuc3lCOUg3c1M2eDNFZXRsVkpPdEY4bUNuZi12U2JaV1R4Uk1odW1RSWZJRTI4a2ttenRKb1dVMlNIck5XSTZUdzhnNUZpdG90d1JNbkM5a0VFR1Nob2JfVU95MHBSZVRNQlNiNFhqeUdxWVdHMHZEdjE5TmhyMHQzcVpLRHBnNWZPS09kMjJzclQ1czVOQVktZ1kyVko2V2Q0V1d0NG4xZw?oc=5",
-            "source": "Blockchain Council",
-            "date": "Wed, 01 Apr 2026 13:15:05 GMT",
+            "title": "Why we\u2019re still not doing April Fools\u2019 Day",
+            "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNVUo0eV9xYy1fVDg0QUxFeW9oQnExVVhGbDRTVEdvT0h1ZTJpR25UdlVhNkNhaDExYnlhX1lrczhmWlB0eDdLNkZvUElBMXdkMlV0cUpVLUJWanNpZHVwQ1JvSU14QVBIbzBUNmlHUUxBdEdXREZ2dlpGank1emt2dV81N01hRnVNOHBwaEFoOEdFQQ?oc=5",
+            "source": "Malwarebytes",
+            "date": "Wed, 01 Apr 2026 13:33:49 GMT",
             "source_type": "news",
-            "category": "Cyber",
+            "category": "Fraud",
             "uk_score": 0
           }
         ],
         "confidence": 0.256,
         "confidence_label": "Low",
-        "ai_summary": "Potential Cyber harm: recurring themes include build, shopping, assistant, architecture, guide (1 sources)."
+        "ai_summary": "Potential Fraud harm: recurring themes include still, doing, april, fools (1 sources)."
       },
       {
         "signal_id": "9eb7584998692b13",
@@ -4356,7 +4291,7 @@
           {
             "title": "Elder fraud rises as scammers use AI",
             "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQLTFhLUVsS1hOdFpUNS1JZ183OThqVFpTN0dfWi1zT1ZwQmxBbVFBV0NSSVNiajQ1YlpvWEhNUlhTT0N0LW9xUlN2YVh3blMwMVlaTmhsVERCRzVMVWxUTFRDcjBVV0RmcF9aWnZhLXJybkR1OG5icElrc21zb0h1WGo0TXVRdWNtNDRoQ2RtSGp2cEtu?oc=5",
-            "source": "Journal of Accountancy",
+            "source": "journalofaccountancy.com",
             "date": "Wed, 01 Apr 2026 11:00:39 GMT",
             "source_type": "news",
             "category": "Fraud",
@@ -4366,33 +4301,6 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Potential Fraud harm: recurring themes include elder, fraud, rises, scammers (1 sources)."
-      },
-      {
-        "signal_id": "46f793b51befd76b",
-        "title": "Why every woman can see herself in the story of a German celebrity couple\u2019s split | Fatma Aydemir",
-        "primary_category": "VAWG",
-        "tags": [
-          "VAWG"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1775031120.0,
-        "last_seen": 1775031120.0,
-        "latest_date": "Wed, 01 Apr 2026 08:12:00 GMT",
-        "links": [
-          {
-            "title": "Why every woman can see herself in the story of a German celebrity couple\u2019s split | Fatma Aydemir",
-            "link": "https://news.google.com/rss/articles/CBMizwFBVV95cUxPNy1OSzVIc0psamxzMlB2eU9IbEJoSE51bGdKUHVOM1pOcWNGTVB3eXk2VzAtLTdZY1BXTU10cW9pMEN6Z3Bhb3pwQTRGRVd1SGQ0MjBNdUpmNUd5c3FnZDhDc0kwa3pCMXRLZndiVmdqSVZTLUZYanFsazNhaWVOU2RLT1BOUVd0Q21IS1ZsT0QyRmIxMlNTTUplaV9ZY2djVktXRG1FNkxseGtwLW13Rk13a2N1UFhoTGRMbmZhVDJxdmVLNFNub2d1MHRjMGs?oc=5",
-            "source": "The Guardian",
-            "date": "Wed, 01 Apr 2026 08:12:00 GMT",
-            "source_type": "news",
-            "category": "VAWG",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential VAWG harm: recurring themes include every, woman, herself, story, german, celebrity (1 sources)."
       },
       {
         "signal_id": "4669ea071c2fb804",
@@ -4420,6 +4328,33 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Potential Terrorism harm: recurring themes include human, propaganda (1 sources)."
+      },
+      {
+        "signal_id": "f5ca77ccb12e2271",
+        "title": "AI deepfake nude scandal rocks elite school",
+        "primary_category": "VAWG",
+        "tags": [
+          "VAWG"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1775027615.0,
+        "last_seen": 1775027615.0,
+        "latest_date": "Wed, 01 Apr 2026 07:13:35 GMT",
+        "links": [
+          {
+            "title": "AI deepfake nude scandal rocks elite school",
+            "link": "https://news.google.com/rss/articles/CBMiiAJBVV95cUxOQUxwU2ZrdW91UU9OUDdLZHViNy1oci1pdVF5Qi05QjBpWUJJZkNheXZOMVR4QUhVU1hMekZ2Rk5DWWhmYzBmbXhpdGgzMUNoQjFaVURqc1JTVGdRQjZsbFFjWk5pRjJXTElWWW1KMXJweWdZbmpaTXRfXzAybHRRMkh0cjVWcDlwZm41VFFWWEZWSzRKV3B3VjQ2dFpOOUh3ZGFKSkdUTGdVbnRaSE55QVc0OGRiRmliQXAtdHFkOF83bmE5YTB1ZW1idG5aZVNsa0RpMkM0SE5VVTVObElhc0NaNDA3OEQ2ODFkS3hiQWZiWjhXWUhsaWk2ak1NMUVtRzBxYjAyUjDSAY4CQVVfeXFMTWp5MWNHcEJjYkt2XzVZM3U2dnpQdVlxaXdOTHJvSG52UEVCV2toemNBcUhqMHczOGt4V0t0aFdyZm5WWEJINTBCOWZyaWVvX0E3UWRSY2Z3TzNFdmtYcFoweWVwei1mUURkdy1kaWRsbUZlWDRMa3BwOC1jeUZXSHY4VkxFWFE5N25sdVBGdHJfd3FjSzFITVVaRlJ4MWpzQ0wyZDVzeWtESENLSG5vLS04ck9EZnZCM2ZNR1dSQnkydm41LUlDTjJnSlJXbTRRdU8tcTZEd0Y1ZGFiY3BWM213R080bWNVenpTcmlHWkhrT3RNMTlrN1pQNUIxMFUybkQzREEta1h0YjVBOWNB?oc=5",
+            "source": "dailytelegraph.com.au",
+            "date": "Wed, 01 Apr 2026 07:13:35 GMT",
+            "source_type": "news",
+            "category": "VAWG",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential VAWG harm: recurring themes include deepfake, nude, scandal, rocks, elite, school (1 sources)."
       },
       {
         "signal_id": "7833f9626899792d",
@@ -4464,7 +4399,7 @@
           {
             "title": "Campaigner hopes new law will stop sexist street abuse",
             "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5tUl9NWGkzQzhyNF9UNUpBVFNRNk9kNWRSeVNCY3dJN3RWYmFUdlZ6M3FieE9QQWNiMU00ampGT2FjVkFhSy1mRnhNbm90ZHJIbUdITExTSms3UQ?oc=5",
-            "source": "bbc.com",
+            "source": "BBC",
             "date": "Wed, 01 Apr 2026 05:08:01 GMT",
             "source_type": "news",
             "category": "VAWG",
@@ -4491,11 +4426,11 @@
           {
             "title": "Behind the screens: The hidden crime epidemic swamping police",
             "link": "https://news.google.com/rss/articles/CBMiugFBVV95cUxORDl5ZlVPbVZXZWRoamRzRFQ4cmlEUzc5eU04WlMyNEc0a2hESkotUURaeHZONUZ6TE5Ec2hDemE5MFgzT2xHWnBVSWRMdkRQcjA3dWtyLVNtYXkzc01JVGVFejFpYmllaDhPc3Jmb3JuZ2JhcXB6TEVDSVRVSHdzLWpwZEE0U2h6NXZLOWJiTFJkZVg3V2REeFFuTUF1Y3lhSEpNaHpWNlktZHE0eVVzRGJtelp6STJKTlHSAboBQVVfeXFMTkQ5eWZVT21WV2VkaGpkc0RUOHJpRFM3OXlNOFpTMjRHNGtoREpKLVFEWnh2TjVGekxORHNoQ3phOTBYM09sR1pwVUlkTHZEUHIwN3Vrci1TbWF5M3NNSVRlRXoxaWJpZWg4T3NyZm9ybmdiYXFwekxFQ0lUVUh3cy1qcGRBNFNoejV2SzliYkxSZGVYN1dkRHhRbk1BdWN5YUhKTWh6VjZZLWRxNHlVc0RibXpaekkySk5R?oc=5",
-            "source": "manchestereveningnews.co.uk",
+            "source": "Manchester Evening News",
             "date": "Wed, 01 Apr 2026 04:56:00 GMT",
             "source_type": "news",
             "category": "CSAM",
-            "uk_score": 1
+            "uk_score": 0
           }
         ],
         "confidence": 0.256,
@@ -4557,6 +4492,33 @@
         "ai_summary": "Potential Terrorism harm: recurring themes include iran, lego, tehran, weaponized, bricks, against (1 sources)."
       },
       {
+        "signal_id": "95cf39c798e2fc6e",
+        "title": "NC Christian School Teacher Charged with Creating Porn Using AI and Students\u2019 Faces",
+        "primary_category": "Other",
+        "tags": [
+          "Other"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1774994901.0,
+        "last_seen": 1774994901.0,
+        "latest_date": "Tue, 31 Mar 2026 22:08:21 GMT",
+        "links": [
+          {
+            "title": "NC Christian School Teacher Charged with Creating Porn Using AI and Students\u2019 Faces",
+            "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOeE5LNjFRVXQyb0s3TFZfcXF3UXJfVFJKZWhxU3VWRGZna3FrOFFSWGRlUzY2Mmo1bXZIcUVHN1ZMdUJIMkhlN2I1ckxNYzNXOWt1dGZidVBqR0xMYW5vOG9QQmN0ZVlfTDN2ell2bzJLUTBhcXBiRFI0SC1oVlNHQWczbWZ0XzVRcDgtYlhOZzFMSFV1a2ExLUc5aU5ETzZkSlBNN1BEYVlqbFEyMGc?oc=5",
+            "source": "MinistryWatch",
+            "date": "Tue, 31 Mar 2026 22:08:21 GMT",
+            "source_type": "news",
+            "category": "Other",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential Other harm: recurring themes include christian, school, teacher, charged, creating, porn (1 sources)."
+      },
+      {
         "signal_id": "daa14ea16b888ee2",
         "title": "Terminal B Deploys AI-Enhanced Cybersecurity Solutions to Shield Austin Businesses Against 2026 Phishing Surge",
         "primary_category": "Other",
@@ -4584,6 +4546,33 @@
         "ai_summary": "Potential Other harm: recurring themes include terminal, deploys, enhanced, cybersecurity, solutions, shield (1 sources)."
       },
       {
+        "signal_id": "1fe5f5e71333a601",
+        "title": "Experts warn AI enables scammers to bypass passwords and take over accounts",
+        "primary_category": "Other",
+        "tags": [
+          "Other"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1774987500.0,
+        "last_seen": 1774987500.0,
+        "latest_date": "Tue, 31 Mar 2026 20:05:00 GMT",
+        "links": [
+          {
+            "title": "Experts warn AI enables scammers to bypass passwords and take over accounts",
+            "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxPNDMxcWk2T19FaGVLcGxvQzZ5UTdiakdEX2dwWTFJTlFTemNSRUhXcW9NeGcwZ09DUGRtbnJrcXhSWFRlbTNla1Z1Q0pPYWNqMERxSTIxRUpQZmRHNmF1RExPVWNBdmNIRmhCSW5Wd0pBYm9KMHBNQ0Y2aUlfa1ZjNWRQTzU4SGJVdWNtOXFIRVl3QlJMQmhmdDdxQnBQSDRtTk5F0gG3AUFVX3lxTE5nWnFWN3JGcEFkY3Q0MFJBZDRfdGIwdlRrQ0hYb3JYQk1iZXIyaDJSc3hSMzlxa05jVTZWdmpJVUo3MUg4ajNpdTM0ZVBVZXNrZGNOZ0N5N0VyVm4wazdORHdPekJMNWgxa3M5VUlDU1VQNzlCMm1oUlVfNTVCa2hSTUpVSHJYaS11aWJ0TEhtR3JxTll0U3hQWS1WVWdSbzRXM2ZaS1JUaWJLd0gyd2VKTHBJN0NBaw?oc=5",
+            "source": "WAFB",
+            "date": "Tue, 31 Mar 2026 20:05:00 GMT",
+            "source_type": "news",
+            "category": "Other",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential Other harm: recurring themes include experts, warn, enables, scammers, bypass, passwords (1 sources)."
+      },
+      {
         "signal_id": "ced7b3e6614d70a6",
         "title": "Chainalysis Launches AI Agents for Crypto Crime Investigations",
         "primary_category": "Other",
@@ -4599,7 +4588,7 @@
           {
             "title": "Chainalysis Launches AI Agents for Crypto Crime Investigations",
             "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNRnpTMUxkQ3VxeXVTVTF3cmlBNmdNaGEwZkxTVnFnTzB1NGUxWGhzcm9CcmJYNHhKc0dQaHgwdFpNVkJ5aEtQRlYzQVQxMElTTG9jRENCT1dQdFI2NE5MLTRPb3Y4TTJ3bWNvZ2t0YTRyaC1EZjVKZlBoWHBnWDEtcWY1QkxIYTZ5WHJKaTBPRnBINGR2UnJGaUU5ZVk4YmE3WHMwUkoxNTRtVTJjQkhr?oc=5",
-            "source": "PYMNTS.com",
+            "source": "pymnts.com",
             "date": "Tue, 31 Mar 2026 19:12:08 GMT",
             "source_type": "news",
             "category": "Other",
@@ -4636,33 +4625,6 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Potential CSAM harm: recurring themes include california, order, requires, firms, seeking, state (1 sources)."
-      },
-      {
-        "signal_id": "ab043eee8350ccb2",
-        "title": "DeSantis signs \u2018Missy\u2019s Law,\u2019 toughens penalties for child exploitation and calls for impeachment of Leon County judge",
-        "primary_category": "CSAM",
-        "tags": [
-          "CSAM"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1774978440.0,
-        "last_seen": 1774978440.0,
-        "latest_date": "Tue, 31 Mar 2026 17:34:00 GMT",
-        "links": [
-          {
-            "title": "DeSantis signs \u2018Missy\u2019s Law,\u2019 toughens penalties for child exploitation and calls for impeachment of Leon County judge",
-            "link": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxQeEZ1RXFQVElYUFZJb1hIdVoyUHpNWHpxTTkyQ1E0YlJKLXltTFFHME8tRFRza25QdnREcS1IdEp6Q2Eydk5EVFBZbTE1N2xmcXQ2SVhtdF9uT2h0dDBQOVRVTXRJTDBjT1lZTU1CZ215TEVJdWRZaTlQLWFOVE5lLWRWbTF5THllekt0NWxQYVBaV2NVeVo5MEZiTEhkNWVfTWpETGJucXNhUXAxdWt3WXEtaTBXSFRaTWJvZjNTcG9vMlBJbWVYMXJfRTQ5TlhTN05RWDBn?oc=5",
-            "source": "Florida\u2019s Voice",
-            "date": "Tue, 31 Mar 2026 17:34:00 GMT",
-            "source_type": "news",
-            "category": "CSAM",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential CSAM harm: recurring themes include desantis, signs, missy, toughens, penalties, child (1 sources)."
       },
       {
         "signal_id": "a2988b715574ec87",
@@ -4854,6 +4816,33 @@
         "ai_summary": "Potential VAWG harm: recurring themes include protecting, children (1 sources)."
       },
       {
+        "signal_id": "2e65d4fa77de3534",
+        "title": "EU Moves to Regulate AI Nudification, But Key Challenges Remain",
+        "primary_category": "CSAM",
+        "tags": [
+          "CSAM"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1774957680.0,
+        "last_seen": 1774957680.0,
+        "latest_date": "Tue, 31 Mar 2026 11:48:00 GMT",
+        "links": [
+          {
+            "title": "EU Moves to Regulate AI Nudification, But Key Challenges Remain",
+            "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxQc25PbGN2WV9jMUp0NjdRVVM4N0U0Rzhxc21ER0t5RjNDazZSQ1lDZllBaXRDX2VFNWJUWmNKRXVETEtHWDRiVFRwUU5GajNRNTlHNk5WLXBsSzlhbWxXQS1SVk05dkhWMG1NSlVrMl9zRU4xR0x6Qkw3dkEzT3Y1azNubWROc0tWTFVES1ZRZVI?oc=5",
+            "source": "Tech Policy Press",
+            "date": "Tue, 31 Mar 2026 11:48:00 GMT",
+            "source_type": "news",
+            "category": "CSAM",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Potential CSAM harm: recurring themes include moves, regulate, nudification, challenges, remain (1 sources)."
+      },
+      {
         "signal_id": "14b328be6e9f5a37",
         "title": "DeSantis signs bills targeting child predators, AI-generated abuse material",
         "primary_category": "CSAM",
@@ -4923,7 +4912,7 @@
           {
             "title": "AI gone wrong, again: 50-year-old woman arrested for crimes in a state she had never been to",
             "link": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxQcnluSFc2NG4wazBYVDdUQ29DSUcyWElFbU5EM1pKRlRiaHB1RUxYUHA2VXBWSHBSbzJ2Qk9GaDR6cnpMWFBOV28tcjhra2M2RGNrbTdXT25mRFlZUXdXSjRoMzhDbGlpUzR6dk9saEsyajUyZDFWLXV0NmNFc0ZFQjNKRlJxSFRxVlNRZ01tZndFc2lhdWxrdWJ4VjV5U1huMk0zZmlnQk1EeUFFeDlwWWF0dG9sRmdNc1VObUt2SVFlTDFzUnVGYktIUFA5ZFVWTmNZ0gHYAUFVX3lxTE9uaWpGTlZOXzF2SEptbWxaaThMZENrb3JhVXRFRjN5VmJFLUduOFBTRWNnUEJYcDdHYmt0U29qamdqYUZGV2lqQkV4MThvNDFLMFkwRnh2ejYwNDVSX3ZXeEducWV0MS1MM2UyUVFOem03a3V0TEhmaXU4Q3JDNFg1b3NLa29ZZjZXTjdyZ2hsYlZsNFhaZmFGcWJ3VWxINF9xRWxaUE4zbVVJTkVpcXlEZGIyeW56czNfeDgwQVJmYnpmeElGSmQ0b05zUlJiVHRyQnE2SmNLTg?oc=5",
-            "source": "WION",
+            "source": "wionews.com",
             "date": "Tue, 31 Mar 2026 11:02:00 GMT",
             "source_type": "news",
             "category": "Other",
@@ -4950,7 +4939,7 @@
           {
             "title": "Does the \u201cthree-finger\u201d method to detect deepfakes actually work?",
             "link": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE42S0FaeS1HOGMzWjExS3VGMGdWQW5rOEhFekJzZTdJLUhKeTNhaXNiMWRKMVZndlNuVHU5N1l0ZmhteXdDUVZXLW5FazdIS0FMdDh6N09xenlHMGtJZjhFUmxSeFk?oc=5",
-            "source": "cybernews.com",
+            "source": "Cybernews",
             "date": "Tue, 31 Mar 2026 10:19:37 GMT",
             "source_type": "news",
             "category": "Fraud",
@@ -5004,7 +4993,7 @@
           {
             "title": "Guarding LLMs With a Layered Prompt Injection Representation",
             "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQNWhFYnV3LWpmSkxtME5vQkdHczRUZ2hJcGFNUktSTF9JVFRvUnNUQ3dkZnFEX3VaTjdSa3VlMm9tZ1ktdi00UkpOSjhvTk9fRmtHemdEZG02SFphRFBXQTFHNzE0aVQzWnpSNFA1SVFpcnUzWWJ5NFZ5UVRpNG9CdzhWWGxoQW1mUXVESHFmVGI4TnhKc0RvcWZJYmZ2MXliWjE3UDJQSTZuLUhJV19ldHVOWUo4WlF6cWI2d0dpN3J2aURHaWxPdllR?oc=5",
-            "source": "TrendMicro",
+            "source": "www.trendmicro.com",
             "date": "Tue, 31 Mar 2026 08:37:31 GMT",
             "source_type": "news",
             "category": "Cyber",
@@ -5044,7 +5033,7 @@
       },
       {
         "signal_id": "0d4f3f112638fa36",
-        "title": "African Union: Combatting violence against women must account for online harms",
+        "title": "African Union: Combatting violence against women must account for online harms - ARTICLE 19",
         "primary_category": "VAWG",
         "tags": [
           "VAWG"
@@ -5056,9 +5045,9 @@
         "latest_date": "Tue, 31 Mar 2026 07:00:00 GMT",
         "links": [
           {
-            "title": "African Union: Combatting violence against women must account for online harms",
+            "title": "African Union: Combatting violence against women must account for online harms - ARTICLE 19",
             "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNU3FwTkFET3hPNDhCeWZkX0xkOU9DQVdVR2hkNGhEaXNiZ3lzQ3kyeWctN2luN0hmcVVTMWFCY1dBNm81VTlTZWg2UkprWUllaHNMY2dEaVFkMGJFdTdmendaUE9kMjJyQUVLOTFIZlJoRTRfbUdSdDB5bms0U2RzV1RxUGpzcDRESlpWa0RXSDRoRUFTenk3Vjg0LW9FNVRNTTBlWTdZWUVLZWZqTDRF?oc=5",
-            "source": "article19.org",
+            "source": "ARTICLE 19 - Defending freedom of expression and information.",
             "date": "Tue, 31 Mar 2026 07:00:00 GMT",
             "source_type": "news",
             "category": "VAWG",
@@ -5220,7 +5209,7 @@
           {
             "title": "TV star\u2019s AI porn allegations spark national debate in Germany",
             "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNOEFaTXdmTjJSUDVJbWZqSU5UcEpZVkRmMXpxRXJZMzluTGVOSHhKYm4yNmtIVERfMFJSR094SUpxSWFPX0VHTnIxTXdYWFBTYzhvTTJGeEdmalZOSFQwWUhkYVNCVFFsT0hXdWNDYUU4T0ZZNE5vSl95NVBXV0ZvQjA4Yk1YbnhVR2Q1dzRjMVVYdUtyRUxueDY2U19iUkhVT3AxdjJoOU55Q1Bad1JKcnVQb2E3My1KZlJMNg?oc=5",
-            "source": "The Guardian",
+            "source": "theguardian.com",
             "date": "Mon, 30 Mar 2026 20:04:00 GMT",
             "source_type": "news",
             "category": "VAWG",
@@ -5259,33 +5248,6 @@
         "ai_summary": "Potential Other harm: recurring themes include atlanta, arrested, conspiring, smuggle, technology, china (1 sources)."
       },
       {
-        "signal_id": "000a0597069ef812",
-        "title": "Scam campaigns target older Ohioans, but younger adults often fall prey",
-        "primary_category": "Fraud",
-        "tags": [
-          "Fraud"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1774895905.0,
-        "last_seen": 1774895905.0,
-        "latest_date": "Mon, 30 Mar 2026 18:38:25 GMT",
-        "links": [
-          {
-            "title": "Scam campaigns target older Ohioans, but younger adults often fall prey",
-            "link": "https://news.google.com/rss/articles/CBMi2AJBVV95cUxONmE2YXV6Mm9WSWhUOTBPUzZ1ekNQdzNFbzhRY1pTU0JvQ3ZabVg3UVhwSk5tdlZ1UHg1M3NTdXpJOG9tMDhRNFp0dDdNVE5BcUE0ZTFnUXlILVdCeFV0eFpPeTByQ0N0STdaM0NRWHVJVGNnVmQ0Q0J0SS0ycURNVEF0RTJGS0Y1Q3pFMU1MMW1TbDVDeVFSUzlYUG9WdHk4cDhDWHVLeERydGtVWHRndktvdjlWVVREYUpMbXowdGpHX1lxdTc2Y21RbGZuWU5WZFJzaGd5UlBNcTFqOXRvWE5PRGU2VEhZb2RFWGk1Zm5XNHBqdG5sMjQ5LUZNVTV2NHRqbWpPMzFHTExBUEh2bVFjd3gyeVVFWU1iS05seDJwRnFLdldBNV9mb2FXYUk1LUhBcFUxT2pHSDZsYWhsTkFqd3NvbUhlbHl5a3FsVERLdTJINEZiOQ?oc=5",
-            "source": "MSN",
-            "date": "Mon, 30 Mar 2026 18:38:25 GMT",
-            "source_type": "news",
-            "category": "Fraud",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Potential Fraud harm: recurring themes include scam, campaigns, target, older, ohioans, younger (1 sources)."
-      },
-      {
         "signal_id": "db0fd698d0937ba2",
         "title": "Grandmother mistakenly jailed for 5 months after AI linked her to crime",
         "primary_category": "Other",
@@ -5301,11 +5263,11 @@
           {
             "title": "Grandmother mistakenly jailed for 5 months after AI linked her to crime",
             "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQTmtpMmFWclFVRlJVSlJLWVctVHBvVU5lRHo3M1FZZ3F0MUlWbDB0V0xQZmU0Z04wZzBaTXNDaUVza2ZVSlJQQlN2WUlhcW5SSzF3TjNXX0hSRXByckVidW5YTE5VWjN5b2FPVVh2S3U0NTBjTFpFWVVYZXMwRTkzbk9vb3gybUlZcnNOdTQ2Nm1DZWdoM3pyXzFIRVlJdzVmT3pQVw?oc=5",
-            "source": "telegraph.co.uk",
+            "source": "The Telegraph",
             "date": "Mon, 30 Mar 2026 18:21:00 GMT",
             "source_type": "news",
             "category": "Other",
-            "uk_score": 1
+            "uk_score": 0
           }
         ],
         "confidence": 0.256,
@@ -5355,7 +5317,7 @@
           {
             "title": "Mistral AI just released a text-to-speech model it says beats ElevenLabs \u2014 and it's giving away the weights for free",
             "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOZUtQbHhIa2daZ01KZjVVYkw1UkhsQmlGNVBwdjA0TDBRR0Q1anY0TDdPMDBZekMxU0VTNTVfOHpTY3RtNWhROHpnLW9BamNCTGpsTktyQmhJNEVVQ1llVVh3TklMUTgtOXVaUHZKanhHYjR5TklScHA0dGxuWDI0akpyNkdyeXVGdGt1QnN5S0hGbnQ3R2hUZWRST2JjTXZZaXhKR1VUUW5mLVhRNXRnX2JjU1o?oc=5",
-            "source": "Venturebeat",
+            "source": "VentureBeat",
             "date": "Thu, 26 Mar 2026 07:00:00 GMT",
             "source_type": "news",
             "category": "Model Releases",
@@ -5703,6 +5665,33 @@
         "ai_summary": "Model Releases: recurring themes include introducing (1 sources)."
       },
       {
+        "signal_id": "0b77555e7f1aa092",
+        "title": "VfL Wolfsburg turns ChatGPT into a club-wide capability",
+        "primary_category": "Model Releases",
+        "tags": [
+          "Model Releases"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1772668800.0,
+        "last_seen": 1772668800.0,
+        "latest_date": "Thu, 05 Mar 2026 00:00:00 GMT",
+        "links": [
+          {
+            "title": "VfL Wolfsburg turns ChatGPT into a club-wide capability",
+            "link": "https://openai.com/index/vfl-wolfsburg",
+            "source": "OpenAI",
+            "date": "Thu, 05 Mar 2026 00:00:00 GMT",
+            "source_type": "news",
+            "category": "Model Releases",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Model Releases: recurring themes include wolfsburg, turns, chatgpt, club, wide, capability (1 sources)."
+      },
+      {
         "signal_id": "37f2d0b711479a96",
         "title": "Introducing the Adoption news channel",
         "primary_category": "Model Releases",
@@ -5757,33 +5746,6 @@
         "ai_summary": "Model Releases: recurring themes include introducing, chatgpt, excel, financial, data, integrations (1 sources)."
       },
       {
-        "signal_id": "0b77555e7f1aa092",
-        "title": "VfL Wolfsburg turns ChatGPT into a club-wide capability",
-        "primary_category": "Model Releases",
-        "tags": [
-          "Model Releases"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1772668800.0,
-        "last_seen": 1772668800.0,
-        "latest_date": "Thu, 05 Mar 2026 00:00:00 GMT",
-        "links": [
-          {
-            "title": "VfL Wolfsburg turns ChatGPT into a club-wide capability",
-            "link": "https://openai.com/index/vfl-wolfsburg",
-            "source": "OpenAI",
-            "date": "Thu, 05 Mar 2026 00:00:00 GMT",
-            "source_type": "news",
-            "category": "Model Releases",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Model Releases: recurring themes include wolfsburg, turns, chatgpt, club, wide, capability (1 sources)."
-      },
-      {
         "signal_id": "0de96e92e951ac9a",
         "title": "GPT-5.3 Instant: Smoother, more useful everyday conversations",
         "primary_category": "Model Releases",
@@ -5836,33 +5798,6 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Model Releases: recurring themes include introducing, stateful, runtime, environment, agents, amazon (1 sources)."
-      },
-      {
-        "signal_id": "bb7548326f3adbe7",
-        "title": "OpenAI Codex and Figma launch seamless code-to-design experience",
-        "primary_category": "Model Releases",
-        "tags": [
-          "Model Releases"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1772085600.0,
-        "last_seen": 1772085600.0,
-        "latest_date": "Thu, 26 Feb 2026 06:00:00 GMT",
-        "links": [
-          {
-            "title": "OpenAI Codex and Figma launch seamless code-to-design experience",
-            "link": "https://openai.com/index/figma-partnership",
-            "source": "OpenAI",
-            "date": "Thu, 26 Feb 2026 06:00:00 GMT",
-            "source_type": "news",
-            "category": "Model Releases",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Model Releases: recurring themes include openai, codex, figma, launch, seamless, code (1 sources)."
       },
       {
         "signal_id": "fd2a89b5a1b5a8dc",
@@ -6000,33 +5935,6 @@
         "ai_summary": "Model Releases: recurring themes include beyond, deepseek, china, diverse, open, weight (1 sources)."
       },
       {
-        "signal_id": "3d7592ca80e0b6af",
-        "title": "The best Chinese open-weight models \u2014 and the strongest US rivals",
-        "primary_category": "Model Releases",
-        "tags": [
-          "Model Releases"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1765785600.0,
-        "last_seen": 1765785600.0,
-        "latest_date": "Mon, 15 Dec 2025 08:00:00 GMT",
-        "links": [
-          {
-            "title": "The best Chinese open-weight models \u2014 and the strongest US rivals",
-            "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE5aRUUtRDNyd05CNlRPU1JDN2lPcEU3RkZVOTU0UkN4T1Vzb0hvMjhWTGJLUzlwcW83dWxsY1pVTFlHNjlnLUt1N0JJVnB1dGtqdTQxNjd1R2U4OW14RWhUVVZkVlFUVDExWWx5QjJ2U1ZFSlVKS0s5RA?oc=5",
-            "source": "understandingai.org",
-            "date": "Mon, 15 Dec 2025 08:00:00 GMT",
-            "source_type": "news",
-            "category": "Model Releases",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Model Releases: recurring themes include best, chinese, open, weight, models, strongest (1 sources)."
-      },
-      {
         "signal_id": "46ce2f11fb91cf50",
         "title": "DeepSeek V3.2 is the #2 most intelligent open weights model and also ranks ahead of Grok 4 and Claude Sonnet 4.5 (Thinking)",
         "primary_category": "Model Releases",
@@ -6123,7 +6031,7 @@
           {
             "title": "Moonshot's open source Kimi K2 Thinking outperforms GPT-5, Claude Sonnet 4.5",
             "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQVUtHLU8tMGduQW5PaExYZk9COUVGbUxXaGlfMkdTRjd3WmNUMklNcVFqYkU2dkRFblVWSXlVU05JYmJIM1BWTDBxN055VlUySjh1MzBKS3hFQ3ZlMVNYVmZ6Vm1wcldPUUJPS0lNWG9RSE43VGVvYlQwZzhGRHFfT1dHcnUwbXQya09WeWVNTkVDaHk4VWEtNHdBNjlNVzJHck9v?oc=5",
-            "source": "Venturebeat",
+            "source": "VentureBeat",
             "date": "Thu, 06 Nov 2025 08:00:00 GMT",
             "source_type": "news",
             "category": "Model Releases",
@@ -6160,6 +6068,33 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Model Releases: recurring themes include thoughts, kimi, thinking, nathan, lambert (1 sources)."
+      },
+      {
+        "signal_id": "9ea265a8383d46c1",
+        "title": "Anthropic fights tooth and nail to keep their AI model weights secret",
+        "primary_category": "Model Releases",
+        "tags": [
+          "Model Releases"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1759489664.0,
+        "last_seen": 1759489664.0,
+        "latest_date": "Fri, 03 Oct 2025 11:07:44 GMT",
+        "links": [
+          {
+            "title": "Anthropic fights tooth and nail to keep their AI model weights secret",
+            "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOZU1Eb082Q1RndGRoQmdFUzZYMVhSYUtxUGRsN29ObXkzOHVsNlhMQmdaSUNLdFJTTGEwR1gzMzh4dEVEQkpPQ3dldFVDaXphclVfazZBbkNLNm5kUU9mVDR6UWJJbFV0d08zaF9EQ2xzUFJMTklLZ1FLelZIZkoxMzFqUlBmV3Q3TnlmZUk2SkJBeHlydEk0NUFyZHZMZ1NBUnJKdFJpLWZabURLQ0ROQzJn?oc=5",
+            "source": "fanaticalfuturist.com",
+            "date": "Fri, 03 Oct 2025 11:07:44 GMT",
+            "source_type": "news",
+            "category": "Model Releases",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Model Releases: recurring themes include anthropic, fights, tooth, nail, keep, model (1 sources)."
       },
       {
         "signal_id": "5965d3745c224e10",
@@ -6258,7 +6193,7 @@
           {
             "title": "This researcher turned OpenAI's open weights model gpt-oss-20b into a non-reasoning 'base' model with less alignment, more freedom",
             "link": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxOY2F2eXJjZGFPZnJrWVdNcEY0eWQ1YnlYVzJpSmlpMTdFRW9iT01RN1ktNnp2dXVLTmR0RUM4NUN4alpFU1Q0WUVLUHBEcUlDZzd0QTJ6MmVxdklENTBWN2tyWGF3Q0JwWVFnWE0xVEYwMlJwMmd1STNZOGw2Q1ZDaUpZbGxYYnNjbGt3NXg4bTN1akFRcUpUbVJrSHBEcnhjT1UtZThJc3RJd0RlTEFFdzFzWE5EQjBfaWpDeWRSSFFWbTZZdHFoSWEwRHhKM0I4SW9OVGI5NGFLNkNDLWp1YThucjlmM2t4cUEzUldCa3M?oc=5",
-            "source": "Venturebeat",
+            "source": "VentureBeat",
             "date": "Fri, 15 Aug 2025 07:00:00 GMT",
             "source_type": "news",
             "category": "Model Releases",
@@ -6393,7 +6328,7 @@
           {
             "title": "OpenAI takes on Meta and DeepSeek with free and customisable AI models",
             "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPM1dSbWJfeUc4Q0lMU2dGeE5kVHVUZFRNcjU5cEFTTS1iV3dfNHBzajRFUzFjOWNnSzFVT3lmTVpvOFBSajZkQkVWMkJld1RzbGFzcWlxaHdab2ZZWHZJRlBsbjdMZGVhYjlTZkNoR2ZtOF9mdkxiMnNpMVN5bWNmc2tORHJBU0JQQ2g4TXU4MEN5NFpJOXVDQV9hVW1tT09INWc?oc=5",
-            "source": "The Guardian",
+            "source": "theguardian.com",
             "date": "Tue, 05 Aug 2025 07:00:00 GMT",
             "source_type": "news",
             "category": "Model Releases",
@@ -6403,60 +6338,6 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Model Releases: recurring themes include openai, takes, meta, deepseek, free, customisable (1 sources)."
-      },
-      {
-        "signal_id": "4162634c21abdcb8",
-        "title": "OpenAI Just Released Its First Open-Weight Models Since GPT-2",
-        "primary_category": "Model Releases",
-        "tags": [
-          "Model Releases"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1754377200.0,
-        "last_seen": 1754377200.0,
-        "latest_date": "Tue, 05 Aug 2025 07:00:00 GMT",
-        "links": [
-          {
-            "title": "OpenAI Just Released Its First Open-Weight Models Since GPT-2",
-            "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPaXYtTDVWVmNMa2RmT2pYWjNlYy1JS3NiZTBFWDJjczd0b1V1SnRBcVBDeXJyY1YwVGhjT2hma0dJVGk5WC00WHRyRGtDamlOY3NvWGd0ckx4NFJZcldpc2IzdXZXb29QR0JZT2RuRnBoUVdWcVVNRVdvQzZpazE4VDNuOEdwWlBYWmRIV0RRTjdqalU4?oc=5",
-            "source": "WIRED",
-            "date": "Tue, 05 Aug 2025 07:00:00 GMT",
-            "source_type": "news",
-            "category": "Model Releases",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Model Releases: recurring themes include openai, released, first, open, weight, models (1 sources)."
-      },
-      {
-        "signal_id": "1ca11bcdc1af3ef3",
-        "title": "OpenAI launches two \u2018open\u2019 AI reasoning models",
-        "primary_category": "Model Releases",
-        "tags": [
-          "Model Releases"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1754377200.0,
-        "last_seen": 1754377200.0,
-        "latest_date": "Tue, 05 Aug 2025 07:00:00 GMT",
-        "links": [
-          {
-            "title": "OpenAI launches two \u2018open\u2019 AI reasoning models",
-            "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPVFJENE8tZlFpbUtScThyNmxaVkxJa0NhVmlkOHZUY0JQVTU0RHFVNWw2QzM4T1ZCS3l3c05MRWJGZGI0VXpzRUhwWlFlWjE0ZjRTbG1JdDNibVlBT2RfeDFaVDVxbkM4SmlwWGEyczNlQTFrd2x3ZUFnTVNWaDkxMUIxOGlLQQ?oc=5",
-            "source": "TechCrunch",
-            "date": "Tue, 05 Aug 2025 07:00:00 GMT",
-            "source_type": "news",
-            "category": "Model Releases",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Model Releases: recurring themes include openai, launches, open, reasoning, models (1 sources)."
       },
       {
         "signal_id": "c7ba4e44f0c6654c",
@@ -6540,33 +6421,6 @@
         "ai_summary": "Model Releases: recurring themes include introducing, openai, open, models, databricks (1 sources)."
       },
       {
-        "signal_id": "e2ac6b15592a1cb2",
-        "title": "OpenAI Releases Two \u2018Open\u2019 AI Models After DeepSeek\u2019s Success",
-        "primary_category": "Model Releases",
-        "tags": [
-          "Model Releases"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1754377200.0,
-        "last_seen": 1754377200.0,
-        "latest_date": "Tue, 05 Aug 2025 07:00:00 GMT",
-        "links": [
-          {
-            "title": "OpenAI Releases Two \u2018Open\u2019 AI Models After DeepSeek\u2019s Success",
-            "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPLWhlNWRrd3BuS3EybXBqU3RkbUQtbS1CWWdVcmY5NjFPNG9OajBSZU0xZHE2UlprMDRqZUVOaVhZVTNmc3pLQlE4X2RHQ2Q4RWxUNElaVGNrVXA3cmFMWjU5RGhLNGtCaS1BaFE1T3Z5UG8xNXpBSmFkcnp4NjRlTG9QMXBTZ1BuWE1MUC1ra0xObmtwUHdsdzI0VlVJUFVleGNydHIxdkZNeDYweklv?oc=5",
-            "source": "Bloomberg.com",
-            "date": "Tue, 05 Aug 2025 07:00:00 GMT",
-            "source_type": "news",
-            "category": "Model Releases",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Model Releases: recurring themes include openai, releases, open, models, deepseek, success (1 sources)."
-      },
-      {
         "signal_id": "e9d61aae0a0f915b",
         "title": "OpenAI has finally released open-weight language models",
         "primary_category": "Model Releases",
@@ -6582,7 +6436,7 @@
           {
             "title": "OpenAI has finally released open-weight language models",
             "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNTU00NnFEdjlSZzJYeTRHZjhtYXdXSnRFR1BBRHJkMGFmWUdSNGNjWTJBSkxjTGpqVGhSdkhhQzhucmZ4aFRhSUtkVjRnb3pNYXhWR05ycGdiSXN5RGVHTk9RSXhRQjRsYll3ZS1Fd2V5djVfQWVuVTlzQ3lBYW1vMjJ1MHVXT2lKaDFCRDJKdlJqSXB3OWltb1ZpeklyU2VJdmJJZTVtSlZDaE1i0gGyAUFVX3lxTE5ROVdGSC1tZEtGdm1jdDVvVXhFTEhtdk1JWEYyRWtOaFhlLWxlV0ZyTks0XzJ2UFBEWmtPcEt3dWVXQUt1Nm9nZmVqZWc1b3h2M2dmOHFoRGRFV1l6NjRXY2xDWGNDc1cxd2swa201eEZVQW4xUXptZkczTkpWU3BrUFhFRnE0cjI4cVV4R0o5Uno2Nk40ZFNXYWF4ODliRmFDMDFLOVZVbDBFdVRaOGlNaEE?oc=5",
-            "source": "MIT Technology Review",
+            "source": "technologyreview.com",
             "date": "Tue, 05 Aug 2025 07:00:00 GMT",
             "source_type": "news",
             "category": "Model Releases",
@@ -6592,6 +6446,33 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Model Releases: recurring themes include openai, finally, released, open, weight, language (1 sources)."
+      },
+      {
+        "signal_id": "c6793e509371b0eb",
+        "title": "OpenAI's first new open-weight LLMs in six years are here",
+        "primary_category": "Model Releases",
+        "tags": [
+          "Model Releases"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1754377200.0,
+        "last_seen": 1754377200.0,
+        "latest_date": "Tue, 05 Aug 2025 07:00:00 GMT",
+        "links": [
+          {
+            "title": "OpenAI's first new open-weight LLMs in six years are here",
+            "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQVkxXMUdLLVFLRUVsZUZ4d2plLWpNeUJVVnZqZFNJOUFzeWF1Y1FrMTV0dWJpQWhlUXRfNEFSYTVOYkxScXdSVTdtbmZCME1XSEU4U0NZYUdXUlBwMGRaajNubDcyQWVwRUhLZUFLLS1HQVFMTFRFaFhUMzVpOEt0djlxTWE1cHNKVFlxY1hpbEtzclF3R21RQUJtTjF2a0NB?oc=5",
+            "source": "Engadget",
+            "date": "Tue, 05 Aug 2025 07:00:00 GMT",
+            "source_type": "news",
+            "category": "Model Releases",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Model Releases: recurring themes include openai, first, open, weight, llms, years (1 sources)."
       },
       {
         "signal_id": "cb7a4625cf937992",
@@ -6621,6 +6502,33 @@
         "ai_summary": "Model Releases: recurring themes include openai, releases, open, weight, models, compete (1 sources)."
       },
       {
+        "signal_id": "4286bb91cc90319b",
+        "title": "gpt-oss: OpenAI validates the open ecosystem (finally)",
+        "primary_category": "Model Releases",
+        "tags": [
+          "Model Releases"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1754377200.0,
+        "last_seen": 1754377200.0,
+        "latest_date": "Tue, 05 Aug 2025 07:00:00 GMT",
+        "links": [
+          {
+            "title": "gpt-oss: OpenAI validates the open ecosystem (finally)",
+            "link": "https://news.google.com/rss/articles/CBMickFVX3lxTE1lR2FKbmxWT2hVUk1FTzl6RUtHME13SnROckl4Z0E1X1p5SThVd2ltVkpMZjRWLVVqYm1mbUpwaXZ5Q2FTejRPem9JaWI2WW9UR2NVYW8wemxtLWFtNWZOMXJOQk1CZk9lNGExSlVhalktZw?oc=5",
+            "source": "Interconnects AI",
+            "date": "Tue, 05 Aug 2025 07:00:00 GMT",
+            "source_type": "news",
+            "category": "Model Releases",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Model Releases: recurring themes include openai, validates, open, ecosystem, finally (1 sources)."
+      },
+      {
         "signal_id": "97d291f9ef6660b0",
         "title": "OpenAI Takes on Rivals Meta, DeepSeek With 2 New Models",
         "primary_category": "Model Releases",
@@ -6636,7 +6544,7 @@
           {
             "title": "OpenAI Takes on Rivals Meta, DeepSeek With 2 New Models",
             "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOYUtNXzh2YWtJbnp5RDFBR1J5dU9janY1VkxORUhwdzhraldqMldoNUYtU2FxdEROLWdlSXFJT0hSUnBVNDk1VTVpNEplYUU1M3dPVWpzczlYZnVRRUY3MXdjZFJ0ZzFrbnd3NXc5a21CQUo3ZWxUSHJkM1ZwbWxEenNkVHlnOVlkRVozSEprREthazVQbU9VYUh3aFU2ekRRU1B1eEEzcWNjekxqVnc?oc=5",
-            "source": "PYMNTS.com",
+            "source": "pymnts.com",
             "date": "Tue, 05 Aug 2025 07:00:00 GMT",
             "source_type": "news",
             "category": "Model Releases",
@@ -6712,8 +6620,8 @@
         "date": "2026-04-06T12:20:20+00:00",
         "tags": [
           "reddit",
-          "forum",
           "Fraud",
+          "forum",
           "cyber"
         ],
         "source_type": "forum",
@@ -6729,9 +6637,9 @@
         "date": "Sun, 05 Apr 2026 21:57:52 +0000",
         "tags": [
           "Cyber",
+          "hn",
           "forum",
-          "model-safety",
-          "hn"
+          "model-safety"
         ],
         "source_type": "forum",
         "uk_score": 0,
@@ -6746,9 +6654,9 @@
         "date": "Fri, 03 Apr 2026 19:26:20 +0000",
         "tags": [
           "Cyber",
+          "hn",
           "forum",
-          "model-safety",
-          "hn"
+          "model-safety"
         ],
         "source_type": "forum",
         "uk_score": 0,
@@ -6763,9 +6671,9 @@
         "date": "Thu, 02 Apr 2026 16:24:11 +0000",
         "tags": [
           "Cyber",
+          "hn",
           "forum",
-          "model-safety",
-          "hn"
+          "model-safety"
         ],
         "source_type": "forum",
         "uk_score": 0,
@@ -6780,9 +6688,9 @@
         "date": "Wed, 01 Apr 2026 22:07:19 +0000",
         "tags": [
           "Cyber",
+          "hn",
           "forum",
-          "model-safety",
-          "hn"
+          "model-safety"
         ],
         "source_type": "forum",
         "uk_score": 0,
@@ -6796,10 +6704,10 @@
         "timestamp": 1774495199.0,
         "date": "Thu, 26 Mar 2026 03:19:59 +0000",
         "tags": [
-          "forum",
-          "Fraud",
           "hn",
-          "fraud"
+          "forum",
+          "fraud",
+          "Fraud"
         ],
         "source_type": "forum",
         "uk_score": 0,
@@ -6838,7 +6746,7 @@
       {
         "title": "Mistral AI just released a text-to-speech model it says beats ElevenLabs \u2014 and it's giving away the weights for free",
         "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOZUtQbHhIa2daZ01KZjVVYkw1UkhsQmlGNVBwdjA0TDBRR0Q1anY0TDdPMDBZekMxU0VTNTVfOHpTY3RtNWhROHpnLW9BamNCTGpsTktyQmhJNEVVQ1llVVh3TklMUTgtOXVaUHZKanhHYjR5TklScHA0dGxuWDI0akpyNkdyeXVGdGt1QnN5S0hGbnQ3R2hUZWRST2JjTXZZaXhKR1VUUW5mLVhRNXRnX2JjU1o?oc=5",
-        "source": "Venturebeat",
+        "source": "VentureBeat",
         "timestamp": 1774508400.0,
         "date": "Thu, 26 Mar 2026 07:00:00 GMT"
       },
@@ -6920,6 +6828,13 @@
         "date": "Thu, 05 Mar 2026 10:00:00 GMT"
       },
       {
+        "title": "VfL Wolfsburg turns ChatGPT into a club-wide capability",
+        "link": "https://openai.com/index/vfl-wolfsburg",
+        "source": "OpenAI",
+        "timestamp": 1772668800.0,
+        "date": "Thu, 05 Mar 2026 00:00:00 GMT"
+      },
+      {
         "title": "Introducing the Adoption news channel",
         "link": "https://openai.com/index/introducing-the-adoption-news-channel",
         "source": "OpenAI",
@@ -6929,13 +6844,6 @@
       {
         "title": "Introducing ChatGPT for Excel and new financial data integrations",
         "link": "https://openai.com/index/chatgpt-for-excel",
-        "source": "OpenAI",
-        "timestamp": 1772668800.0,
-        "date": "Thu, 05 Mar 2026 00:00:00 GMT"
-      },
-      {
-        "title": "VfL Wolfsburg turns ChatGPT into a club-wide capability",
-        "link": "https://openai.com/index/vfl-wolfsburg",
         "source": "OpenAI",
         "timestamp": 1772668800.0,
         "date": "Thu, 05 Mar 2026 00:00:00 GMT"
@@ -6960,13 +6868,6 @@
         "source": "OpenAI",
         "timestamp": 1772170200.0,
         "date": "Fri, 27 Feb 2026 05:30:00 GMT"
-      },
-      {
-        "title": "OpenAI Codex and Figma launch seamless code-to-design experience",
-        "link": "https://openai.com/index/figma-partnership",
-        "source": "OpenAI",
-        "timestamp": 1772085600.0,
-        "date": "Thu, 26 Feb 2026 06:00:00 GMT"
       },
       {
         "title": "Alibaba's free Qwen3.5 signals that China's open-weight model race is far from slowing down",
@@ -7004,13 +6905,6 @@
         "date": "Tue, 16 Dec 2025 08:00:00 GMT"
       },
       {
-        "title": "The best Chinese open-weight models \u2014 and the strongest US rivals",
-        "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE5aRUUtRDNyd05CNlRPU1JDN2lPcEU3RkZVOTU0UkN4T1Vzb0hvMjhWTGJLUzlwcW83dWxsY1pVTFlHNjlnLUt1N0JJVnB1dGtqdTQxNjd1R2U4OW14RWhUVVZkVlFUVDExWWx5QjJ2U1ZFSlVKS0s5RA?oc=5",
-        "source": "understandingai.org",
-        "timestamp": 1765785600.0,
-        "date": "Mon, 15 Dec 2025 08:00:00 GMT"
-      },
-      {
         "title": "DeepSeek V3.2 is the #2 most intelligent open weights model and also ranks ahead of Grok 4 and Claude Sonnet 4.5 (Thinking)",
         "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNbEdZaXI0YmRjc041LVVSdWRUZ0d6WjFWZE03R0lER0twcmZ4SDQyaUZaMF9SWTFfbk5MYlh0NkMyVkJaendNajA3WkVpYVlnQTBteE1tLUVhSkV3M0JiWWRoLV9OWVpJZ2NjanUyRndSaTk0NXVHRWotTkJhTldKbm1zUGJScnlfTmdpWVRJZ0w?oc=5",
         "source": "LinkedIn",
@@ -7034,7 +6928,7 @@
       {
         "title": "Moonshot's open source Kimi K2 Thinking outperforms GPT-5, Claude Sonnet 4.5",
         "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQVUtHLU8tMGduQW5PaExYZk9COUVGbUxXaGlfMkdTRjd3WmNUMklNcVFqYkU2dkRFblVWSXlVU05JYmJIM1BWTDBxN055VlUySjh1MzBKS3hFQ3ZlMVNYVmZ6Vm1wcldPUUJPS0lNWG9RSE43VGVvYlQwZzhGRHFfT1dHcnUwbXQya09WeWVNTkVDaHk4VWEtNHdBNjlNVzJHck9v?oc=5",
-        "source": "Venturebeat",
+        "source": "VentureBeat",
         "timestamp": 1762416000.0,
         "date": "Thu, 06 Nov 2025 08:00:00 GMT"
       },
@@ -7044,6 +6938,13 @@
         "source": "Interconnects AI",
         "timestamp": 1762416000.0,
         "date": "Thu, 06 Nov 2025 08:00:00 GMT"
+      },
+      {
+        "title": "Anthropic fights tooth and nail to keep their AI model weights secret",
+        "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxOZU1Eb082Q1RndGRoQmdFUzZYMVhSYUtxUGRsN29ObXkzOHVsNlhMQmdaSUNLdFJTTGEwR1gzMzh4dEVEQkpPQ3dldFVDaXphclVfazZBbkNLNm5kUU9mVDR6UWJJbFV0d08zaF9EQ2xzUFJMTklLZ1FLelZIZkoxMzFqUlBmV3Q3TnlmZUk2SkJBeHlydEk0NUFyZHZMZ1NBUnJKdFJpLWZabURLQ0ROQzJn?oc=5",
+        "source": "fanaticalfuturist.com",
+        "timestamp": 1759489664.0,
+        "date": "Fri, 03 Oct 2025 11:07:44 GMT"
       },
       {
         "title": "Secrets of DeepSeek AI model revealed in landmark paper",
@@ -7069,7 +6970,7 @@
       {
         "title": "This researcher turned OpenAI's open weights model gpt-oss-20b into a non-reasoning 'base' model with less alignment, more freedom",
         "link": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxOY2F2eXJjZGFPZnJrWVdNcEY0eWQ1YnlYVzJpSmlpMTdFRW9iT01RN1ktNnp2dXVLTmR0RUM4NUN4alpFU1Q0WUVLUHBEcUlDZzd0QTJ6MmVxdklENTBWN2tyWGF3Q0JwWVFnWE0xVEYwMlJwMmd1STNZOGw2Q1ZDaUpZbGxYYnNjbGt3NXg4bTN1akFRcUpUbVJrSHBEcnhjT1UtZThJc3RJd0RlTEFFdzFzWE5EQjBfaWpDeWRSSFFWbTZZdHFoSWEwRHhKM0I4SW9OVGI5NGFLNkNDLWp1YThucjlmM2t4cUEzUldCa3M?oc=5",
-        "source": "Venturebeat",
+        "source": "VentureBeat",
         "timestamp": 1755241200.0,
         "date": "Fri, 15 Aug 2025 07:00:00 GMT"
       },
@@ -7104,21 +7005,7 @@
       {
         "title": "OpenAI takes on Meta and DeepSeek with free and customisable AI models",
         "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPM1dSbWJfeUc4Q0lMU2dGeE5kVHVUZFRNcjU5cEFTTS1iV3dfNHBzajRFUzFjOWNnSzFVT3lmTVpvOFBSajZkQkVWMkJld1RzbGFzcWlxaHdab2ZZWHZJRlBsbjdMZGVhYjlTZkNoR2ZtOF9mdkxiMnNpMVN5bWNmc2tORHJBU0JQQ2g4TXU4MEN5NFpJOXVDQV9hVW1tT09INWc?oc=5",
-        "source": "The Guardian",
-        "timestamp": 1754377200.0,
-        "date": "Tue, 05 Aug 2025 07:00:00 GMT"
-      },
-      {
-        "title": "OpenAI Just Released Its First Open-Weight Models Since GPT-2",
-        "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPaXYtTDVWVmNMa2RmT2pYWjNlYy1JS3NiZTBFWDJjczd0b1V1SnRBcVBDeXJyY1YwVGhjT2hma0dJVGk5WC00WHRyRGtDamlOY3NvWGd0ckx4NFJZcldpc2IzdXZXb29QR0JZT2RuRnBoUVdWcVVNRVdvQzZpazE4VDNuOEdwWlBYWmRIV0RRTjdqalU4?oc=5",
-        "source": "WIRED",
-        "timestamp": 1754377200.0,
-        "date": "Tue, 05 Aug 2025 07:00:00 GMT"
-      },
-      {
-        "title": "OpenAI launches two \u2018open\u2019 AI reasoning models",
-        "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPVFJENE8tZlFpbUtScThyNmxaVkxJa0NhVmlkOHZUY0JQVTU0RHFVNWw2QzM4T1ZCS3l3c05MRWJGZGI0VXpzRUhwWlFlWjE0ZjRTbG1JdDNibVlBT2RfeDFaVDVxbkM4SmlwWGEyczNlQTFrd2x3ZUFnTVNWaDkxMUIxOGlLQQ?oc=5",
-        "source": "TechCrunch",
+        "source": "theguardian.com",
         "timestamp": 1754377200.0,
         "date": "Tue, 05 Aug 2025 07:00:00 GMT"
       },
@@ -7144,16 +7031,37 @@
         "date": "Tue, 05 Aug 2025 07:00:00 GMT"
       },
       {
-        "title": "OpenAI Releases Two \u2018Open\u2019 AI Models After DeepSeek\u2019s Success",
-        "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPLWhlNWRrd3BuS3EybXBqU3RkbUQtbS1CWWdVcmY5NjFPNG9OajBSZU0xZHE2UlprMDRqZUVOaVhZVTNmc3pLQlE4X2RHQ2Q4RWxUNElaVGNrVXA3cmFMWjU5RGhLNGtCaS1BaFE1T3Z5UG8xNXpBSmFkcnp4NjRlTG9QMXBTZ1BuWE1MUC1ra0xObmtwUHdsdzI0VlVJUFVleGNydHIxdkZNeDYweklv?oc=5",
-        "source": "Bloomberg.com",
+        "title": "OpenAI has finally released open-weight language models",
+        "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNTU00NnFEdjlSZzJYeTRHZjhtYXdXSnRFR1BBRHJkMGFmWUdSNGNjWTJBSkxjTGpqVGhSdkhhQzhucmZ4aFRhSUtkVjRnb3pNYXhWR05ycGdiSXN5RGVHTk9RSXhRQjRsYll3ZS1Fd2V5djVfQWVuVTlzQ3lBYW1vMjJ1MHVXT2lKaDFCRDJKdlJqSXB3OWltb1ZpeklyU2VJdmJJZTVtSlZDaE1i0gGyAUFVX3lxTE5ROVdGSC1tZEtGdm1jdDVvVXhFTEhtdk1JWEYyRWtOaFhlLWxlV0ZyTks0XzJ2UFBEWmtPcEt3dWVXQUt1Nm9nZmVqZWc1b3h2M2dmOHFoRGRFV1l6NjRXY2xDWGNDc1cxd2swa201eEZVQW4xUXptZkczTkpWU3BrUFhFRnE0cjI4cVV4R0o5Uno2Nk40ZFNXYWF4ODliRmFDMDFLOVZVbDBFdVRaOGlNaEE?oc=5",
+        "source": "technologyreview.com",
         "timestamp": 1754377200.0,
         "date": "Tue, 05 Aug 2025 07:00:00 GMT"
       },
       {
-        "title": "OpenAI has finally released open-weight language models",
-        "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNTU00NnFEdjlSZzJYeTRHZjhtYXdXSnRFR1BBRHJkMGFmWUdSNGNjWTJBSkxjTGpqVGhSdkhhQzhucmZ4aFRhSUtkVjRnb3pNYXhWR05ycGdiSXN5RGVHTk9RSXhRQjRsYll3ZS1Fd2V5djVfQWVuVTlzQ3lBYW1vMjJ1MHVXT2lKaDFCRDJKdlJqSXB3OWltb1ZpeklyU2VJdmJJZTVtSlZDaE1i0gGyAUFVX3lxTE5ROVdGSC1tZEtGdm1jdDVvVXhFTEhtdk1JWEYyRWtOaFhlLWxlV0ZyTks0XzJ2UFBEWmtPcEt3dWVXQUt1Nm9nZmVqZWc1b3h2M2dmOHFoRGRFV1l6NjRXY2xDWGNDc1cxd2swa201eEZVQW4xUXptZkczTkpWU3BrUFhFRnE0cjI4cVV4R0o5Uno2Nk40ZFNXYWF4ODliRmFDMDFLOVZVbDBFdVRaOGlNaEE?oc=5",
-        "source": "MIT Technology Review",
+        "title": "OpenAI's first new open-weight LLMs in six years are here",
+        "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQVkxXMUdLLVFLRUVsZUZ4d2plLWpNeUJVVnZqZFNJOUFzeWF1Y1FrMTV0dWJpQWhlUXRfNEFSYTVOYkxScXdSVTdtbmZCME1XSEU4U0NZYUdXUlBwMGRaajNubDcyQWVwRUhLZUFLLS1HQVFMTFRFaFhUMzVpOEt0djlxTWE1cHNKVFlxY1hpbEtzclF3R21RQUJtTjF2a0NB?oc=5",
+        "source": "Engadget",
+        "timestamp": 1754377200.0,
+        "date": "Tue, 05 Aug 2025 07:00:00 GMT"
+      },
+      {
+        "title": "OpenAI releases open-weight \u201cgpt-oss\u201d models to compete with DeepSeek, Meta",
+        "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQVTZYSzBIOVBYeDdtNmtmLWxuZlphLU8yeFFwZ1lFODE1S1VrVDY4VW5MMkthZS1oUi1uNEZCc09xbkZONWZhR1RoMkZXYlA4UEZTMFRWTWk0T2RmbVJEMWhsd2RhY2VvTnhDeHpjajNrNnpNZzBIZ3ZaNmVhcEhlNEhKTVJYZV9lWVA1OWladlNIRTMyeVk1cWp0YWlzeUJHbnc?oc=5",
+        "source": "Sherwood News",
+        "timestamp": 1754377200.0,
+        "date": "Tue, 05 Aug 2025 07:00:00 GMT"
+      },
+      {
+        "title": "gpt-oss: OpenAI validates the open ecosystem (finally)",
+        "link": "https://news.google.com/rss/articles/CBMickFVX3lxTE1lR2FKbmxWT2hVUk1FTzl6RUtHME13SnROckl4Z0E1X1p5SThVd2ltVkpMZjRWLVVqYm1mbUpwaXZ5Q2FTejRPem9JaWI2WW9UR2NVYW8wemxtLWFtNWZOMXJOQk1CZk9lNGExSlVhalktZw?oc=5",
+        "source": "Interconnects AI",
+        "timestamp": 1754377200.0,
+        "date": "Tue, 05 Aug 2025 07:00:00 GMT"
+      },
+      {
+        "title": "OpenAI Takes on Rivals Meta, DeepSeek With 2 New Models",
+        "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOYUtNXzh2YWtJbnp5RDFBR1J5dU9janY1VkxORUhwdzhraldqMldoNUYtU2FxdEROLWdlSXFJT0hSUnBVNDk1VTVpNEplYUU1M3dPVWpzczlYZnVRRUY3MXdjZFJ0ZzFrbnd3NXc5a21CQUo3ZWxUSHJkM1ZwbWxEenNkVHlnOVlkRVozSEprREthazVQbU9VYUh3aFU2ekRRU1B1eEEzcWNjekxqVnc?oc=5",
+        "source": "pymnts.com",
         "timestamp": 1754377200.0,
         "date": "Tue, 05 Aug 2025 07:00:00 GMT"
       }
@@ -7161,11 +7069,6 @@
   },
   "coverage": {
     "by_harm": {
-      "Other": {
-        "count": 25,
-        "uk_count": 0,
-        "last_seen": 1775483730.0
-      },
       "CSAM": {
         "count": 25,
         "uk_count": 0,
@@ -7177,7 +7080,7 @@
         "last_seen": 1775388404.0
       },
       "Fraud": {
-        "count": 24,
+        "count": 23,
         "uk_count": 0,
         "last_seen": 1775477220.0
       },
@@ -7190,6 +7093,11 @@
         "count": 12,
         "uk_count": 0,
         "last_seen": 1775402327.0
+      },
+      "Other": {
+        "count": 25,
+        "uk_count": 0,
+        "last_seen": 1775448000.0
       }
     }
   },
@@ -7198,11 +7106,11 @@
       "Fraud": "Recurring themes: scams, voice, fraud, warns, rise, scammers, cloning.",
       "Cyber": "Recurring themes: prompt, injection, threats, security, cybersecurity, applications, jailbreaks.",
       "Terrorism": "Recurring themes: iran, propaganda, generated, distorting, conflict, reality, middle.",
-      "VAWG": "Recurring themes: abuse, sexual, using, deepfake, harassment, online, make.",
-      "CSAM": "Recurring themes: child, abuse, generated, material, sexual, charged, desantis.",
-      "Other": "Recurring themes: crime, agents, grandmother, jailed, crimes, chainalysis, arrested."
+      "VAWG": "Recurring themes: abuse, sexual, online, using, deepfake, harassment, make.",
+      "CSAM": "Recurring themes: child, abuse, generated, material, sexual, charged, youths.",
+      "Other": "Recurring themes: crime, agents, crimes, chainalysis, arrested, never, grandmother."
     },
-    "signals_top": "Recurring themes: scams, abuse, online, scam, phishing, powered, safety.",
-    "releases_top": "Recurring themes: open, model, introducing, models, codex, weights, chatgpt."
+    "signals_top": "Recurring themes: scams, abuse, online, child, phishing, safety, deepfakes.",
+    "releases_top": "Recurring themes: open, model, introducing, weights, models, codex, chatgpt."
   }
 }
