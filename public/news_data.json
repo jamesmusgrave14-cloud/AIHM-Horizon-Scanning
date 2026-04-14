@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-14T20:59:45.985480",
+  "last_updated": "2026-04-14T21:02:56.915011",
   "disclaimer": "Automated horizon-scanning prototype. Items indicate emerging discussion, not verified risk, intent, or prevalence.",
   "meta": {
     "limits": {
@@ -62,7 +62,7 @@
         "category": "CSAM",
         "title": "Ohio House bill targets AI-generated child sexual abuse material",
         "link": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxQUmtOYTdYZGEyZEUwc21qaTZtYlBQdXoycjctSUV3WV9sZGd5eUl1Z3NObTBTVXRGcS1FbExKTk9qb0xSbUE4WTVnSnNoOVBCMVJ1S0RYUzh5cVYzai12U0Izczg5RXItMkg0bG8zRDNEbFZrdnpzczBoeW9tOGx3YVAzWTM5bnBVNzR1ZllMbnYzX05COUtma3k1U2lyNGNYQUhNT2xrXy1qSXIxX1F0OENzMGwyVTZfZ2U0Zno5aUpkSFZEQk9iS2tBc19pVEp1MV9jS2s0eTB6RmpmNkN4WVh6Yw?oc=5",
-        "source": "wtol.com",
+        "source": "WTOL",
         "timestamp": 1776123660.0,
         "date": "Mon, 13 Apr 2026 23:41:00 GMT",
         "relevance_score": 4,
@@ -95,7 +95,7 @@
         "category": "CSAM",
         "title": "Ohio politicians prioritizing legislation to prevent using AI to produce child sexual abuse material",
         "link": "https://news.google.com/rss/articles/CBMikgJBVV95cUxOX0JQLVhLTTV3UmUtUHU1M0NkTFdZMkZ3UkJsdk5fZE9ncGc5ajRSb1dNUzVQMmhtNGpacEVVc1I2OVZIY3NRbm9VYjJCMVBmZWZXZzJVOGljR1Q3LWctTk5wVkFhbU8zMVpmSGR6WlZBMVFhbHVoVnR0QTNBWmZzY1k4d0xNVjUtei1NVG9TQlpCdnBLUDdMbUVZOXA1TnBjdVR4ZncyNzI1Wjc5aUM2SHJjcE9GR2ZLOXlncWI2Yk5iMWFoNzdHQWhmSVJRai1lRnlROXA0Q3VtdmxydWJZX3d0c0VwUlFYa1VNNVJOb3ZVQ043LU5nTjZrWUt6T3RQVV8wTHNWcVJKSkNwd01TTmh3?oc=5",
-        "source": "wtol.com",
+        "source": "WTOL",
         "timestamp": 1776114660.0,
         "date": "Mon, 13 Apr 2026 21:11:00 GMT",
         "relevance_score": 3,
@@ -1894,7 +1894,7 @@
           {
             "title": "Ohio House bill targets AI-generated child sexual abuse material",
             "link": "https://news.google.com/rss/articles/CBMi4wFBVV95cUxQUmtOYTdYZGEyZEUwc21qaTZtYlBQdXoycjctSUV3WV9sZGd5eUl1Z3NObTBTVXRGcS1FbExKTk9qb0xSbUE4WTVnSnNoOVBCMVJ1S0RYUzh5cVYzai12U0Izczg5RXItMkg0bG8zRDNEbFZrdnpzczBoeW9tOGx3YVAzWTM5bnBVNzR1ZllMbnYzX05COUtma3k1U2lyNGNYQUhNT2xrXy1qSXIxX1F0OENzMGwyVTZfZ2U0Zno5aUpkSFZEQk9iS2tBc19pVEp1MV9jS2s0eTB6RmpmNkN4WVh6Yw?oc=5",
-            "source": "wtol.com",
+            "source": "WTOL",
             "date": "Mon, 13 Apr 2026 23:41:00 GMT",
             "source_type": "news",
             "category": "CSAM",
@@ -1975,7 +1975,7 @@
           {
             "title": "Ohio politicians prioritizing legislation to prevent using AI to produce child sexual abuse material",
             "link": "https://news.google.com/rss/articles/CBMikgJBVV95cUxOX0JQLVhLTTV3UmUtUHU1M0NkTFdZMkZ3UkJsdk5fZE9ncGc5ajRSb1dNUzVQMmhtNGpacEVVc1I2OVZIY3NRbm9VYjJCMVBmZWZXZzJVOGljR1Q3LWctTk5wVkFhbU8zMVpmSGR6WlZBMVFhbHVoVnR0QTNBWmZzY1k4d0xNVjUtei1NVG9TQlpCdnBLUDdMbUVZOXA1TnBjdVR4ZncyNzI1Wjc5aUM2SHJjcE9GR2ZLOXlncWI2Yk5iMWFoNzdHQWhmSVJRai1lRnlROXA0Q3VtdmxydWJZX3d0c0VwUlFYa1VNNVJOb3ZVQ043LU5nTjZrWUt6T3RQVV8wTHNWcVJKSkNwd01TTmh3?oc=5",
-            "source": "wtol.com",
+            "source": "WTOL",
             "date": "Mon, 13 Apr 2026 21:11:00 GMT",
             "source_type": "news",
             "category": "CSAM",
@@ -5955,6 +5955,33 @@
         "ai_summary": "Model Releases: recurring themes include moonshot, kimi, leading, open, weights, model (1 sources)."
       },
       {
+        "signal_id": "7ccc9dee65294a2c",
+        "title": "Introducing gpt-oss",
+        "primary_category": "Model Releases",
+        "tags": [
+          "Model Releases"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1765917510.0,
+        "last_seen": 1765917510.0,
+        "latest_date": "Tue, 16 Dec 2025 20:38:30 GMT",
+        "links": [
+          {
+            "title": "Introducing gpt-oss",
+            "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTFBvLTl3Q3VvVGNYaWNHNllzSFFzZGNCV01XNjZGYnVsc2owbnFCLUNlOVF3ZHl2enFkSWppYTNwWWFLNm5MTTJBVmtHclRkQ2JSZlRtUU03Zkg3b3VMaWVnTg?oc=5",
+            "source": "OpenAI",
+            "date": "Tue, 16 Dec 2025 20:38:30 GMT",
+            "source_type": "news",
+            "category": "Model Releases",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Model Releases: recurring themes include introducing (1 sources)."
+      },
+      {
         "signal_id": "7e4a131327d4783e",
         "title": "Beyond DeepSeek: China's Diverse Open-Weight AI Ecosystem and Its Policy Implications",
         "primary_category": "Model Releases",
@@ -6105,7 +6132,7 @@
           {
             "title": "Moonshot's open source Kimi K2 Thinking outperforms GPT-5, Claude Sonnet 4.5",
             "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQVUtHLU8tMGduQW5PaExYZk9COUVGbUxXaGlfMkdTRjd3WmNUMklNcVFqYkU2dkRFblVWSXlVU05JYmJIM1BWTDBxN055VlUySjh1MzBKS3hFQ3ZlMVNYVmZ6Vm1wcldPUUJPS0lNWG9RSE43VGVvYlQwZzhGRHFfT1dHcnUwbXQya09WeWVNTkVDaHk4VWEtNHdBNjlNVzJHck9v?oc=5",
-            "source": "Venturebeat",
+            "source": "VentureBeat",
             "date": "Thu, 06 Nov 2025 08:00:00 GMT",
             "source_type": "news",
             "category": "Model Releases",
@@ -6223,6 +6250,33 @@
         "confidence": 0.256,
         "confidence_label": "Low",
         "ai_summary": "Model Releases: recurring themes include china, deepseek, dropped, rival, optimized, chinese (1 sources)."
+      },
+      {
+        "signal_id": "d48b80debb2d390f",
+        "title": "This researcher turned OpenAI's open weights model gpt-oss-20b into a non-reasoning 'base' model with less alignment, more freedom",
+        "primary_category": "Model Releases",
+        "tags": [
+          "Model Releases"
+        ],
+        "cluster_size": 1,
+        "source_count": 1,
+        "first_seen": 1755241200.0,
+        "last_seen": 1755241200.0,
+        "latest_date": "Fri, 15 Aug 2025 07:00:00 GMT",
+        "links": [
+          {
+            "title": "This researcher turned OpenAI's open weights model gpt-oss-20b into a non-reasoning 'base' model with less alignment, more freedom",
+            "link": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxOY2F2eXJjZGFPZnJrWVdNcEY0eWQ1YnlYVzJpSmlpMTdFRW9iT01RN1ktNnp2dXVLTmR0RUM4NUN4alpFU1Q0WUVLUHBEcUlDZzd0QTJ6MmVxdklENTBWN2tyWGF3Q0JwWVFnWE0xVEYwMlJwMmd1STNZOGw2Q1ZDaUpZbGxYYnNjbGt3NXg4bTN1akFRcUpUbVJrSHBEcnhjT1UtZThJc3RJd0RlTEFFdzFzWE5EQjBfaWpDeWRSSFFWbTZZdHFoSWEwRHhKM0I4SW9OVGI5NGFLNkNDLWp1YThucjlmM2t4cUEzUldCa3M?oc=5",
+            "source": "VentureBeat",
+            "date": "Fri, 15 Aug 2025 07:00:00 GMT",
+            "source_type": "news",
+            "category": "Model Releases",
+            "uk_score": 0
+          }
+        ],
+        "confidence": 0.256,
+        "confidence_label": "Low",
+        "ai_summary": "Model Releases: recurring themes include model, researcher, turned, openai, open, weights (1 sources)."
       },
       {
         "signal_id": "244169cec72c835b",
@@ -6576,33 +6630,6 @@
         "ai_summary": "Model Releases: recurring themes include open, weights (1 sources)."
       },
       {
-        "signal_id": "c6793e509371b0eb",
-        "title": "OpenAI's first new open-weight LLMs in six years are here",
-        "primary_category": "Model Releases",
-        "tags": [
-          "Model Releases"
-        ],
-        "cluster_size": 1,
-        "source_count": 1,
-        "first_seen": 1754377200.0,
-        "last_seen": 1754377200.0,
-        "latest_date": "Tue, 05 Aug 2025 07:00:00 GMT",
-        "links": [
-          {
-            "title": "OpenAI's first new open-weight LLMs in six years are here",
-            "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQVkxXMUdLLVFLRUVsZUZ4d2plLWpNeUJVVnZqZFNJOUFzeWF1Y1FrMTV0dWJpQWhlUXRfNEFSYTVOYkxScXdSVTdtbmZCME1XSEU4U0NZYUdXUlBwMGRaajNubDcyQWVwRUhLZUFLLS1HQVFMTFRFaFhUMzVpOEt0djlxTWE1cHNKVFlxY1hpbEtzclF3R21RQUJtTjF2a0NB?oc=5",
-            "source": "Engadget",
-            "date": "Tue, 05 Aug 2025 07:00:00 GMT",
-            "source_type": "news",
-            "category": "Model Releases",
-            "uk_score": 0
-          }
-        ],
-        "confidence": 0.256,
-        "confidence_label": "Low",
-        "ai_summary": "Model Releases: recurring themes include openai, first, open, weight, llms, years (1 sources)."
-      },
-      {
         "signal_id": "4286bb91cc90319b",
         "title": "gpt-oss: OpenAI validates the open ecosystem (finally)",
         "primary_category": "Model Releases",
@@ -6630,23 +6657,23 @@
         "ai_summary": "Model Releases: recurring themes include openai, validates, open, ecosystem, finally (1 sources)."
       },
       {
-        "signal_id": "33800f61daff81a4",
-        "title": "OpenAI Delays Launch of Its Open Weight Reasoning Model Again",
+        "signal_id": "97d291f9ef6660b0",
+        "title": "OpenAI Takes on Rivals Meta, DeepSeek With 2 New Models",
         "primary_category": "Model Releases",
         "tags": [
           "Model Releases"
         ],
         "cluster_size": 1,
         "source_count": 1,
-        "first_seen": 1752649200.0,
-        "last_seen": 1752649200.0,
-        "latest_date": "Wed, 16 Jul 2025 07:00:00 GMT",
+        "first_seen": 1754377200.0,
+        "last_seen": 1754377200.0,
+        "latest_date": "Tue, 05 Aug 2025 07:00:00 GMT",
         "links": [
           {
-            "title": "OpenAI Delays Launch of Its Open Weight Reasoning Model Again",
-            "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxOeE9VTFpQbU5TZEVqRnQtNnVPbXNXME1MZG9CdG9BM2tJMzdUSE0tenNLTHdmdUxId05BRkNyNFZMLUtPb2RYVkdqNkktbEx3cVdzdnN0SjQ2aTRPZDkyWFUyOC1Lc3hQODZEcTEyNjlpeDZZalRieS1IbVctVXEydkVMdnA1RXhGNE16QzJHVDdtWjhEeXpMaQ?oc=5",
-            "source": "Actu IA",
-            "date": "Wed, 16 Jul 2025 07:00:00 GMT",
+            "title": "OpenAI Takes on Rivals Meta, DeepSeek With 2 New Models",
+            "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOYUtNXzh2YWtJbnp5RDFBR1J5dU9janY1VkxORUhwdzhraldqMldoNUYtU2FxdEROLWdlSXFJT0hSUnBVNDk1VTVpNEplYUU1M3dPVWpzczlYZnVRRUY3MXdjZFJ0ZzFrbnd3NXc5a21CQUo3ZWxUSHJkM1ZwbWxEenNkVHlnOVlkRVozSEprREthazVQbU9VYUh3aFU2ekRRU1B1eEEzcWNjekxqVnc?oc=5",
+            "source": "PYMNTS.com",
+            "date": "Tue, 05 Aug 2025 07:00:00 GMT",
             "source_type": "news",
             "category": "Model Releases",
             "uk_score": 0
@@ -6654,7 +6681,7 @@
         ],
         "confidence": 0.256,
         "confidence_label": "Low",
-        "ai_summary": "Model Releases: recurring themes include openai, delays, launch, open, weight, reasoning (1 sources)."
+        "ai_summary": "Model Releases: recurring themes include openai, takes, rivals, meta, deepseek, models (1 sources)."
       },
       {
         "signal_id": "9e757549071c7c69",
@@ -6693,9 +6720,9 @@
         "timestamp": 1776098263.0,
         "date": "Mon, 13 Apr 2026 16:37:43 +0000",
         "tags": [
-          "Cyber",
-          "hn",
           "model-safety",
+          "hn",
+          "Cyber",
           "forum"
         ],
         "source_type": "forum",
@@ -6710,9 +6737,9 @@
         "timestamp": 1776097476.0,
         "date": "2026-04-13T16:24:36+00:00",
         "tags": [
+          "Cyber",
           "reddit",
           "cyber",
-          "Cyber",
           "forum"
         ],
         "source_type": "forum",
@@ -6727,9 +6754,9 @@
         "timestamp": 1776071599.0,
         "date": "Mon, 13 Apr 2026 09:13:19 +0000",
         "tags": [
-          "Cyber",
-          "hn",
           "model-safety",
+          "hn",
+          "Cyber",
           "forum"
         ],
         "source_type": "forum",
@@ -6744,9 +6771,9 @@
         "timestamp": 1775803941.0,
         "date": "Fri, 10 Apr 2026 06:52:21 +0000",
         "tags": [
-          "Cyber",
-          "hn",
           "model-safety",
+          "hn",
+          "Cyber",
           "forum"
         ],
         "source_type": "forum",
@@ -6761,9 +6788,9 @@
         "timestamp": 1775752345.0,
         "date": "Thu, 09 Apr 2026 16:32:25 +0000",
         "tags": [
-          "Cyber",
-          "hn",
           "model-safety",
+          "hn",
+          "Cyber",
           "forum"
         ],
         "source_type": "forum",
@@ -6778,9 +6805,9 @@
         "timestamp": 1775720273.0,
         "date": "Thu, 09 Apr 2026 07:37:53 +0000",
         "tags": [
+          "hn",
           "provenance",
           "VAWG",
-          "hn",
           "forum"
         ],
         "source_type": "forum",
@@ -6795,9 +6822,9 @@
         "timestamp": 1775667509.0,
         "date": "Wed, 08 Apr 2026 16:58:29 +0000",
         "tags": [
-          "Cyber",
-          "hn",
           "model-safety",
+          "hn",
+          "Cyber",
           "forum"
         ],
         "source_type": "forum",
@@ -7017,6 +7044,13 @@
         "date": "Tue, 27 Jan 2026 08:00:00 GMT"
       },
       {
+        "title": "Introducing gpt-oss",
+        "link": "https://news.google.com/rss/articles/CBMiYEFVX3lxTFBvLTl3Q3VvVGNYaWNHNllzSFFzZGNCV01XNjZGYnVsc2owbnFCLUNlOVF3ZHl2enFkSWppYTNwWWFLNm5MTTJBVmtHclRkQ2JSZlRtUU03Zkg3b3VMaWVnTg?oc=5",
+        "source": "OpenAI",
+        "timestamp": 1765917510.0,
+        "date": "Tue, 16 Dec 2025 20:38:30 GMT"
+      },
+      {
         "title": "Beyond DeepSeek: China's Diverse Open-Weight AI Ecosystem and Its Policy Implications",
         "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxQZ0hQRmUyZTBfTDllbWlYQV9HclRlaUNrWjdlMXM5dk1qQ3FPbVVVMTFkUnlOTUR0enBncV9JS2tsanJScXFFNWJEczZ2bGhWNUlsN0tMN0t3RlBYUDdER2Y0Q2IxVGkxN2M4b21yVmxPOFlXeXBLT19NdS1ZQWNZWFJBSTBfOWNCSG9PZjJwVUFMYkxNUUJpNHAzdkJFdWZRMEkxdzQ0TUQtWHBwZzc2QV92ME93UQ?oc=5",
         "source": "Stanford HAI",
@@ -7054,7 +7088,7 @@
       {
         "title": "Moonshot's open source Kimi K2 Thinking outperforms GPT-5, Claude Sonnet 4.5",
         "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQVUtHLU8tMGduQW5PaExYZk9COUVGbUxXaGlfMkdTRjd3WmNUMklNcVFqYkU2dkRFblVWSXlVU05JYmJIM1BWTDBxN055VlUySjh1MzBKS3hFQ3ZlMVNYVmZ6Vm1wcldPUUJPS0lNWG9RSE43VGVvYlQwZzhGRHFfT1dHcnUwbXQya09WeWVNTkVDaHk4VWEtNHdBNjlNVzJHck9v?oc=5",
-        "source": "Venturebeat",
+        "source": "VentureBeat",
         "timestamp": 1762416000.0,
         "date": "Thu, 06 Nov 2025 08:00:00 GMT"
       },
@@ -7085,6 +7119,13 @@
         "source": "Fortune",
         "timestamp": 1755759600.0,
         "date": "Thu, 21 Aug 2025 07:00:00 GMT"
+      },
+      {
+        "title": "This researcher turned OpenAI's open weights model gpt-oss-20b into a non-reasoning 'base' model with less alignment, more freedom",
+        "link": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxOY2F2eXJjZGFPZnJrWVdNcEY0eWQ1YnlYVzJpSmlpMTdFRW9iT01RN1ktNnp2dXVLTmR0RUM4NUN4alpFU1Q0WUVLUHBEcUlDZzd0QTJ6MmVxdklENTBWN2tyWGF3Q0JwWVFnWE0xVEYwMlJwMmd1STNZOGw2Q1ZDaUpZbGxYYnNjbGt3NXg4bTN1akFRcUpUbVJrSHBEcnhjT1UtZThJc3RJd0RlTEFFdzFzWE5EQjBfaWpDeWRSSFFWbTZZdHFoSWEwRHhKM0I4SW9OVGI5NGFLNkNDLWp1YThucjlmM2t4cUEzUldCa3M?oc=5",
+        "source": "VentureBeat",
+        "timestamp": 1755241200.0,
+        "date": "Fri, 15 Aug 2025 07:00:00 GMT"
       },
       {
         "title": "OpenAI\u2019s GPT-OSS Challenges Meta\u2019s Leadership in Open-Weight AI",
@@ -7139,20 +7180,6 @@
         "title": "OpenAI Releases Two \u2018Open\u2019 AI Models After DeepSeek\u2019s Success",
         "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPLWhlNWRrd3BuS3EybXBqU3RkbUQtbS1CWWdVcmY5NjFPNG9OajBSZU0xZHE2UlprMDRqZUVOaVhZVTNmc3pLQlE4X2RHQ2Q4RWxUNElaVGNrVXA3cmFMWjU5RGhLNGtCaS1BaFE1T3Z5UG8xNXpBSmFkcnp4NjRlTG9QMXBTZ1BuWE1MUC1ra0xObmtwUHdsdzI0VlVJUFVleGNydHIxdkZNeDYweklv?oc=5",
         "source": "Bloomberg.com",
-        "timestamp": 1754377200.0,
-        "date": "Tue, 05 Aug 2025 07:00:00 GMT"
-      },
-      {
-        "title": "OpenAI launches two \u2018open\u2019 AI reasoning models",
-        "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPVFJENE8tZlFpbUtScThyNmxaVkxJa0NhVmlkOHZUY0JQVTU0RHFVNWw2QzM4T1ZCS3l3c05MRWJGZGI0VXpzRUhwWlFlWjE0ZjRTbG1JdDNibVlBT2RfeDFaVDVxbkM4SmlwWGEyczNlQTFrd2x3ZUFnTVNWaDkxMUIxOGlLQQ?oc=5",
-        "source": "TechCrunch",
-        "timestamp": 1754377200.0,
-        "date": "Tue, 05 Aug 2025 07:00:00 GMT"
-      },
-      {
-        "title": "OpenAI releases lower-cost models to rival Meta, Mistral and DeepSeek",
-        "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPTGZNZmJtRzRNNXk2VzNnbXBXY1g4aWdnS0JlZFhRcUZuLWNRNW54ZE80RUstTnRscmM1OTlEVGNZUVE2U29paFd0T2oycHQ2dHloV09FTGM1TUt3TmJXZXJKUUhOQzBNb250aXlxdVA4MmNvYkNUS2lnUTMzLWlyQ0V0UHF5dmfSAYwBQVVfeXFMTzA3ZmJkVDNPTmI3OW9nNHlETTh0ZC1XVDRKdjJIWlRvODFWUTh3SkdLancwSFBwOXU4Tm5uaEpGNUNPY05oUmI3dnVmLUdCdTQ2U2l4alRJZ2xCUlNZMW11eVVWRGpyd3FmOEdmLWQwdko2eEh2THFGbjR0emo4VDlKUHBTdzZoNjVZcE0?oc=5",
-        "source": "CNBC",
         "timestamp": 1754377200.0,
         "date": "Tue, 05 Aug 2025 07:00:00 GMT"
       }
