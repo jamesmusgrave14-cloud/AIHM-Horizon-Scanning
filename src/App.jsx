@@ -648,3 +648,4 @@ function mechanismChip(mechanism) {
   if (key.includes("synthetic")) return "border-pink-200 bg-pink-50 text-pink-900";
   if (key.includes("offender")) return "border-amber-200 bg-amber-50 text-amber-900";
   if (key.includes("automation") || key.includes("scale")) return "border-violet-200 bg-violet-50 text-violet-900";
+}
