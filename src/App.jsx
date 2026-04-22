@@ -1,495 +1,4 @@
-import { useEffect, useMemo, useState } from "react";  MECHANISMS.OTHER,
-];
-
-const SUBTYPES = {
-  FRAUD_SCAMS: "Fraud / scams / impersonation",
-  GROOMING_EXPLOITATION: "Grooming / exploitation / coercion",
-  SYNTHETIC_IMAGE_ABUSE: "Synthetic-image abuse",
-  STALKING_HARASSMENT: "Stalking / harassment / coercion",
-  TERRORIST_PROPAGANDA: "Propaganda / radicalisation / recruitment",
-  ATTACK_PLANNING: "Attack planning / operational guidance",
-  ILLICIT_ITEMS: "Illegal items / drugs / firearms",
-  CYBER_CRIME_ENABLEMENT: "Cyber / phishing / ransomware enablement",
-  EVIDENCE_IDENTITY: "False evidence / false documents / identity abuse",
-  OTHER: "Other",
-};
-
-const SUBTYPE_ORDER = [
-  SUBTYPES.FRAUD_SCAMS,
-  SUBTYPES.GROOMING_EXPLOITATION,
-  SUBTYPES.SYNTHETIC_IMAGE_ABUSE,
-  SUBTYPES.STALKING_HARASSMENT,
-  SUBTYPES.TERRORIST_PROPAGANDA,
-  SUBTYPES.ATTACK_PLANNING,
-  SUBTYPES.ILLICIT_ITEMS,
-  SUBTYPES.CYBER_CRIME_ENABLEMENT,
-  SUBTYPES.EVIDENCE_IDENTITY,
-  SUBTYPES.OTHER,
-];
-
-/* ------------------------- chips / colours ------------------------- */
-
-function catChip(cat) {
-  const key = String(cat || "").toLowerCase();
-
-  if (key.includes("financial crime")) {
-    return "border-amber-200 bg-amber-50 text-amber-900";
-  }
-  if (key.includes("sexual crime")) {
-    return "border-fuchsia-200 bg-fuchsia-50 text-fuchsia-900";
-  }
-  if (key.includes("terrorism")) {
-    return "border-rose-200 bg-rose-50 text-rose-900";
-  }
-  if (key.includes("illegal item")) {
-    return "border-violet-200 bg-violet-50 text-violet-900";
-  }
-  if (key.includes("model")) {
-    return "border-indigo-200 bg-indigo-50 text-indigo-900";
-  }
-  return "border-slate-200 bg-slate-50 text-slate-700";
-}
-
-function mechanismChip(mechanism) {
-  const key = String(mechanism || "").toLowerCase();
-
-  if (key.includes("synthetic media")) return "border-pink-200 bg-pink-50 text-pink-900";
-  if (key.includes("offender capability")) return "border-amber-200 bg-amber-50 text-amber-900";
-  if (key.includes("automation")) return "border-violet-200 bg-violet-50 text-violet-900";
-  if (key.includes("targeting")) return "border-cyan-200 bg-cyan-50 text-cyan-900";
-  if (key.includes("model misuse")) return "border-indigo-200 bg-indigo-50 text-indigo-900";
-  return "border-slate-200 bg-slate-50 text-slate-700";
-}
-
-function subtypeChip(subtype) {
-  const key = String(subtype || "").toLowerCase();
-
-  if (key.includes("fraud") || key.includes("scam")) return "border-amber-200 bg-amber-50 text-amber-900";
-  if (key.includes("grooming") || key.includes("exploitation")) return "border-orange-200 bg-orange-50 text-orange-900";
-  if (key.includes("synthetic-image")) return "border-pink-200 bg-pink-50 text-pink-900";
-  if (key.includes("stalking") || key.includes("harassment")) return "border-fuchsia-200 bg-fuchsia-50 text-fuchsia-900";
-  if (key.includes("propaganda") || key.includes("radicalisation") || key.includes("recruitment")) return "border-rose-200 bg-rose-50 text-rose-900";
-  if (key.includes("attack planning")) return "border-red-200 bg-red-50 text-red-900";
-  if (key.includes("illegal items") || key.includes("drugs") || key.includes("firearms")) return "border-violet-200 bg-violet-50 text-violet-900";
-  if (key.includes("cyber") || key.includes("ransomware") || key.includes("phishing")) return "border-cyan-200 bg-cyan-50 text-cyan-900";
-  if (key.includes("evidence") || key.includes("identity")) return "border-indigo-200 bg-indigo-50 text-indigo-900";
-
-  return "border-slate-200 bg-slate-50 text-slate-700";
-}
-
-/* ------------------------- inference ------------------------- */
-
-function itemTextBlob(item) {
-  const linkText = (item?.links || [])
-    .map((l) => `${l?.title || ""} ${l?.source || ""}`)
-    .join(" ");
-
-  return [
-    item?.title,
-    item?.source,
-    item?.ai_summary,
-    item?.summary,
-    item?.category,
-    item?.primary_category,
-    item?.tags?.join(" "),
-    linkText,
-  ]
-    .filter(Boolean)
-    .join(" ")
-    .toLowerCase();
-}
-
-function inferMechanism(text) {
-  if (
-    includesAny(text, [
-      "deepfake",
-      "synthetic",
-      "synthetic image",
-      "fake image",
-      "fake video",
-      "fake audio",
-      "voice clone",
-      "voice cloning",
-      "face swap",
-      "image generator",
-      "image generation",
-      "realistic fake",
-      "impersonation",
-    ])
-  ) {
-    return MECHANISMS.SYNTHETIC_MEDIA;
-  }
-
-  if (
-    includesAny(text, [
-      "automation",
-      "automated",
-      "at scale",
-      "scale",
-      "scalable",
-      "bot",
-      "bots",
-      "botnet",
-      "mass",
-      "bulk",
-      "industrial scale",
-      "high-volume",
-    ])
-  ) {
-    return MECHANISMS.AUTOMATION_SCALE;
-  }
-
-  if (
-    includesAny(text, [
-      "targeting",
-      "targeted",
-      "micro-targeting",
-      "personalised",
-      "personalized",
-      "hyper-targeting",
-      "profiling",
-      "susceptibilities",
-      "recruitment",
-    ])
-  ) {
-    return MECHANISMS.TARGETING;
-  }
-
-  if (
-    includesAny(text, [
-      "jailbreak",
-      "guardrail",
-      "bypass",
-      "evade detection",
-      "evasion",
-      "wormgpt",
-      "fraudgpt",
-      "uncensored model",
-      "model misuse",
-    ])
-  ) {
-    return MECHANISMS.MODEL_EVASION;
-  }
-
-  if (
-    includesAny(text, [
-      "instructions",
-      "guidance",
-      "how to",
-      "planning",
-      "preparation",
-      "groom",
-      "harass",
-      "coerce",
-      "phishing",
-      "ransomware",
-      "attack",
-      "terrorist training",
-      "offender",
-      "criminal",
-      "crime",
-    ])
-  ) {
-    return MECHANISMS.OFFENDER_UPLIFT;
-  }
-
-  return MECHANISMS.OTHER;
-}
-
-function inferSubtype(text) {
-  if (
-    includesAny(text, [
-      "fraud",
-      "scam",
-      "scamming",
-      "money laundering",
-      "phishing",
-      "impersonation",
-      "synthetic identity",
-      "ceo scam",
-      "romance scam",
-      "hi mum",
-      "muling",
-    ])
-  ) {
-    return SUBTYPES.FRAUD_SCAMS;
-  }
-
-  if (
-    includesAny(text, [
-      "grooming",
-      "exploitation",
-      "extortion",
-      "sextortion",
-      "coercion",
-      "vulnerable individuals",
-      "vulnerable people",
-      "children",
-      "child sexual exploitation",
-    ])
-  ) {
-    return SUBTYPES.GROOMING_EXPLOITATION;
-  }
-
-  if (
-    includesAny(text, [
-      "ncii",
-      "non-consensual intimate",
-      "non consensual intimate",
-      "synthetic image",
-      "illicit synthetic images",
-      "deepfake abuse",
-      "image abuse",
-    ])
-  ) {
-    return SUBTYPES.SYNTHETIC_IMAGE_ABUSE;
-  }
-
-  if (
-    includesAny(text, [
-      "stalking",
-      "cyber stalk",
-      "harassment",
-      "harass",
-      "coerce women",
-      "coerce girls",
-      "audio abuse",
-    ])
-  ) {
-    return SUBTYPES.STALKING_HARASSMENT;
-  }
-
-  if (
-    includesAny(text, [
-      "propaganda",
-      "radicalisation",
-      "radicalization",
-      "recruitment",
-      "extremist content",
-      "terrorist content",
-      "dangerous narratives",
-      "grievance narratives",
-    ])
-  ) {
-    return SUBTYPES.TERRORIST_PROPAGANDA;
-  }
-
-  if (
-    includesAny(text, [
-      "attack planning",
-      "attack preparation",
-      "terrorist training",
-      "instructions",
-      "weaponry",
-      "target selection",
-      "explosives",
-      "3d printing",
-      "operational guidance",
-    ])
-  ) {
-    return SUBTYPES.ATTACK_PLANNING;
-  }
-
-  if (
-    includesAny(text, [
-      "firearms",
-      "drugs",
-      "drug production",
-      "drug smuggling",
-      "illicit items",
-      "illicit commodities",
-      "counterfeit",
-      "toxic chemicals",
-      "dark web",
-      "parcels",
-    ])
-  ) {
-    return SUBTYPES.ILLICIT_ITEMS;
-  }
-
-  if (
-    includesAny(text, [
-      "ransomware",
-      "phishing",
-      "hack",
-      "cyberattack",
-      "crime scripts",
-      "scam scripts",
-      "wormgpt",
-      "fraudgpt",
-    ])
-  ) {
-    return SUBTYPES.CYBER_CRIME_ENABLEMENT;
-  }
-
-  if (
-    includesAny(text, [
-      "false evidence",
-      "court case",
-      "identity documents",
-      "false supporting documents",
-      "birth certificates",
-      "bank statements",
-      "educational qualifications",
-      "false identity",
-      "identity abuse",
-      "evidence",
-    ])
-  ) {
-    return SUBTYPES.EVIDENCE_IDENTITY;
-  }
-
-  return SUBTYPES.OTHER;
-}
-
-function inferRiskArea({ text, legacyCategory }) {
-  const joined = `${text || ""} ${legacyCategory || ""}`.toLowerCase();
-
-  // RA09
-  if (
-    includesAny(joined, [
-      "fraud",
-      "money laundering",
-      "scam",
-      "scamming",
-      "blackmail",
-      "extortion",
-      "impersonation",
-      "fraudgpt",
-      "wormgpt",
-      "phishing",
-      "synthetic identity",
-      "romance scam",
-      "ceo scam",
-      "hi mum scam",
-      "muling",
-      "financial crime",
-    ])
-  ) {
-    return RISK_AREAS.FINANCIAL_CRIME;
-  }
-
-  // RA11
-  if (
-    includesAny(joined, [
-      "sexual crime",
-      "sexual abuse",
-      "child sexual abuse",
-      "child sexual exploitation",
-      "csea",
-      "csam",
-      "sextortion",
-      "ncii",
-      "non-consensual intimate",
-      "non consensual intimate",
-      "synthetic image",
-      "women and girls",
-      "stalking",
-      "harassment",
-      "grooming",
-      "coercion",
-    ])
-  ) {
-    return RISK_AREAS.SEXUAL_CRIME_ABUSE;
-  }
-
-  // RA13
-  if (
-    includesAny(joined, [
-      "terrorism",
-      "terrorist",
-      "extremist",
-      "radicalisation",
-      "radicalization",
-      "recruitment",
-      "propaganda",
-      "attack planning",
-      "attack preparation",
-      "violent extremism",
-      "grievance narratives",
-    ])
-  ) {
-    return RISK_AREAS.TERRORISM;
-  }
-
-  // RA14
-  if (
-    includesAny(joined, [
-      "illegal item",
-      "firearms",
-      "drugs",
-      "drug smuggling",
-      "drug production",
-      "designer drugs",
-      "illicit items",
-      "illicit commodities",
-      "counterfeit",
-      "toxic chemicals",
-      "dark web",
-      "ransomware",
-      "instructions for committing crimes",
-    ])
-  ) {
-    return RISK_AREAS.ILLEGAL_ITEMS;
-  }
-
-  return RISK_AREAS.OTHER;
-}
-
-function normaliseItem(item, kind) {
-  const text = itemTextBlob(item);
-  const legacyCategory = kind === "signals" ? item?.primary_category || "" : item?.category || "";
-  const mechanism = item?.mechanism || inferMechanism(text);
-  const harm_subtype = item?.harm_subtype || inferSubtype(text);
-  const primary_risk_area = item?.primary_risk_area || inferRiskArea({ text, legacyCategory });
-
-  return {
-    ...item,
-    legacy_category: legacyCategory,
-    primary_risk_area,
-    mechanism,
-    harm_subtype,
-  };
-}
-
-/* ---------------------------- App ---------------------------- */
-
-export default function App() {
-  const [payload, setPayload] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  // Landing page is Harms
-  const [view, setView] = useState("harms"); // harms | signals | forums | releases
-
-  // Filters
-  const [searchTerm, setSearchTerm] = useState("");
-  const [timeFilter, setTimeFilter] = useState("7d");
-  const [dateFrom, setDateFrom] = useState("");
-  const [dateTo, setDateTo] = useState("");
-  const [sortBy, setSortBy] = useState("relevance"); // relevance | newest | oldest | uk | confidence
-  const [minUkScore, setMinUkScore] = useState(0);
-  const [categoryFilter, setCategoryFilter] = useState("All"); // risk area
-  const [mechanismFilter, setMechanismFilter] = useState("All");
-  const [subtypeFilter, setSubtypeFilter] = useState("All");
-  const [sourceFilter, setSourceFilter] = useState("All"); // All | News | Forum
-  const [ukOnly, setUkOnly] = useState(false);
-  const [showAiSummaries, setShowAiSummaries] = useState(false);
-  const [showN, setShowN] = useState(36);
-  const [filtersOpen, setFiltersOpen] = useState(false);
-
-  // Harms view UI
-  const [harmsFocusRiskArea, setHarmsFocusRiskArea] = useState("All");
-  const [openBuckets, setOpenBuckets] = useState({});
-
-  // Persist a few prefs
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem("aihm_ui_prefs_v6");
-      if (!raw) return;
-      const p = JSON.parse(raw);
-      const allowed = new Set(["harms", "signals", "forums", "releases"]);
-      if (p?.view && allowed.has(p.view)) setView(p.view);
-      if (typeof p?.showN === "number") setShowN(p.showN);
+import { useEffect, useMemo, useState } from "react"; setShowN(p.showN);
       if (typeof p?.showAiSummaries === "boolean") setShowAiSummaries(p.showAiSummaries);
     } catch {
       // ignore
@@ -499,7 +8,7 @@ export default function App() {
   useEffect(() => {
     try {
       localStorage.setItem(
-        "aihm_ui_prefs_v6",
+        "aihm_ui_prefs_v7",
         JSON.stringify({ view, showN, showAiSummaries })
       );
     } catch {
@@ -524,80 +33,73 @@ export default function App() {
   }, []);
 
   const sections = payload?.sections || {};
+  const coverage = payload?.coverage || {};
+  const summaries = payload?.summaries || {};
   const meta = payload?.meta || {};
   const limits = meta?.limits || {};
   const errors = meta?.errors || {};
 
-  const normalisedSections = useMemo(
+  const counts = useMemo(
     () => ({
-      harms: (sections.harms || []).map((x) => normaliseItem(x, "harms")),
-      signals: (sections.signals || []).map((x) => normaliseItem(x, "signals")),
-      forums: (sections.forums || []).map((x) => normaliseItem(x, "forums")),
-      dev_releases: sections.dev_releases || [],
+      harms: (sections.harms || []).length,
+      signals: (sections.signals || []).length,
+      dev_releases: (sections.dev_releases || []).length,
+      forums: (sections.forums || []).length,
     }),
     [sections]
   );
 
-  const counts = useMemo(
-    () => ({
-      harms: normalisedSections.harms.length,
-      signals: normalisedSections.signals.length,
-      dev_releases: normalisedSections.dev_releases.length,
-      forums: normalisedSections.forums.length,
-    }),
-    [normalisedSections]
-  );
-
-  const allRiskAreas = useMemo(() => {
-    const vals = new Set();
-    normalisedSections.harms.forEach((x) => x?.primary_risk_area && vals.add(x.primary_risk_area));
-    normalisedSections.signals.forEach((x) => x?.primary_risk_area && vals.add(x.primary_risk_area));
-    normalisedSections.forums.forEach((x) => x?.primary_risk_area && vals.add(x.primary_risk_area));
-    normalisedSections.dev_releases.forEach(() => vals.add("Model Releases"));
-
-    return ["All", ...sortByConfiguredOrder(Array.from(vals), [...RISK_AREA_ORDER, "Model Releases"])];
-  }, [normalisedSections]);
-
-  const harmRiskAreas = useMemo(() => {
-    const vals = new Set(normalisedSections.harms.map((x) => x.primary_risk_area).filter(Boolean));
-    return sortByConfiguredOrder(Array.from(vals), RISK_AREA_ORDER);
-  }, [normalisedSections.harms]);
+  const allCategories = useMemo(() => {
+    const cats = new Set();
+    (sections?.harms || []).forEach((h) => h?.category && cats.add(h.category));
+    (sections?.signals || []).forEach((s) => s?.primary_category && cats.add(s.primary_category));
+    (sections?.forums || []).forEach((f) => f?.category && cats.add(f.category));
+    (sections?.dev_releases || []).forEach(() => cats.add("Model Releases"));
+    return ["All", ...Array.from(cats).sort((a, b) => a.localeCompare(b))];
+  }, [sections]);
 
   const allMechanisms = useMemo(() => {
     const vals = new Set();
-    normalisedSections.harms.forEach((x) => x?.mechanism && vals.add(x.mechanism));
-    normalisedSections.signals.forEach((x) => x?.mechanism && vals.add(x.mechanism));
-    normalisedSections.forums.forEach((x) => x?.mechanism && vals.add(x.mechanism));
-    return ["All", ...sortByConfiguredOrder(Array.from(vals), MECHANISM_ORDER)];
-  }, [normalisedSections]);
+    (sections?.harms || []).forEach((x) => x?.mechanism && vals.add(x.mechanism));
+    (sections?.signals || []).forEach((x) => x?.mechanism && vals.add(x.mechanism));
+    (sections?.forums || []).forEach((x) => x?.mechanism && vals.add(x.mechanism));
+    return ["All", ...Array.from(vals).sort((a, b) => a.localeCompare(b))];
+  }, [sections]);
 
   const allSubtypes = useMemo(() => {
     const vals = new Set();
-    normalisedSections.harms.forEach((x) => x?.harm_subtype && vals.add(x.harm_subtype));
-    normalisedSections.signals.forEach((x) => x?.harm_subtype && vals.add(x.harm_subtype));
-    normalisedSections.forums.forEach((x) => x?.harm_subtype && vals.add(x.harm_subtype));
-    return ["All", ...sortByConfiguredOrder(Array.from(vals), SUBTYPE_ORDER)];
-  }, [normalisedSections]);
+    (sections?.harms || []).forEach((x) => x?.harm_subtype && vals.add(x.harm_subtype));
+    (sections?.signals || []).forEach((x) => x?.harm_subtype && vals.add(x.harm_subtype));
+    (sections?.forums || []).forEach((x) => x?.harm_subtype && vals.add(x.harm_subtype));
+    return ["All", ...Array.from(vals).sort((a, b) => a.localeCompare(b))];
+  }, [sections]);
+
+  const harmCategories = useMemo(() => {
+    const cats = new Set((sections.harms || []).map((h) => h.category).filter(Boolean));
+    const arr = Array.from(cats);
+    arr.sort((a, b) => (a === "Other" ? 1 : b === "Other" ? -1 : a.localeCompare(b)));
+    return arr;
+  }, [sections.harms]);
 
   function matchesSearch(item) {
     const q = searchTerm.toLowerCase().trim();
     if (!q) return true;
-
-    const fields = [
-      item?.title,
-      item?.source,
-      item?.ai_summary,
-      item?.legacy_category,
-      item?.primary_risk_area,
-      item?.mechanism,
-      item?.harm_subtype,
-      ...(item?.tags || []),
-    ]
-      .filter(Boolean)
-      .join(" ")
-      .toLowerCase();
-
-    return fields.includes(q);
+    const title = (item?.title || "").toLowerCase();
+    const source = (item?.source || "").toLowerCase();
+    const tags = (item?.tags || []).join(" ").toLowerCase();
+    const cat = (item?.category || item?.primary_category || "").toLowerCase();
+    const mech = (item?.mechanism || "").toLowerCase();
+    const subtype = (item?.harm_subtype || "").toLowerCase();
+    const summary = (item?.ai_summary || "").toLowerCase();
+    return (
+      title.includes(q) ||
+      source.includes(q) ||
+      tags.includes(q) ||
+      cat.includes(q) ||
+      mech.includes(q) ||
+      subtype.includes(q) ||
+      summary.includes(q)
+    );
   }
 
   function passesDateRange(item, kind) {
@@ -609,7 +111,6 @@ export default function App() {
   }
 
   function passesCommon(item, kind) {
-    // Date range overrides time window
     if (dateFrom || dateTo) {
       if (!passesDateRange(item, kind)) return false;
     } else {
@@ -617,47 +118,45 @@ export default function App() {
       if (ts && !withinWindow(ts, timeFilter)) return false;
     }
 
-    // UK-only
     if (ukOnly) {
       const uk = item?.uk_relevance || (item?.uk_score >= 2);
       if (!uk) return false;
     }
 
-    // Min UK score
     if (minUkScore > 0) {
       const score = item?.uk_score ?? (item?.uk_relevance ? 2 : 0);
       if (score < minUkScore) return false;
     }
 
-    // Risk area
     if (categoryFilter !== "All") {
       if (kind === "releases") {
         if (categoryFilter !== "Model Releases") return false;
+      } else if (kind === "signals") {
+        const cat = item?.primary_category || "";
+        const tags = item?.tags || [];
+        if (cat !== categoryFilter && !tags.includes(categoryFilter)) return false;
       } else {
-        if ((item?.primary_risk_area || "") !== categoryFilter) return false;
+        if ((item?.category || "") !== categoryFilter) return false;
       }
     }
 
-    // Mechanism
     if (mechanismFilter !== "All") {
       if ((item?.mechanism || "") !== mechanismFilter) return false;
     }
 
-    // Subtype
     if (subtypeFilter !== "All") {
       if ((item?.harm_subtype || "") !== subtypeFilter) return false;
     }
 
-    // Source type
     if (sourceFilter !== "All") {
       if (kind === "signals") {
         const links = item?.links || [];
-        const anyForum = links.some((l) => String(l?.source_type || "").toLowerCase() === "forum");
-        const anyNews = links.some((l) => String(l?.source_type || "").toLowerCase() === "news");
+        const anyForum = links.some((l) => (l?.source_type || "").toLowerCase() === "forum");
+        const anyNews = links.some((l) => (l?.source_type || "").toLowerCase() === "news");
         if (sourceFilter === "Forum" && !anyForum) return false;
         if (sourceFilter === "News" && !anyNews) return false;
       } else {
-        const st = String(item?.source_type || "news").toLowerCase();
+        const st = (item?.source_type || "news").toLowerCase();
         if (sourceFilter === "Forum" && st !== "forum") return false;
         if (sourceFilter === "News" && st !== "news") return false;
       }
@@ -668,19 +167,16 @@ export default function App() {
 
   function sortItems(items, kind) {
     if (sortBy === "relevance") return items;
-
     const copy = items.slice();
 
     if (sortBy === "newest") {
       copy.sort((a, b) => compareDatesDesc(getItemDateISO(a, kind), getItemDateISO(b, kind)));
       return copy;
     }
-
     if (sortBy === "oldest") {
       copy.sort((a, b) => compareDatesAsc(getItemDateISO(a, kind), getItemDateISO(b, kind)));
       return copy;
     }
-
     if (sortBy === "uk") {
       copy.sort(
         (a, b) =>
@@ -689,84 +185,32 @@ export default function App() {
       );
       return copy;
     }
-
     if (sortBy === "confidence" && kind === "signals") {
       copy.sort((a, b) => confidenceRank(b?.confidence_label) - confidenceRank(a?.confidence_label));
       return copy;
     }
-
     return copy;
   }
 
   const harms = useMemo(() => {
-    const filtered = normalisedSections.harms.filter((x) => passesCommon(x, "harms"));
+    const filtered = (sections.harms || []).filter((x) => passesCommon(x, "harms"));
     return sortItems(filtered, "harms");
-  }, [
-    normalisedSections.harms,
-    searchTerm,
-    timeFilter,
-    dateFrom,
-    dateTo,
-    categoryFilter,
-    mechanismFilter,
-    subtypeFilter,
-    sourceFilter,
-    ukOnly,
-    minUkScore,
-    sortBy,
-  ]);
+  }, [sections.harms, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, mechanismFilter, subtypeFilter, sourceFilter, ukOnly, minUkScore, sortBy]);
 
   const signals = useMemo(() => {
-    const filtered = normalisedSections.signals.filter((x) => passesCommon(x, "signals"));
+    const filtered = (sections.signals || []).filter((x) => passesCommon(x, "signals"));
     return sortItems(filtered, "signals");
-  }, [
-    normalisedSections.signals,
-    searchTerm,
-    timeFilter,
-    dateFrom,
-    dateTo,
-    categoryFilter,
-    mechanismFilter,
-    subtypeFilter,
-    sourceFilter,
-    ukOnly,
-    minUkScore,
-    sortBy,
-  ]);
+  }, [sections.signals, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, mechanismFilter, subtypeFilter, sourceFilter, ukOnly, minUkScore, sortBy]);
 
   const forums = useMemo(() => {
-    const filtered = normalisedSections.forums.filter((x) => passesCommon(x, "forums"));
+    const filtered = (sections.forums || []).filter((x) => passesCommon(x, "forums"));
     return sortItems(filtered, "forums");
-  }, [
-    normalisedSections.forums,
-    searchTerm,
-    timeFilter,
-    dateFrom,
-    dateTo,
-    categoryFilter,
-    mechanismFilter,
-    subtypeFilter,
-    sourceFilter,
-    ukOnly,
-    minUkScore,
-    sortBy,
-  ]);
+  }, [sections.forums, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, mechanismFilter, subtypeFilter, sourceFilter, ukOnly, minUkScore, sortBy]);
 
   const releases = useMemo(() => {
-    const filtered = normalisedSections.dev_releases.filter((x) => passesCommon(x, "releases"));
+    const filtered = (sections.dev_releases || []).filter((x) => passesCommon(x, "releases"));
     return sortItems(filtered, "releases");
-  }, [
-    normalisedSections.dev_releases,
-    searchTerm,
-    timeFilter,
-    dateFrom,
-    dateTo,
-    categoryFilter,
-    sourceFilter,
-    ukOnly,
-    minUkScore,
-    sortBy,
-  ]);
+  }, [sections.dev_releases, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, sourceFilter, ukOnly, minUkScore, sortBy]);
 
   function toggleBucket(cat) {
     setOpenBuckets((s) => ({ ...s, [cat]: !s[cat] }));
@@ -778,7 +222,7 @@ export default function App() {
     if (dateFrom) chips.push({ k: "dateFrom", label: `From: ${dateFrom}` });
     if (dateTo) chips.push({ k: "dateTo", label: `To: ${dateTo}` });
     if (!dateFrom && !dateTo && timeFilter !== "All") chips.push({ k: "time", label: `Time: ${timeFilter}` });
-    if (categoryFilter !== "All") chips.push({ k: "cat", label: `Risk area: ${categoryFilter}` });
+    if (categoryFilter !== "All") chips.push({ k: "cat", label: `Category: ${categoryFilter}` });
     if (mechanismFilter !== "All") chips.push({ k: "mech", label: `Mechanism: ${mechanismFilter}` });
     if (subtypeFilter !== "All") chips.push({ k: "subtype", label: `Subtype: ${subtypeFilter}` });
     if (sourceFilter !== "All") chips.push({ k: "src", label: `Source: ${sourceFilter}` });
@@ -787,20 +231,7 @@ export default function App() {
     if (ukOnly) chips.push({ k: "ukOnly", label: "UK only" });
     if (showAiSummaries) chips.push({ k: "aiSum", label: "AI summaries" });
     return chips;
-  }, [
-    searchTerm,
-    dateFrom,
-    dateTo,
-    timeFilter,
-    categoryFilter,
-    mechanismFilter,
-    subtypeFilter,
-    sourceFilter,
-    sortBy,
-    minUkScore,
-    ukOnly,
-    showAiSummaries,
-  ]);
+  }, [searchTerm, dateFrom, dateTo, timeFilter, categoryFilter, mechanismFilter, subtypeFilter, sourceFilter, sortBy, minUkScore, ukOnly, showAiSummaries]);
 
   function clearChip(k) {
     if (k === "search") setSearchTerm("");
@@ -808,7 +239,193 @@ export default function App() {
     if (k === "dateTo") setDateTo("");
     if (k === "time") setTimeFilter("7d");
     if (k === "cat") setCategoryFilter("All");
-    if (
+    if (k === "mech") setMechanismFilter("All");
+    if (k === "subtype") setSubtypeFilter("All");
+    if (k === "src") setSourceFilter("All");
+    if (k === "sort") setSortBy("relevance");
+    if (k === "minUk") setMinUkScore(0);
+    if (k === "ukOnly") setUkOnly(false);
+    if (k === "aiSum") setShowAiSummaries(false);
+  }
+
+  function clearAllFilters() {
+    setSearchTerm("");
+    setTimeFilter("7d");
+    setDateFrom("");
+    setDateTo("");
+    setSortBy("relevance");
+    setMinUkScore(0);
+    setCategoryFilter("All");
+    setMechanismFilter("All");
+    setSubtypeFilter("All");
+    setSourceFilter("All");
+    setUkOnly(false);
+  }
+
+  return (
+    <div className={`min-h-screen ${pageBg(view)}`}>
+      <div className="max-w-7xl mx-auto px-5 py-5 animate-fadeUp">
+        <div className="card p-5 bg-white/80 backdrop-blur border border-slate-200">
+          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+            <div>
+              <div className="flex items-center gap-3">
+                <div className="h-2.5 w-2.5 rounded-full" style={{ background: "var(--a1)" }} />
+                <h1 className="text-lg font-semibold">AI Harms Horizon Scan</h1>
+                {payload?.last_updated ? (
+                  <span className="text-sm text-[var(--muted)] font-mono">
+                    updated {String(payload.last_updated).slice(0, 19)}
+                  </span>
+                ) : null}
+              </div>
+
+              <div className="mt-2 text-sm text-[var(--muted)] max-w-3xl leading-relaxed">
+                {payload?.disclaimer || "Proof-of-concept dashboard for harms-focused horizon scanning."}
+              </div>
+
+              {errors && Object.keys(errors).length ? (
+                <div className="mt-3 text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2">
+                  Some sources returned errors (see meta.errors in news_data.json): {Object.keys(errors).join(", ")}
+                </div>
+              ) : null}
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={load}
+                className="pill px-4 py-2 text-sm hover:bg-white transition inline-flex items-center gap-2 bg-white/70"
+                title="Refresh"
+                type="button"
+              >
+                <RefreshCw size={16} className={loading ? "animate-spin" : ""} />
+                Refresh
+              </button>
+
+              <button
+                onClick={() => setFiltersOpen((v) => !v)}
+                className="pill px-4 py-2 text-sm hover:bg-white transition inline-flex items-center gap-2 bg-white/70"
+                title="Filters"
+                type="button"
+              >
+                <SlidersHorizontal size={16} />
+                Filters
+              </button>
+            </div>
+          </div>
+
+          {!filtersOpen && activeFilterChips.length ? (
+            <div className="mt-4">
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="text-xs text-[var(--muted)] mr-1">Active filters:</div>
+                {activeFilterChips.map((c) => (
+                  <button
+                    key={c.k}
+                    onClick={() => clearChip(c.k)}
+                    className="inline-flex items-center gap-2 text-sm px-3 py-1.5 rounded-full border border-slate-200 bg-white/70 hover:bg-white transition"
+                    title="Click to remove"
+                    type="button"
+                  >
+                    {c.label}
+                    <X size={14} className="text-slate-400" />
+                  </button>
+                ))}
+                <button
+                  onClick={clearAllFilters}
+                  className="text-sm px-3 py-1.5 rounded-full border border-slate-200 bg-white hover:bg-slate-50 transition"
+                  title="Clear all filters"
+                  type="button"
+                >
+                  Clear all
+                </button>
+              </div>
+            </div>
+          ) : null}
+
+          {filtersOpen ? (
+            <div className="mt-4 card p-4 bg-white/70 border border-slate-200">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-3">
+                <div className="lg:col-span-4">
+                  <label className="text-xs text-[var(--muted)]">Search</label>
+                  <div className="relative mt-1">
+                    <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <input
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      placeholder="titles, sources, tags, summaries…"
+                      className="w-full rounded-xl border border-slate-200 bg-white py-2 pl-9 pr-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-200"
+                    />
+                  </div>
+                </div>
+
+                <div className="lg:col-span-2">
+                  <label className="text-xs text-[var(--muted)]">Time window</label>
+                  <select
+                    className="mt-1 w-full pill px-3 py-2 text-sm bg-white"
+                    value={timeFilter}
+                    onChange={(e) => setTimeFilter(e.target.value)}
+                    disabled={!!(dateFrom || dateTo)}
+                    title={dateFrom || dateTo ? "Disabled when Date From/To is set" : ""}
+                  >
+                    <option value="24h">Last 24h</option>
+                    <option value="7d">Last 7d</option>
+                    <option value="30d">Last 30d</option>
+                    <option value="All">Any time</option>
+                  </select>
+                </div>
+
+                <div className="lg:col-span-2">
+                  <label className="text-xs text-[var(--muted)]">Date from</label>
+                  <input
+                    type="date"
+                    className="mt-1 w-full pill px-3 py-2 text-sm bg-white"
+                    value={dateFrom}
+                    onChange={(e) => setDateFrom(e.target.value)}
+                  />
+                </div>
+
+                <div className="lg:col-span-2">
+                  <label className="text-xs text-[var(--muted)]">Date to</label>
+                  <input
+                    type="date"
+                    className="mt-1 w-full pill px-3 py-2 text-sm bg-white"
+                    value={dateTo}
+                    onChange={(e) => setDateTo(e.target.value)}
+                  />
+                </div>
+
+                <div className="lg:col-span-2">
+                  <label className="text-xs text-[var(--muted)]">Show</label>
+                  <select
+                    className="mt-1 w-full pill px-3 py-2 text-sm bg-white"
+                    value={showN}
+                    onChange={(e) => setShowN(parseInt(e.target.value, 10))}
+                  >
+                    {[24, 36, 48, 72, 100].map((n) => (
+                      <option key={n} value={n}>
+                        {n}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="lg:col-span-3">
+                  <label className="text-xs text-[var(--muted)]">Category</label>
+                  <select
+                    className="mt-1 w-full pill px-3 py-2 text-sm bg-white"
+                    value={categoryFilter}
+                    onChange={(e) => setCategoryFilter(e.target.value)}
+                  >
+                    {allCategories.map((c) => (
+                      <option key={c} value={c}>
+                        {c}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="lg:col-span-3">
+                  <label className="text-xs text-[var(--muted)]">Mechanism</label>
+                  <select
+                    className="mt-
 import axios from "axios";
 import {
   Shield,
@@ -839,7 +456,7 @@ function withinWindow(timestamp, windowKey) {
   if (windowKey === "24h") return age <= 24 * 3600;
   if (windowKey === "7d") return age <= 7 * 24 * 3600;
   if (windowKey === "30d") return age <= 30 * 24 * 3600;
-  return true; // "All"
+  return true;
 }
 
 function confidenceChip(level) {
@@ -848,45 +465,55 @@ function confidenceChip(level) {
   return "border-slate-200 bg-slate-50 text-slate-700";
 }
 
+function catChip(cat) {
+  const key = (cat || "").toLowerCase();
+  if (key.includes("fraud")) return "border-amber-200 bg-amber-50 text-amber-800";
+  if (key.includes("cyber")) return "border-cyan-200 bg-cyan-50 text-cyan-900";
+  if (key.includes("terror")) return "border-rose-200 bg-rose-50 text-rose-900";
+  if (key.includes("vawg")) return "border-fuchsia-200 bg-fuchsia-50 text-fuchsia-900";
+  if (key.includes("csam") || key.includes("child")) return "border-violet-200 bg-violet-50 text-violet-900";
+  if (key.includes("model")) return "border-indigo-200 bg-indigo-50 text-indigo-900";
+  return "border-slate-200 bg-slate-50 text-slate-700";
+}
+
+function mechanismChip(mechanism) {
+  const key = (mechanism || "").toLowerCase();
+  if (key.includes("synthetic")) return "border-pink-200 bg-pink-50 text-pink-900";
+  if (key.includes("offender")) return "border-amber-200 bg-amber-50 text-amber-900";
+  if (key.includes("automation") || key.includes("scale")) return "border-violet-200 bg-violet-50 text-violet-900";
+  if (key.includes("targeting")) return "border-cyan-200 bg-cyan-50 text-cyan-900";
+  if (key.includes("model misuse") || key.includes("evasion")) return "border-indigo-200 bg-indigo-50 text-indigo-900";
+  return "border-slate-200 bg-slate-50 text-slate-700";
+}
+
+function subtypeChip(subtype) {
+  const key = (subtype || "").toLowerCase();
+  if (key.includes("fraud") || key.includes("scam")) return "border-amber-200 bg-amber-50 text-amber-900";
+  if (key.includes("grooming") || key.includes("exploitation")) return "border-orange-200 bg-orange-50 text-orange-900";
+  if (key.includes("synthetic-image")) return "border-pink-200 bg-pink-50 text-pink-900";
+  if (key.includes("stalking") || key.includes("harassment")) return "border-fuchsia-200 bg-fuchsia-50 text-fuchsia-900";
+  if (key.includes("propaganda") || key.includes("radicalisation") || key.includes("recruitment")) return "border-rose-200 bg-rose-50 text-rose-900";
+  if (key.includes("attack planning")) return "border-red-200 bg-red-50 text-red-900";
+  if (key.includes("illegal items") || key.includes("drugs") || key.includes("firearms")) return "border-violet-200 bg-violet-50 text-violet-900";
+  if (key.includes("cyber") || key.includes("ransomware") || key.includes("phishing")) return "border-cyan-200 bg-cyan-50 text-cyan-900";
+  if (key.includes("evidence") || key.includes("identity")) return "border-indigo-200 bg-indigo-50 text-indigo-900";
+  return "border-slate-200 bg-slate-50 text-slate-700";
+}
+
 function viewTheme(view) {
   if (view === "harms") {
-    return {
-      ring: "ring-rose-100",
-      band: "from-rose-50 to-white",
-      accent: "text-rose-700",
-      border: "border-rose-100",
-    };
+    return { ring: "ring-rose-100", band: "from-rose-50 to-white", accent: "text-rose-700", border: "border-rose-100" };
   }
   if (view === "signals") {
-    return {
-      ring: "ring-sky-100",
-      band: "from-sky-50 to-white",
-      accent: "text-sky-700",
-      border: "border-sky-100",
-    };
+    return { ring: "ring-sky-100", band: "from-sky-50 to-white", accent: "text-sky-700", border: "border-sky-100" };
   }
   if (view === "forums") {
-    return {
-      ring: "ring-fuchsia-100",
-      band: "from-fuchsia-50 to-white",
-      accent: "text-fuchsia-700",
-      border: "border-fuchsia-100",
-    };
+    return { ring: "ring-fuchsia-100", band: "from-fuchsia-50 to-white", accent: "text-fuchsia-700", border: "border-fuchsia-100" };
   }
   if (view === "releases") {
-    return {
-      ring: "ring-indigo-100",
-      band: "from-indigo-50 to-white",
-      accent: "text-indigo-700",
-      border: "border-indigo-100",
-    };
+    return { ring: "ring-indigo-100", band: "from-indigo-50 to-white", accent: "text-indigo-700", border: "border-indigo-100" };
   }
-  return {
-    ring: "ring-slate-100",
-    band: "from-slate-50 to-white",
-    accent: "text-slate-700",
-    border: "border-slate-100",
-  };
+  return { ring: "ring-slate-100", band: "from-slate-50 to-white", accent: "text-slate-700", border: "border-slate-100" };
 }
 
 function pageBg(view) {
@@ -899,7 +526,7 @@ function pageBg(view) {
 
 function getItemDateISO(item, kind) {
   const raw =
-    (kind === "signals" ? item?.latest_date || item?.date : item?.date) ||
+    (kind === "signals" ? (item?.latest_date || item?.date) : item?.date) ||
     (item?.timestamp ? new Date(item.timestamp * 1000).toISOString() : "");
   return fmtDateShort(raw) || "";
 }
@@ -922,56 +549,36 @@ function confidenceRank(label) {
   return 1;
 }
 
-function includesAny(text, terms) {
-  const hay = String(text || "").toLowerCase();
-  return terms.some((t) => hay.includes(String(t).toLowerCase()));
-}
+/* ---------------------------- App ---------------------------- */
 
-function sortByConfiguredOrder(values, order) {
-  return values.slice().sort((a, b) => {
-    const ia = order.indexOf(a);
-    const ib = order.indexOf(b);
-    const safeIa = ia === -1 ? Number.MAX_SAFE_INTEGER : ia;
-    const safeIb = ib === -1 ? Number.MAX_SAFE_INTEGER : ib;
-    if (safeIa !== safeIb) return safeIa - safeIb;
-    return String(a).localeCompare(String(b));
-  });
-}
+export default function App() {
+  const [payload, setPayload] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-/* ------------------------- taxonomy config ------------------------- */
-/*
-  Based on the HO-owned risk areas in:
-  130226 - HO AI Risk Register - UK OFFICIAL-SENSITIVE INTERNAL ONLY.xlsx
-*/
+  const [view, setView] = useState("harms");
 
-const RISK_AREAS = {
-  FINANCIAL_CRIME: "AI use in financial crime, fraud and exploitation",
-  SEXUAL_CRIME_ABUSE: "AI Use for Sexual Crime and Abuse",
-  TERRORISM: "AI use in terrorism",
-  ILLEGAL_ITEMS: "AI increases illegal item creation and acquisition",
-  OTHER: "Other",
-};
+  const [searchTerm, setSearchTerm] = useState("");
+  const [timeFilter, setTimeFilter] = useState("7d");
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
+  const [sortBy, setSortBy] = useState("relevance");
+  const [minUkScore, setMinUkScore] = useState(0);
+  const [categoryFilter, setCategoryFilter] = useState("All");
+  const [mechanismFilter, setMechanismFilter] = useState("All");
+  const [subtypeFilter, setSubtypeFilter] = useState("All");
+  const [sourceFilter, setSourceFilter] = useState("All");
+  const [ukOnly, setUkOnly] = useState(false);
+  const [showAiSummaries, setShowAiSummaries] = useState(false);
+  const [showN, setShowN] = useState(36);
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
-const RISK_AREA_ORDER = [
-  RISK_AREAS.FINANCIAL_CRIME,
-  RISK_AREAS.SEXUAL_CRIME_ABUSE,
-  RISK_AREAS.TERRORISM,
-  RISK_AREAS.ILLEGAL_ITEMS,
-  RISK_AREAS.OTHER,
-];
+  const [harmsFocusCat, setHarmsFocusCat] = useState("All");
+  const [openBuckets, setOpenBuckets] = useState({});
 
-const MECHANISMS = {
-  SYNTHETIC_MEDIA: "Synthetic media / realistic fake",
-  OFFENDER_UPLIFT: "Offender capability uplift",
-  AUTOMATION_SCALE: "Automation / scale",
-  TARGETING: "Targeting / personalisation",
-  MODEL_EVASION: "Model misuse / evasion",
-  OTHER: "Other / mixed",
-};
-
-const MECHANISM_ORDER = [
-  MECHANISMS.SYNTHETIC_MEDIA,
-  MECHANISMS.OFFENDER_UPLIFT,
-  MECHANISMS.AUTOMATION_SCALE,
-  MECHANISMS.TARGETING,
-  MECHANISMS.MODEL_EVASION,
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("aihm_ui_prefs_v7");
+      if (!raw) return;
+      const p = JSON.parse(raw);
+      const allowed = new Set(["harms", "signals", "forums", "releases"]);
+      if (p?.view && allowed.has(p.view)) setView(p.view);
