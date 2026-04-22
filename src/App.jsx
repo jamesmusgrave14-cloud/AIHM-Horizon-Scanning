@@ -1,4 +1,56 @@
-import React, { useEffect, useMemo, useState } from "react"; return "border-cyan-200 bg-cyan-50 text-cyan-900";
+import React, { useEffect, useMemo, useState } from "react"; * 24 * 3600;
+  if (windowKey === "30d") return age <= 30 * 24 * 3600;
+  return true;
+}
+
+function getItemDateISO(item, kind) {
+  const raw =
+    (kind === "signals" ? item?.latest_date || item?.date : item?.date) ||
+    (item?.timestamp ? new Date(item.timestamp * 1000).toISOString() : "");
+  return fmtDateShort(raw) || "";
+}
+
+function compareDatesDesc(a, b) {
+  const ta = Date.parse(a || "") || 0;
+  const tb = Date.parse(b || "") || 0;
+  return tb - ta;
+}
+
+function compareDatesAsc(a, b) {
+  const ta = Date.parse(a || "") || 0;
+  const tb = Date.parse(b || "") || 0;
+  return ta - tb;
+}
+
+function confidenceRank(label) {
+  if (label === "High") return 3;
+  if (label === "Medium") return 2;
+  return 1;
+}
+
+function confidenceChip(level) {
+  if (level === "High") return "border-emerald-200 bg-emerald-50 text-emerald-800";
+  if (level === "Medium") return "border-amber-200 bg-amber-50 text-amber-800";
+  return "border-slate-200 bg-slate-50 text-slate-700";
+}
+
+function catChip(cat) {
+  const key = String(cat || "").toLowerCase();
+  if (key.includes("fraud")) return "border-amber-200 bg-amber-50 text-amber-800";
+  if (key.includes("cyber")) return "border-cyan-200 bg-cyan-50 text-cyan-900";
+  if (key.includes("terror")) return "border-rose-200 bg-rose-50 text-rose-900";
+  if (key.includes("vawg")) return "border-fuchsia-200 bg-fuchsia-50 text-fuchsia-900";
+  if (key.includes("csam") || key.includes("child")) return "border-violet-200 bg-violet-50 text-violet-900";
+  if (key.includes("model")) return "border-indigo-200 bg-indigo-50 text-indigo-900";
+  return "border-slate-200 bg-slate-50 text-slate-700";
+}
+
+function mechanismChip(mechanism) {
+  const key = String(mechanism || "").toLowerCase();
+  if (key.includes("synthetic")) return "border-pink-200 bg-pink-50 text-pink-900";
+  if (key.includes("offender")) return "border-amber-200 bg-amber-50 text-amber-900";
+  if (key.includes("automation") || key.includes("scale")) return "border-violet-200 bg-violet-50 text-violet-900";
+  if (key.includes("targeting")) return "border-cyan-200 bg-cyan-50 text-cyan-900";
   if (key.includes("model misuse") || key.includes("evasion")) return "border-indigo-200 bg-indigo-50 text-indigo-900";
   return "border-slate-200 bg-slate-50 text-slate-700";
 }
@@ -72,7 +124,7 @@ function pageBg(view) {
   return "bg-gradient-to-b from-rose-50 via-slate-50 to-slate-50";
 }
 
-/* ------------------------- components ------------------------- */
+/* ------------------------- small components ------------------------- */
 
 function ExternalLink({ href, className = "", children }) {
   if (!href) return <>{children}</>;
@@ -425,7 +477,7 @@ function SignalsView({ items, showAiSummaries, summaries }) {
 
                     return (
                       <ExternalLink
-                        key={`${l.link || l.title || i}-${i}`}
+                        key={`${l.link || l.title || "signal"}-${i}`}
                         href={l.link}
                         className="block text-sm text-blue-700 hover:underline"
                       >
@@ -508,7 +560,7 @@ function ReleasesView({ items, showAiSummaries, summaries }) {
           <div className="space-y-2">
             {items.map((r, i) => (
               <ExternalLink
-                key={`${r.link || r.title || i}-${i}`}
+                key={`${r.link || r.title || "release"}-${i}`}
                 href={r.link}
                 className="block card-hover border border-slate-100 rounded-2xl p-4 bg-white"
               >
@@ -565,7 +617,371 @@ export default function App() {
   useEffect(() => {
     try {
       const raw = localStorage.getItem("aihm_ui_prefs_v10");
-      if (
+      if (!raw) return;
+      const p = JSON.parse(raw);
+      const allowed = new Set(["harms", "signals", "forums", "releases"]);
+      if (p?.view && allowed.has(p.view)) setView(p.view);
+      if (typeof p?.showN === "number") setShowN(p.showN);
+      if (typeof p?.showAiSummaries === "boolean") setShowAiSummaries(p.showAiSummaries);
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(
+        "aihm_ui_prefs_v10",
+        JSON.stringify({ view, showN, showAiSummaries })
+      );
+    } catch {
+      // ignore
+    }
+  }, [view, showN, showAiSummaries]);
+
+  async function load() {
+    setLoading(true);
+    try {
+      const res = await axios.get(`${import.meta.env.BASE_URL}news_data.json?ts=${Date.now()}`);
+      setPayload(res.data);
+    } catch (e) {
+      console.error(e);
+      setPayload(null);
+    }
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    load();
+  }, []);
+
+  const sections = payload?.sections || {};
+  const coverage = payload?.coverage || {};
+  const summaries = payload?.summaries || {};
+  const meta = payload?.meta || {};
+  const limits = meta?.limits || {};
+  const errors = meta?.errors || {};
+
+  const counts = useMemo(() => {
+    return {
+      harms: (sections.harms || []).length,
+      signals: (sections.signals || []).length,
+      forums: (sections.forums || []).length,
+      dev_releases: (sections.dev_releases || []).length,
+    };
+  }, [sections]);
+
+  const allCategories = useMemo(() => {
+    const cats = new Set();
+    (sections.harms || []).forEach((h) => h?.category && cats.add(h.category));
+    (sections.signals || []).forEach((s) => s?.primary_category && cats.add(s.primary_category));
+    (sections.forums || []).forEach((f) => f?.category && cats.add(f.category));
+    (sections.dev_releases || []).forEach(() => cats.add("Model Releases"));
+    return ["All", ...Array.from(cats).sort((a, b) => a.localeCompare(b))];
+  }, [sections]);
+
+  const allMechanisms = useMemo(() => {
+    const vals = new Set();
+    (sections.harms || []).forEach((x) => x?.mechanism && vals.add(x.mechanism));
+    (sections.signals || []).forEach((x) => x?.mechanism && vals.add(x.mechanism));
+    (sections.forums || []).forEach((x) => x?.mechanism && vals.add(x.mechanism));
+    return ["All", ...Array.from(vals).sort((a, b) => a.localeCompare(b))];
+  }, [sections]);
+
+  const allSubtypes = useMemo(() => {
+    const vals = new Set();
+    (sections.harms || []).forEach((x) => x?.harm_subtype && vals.add(x.harm_subtype));
+    (sections.signals || []).forEach((x) => x?.harm_subtype && vals.add(x.harm_subtype));
+    (sections.forums || []).forEach((x) => x?.harm_subtype && vals.add(x.harm_subtype));
+    return ["All", ...Array.from(vals).sort((a, b) => a.localeCompare(b))];
+  }, [sections]);
+
+  const harmCategories = useMemo(() => {
+    const cats = new Set((sections.harms || []).map((h) => h.category).filter(Boolean));
+    const arr = Array.from(cats);
+    arr.sort((a, b) => (a === "Other" ? 1 : b === "Other" ? -1 : a.localeCompare(b)));
+    return arr;
+  }, [sections.harms]);
+
+  function matchesSearch(item) {
+    const q = searchTerm.toLowerCase().trim();
+    if (!q) return true;
+
+    const blob = [
+      item?.title || "",
+      item?.source || "",
+      item?.category || item?.primary_category || "",
+      item?.mechanism || "",
+      item?.harm_subtype || "",
+      item?.ai_summary || "",
+      ...(item?.tags || []),
+    ]
+      .join(" ")
+      .toLowerCase();
+
+    return blob.includes(q);
+  }
+
+  function passesDateRange(item, kind) {
+    const d = getItemDateISO(item, kind);
+    if (!d) return true;
+    if (dateFrom && d < dateFrom) return false;
+    if (dateTo && d > dateTo) return false;
+    return true;
+  }
+
+  function passesCommon(item, kind) {
+    if (dateFrom || dateTo) {
+      if (!passesDateRange(item, kind)) return false;
+    } else {
+      const ts = item?.timestamp;
+      if (ts && !withinWindow(ts, timeFilter)) return false;
+    }
+
+    if (ukOnly) {
+      const uk = item?.uk_relevance || (item?.uk_score >= 2);
+      if (!uk) return false;
+    }
+
+    if (minUkScore > 0) {
+      const score = item?.uk_score ?? (item?.uk_relevance ? 2 : 0);
+      if (score < minUkScore) return false;
+    }
+
+    if (categoryFilter !== "All") {
+      if (kind === "releases") {
+        if (categoryFilter !== "Model Releases") return false;
+      } else if (kind === "signals") {
+        const cat = item?.primary_category || "";
+        const tags = item?.tags || [];
+        if (cat !== categoryFilter && !tags.includes(categoryFilter)) return false;
+      } else {
+        if ((item?.category || "") !== categoryFilter) return false;
+      }
+    }
+
+    if (mechanismFilter !== "All") {
+      if ((item?.mechanism || "") !== mechanismFilter) return false;
+    }
+
+    if (subtypeFilter !== "All") {
+      if ((item?.harm_subtype || "") !== subtypeFilter) return false;
+    }
+
+    if (sourceFilter !== "All") {
+      if (kind === "signals") {
+        const links = item?.links || [];
+        const anyForum = links.some((l) => (l?.source_type || "").toLowerCase() === "forum");
+        const anyNews = links.some((l) => (l?.source_type || "").toLowerCase() === "news");
+        if (sourceFilter === "Forum" && !anyForum) return false;
+        if (sourceFilter === "News" && !anyNews) return false;
+      } else {
+        const st = (item?.source_type || "news").toLowerCase();
+        if (sourceFilter === "Forum" && st !== "forum") return false;
+        if (sourceFilter === "News" && st !== "news") return false;
+      }
+    }
+
+    return matchesSearch(item);
+  }
+
+  function sortItems(items, kind) {
+    if (sortBy === "relevance") return items;
+
+    const copy = items.slice();
+
+    if (sortBy === "newest") {
+      copy.sort((a, b) => compareDatesDesc(getItemDateISO(a, kind), getItemDateISO(b, kind)));
+      return copy;
+    }
+
+    if (sortBy === "oldest") {
+      copy.sort((a, b) => compareDatesAsc(getItemDateISO(a, kind), getItemDateISO(b, kind)));
+      return copy;
+    }
+
+    if (sortBy === "uk") {
+      copy.sort(
+        (a, b) =>
+          (b?.uk_score ?? (b?.uk_relevance ? 2 : 0)) -
+          (a?.uk_score ?? (a?.uk_relevance ? 2 : 0))
+      );
+      return copy;
+    }
+
+    if (sortBy === "confidence" && kind === "signals") {
+      copy.sort((a, b) => confidenceRank(b?.confidence_label) - confidenceRank(a?.confidence_label));
+      return copy;
+    }
+
+    return copy;
+  }
+
+  const harms = useMemo(() => {
+    const filtered = (sections.harms || []).filter((x) => passesCommon(x, "harms"));
+    return sortItems(filtered, "harms");
+  }, [
+    sections.harms,
+    searchTerm,
+    timeFilter,
+    dateFrom,
+    dateTo,
+    categoryFilter,
+    mechanismFilter,
+    subtypeFilter,
+    sourceFilter,
+    ukOnly,
+    minUkScore,
+    sortBy,
+  ]);
+
+  const signals = useMemo(() => {
+    const filtered = (sections.signals || []).filter((x) => passesCommon(x, "signals"));
+    return sortItems(filtered, "signals");
+  }, [
+    sections.signals,
+    searchTerm,
+    timeFilter,
+    dateFrom,
+    dateTo,
+    categoryFilter,
+    mechanismFilter,
+    subtypeFilter,
+    sourceFilter,
+    ukOnly,
+    minUkScore,
+    sortBy,
+  ]);
+
+  const forums = useMemo(() => {
+    const filtered = (sections.forums || []).filter((x) => passesCommon(x, "forums"));
+    return sortItems(filtered, "forums");
+  }, [
+    sections.forums,
+    searchTerm,
+    timeFilter,
+    dateFrom,
+    dateTo,
+    categoryFilter,
+    mechanismFilter,
+    subtypeFilter,
+    sourceFilter,
+    ukOnly,
+    minUkScore,
+    sortBy,
+  ]);
+
+  const releases = useMemo(() => {
+    const filtered = (sections.dev_releases || []).filter((x) => passesCommon(x, "releases"));
+    return sortItems(filtered, "releases");
+  }, [
+    sections.dev_releases,
+    searchTerm,
+    timeFilter,
+    dateFrom,
+    dateTo,
+    categoryFilter,
+    sourceFilter,
+    ukOnly,
+    minUkScore,
+    sortBy,
+  ]);
+
+  function toggleBucket(cat) {
+    setOpenBuckets((s) => ({ ...s, [cat]: !s[cat] }));
+  }
+
+  const activeFilterChips = useMemo(() => {
+    const chips = [];
+    if (searchTerm.trim()) chips.push({ k: "search", label: `Search: ${searchTerm.trim()}` });
+    if (dateFrom) chips.push({ k: "dateFrom", label: `From: ${dateFrom}` });
+    if (dateTo) chips.push({ k: "dateTo", label: `To: ${dateTo}` });
+    if (!dateFrom && !dateTo && timeFilter !== "All") chips.push({ k: "time", label: `Time: ${timeFilter}` });
+    if (categoryFilter !== "All") chips.push({ k: "cat", label: `Category: ${categoryFilter}` });
+    if (mechanismFilter !== "All") chips.push({ k: "mech", label: `Mechanism: ${mechanismFilter}` });
+    if (subtypeFilter !== "All") chips.push({ k: "subtype", label: `Subtype: ${subtypeFilter}` });
+    if (sourceFilter !== "All") chips.push({ k: "src", label: `Source: ${sourceFilter}` });
+    if (sortBy !== "relevance") chips.push({ k: "sort", label: `Sort: ${sortBy}` });
+    if (minUkScore > 0) chips.push({ k: "minUk", label: `Min UK: ${minUkScore}` });
+    if (ukOnly) chips.push({ k: "ukOnly", label: "UK only" });
+    if (showAiSummaries) chips.push({ k: "aiSum", label: "AI summaries" });
+    return chips;
+  }, [
+    searchTerm,
+    dateFrom,
+    dateTo,
+    timeFilter,
+    categoryFilter,
+    mechanismFilter,
+    subtypeFilter,
+    sourceFilter,
+    sortBy,
+    minUkScore,
+    ukOnly,
+    showAiSummaries,
+  ]);
+
+  function clearChip(k) {
+    if (k === "search") setSearchTerm("");
+    if (k === "dateFrom") setDateFrom("");
+    if (k === "dateTo") setDateTo("");
+    if (k === "time") setTimeFilter("7d");
+    if (k === "cat") setCategoryFilter("All");
+    if (k === "mech") setMechanismFilter("All");
+    if (k === "subtype") setSubtypeFilter("All");
+    if (k === "src") setSourceFilter("All");
+    if (k === "sort") setSortBy("relevance");
+    if (k === "minUk") setMinUkScore(0);
+    if (k === "ukOnly") setUkOnly(false);
+    if (k === "aiSum") setShowAiSummaries(false);
+  }
+
+  function clearAllFilters() {
+    setSearchTerm("");
+    setTimeFilter("7d");
+    setDateFrom("");
+    setDateTo("");
+    setSortBy("relevance");
+    setMinUkScore(0);
+    setCategoryFilter("All");
+    setMechanismFilter("All");
+    setSubtypeFilter("All");
+    setSourceFilter("All");
+    setUkOnly(false);
+  }
+
+  return (
+    <div className={`min-h-screen ${pageBg(view)}`}>
+      <div className="max-w-7xl mx-auto px-5 py-5 animate-fadeUp">
+        <div className="card p-5 bg-white/80 backdrop-blur border border-slate-200">
+          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+            <div>
+              <div className="flex items-center gap-3">
+                <div className="h-2.5 w-2.5 rounded-full" style={{ background: "var(--a1)" }} />
+                <h1 className="text-lg font-semibold">AI Harms Horizon Scan</h1>
+                {payload?.last_updated ? (
+                  <span className="text-sm text-[var(--muted)] font-mono">
+                    updated {String(payload.last_updated).slice(0, 19)}
+                  </span>
+                ) : null}
+              </div>
+
+              <div className="mt-2 text-sm text-[var(--muted)] max-w-3xl leading-relaxed">
+                {payload?.disclaimer || "Proof-of-concept dashboard for harms-focused horizon scanning."}
+              </div>
+
+              {errors && Object.keys(errors).length ? (
+                <div className="mt-3 text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2">
+                  Some sources returned errors (see meta.errors in news_data.json): {Object.keys(errors).join(", ")}
+                </div>
+              ) : null}
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                onClick={load}
+                className="pill px-4 py-2 text-sm hover:bg-white transition inline-flex items-center gap-2 bg-white/70"
+                title
 import axios from "axios";
 import {
   Shield,
@@ -596,56 +1012,3 @@ function withinWindow(timestamp, windowKey) {
   const age = now - timestamp;
 
   if (windowKey === "24h") return age <= 24 * 3600;
-  if (windowKey === "7d") return age <= 7 * 24 * 3600;
-  if (windowKey === "30d") return age <= 30 * 24 * 3600;
-  return true;
-}
-
-function getItemDateISO(item, kind) {
-  const raw =
-    (kind === "signals" ? item?.latest_date || item?.date : item?.date) ||
-    (item?.timestamp ? new Date(item.timestamp * 1000).toISOString() : "");
-  return fmtDateShort(raw) || "";
-}
-
-function compareDatesDesc(a, b) {
-  const ta = Date.parse(a || "") || 0;
-  const tb = Date.parse(b || "") || 0;
-  return tb - ta;
-}
-
-function compareDatesAsc(a, b) {
-  const ta = Date.parse(a || "") || 0;
-  const tb = Date.parse(b || "") || 0;
-  return ta - tb;
-}
-
-function confidenceRank(label) {
-  if (label === "High") return 3;
-  if (label === "Medium") return 2;
-  return 1;
-}
-
-function confidenceChip(level) {
-  if (level === "High") return "border-emerald-200 bg-emerald-50 text-emerald-800";
-  if (level === "Medium") return "border-amber-200 bg-amber-50 text-amber-800";
-  return "border-slate-200 bg-slate-50 text-slate-700";
-}
-
-function catChip(cat) {
-  const key = String(cat || "").toLowerCase();
-  if (key.includes("fraud")) return "border-amber-200 bg-amber-50 text-amber-800";
-  if (key.includes("cyber")) return "border-cyan-200 bg-cyan-50 text-cyan-900";
-  if (key.includes("terror")) return "border-rose-200 bg-rose-50 text-rose-900";
-  if (key.includes("vawg")) return "border-fuchsia-200 bg-fuchsia-50 text-fuchsia-900";
-  if (key.includes("csam") || key.includes("child")) return "border-violet-200 bg-violet-50 text-violet-900";
-  if (key.includes("model")) return "border-indigo-200 bg-indigo-50 text-indigo-900";
-  return "border-slate-200 bg-slate-50 text-slate-700";
-}
-
-function mechanismChip(mechanism) {
-  const key = String(mechanism || "").toLowerCase();
-  if (key.includes("synthetic")) return "border-pink-200 bg-pink-50 text-pink-900";
-  if (key.includes("offender")) return "border-amber-200 bg-amber-50 text-amber-900";
-  if (key.includes("automation") || key.includes("scale")) return "border-violet-200 bg-violet-50 text-violet-900";
-}
