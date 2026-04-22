@@ -1,8 +1,7 @@
 {
-  "Fraud": "AI scam OR AI fraud OR AI phishing OR voice cloning scam",
-  "Cyber": "AI malware OR LLM exploit OR prompt injection OR jailbreak",
-  "Terrorism": "AI extremism OR AI radicalisation OR synthetic propaganda",
-  "VAWG": "AI harassment OR deepfake abuse OR image-based abuse",
-  "CSAM": "AI-generated child abuse material OR CSAM AI",
-  "Other": "AI violence OR AI weapons OR AI drugs OR AI crime instructions"
+  "RA09 – AI use in financial crime, fraud and exploitation": "AI scam OR AI fraud OR AI phishing OR voice cloning scam OR AI impersonation OR AI money laundering OR mule recruitment",
+  "RA11 – AI Use for Sexual Crime and Abuse": "deepfake abuse OR image-based abuse OR NCII OR non-consensual intimate imagery OR AI harassment OR AI stalking OR AI sextortion OR AI grooming OR AI-generated child abuse material OR CSAM AI",
+  "RA13 – AI use in terrorism": "AI extremism OR AI radicalisation OR synthetic propaganda OR extremist chatbot OR terrorist recruitment AI OR terrorist attack planning AI",
+  "RA14 – AI increases illegal item creation and acquisition": "AI weapons OR AI drugs OR AI crime instructions OR AI malware OR LLM exploit OR prompt injection OR jailbreak OR ransomware AI OR dark web AI OR counterfeit goods AI",
+  "Cross-cutting / unassigned": "AI violence OR AI-enabled crime OR false evidence AI OR liar's dividend OR fake identity documents AI OR border exploitation AI OR immigration abuse chatbot"
 }
