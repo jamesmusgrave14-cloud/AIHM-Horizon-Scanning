@@ -1,31 +1,4 @@
-import feedparser
-import json
-import os
-import requests
-import time
-import re
-import hashlib
-from datetime import datetime
-from urllib.parse import quote_plus, urlparse, parse_qsl, urlunparse, urlencode
-from difflib import SequenceMatcher
-
-BASE_DIR = os.path.dirname(__file__)
-
-# ---------- DEFAULTS ----------
-
-DEFAULT_HARM_QUERIES = {
-    "Fraud": "AI scam OR AI fraud OR AI phishing OR voice cloning scam",
-    "Cyber": "AI malware OR LLM exploit OR prompt injection OR jailbreak",
-    "Terrorism": "AI extremism OR AI radicalisation OR synthetic propaganda",
-    "VAWG": "AI harassment OR deepfake abuse OR image-based abuse",
-    "CSAM": "AI-generated child abuse material OR CSAM AI",
-    "Other": "AI violence OR AI weapons OR AI drugs OR AI crime instructions",
-}
-
-# Forums: deliberately harms-adjacent only (avoid generic AI subs)
-DEFAULT_FORUM_FEEDS = [
-    {"name": "Reddit: scams (new)", "url": "https://old.reddit.com/r/Scams/new/.rss", "tags": ["forum", "reddit", "fraud"]},
-    {"name": "Reddit: socialengineering (new)", "url": "https://old.reddit.com/r/socialengineering/new/.rss", "tags": ["forum", "reddit", "fraud"]},
+import feedparserengineering/new/.rss", "tags": ["forum", "reddit", "fraud"]},
     {"name": "Reddit: netsec (new)", "url": "https://old.reddit.com/r/netsec/new/.rss", "tags": ["forum", "reddit", "cyber"]},
     {"name": "Reddit: cybersecurity (new)", "url": "https://old.reddit.com/r/cybersecurity/new/.rss", "tags": ["forum", "reddit", "cyber"]},
     {"name": "Reddit: malware (new)", "url": "https://old.reddit.com/r/Malware/new/.rss", "tags": ["forum", "reddit", "cyber"]},
@@ -52,15 +25,15 @@ MAX_FORUM_ITEMS = int(os.getenv("MAX_FORUM_ITEMS", "30"))
 SIGNAL_SIM_THRESHOLD = float(os.getenv("SIGNAL_SIM_THRESHOLD", "0.86"))
 
 # Dedupe strategy label for UI debug
-DEDUPE_MODE = os.getenv("DEDUPE_MODE", "title_fingerprint_v3")
+DEDUPE_MODE = os.getenv("DEDUPE_MODE", "title_fingerprint_v4_policy_filtered")
 
 # Optional: true LLM summary (keep empty for deterministic-only)
 SUMMARY_OPENAI_API_KEY = os.getenv("SUMMARY_OPENAI_API_KEY", "").strip()
 SUMMARY_OPENAI_MODEL = os.getenv("SUMMARY_OPENAI_MODEL", "gpt-4.1-mini").strip()
 
 # Sources for releases
-OPENAI_NEWS_RSS = "https://openai.com/news/rss.xml"  # official feed referenced in OpenAI community thread 
-RUNDOWN_RSS = "https://rss.beehiiv.com/feeds/2R3C6Bt5wj.xml"  # The Rundown AI RSS [1](https://rss.beehiiv.com/feeds/2R3C6Bt5wj.xml)
+OPENAI_NEWS_RSS = "https://openai.com/news/rss.xml"
+RUNDOWN_RSS = "https://rss.beehiiv.com/feeds/2R3C6Bt5wj.xml"
 
 HEADERS = {
     "User-Agent": "AIHM-Horizon-Scanning/1.0 (rss fetch)",
@@ -93,6 +66,47 @@ UK_TOKENS = [
     " uk ", " united kingdom ", " britain ", " british ", " england ", " scotland ", " wales ",
     " northern ireland ", " nhs ", " nca ", " metropolitan police ", " met police ", " home office ",
     " ofcom ", " ico ", " cps ", " crown prosecution ", " westminster ", " parliament "
+]
+
+# Policy / LE / national security relevance
+POLICY_TOKENS = [
+    "home office", "law enforcement", "police", "national crime agency", "nca", "ncsc", "ofcom", "ico",
+    "cps", "crown prosecution", "border force", "government", "minister", "parliament", "regulation",
+    "regulator", "policy", "national security", "security", "terrorism", "extremism", "radicalisation",
+    "fraud", "phishing", "scam", "money laundering", "ransomware", "malware", "cybercrime", "cyber attack",
+    "grooming", "harassment", "stalking", "abuse", "child abuse material", "exploitation",
+    "weapons", "firearms", "drugs", "false evidence", "identity documents", "public safety",
+    "court", "prosecution", "investigation", "criminal", "offender", "violent", "deepfake"
+]
+
+POLICY_SOURCE_TOKENS = [
+    "bbc", "reuters", "ap", "associated press", "financial times", "the guardian", "telegraph",
+    "gov.uk", "europol", "interpol", "nca", "ncsc", "ofcom", "ico", "home office",
+    "therecord", "recorded future", "bellingcat"
+]
+
+# Things you explicitly do NOT want
+COMMERCIAL_TITLE_PATTERNS = [
+    "top ", "best ", "tool ", "tools ", "software ", "platform ", "platforms ",
+    "pricing", "features", "review", "reviews", "comparison", "compare", "buyer guide",
+    "buyer's guide", "for seo", "seo agencies", "seo agency", "seo tool", "marketing tool",
+    "marketing tools", "for marketers", "growth hacking", "content marketing", "crm",
+    "productivity", "saas", "startup", "agency", "agencies", "ecommerce", "e commerce",
+    "visibility tools", "keyword tool", "social media scheduler", "email marketing",
+    "ppc", "affiliate", "how to choose", "flexible pricing", "powerful features"
+]
+
+COMMERCIAL_SOURCE_TOKENS = [
+    "businesscloud", "martech", "search engine journal", "search engine land",
+    "techradar pro", "venturebeat", "product hunt", "g2", "capterra"
+]
+
+# If a title contains these, it is likely genuinely in scope even if some commercial-ish words appear
+HARD_HARM_TOKENS = [
+    "fraud", "phishing", "money laundering", "terrorism", "extremism", "radicalisation",
+    "grooming", "stalking", "harassment", "abuse", "child abuse material",
+    "ransomware", "malware", "jailbreak", "prompt injection", "weapons", "firearms",
+    "drugs", "crime instructions", "false evidence", "identity documents", "deepfake"
 ]
 
 # ---------- HELPERS ----------
@@ -295,11 +309,194 @@ def uk_score_for_item(title, link, source):
         if tok in s:
             score += 1
 
-    # UK domains get a boost
     if ".uk/" in u or u.endswith(".uk"):
         score += 2
 
     return score
+
+
+def policy_score_for_item(title, link, source):
+    t = f" {norm_text(title)} "
+    s = f" {norm_text(source)} "
+    u = (link or "").lower()
+    score = 0
+
+    for tok in POLICY_TOKENS:
+        tok_n = f" {norm_text(tok)} "
+        if tok_n in t:
+            score += 2
+        if tok_n in s:
+            score += 1
+
+    for tok in POLICY_SOURCE_TOKENS:
+        tok_n = norm_text(tok)
+        if tok_n in s:
+            score += 2
+        if tok_n in u:
+            score += 2
+
+    if ".gov.uk" in u or "gov.uk/" in u:
+        score += 3
+
+    return score
+
+
+def is_low_value_commercial(title, link, source):
+    t = f" {norm_text(title)} "
+    s = f" {norm_text(source)} "
+    u = (link or "").lower()
+
+    commercial_hits = 0
+    for pat in COMMERCIAL_TITLE_PATTERNS:
+        pat_n = f" {norm_text(pat)} "
+        if pat_n in t:
+            commercial_hits += 1
+
+    for pat in COMMERCIAL_SOURCE_TOKENS:
+        pat_n = norm_text(pat)
+        if pat_n in s or pat_n in u:
+            commercial_hits += 1
+
+    hard_harm_hits = 0
+    for tok in HARD_HARM_TOKENS:
+        tok_n = f" {norm_text(tok)} "
+        if tok_n in t:
+            hard_harm_hits += 1
+
+    # Reject if it looks clearly like a product / SEO / martech article
+    # and does not contain strong harm / security content
+    if commercial_hits >= 2 and hard_harm_hits == 0:
+        return True
+
+    if commercial_hits >= 1 and hard_harm_hits == 0 and (
+        " seo " in t or
+        " marketers " in t or
+        " agencies " in t or
+        " agency " in t or
+        " pricing " in t or
+        " features " in t
+    ):
+        return True
+
+    return False
+
+
+def passes_editorial_relevance(title, link, source, rel, uk_score, policy_score, category):
+    """
+    Gate to keep only items that are meaningfully relevant to:
+    - the harm query, and/or
+    - policy / national security / law enforcement.
+    """
+    if is_low_value_commercial(title, link, source):
+        return False
+
+    title_n = norm_text(title)
+
+    # Always keep very strong policy / LE / natsec relevance
+    if policy_score >= 3:
+        return True
+
+    # Strong direct query match
+    if rel >= 2:
+        return True
+
+    # UK + some policy relevance
+    if uk_score >= 2 and policy_score >= 1:
+        return True
+
+    # Category-specific fallbacks
+    if category == "Fraud" and any(x in title_n for x in ["fraud", "scam", "phishing", "impersonation", "money laundering"]):
+        return True
+    if category == "Cyber" and any(x in title_n for x in ["malware", "ransomware", "jailbreak", "prompt injection", "exploit", "cyber"]):
+        return True
+    if category == "Terrorism" and any(x in title_n for x in ["terror", "extrem", "radical", "propaganda", "attack planning"]):
+        return True
+    if category == "VAWG" and any(x in title_n for x in ["stalking", "harassment", "deepfake abuse", "synthetic image", "coercion"]):
+        return True
+    if category == "CSAM" and any(x in title_n for x in ["child abuse material", "grooming", "child exploitation", "csam"]):
+        return True
+    if category == "Other" and any(x in title_n for x in ["weapons", "drugs", "crime instructions", "false evidence", "identity documents"]):
+        return True
+
+    return False
+
+
+def derive_mechanism(title):
+    t = norm_text(title)
+
+    if any(x in t for x in [
+        "deepfake", "synthetic", "voice clone", "voice cloning", "fake image", "fake video",
+        "fake audio", "impersonation", "synthetic image"
+    ]):
+        return "Synthetic media / realistic fake"
+
+    if any(x in t for x in [
+        "bot", "bots", "automation", "automated", "at scale", "mass", "bulk", "industrial scale"
+    ]):
+        return "Automation / scale"
+
+    if any(x in t for x in [
+        "targeting", "targeted", "micro targeting", "micro-targeting", "personalised",
+        "personalized", "hyper targeting", "hyper-targeting"
+    ]):
+        return "Targeting / personalisation"
+
+    if any(x in t for x in [
+        "jailbreak", "prompt injection", "bypass", "evade detection", "wormgpt", "fraudgpt"
+    ]):
+        return "Model misuse / evasion"
+
+    if any(x in t for x in [
+        "instructions", "guidance", "planning", "preparation", "grooming", "phishing", "ransomware"
+    ]):
+        return "Offender capability uplift"
+
+    return "Other / mixed"
+
+
+def derive_subtype(title, category):
+    t = norm_text(title)
+
+    if any(x in t for x in ["fraud", "scam", "money laundering", "phishing", "impersonation", "voice clone"]):
+        return "Fraud / scams / impersonation"
+
+    if any(x in t for x in ["grooming", "exploitation", "coercion", "sextortion"]):
+        return "Grooming / exploitation / coercion"
+
+    if any(x in t for x in ["synthetic image", "deepfake abuse", "image abuse"]):
+        return "Synthetic-image abuse"
+
+    if any(x in t for x in ["stalking", "harassment", "audio abuse"]):
+        return "Stalking / harassment / coercion"
+
+    if any(x in t for x in ["terrorist", "extremist", "radicalisation", "radicalization", "propaganda", "recruitment"]):
+        return "Propaganda / radicalisation / recruitment"
+
+    if any(x in t for x in ["attack planning", "attack preparation", "crime instructions", "weapon", "explosive"]):
+        return "Attack planning / operational guidance"
+
+    if any(x in t for x in ["drugs", "firearms", "weapons", "illicit items", "dark web"]):
+        return "Illegal items / drugs / firearms"
+
+    if any(x in t for x in ["ransomware", "malware", "jailbreak", "prompt injection", "exploit"]):
+        return "Cyber / phishing / ransomware enablement"
+
+    if any(x in t for x in ["false evidence", "identity documents", "court", "bank statements", "birth certificates"]):
+        return "False evidence / false documents / identity abuse"
+
+    # fallback from current category names
+    if category == "Fraud":
+        return "Fraud / scams / impersonation"
+    if category == "Cyber":
+        return "Cyber / phishing / ransomware enablement"
+    if category == "Terrorism":
+        return "Propaganda / radicalisation / recruitment"
+    if category == "VAWG":
+        return "Stalking / harassment / coercion"
+    if category == "CSAM":
+        return "Grooming / exploitation / coercion"
+
+    return "Other"
 
 
 def assign_harm_category_from_text(title, harm_query_map):
@@ -319,7 +516,6 @@ def assign_harm_category_from_text(title, harm_query_map):
         if score > best:
             best = score
             best_cat = cat
-    # require at least minimal overlap to avoid generic AI chatter
     if best_cat and best >= 2:
         return best_cat, best
     return None, 0
@@ -332,10 +528,12 @@ def summarize_signal(signal):
     joined = " ".join([(l.get("title") or "") for l in links[:6]])
     kws = extract_keywords(joined)
     primary = signal.get("primary_category") or (tags[0] if tags else "Other")
-    harm_txt = f"Potential {primary} harm" if primary in HARM_CATEGORIES else primary
+    subtype = signal.get("harm_subtype") or ""
+    if kws and subtype:
+        return f"{primary}: {subtype.lower()}. Recurring themes include {', '.join(kws)} ({src_count} sources)."
     if kws:
-        return f"{harm_txt}: recurring themes include {', '.join(kws)} ({src_count} sources)."
-    return f"{harm_txt}: clustered coverage detected ({src_count} sources)."
+        return f"{primary}: recurring themes include {', '.join(kws)} ({src_count} sources)."
+    return f"{primary}: clustered coverage detected ({src_count} sources)."
 
 
 def cluster_to_signals(items, threshold=SIGNAL_SIM_THRESHOLD):
@@ -379,6 +577,8 @@ def cluster_to_signals(items, threshold=SIGNAL_SIM_THRESHOLD):
             "signal_id": stable_id(c["key"]),
             "title": items_sorted[0].get("title"),
             "primary_category": primary,
+            "mechanism": items_sorted[0].get("mechanism", "Other / mixed"),
+            "harm_subtype": items_sorted[0].get("harm_subtype", "Other"),
             "tags": tags_sorted if tags_sorted else ([primary] if primary else []),
             "cluster_size": len(items_sorted),
             "source_count": source_count,
@@ -393,6 +593,8 @@ def cluster_to_signals(items, threshold=SIGNAL_SIM_THRESHOLD):
                     "date": x.get("date"),
                     "source_type": x.get("source_type", "news"),
                     "category": x.get("category"),
+                    "mechanism": x.get("mechanism", "Other / mixed"),
+                    "harm_subtype": x.get("harm_subtype", "Other"),
                     "uk_score": x.get("uk_score", 0),
                 }
                 for x in items_sorted[:8]
@@ -478,7 +680,7 @@ def run():
         }
     }
 
-    # 1) HARMS (Google News RSS, UK-prioritised sorting)
+    # 1) HARMS (Google News RSS, UK-prioritised sorting + policy filter)
     raw_harm_items = []
     for cat, q in harm_queries.items():
         try:
@@ -496,10 +698,25 @@ def run():
                 link = clean_url(getattr(e, "link", ""))
 
                 uk_score = uk_score_for_item(title, link, src or "")
+                policy_score = policy_score_for_item(title, link, src or "")
                 rel = relevance_score(title, kws)
+
+                if not passes_editorial_relevance(
+                    title=title,
+                    link=link,
+                    source=src or "",
+                    rel=rel,
+                    uk_score=uk_score,
+                    policy_score=policy_score,
+                    category=cat,
+                ):
+                    continue
 
                 item = {
                     "category": cat,
+                    "primary_category": cat,
+                    "mechanism": derive_mechanism(title),
+                    "harm_subtype": derive_subtype(title, cat),
                     "title": title,
                     "link": link,
                     "source": src or "News",
@@ -508,6 +725,7 @@ def run():
                     "source_type": "news",
                     "tags": [cat],
                     "relevance_score": rel,
+                    "policy_score": policy_score,
                     "uk_score": uk_score,
                     "uk_relevance": True if uk_score >= 2 else False,
                 }
@@ -515,31 +733,40 @@ def run():
         except Exception as ex:
             errors[f"harms:{cat}"] = str(ex)
 
-    # Dedupe harms aggressively by category + fingerprint (ignores minor source/URL differences)
     raw_harm_items = dedupe_by_key(
         raw_harm_items,
         lambda x: f"{x.get('category')}|{fingerprint_title(x.get('title'))}"
     )
 
-    # Sort within category: UK first, then relevance, then recency
-    raw_harm_items.sort(key=lambda x: (x.get("uk_score", 0), x.get("relevance_score", 0), x.get("timestamp", 0)), reverse=True)
+    raw_harm_items.sort(
+        key=lambda x: (
+            x.get("policy_score", 0),
+            x.get("uk_score", 0),
+            x.get("relevance_score", 0),
+            x.get("timestamp", 0),
+        ),
+        reverse=True
+    )
 
     report["sections"]["harms"] = [
         {
             "category": x["category"],
+            "primary_category": x["primary_category"],
+            "mechanism": x["mechanism"],
+            "harm_subtype": x["harm_subtype"],
             "title": x["title"],
             "link": x["link"],
             "source": x["source"],
             "timestamp": x["timestamp"],
             "date": x["date"],
             "relevance_score": x["relevance_score"],
+            "policy_score": x["policy_score"],
             "uk_score": x["uk_score"],
             "uk_relevance": x["uk_relevance"],
         }
         for x in raw_harm_items
     ]
 
-    # Coverage per harm
     cov = {}
     for it in report["sections"]["harms"]:
         c = it.get("category", "Other")
@@ -550,12 +777,10 @@ def run():
         cov[c]["last_seen"] = max(cov[c]["last_seen"] or 0, it.get("timestamp", 0))
     report["coverage"]["by_harm"] = cov
 
-    # Deterministic harm summaries
     for cat in harm_queries.keys():
         titles = [h["title"] for h in report["sections"]["harms"] if h["category"] == cat]
         report["summaries"]["harms_by_category"][cat] = summarize_list(titles)
 
-    # Optional LLM harm summaries (top 3 categories only, to limit cost)
     if SUMMARY_OPENAI_API_KEY:
         try:
             top3 = sorted(cov.items(), key=lambda kv: kv[1]["count"], reverse=True)[:3]
@@ -568,7 +793,7 @@ def run():
         except Exception:
             pass
 
-    # 2) FORUMS (harms-tagged only)
+    # 2) FORUMS (harms-tagged only + policy filter)
     raw_forum_items = []
     try:
         for f in forum_feeds:
@@ -585,16 +810,29 @@ def run():
                 dt = parse_date(published)
                 link = clean_url(getattr(e, "link", ""))
 
-                # Assign harm category by overlap with harm query keywords
                 cat, score = assign_harm_category_from_text(title, harm_queries)
                 if not cat:
-                    continue  # drop generic AI chatter
+                    continue
 
                 uk_score = uk_score_for_item(title, link, name)
+                policy_score = policy_score_for_item(title, link, name)
+
+                if not passes_editorial_relevance(
+                    title=title,
+                    link=link,
+                    source=name,
+                    rel=score,
+                    uk_score=uk_score,
+                    policy_score=policy_score,
+                    category=cat,
+                ):
+                    continue
 
                 item = {
                     "category": cat,
                     "primary_category": cat,
+                    "mechanism": derive_mechanism(title),
+                    "harm_subtype": derive_subtype(title, cat),
                     "title": title,
                     "link": link,
                     "source": name,
@@ -603,6 +841,7 @@ def run():
                     "source_type": "forum",
                     "tags": list(set(base_tags + [cat])),
                     "uk_score": uk_score,
+                    "policy_score": policy_score,
                     "uk_relevance": True if uk_score >= 2 else False,
                     "forum_match_score": score,
                 }
@@ -612,11 +851,22 @@ def run():
         errors["forums"] = str(ex)
 
     raw_forum_items = dedupe_by_key(raw_forum_items, lambda x: f"{x.get('category')}|{fingerprint_title(x.get('title'))}")
-    raw_forum_items.sort(key=lambda x: (x.get("uk_score", 0), x.get("forum_match_score", 0), x.get("timestamp", 0)), reverse=True)
+    raw_forum_items.sort(
+        key=lambda x: (
+            x.get("policy_score", 0),
+            x.get("uk_score", 0),
+            x.get("forum_match_score", 0),
+            x.get("timestamp", 0),
+        ),
+        reverse=True
+    )
 
     report["sections"]["forums"] = [
         {
             "category": x["category"],
+            "primary_category": x["primary_category"],
+            "mechanism": x["mechanism"],
+            "harm_subtype": x["harm_subtype"],
             "title": x["title"],
             "link": x["link"],
             "source": x["source"],
@@ -624,13 +874,14 @@ def run():
             "date": x["date"],
             "tags": x["tags"],
             "source_type": "forum",
+            "policy_score": x["policy_score"],
             "uk_score": x["uk_score"],
             "uk_relevance": x["uk_relevance"],
         }
         for x in raw_forum_items
     ]
 
-    # 3) MODEL RELEASES (better sources: OpenAI RSS + The Rundown RSS + filtered Google fallback)
+    # 3) MODEL RELEASES
     raw_release_items = []
 
     def ingest_release_feed(feed_url, source_label):
@@ -666,7 +917,6 @@ def run():
     except Exception as ex:
         errors["dev_releases_rundown_rss"] = str(ex)
 
-    # Fallback: Google News (filtered to release-like)
     try:
         q = "new model released OR introducing model OR system card OR model card OR open weights"
         feed = fetch_feed(google_rss_url(q, RELEASE_TIME_WINDOW), retries=3, base_sleep=1.0)
@@ -692,7 +942,6 @@ def run():
     except Exception as ex:
         errors["dev_releases_google"] = str(ex)
 
-    # Dedupe releases by fingerprint_title (cross-source duplicates collapse)
     raw_release_items = dedupe_by_key(raw_release_items, lambda x: fingerprint_title(x.get("title")))
     raw_release_items.sort(key=lambda x: x.get("timestamp", 0), reverse=True)
 
@@ -716,16 +965,17 @@ def run():
         if llm:
             report["summaries"]["releases_top"] = llm
 
-    # 4) SIGNALS (cluster across harms + harms-tagged forums + releases)
+    # 4) SIGNALS
     all_for_signals = []
-    # Use raw objects for richer clustering + UK info
     all_for_signals.extend(raw_harm_items)
     all_for_signals.extend(raw_forum_items)
-    # Include releases as separate category so they don't pollute harms clusters
+
     for r in raw_release_items:
         all_for_signals.append({
             "category": "Model Releases",
             "primary_category": "Model Releases",
+            "mechanism": "Other / mixed",
+            "harm_subtype": "Other",
             "title": r["title"],
             "link": r["link"],
             "source": r["source"],
@@ -736,7 +986,6 @@ def run():
             "uk_score": 0,
         })
 
-    # Dedupe inputs into clustering
     all_for_signals = dedupe_by_key(
         all_for_signals,
         lambda x: f"{x.get('category','')}|{fingerprint_title(x.get('title'))}|{norm_text(x.get('source'))}"
@@ -763,3 +1012,30 @@ def run():
 
 if __name__ == "__main__":
     run()
+``
+import json
+import os
+import requests
+import time
+import re
+import hashlib
+from datetime import datetime
+from urllib.parse import quote_plus, urlparse, parse_qsl, urlunparse, urlencode
+from difflib import SequenceMatcher
+
+BASE_DIR = os.path.dirname(__file__)
+
+# ---------- DEFAULTS ----------
+
+DEFAULT_HARM_QUERIES = {
+    "Fraud": "AI fraud OR AI phishing OR voice cloning scam OR deepfake impersonation fraud OR AI money laundering",
+    "Cyber": "AI malware OR AI ransomware OR LLM exploit OR prompt injection OR jailbreak",
+    "Terrorism": "AI extremism OR AI radicalisation OR synthetic propaganda OR AI terrorist recruitment OR AI attack planning",
+    "VAWG": "AI stalking OR AI harassment OR deepfake abuse OR synthetic-image abuse",
+    "CSAM": "AI-generated child abuse material OR AI grooming OR CSAM AI",
+    "Other": "AI weapons OR AI drugs OR AI crime instructions OR AI false evidence OR AI identity documents",
+}
+
+# Forums: deliberately harms-adjacent only (avoid generic AI subs)
+DEFAULT_FORUM_FEEDS = [
+    {"name": "Reddit: scams (new)", "url": "https://old.reddit.com/r/Scams/new/.rss", "tags": ["forum", "reddit", "fraud"]},
