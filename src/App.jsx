@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react"; return "border-indigo-200 bg-indigo-50 text-indigo-900";
   return "border-slate-200 bg-slate-50 text-slate-700";
-}
+
 
 function subtypeChip(subtype) {
   const key = String(subtype || "").toLowerCase();
