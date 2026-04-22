@@ -1,4 +1,103 @@
-import { useEffect, useMemo, useState } from "react"; setShowN(p.showN);
+import { useEffect, useMemo, useState } from "react"; items") || key.includes("drugs") || key.includes("firearms")) {
+    return "border-violet-200 bg-violet-50 text-violet-900";
+  }
+  if (key.includes("cyber") || key.includes("ransomware") || key.includes("phishing")) {
+    return "border-cyan-200 bg-cyan-50 text-cyan-900";
+  }
+  if (key.includes("evidence") || key.includes("identity")) return "border-indigo-200 bg-indigo-50 text-indigo-900";
+  return "border-slate-200 bg-slate-50 text-slate-700";
+}
+
+function viewTheme(view) {
+  if (view === "harms") {
+    return {
+      ring: "ring-rose-100",
+      band: "from-rose-50 to-white",
+      accent: "text-rose-700",
+      border: "border-rose-100",
+    };
+  }
+  if (view === "signals") {
+    return {
+      ring: "ring-sky-100",
+      band: "from-sky-50 to-white",
+      accent: "text-sky-700",
+      border: "border-sky-100",
+    };
+  }
+  if (view === "forums") {
+    return {
+      ring: "ring-fuchsia-100",
+      band: "from-fuchsia-50 to-white",
+      accent: "text-fuchsia-700",
+      border: "border-fuchsia-100",
+    };
+  }
+  if (view === "releases") {
+    return {
+      ring: "ring-indigo-100",
+      band: "from-indigo-50 to-white",
+      accent: "text-indigo-700",
+      border: "border-indigo-100",
+    };
+  }
+  return {
+    ring: "ring-slate-100",
+    band: "from-slate-50 to-white",
+    accent: "text-slate-700",
+    border: "border-slate-100",
+  };
+}
+
+function pageBg(view) {
+  if (view === "harms") return "bg-gradient-to-b from-rose-50 via-slate-50 to-slate-50";
+  if (view === "signals") return "bg-gradient-to-b from-sky-50 via-slate-50 to-slate-50";
+  if (view === "forums") return "bg-gradient-to-b from-fuchsia-50 via-slate-50 to-slate-50";
+  if (view === "releases") return "bg-gradient-to-b from-indigo-50 via-slate-50 to-slate-50";
+  return "bg-gradient-to-b from-rose-50 via-slate-50 to-slate-50";
+}
+
+function getItemDateISO(item, kind) {
+  const raw =
+    (kind === "signals" ? item?.latest_date || item?.date : item?.date) ||
+    (item?.timestamp ? new Date(item.timestamp * 1000).toISOString() : "");
+  return fmtDateShort(raw) || "";
+}
+
+/* ---------------------------- App ---------------------------- */
+
+export default function App() {
+  const [payload, setPayload] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const [view, setView] = useState("harms");
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [timeFilter, setTimeFilter] = useState("7d");
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
+  const [sortBy, setSortBy] = useState("relevance");
+  const [minUkScore, setMinUkScore] = useState(0);
+  const [categoryFilter, setCategoryFilter] = useState("All");
+  const [mechanismFilter, setMechanismFilter] = useState("All");
+  const [subtypeFilter, setSubtypeFilter] = useState("All");
+  const [sourceFilter, setSourceFilter] = useState("All");
+  const [ukOnly, setUkOnly] = useState(false);
+  const [showAiSummaries, setShowAiSummaries] = useState(false);
+  const [showN, setShowN] = useState(36);
+  const [filtersOpen, setFiltersOpen] = useState(false);
+
+  const [harmsFocusCat, setHarmsFocusCat] = useState("All");
+  const [openBuckets, setOpenBuckets] = useState({});
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("aihm_ui_prefs_v8");
+      if (!raw) return;
+      const p = JSON.parse(raw);
+      const allowed = new Set(["harms", "signals", "forums", "releases"]);
+      if (p?.view && allowed.has(p.view)) setView(p.view);
+      if (typeof p?.showN === "number") setShowN(p.showN);
       if (typeof p?.showAiSummaries === "boolean") setShowAiSummaries(p.showAiSummaries);
     } catch {
       // ignore
@@ -8,7 +107,7 @@ import { useEffect, useMemo, useState } from "react"; setShowN(p.showN);
   useEffect(() => {
     try {
       localStorage.setItem(
-        "aihm_ui_prefs_v7",
+        "aihm_ui_prefs_v8",
         JSON.stringify({ view, showN, showAiSummaries })
       );
     } catch {
@@ -39,38 +138,37 @@ import { useEffect, useMemo, useState } from "react"; setShowN(p.showN);
   const limits = meta?.limits || {};
   const errors = meta?.errors || {};
 
-  const counts = useMemo(
-    () => ({
+  const counts = useMemo(() => {
+    return {
       harms: (sections.harms || []).length,
       signals: (sections.signals || []).length,
-      dev_releases: (sections.dev_releases || []).length,
       forums: (sections.forums || []).length,
-    }),
-    [sections]
-  );
+      dev_releases: (sections.dev_releases || []).length,
+    };
+  }, [sections]);
 
   const allCategories = useMemo(() => {
     const cats = new Set();
-    (sections?.harms || []).forEach((h) => h?.category && cats.add(h.category));
-    (sections?.signals || []).forEach((s) => s?.primary_category && cats.add(s.primary_category));
-    (sections?.forums || []).forEach((f) => f?.category && cats.add(f.category));
-    (sections?.dev_releases || []).forEach(() => cats.add("Model Releases"));
+    (sections.harms || []).forEach((h) => h?.category && cats.add(h.category));
+    (sections.signals || []).forEach((s) => s?.primary_category && cats.add(s.primary_category));
+    (sections.forums || []).forEach((f) => f?.category && cats.add(f.category));
+    (sections.dev_releases || []).forEach(() => cats.add("Model Releases"));
     return ["All", ...Array.from(cats).sort((a, b) => a.localeCompare(b))];
   }, [sections]);
 
   const allMechanisms = useMemo(() => {
     const vals = new Set();
-    (sections?.harms || []).forEach((x) => x?.mechanism && vals.add(x.mechanism));
-    (sections?.signals || []).forEach((x) => x?.mechanism && vals.add(x.mechanism));
-    (sections?.forums || []).forEach((x) => x?.mechanism && vals.add(x.mechanism));
+    (sections.harms || []).forEach((x) => x?.mechanism && vals.add(x.mechanism));
+    (sections.signals || []).forEach((x) => x?.mechanism && vals.add(x.mechanism));
+    (sections.forums || []).forEach((x) => x?.mechanism && vals.add(x.mechanism));
     return ["All", ...Array.from(vals).sort((a, b) => a.localeCompare(b))];
   }, [sections]);
 
   const allSubtypes = useMemo(() => {
     const vals = new Set();
-    (sections?.harms || []).forEach((x) => x?.harm_subtype && vals.add(x.harm_subtype));
-    (sections?.signals || []).forEach((x) => x?.harm_subtype && vals.add(x.harm_subtype));
-    (sections?.forums || []).forEach((x) => x?.harm_subtype && vals.add(x.harm_subtype));
+    (sections.harms || []).forEach((x) => x?.harm_subtype && vals.add(x.harm_subtype));
+    (sections.signals || []).forEach((x) => x?.harm_subtype && vals.add(x.harm_subtype));
+    (sections.forums || []).forEach((x) => x?.harm_subtype && vals.add(x.harm_subtype));
     return ["All", ...Array.from(vals).sort((a, b) => a.localeCompare(b))];
   }, [sections]);
 
@@ -84,22 +182,20 @@ import { useEffect, useMemo, useState } from "react"; setShowN(p.showN);
   function matchesSearch(item) {
     const q = searchTerm.toLowerCase().trim();
     if (!q) return true;
-    const title = (item?.title || "").toLowerCase();
-    const source = (item?.source || "").toLowerCase();
-    const tags = (item?.tags || []).join(" ").toLowerCase();
-    const cat = (item?.category || item?.primary_category || "").toLowerCase();
-    const mech = (item?.mechanism || "").toLowerCase();
-    const subtype = (item?.harm_subtype || "").toLowerCase();
-    const summary = (item?.ai_summary || "").toLowerCase();
-    return (
-      title.includes(q) ||
-      source.includes(q) ||
-      tags.includes(q) ||
-      cat.includes(q) ||
-      mech.includes(q) ||
-      subtype.includes(q) ||
-      summary.includes(q)
-    );
+
+    const blob = [
+      item?.title || "",
+      item?.source || "",
+      item?.category || item?.primary_category || "",
+      item?.mechanism || "",
+      item?.harm_subtype || "",
+      item?.ai_summary || "",
+      ...(item?.tags || []),
+    ]
+      .join(" ")
+      .toLowerCase();
+
+    return blob.includes(q);
   }
 
   function passesDateRange(item, kind) {
@@ -167,16 +263,19 @@ import { useEffect, useMemo, useState } from "react"; setShowN(p.showN);
 
   function sortItems(items, kind) {
     if (sortBy === "relevance") return items;
+
     const copy = items.slice();
 
     if (sortBy === "newest") {
       copy.sort((a, b) => compareDatesDesc(getItemDateISO(a, kind), getItemDateISO(b, kind)));
       return copy;
     }
+
     if (sortBy === "oldest") {
       copy.sort((a, b) => compareDatesAsc(getItemDateISO(a, kind), getItemDateISO(b, kind)));
       return copy;
     }
+
     if (sortBy === "uk") {
       copy.sort(
         (a, b) =>
@@ -185,32 +284,84 @@ import { useEffect, useMemo, useState } from "react"; setShowN(p.showN);
       );
       return copy;
     }
+
     if (sortBy === "confidence" && kind === "signals") {
       copy.sort((a, b) => confidenceRank(b?.confidence_label) - confidenceRank(a?.confidence_label));
       return copy;
     }
+
     return copy;
   }
 
   const harms = useMemo(() => {
     const filtered = (sections.harms || []).filter((x) => passesCommon(x, "harms"));
     return sortItems(filtered, "harms");
-  }, [sections.harms, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, mechanismFilter, subtypeFilter, sourceFilter, ukOnly, minUkScore, sortBy]);
+  }, [
+    sections.harms,
+    searchTerm,
+    timeFilter,
+    dateFrom,
+    dateTo,
+    categoryFilter,
+    mechanismFilter,
+    subtypeFilter,
+    sourceFilter,
+    ukOnly,
+    minUkScore,
+    sortBy,
+  ]);
 
   const signals = useMemo(() => {
     const filtered = (sections.signals || []).filter((x) => passesCommon(x, "signals"));
     return sortItems(filtered, "signals");
-  }, [sections.signals, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, mechanismFilter, subtypeFilter, sourceFilter, ukOnly, minUkScore, sortBy]);
+  }, [
+    sections.signals,
+    searchTerm,
+    timeFilter,
+    dateFrom,
+    dateTo,
+    categoryFilter,
+    mechanismFilter,
+    subtypeFilter,
+    sourceFilter,
+    ukOnly,
+    minUkScore,
+    sortBy,
+  ]);
 
   const forums = useMemo(() => {
     const filtered = (sections.forums || []).filter((x) => passesCommon(x, "forums"));
     return sortItems(filtered, "forums");
-  }, [sections.forums, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, mechanismFilter, subtypeFilter, sourceFilter, ukOnly, minUkScore, sortBy]);
+  }, [
+    sections.forums,
+    searchTerm,
+    timeFilter,
+    dateFrom,
+    dateTo,
+    categoryFilter,
+    mechanismFilter,
+    subtypeFilter,
+    sourceFilter,
+    ukOnly,
+    minUkScore,
+    sortBy,
+  ]);
 
   const releases = useMemo(() => {
     const filtered = (sections.dev_releases || []).filter((x) => passesCommon(x, "releases"));
     return sortItems(filtered, "releases");
-  }, [sections.dev_releases, searchTerm, timeFilter, dateFrom, dateTo, categoryFilter, sourceFilter, ukOnly, minUkScore, sortBy]);
+  }, [
+    sections.dev_releases,
+    searchTerm,
+    timeFilter,
+    dateFrom,
+    dateTo,
+    categoryFilter,
+    sourceFilter,
+    ukOnly,
+    minUkScore,
+    sortBy,
+  ]);
 
   function toggleBucket(cat) {
     setOpenBuckets((s) => ({ ...s, [cat]: !s[cat] }));
@@ -231,7 +382,20 @@ import { useEffect, useMemo, useState } from "react"; setShowN(p.showN);
     if (ukOnly) chips.push({ k: "ukOnly", label: "UK only" });
     if (showAiSummaries) chips.push({ k: "aiSum", label: "AI summaries" });
     return chips;
-  }, [searchTerm, dateFrom, dateTo, timeFilter, categoryFilter, mechanismFilter, subtypeFilter, sourceFilter, sortBy, minUkScore, ukOnly, showAiSummaries]);
+  }, [
+    searchTerm,
+    dateFrom,
+    dateTo,
+    timeFilter,
+    categoryFilter,
+    mechanismFilter,
+    subtypeFilter,
+    sourceFilter,
+    sortBy,
+    minUkScore,
+    ukOnly,
+    showAiSummaries,
+  ]);
 
   function clearChip(k) {
     if (k === "search") setSearchTerm("");
@@ -312,7 +476,7 @@ import { useEffect, useMemo, useState } from "react"; setShowN(p.showN);
             </div>
           </div>
 
-          {!filtersOpen && activeFilterChips.length ? (
+          {!filtersOpen && activeFilterChips.length > 0 ? (
             <div className="mt-4">
               <div className="flex flex-wrap items-center gap-2">
                 <div className="text-xs text-[var(--muted)] mr-1">Active filters:</div>
@@ -360,72 +524,7 @@ import { useEffect, useMemo, useState } from "react"; setShowN(p.showN);
                   <label className="text-xs text-[var(--muted)]">Time window</label>
                   <select
                     className="mt-1 w-full pill px-3 py-2 text-sm bg-white"
-                    value={timeFilter}
-                    onChange={(e) => setTimeFilter(e.target.value)}
-                    disabled={!!(dateFrom || dateTo)}
-                    title={dateFrom || dateTo ? "Disabled when Date From/To is set" : ""}
-                  >
-                    <option value="24h">Last 24h</option>
-                    <option value="7d">Last 7d</option>
-                    <option value="30d">Last 30d</option>
-                    <option value="All">Any time</option>
-                  </select>
-                </div>
-
-                <div className="lg:col-span-2">
-                  <label className="text-xs text-[var(--muted)]">Date from</label>
-                  <input
-                    type="date"
-                    className="mt-1 w-full pill px-3 py-2 text-sm bg-white"
-                    value={dateFrom}
-                    onChange={(e) => setDateFrom(e.target.value)}
-                  />
-                </div>
-
-                <div className="lg:col-span-2">
-                  <label className="text-xs text-[var(--muted)]">Date to</label>
-                  <input
-                    type="date"
-                    className="mt-1 w-full pill px-3 py-2 text-sm bg-white"
-                    value={dateTo}
-                    onChange={(e) => setDateTo(e.target.value)}
-                  />
-                </div>
-
-                <div className="lg:col-span-2">
-                  <label className="text-xs text-[var(--muted)]">Show</label>
-                  <select
-                    className="mt-1 w-full pill px-3 py-2 text-sm bg-white"
-                    value={showN}
-                    onChange={(e) => setShowN(parseInt(e.target.value, 10))}
-                  >
-                    {[24, 36, 48, 72, 100].map((n) => (
-                      <option key={n} value={n}>
-                        {n}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="lg:col-span-3">
-                  <label className="text-xs text-[var(--muted)]">Category</label>
-                  <select
-                    className="mt-1 w-full pill px-3 py-2 text-sm bg-white"
-                    value={categoryFilter}
-                    onChange={(e) => setCategoryFilter(e.target.value)}
-                  >
-                    {allCategories.map((c) => (
-                      <option key={c} value={c}>
-                        {c}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="lg:col-span-3">
-                  <label className="text-xs text-[var(--muted)]">Mechanism</label>
-                  <select
-                    className="mt-
+                    value={time
 import axios from "axios";
 import {
   Shield,
@@ -457,6 +556,24 @@ function withinWindow(timestamp, windowKey) {
   if (windowKey === "7d") return age <= 7 * 24 * 3600;
   if (windowKey === "30d") return age <= 30 * 24 * 3600;
   return true;
+}
+
+function compareDatesDesc(a, b) {
+  const ta = Date.parse(a || "") || 0;
+  const tb = Date.parse(b || "") || 0;
+  return tb - ta;
+}
+
+function compareDatesAsc(a, b) {
+  const ta = Date.parse(a || "") || 0;
+  const tb = Date.parse(b || "") || 0;
+  return ta - tb;
+}
+
+function confidenceRank(label) {
+  if (label === "High") return 3;
+  if (label === "Medium") return 2;
+  return 1;
 }
 
 function confidenceChip(level) {
@@ -492,93 +609,7 @@ function subtypeChip(subtype) {
   if (key.includes("grooming") || key.includes("exploitation")) return "border-orange-200 bg-orange-50 text-orange-900";
   if (key.includes("synthetic-image")) return "border-pink-200 bg-pink-50 text-pink-900";
   if (key.includes("stalking") || key.includes("harassment")) return "border-fuchsia-200 bg-fuchsia-50 text-fuchsia-900";
-  if (key.includes("propaganda") || key.includes("radicalisation") || key.includes("recruitment")) return "border-rose-200 bg-rose-50 text-rose-900";
+  if (key.includes("propaganda") || key.includes("radicalisation") || key.includes("recruitment")) {
+    return "border-rose-200 bg-rose-50 text-rose-900";
+  }
   if (key.includes("attack planning")) return "border-red-200 bg-red-50 text-red-900";
-  if (key.includes("illegal items") || key.includes("drugs") || key.includes("firearms")) return "border-violet-200 bg-violet-50 text-violet-900";
-  if (key.includes("cyber") || key.includes("ransomware") || key.includes("phishing")) return "border-cyan-200 bg-cyan-50 text-cyan-900";
-  if (key.includes("evidence") || key.includes("identity")) return "border-indigo-200 bg-indigo-50 text-indigo-900";
-  return "border-slate-200 bg-slate-50 text-slate-700";
-}
-
-function viewTheme(view) {
-  if (view === "harms") {
-    return { ring: "ring-rose-100", band: "from-rose-50 to-white", accent: "text-rose-700", border: "border-rose-100" };
-  }
-  if (view === "signals") {
-    return { ring: "ring-sky-100", band: "from-sky-50 to-white", accent: "text-sky-700", border: "border-sky-100" };
-  }
-  if (view === "forums") {
-    return { ring: "ring-fuchsia-100", band: "from-fuchsia-50 to-white", accent: "text-fuchsia-700", border: "border-fuchsia-100" };
-  }
-  if (view === "releases") {
-    return { ring: "ring-indigo-100", band: "from-indigo-50 to-white", accent: "text-indigo-700", border: "border-indigo-100" };
-  }
-  return { ring: "ring-slate-100", band: "from-slate-50 to-white", accent: "text-slate-700", border: "border-slate-100" };
-}
-
-function pageBg(view) {
-  if (view === "harms") return "bg-gradient-to-b from-rose-50 via-slate-50 to-slate-50";
-  if (view === "signals") return "bg-gradient-to-b from-sky-50 via-slate-50 to-slate-50";
-  if (view === "forums") return "bg-gradient-to-b from-fuchsia-50 via-slate-50 to-slate-50";
-  if (view === "releases") return "bg-gradient-to-b from-indigo-50 via-slate-50 to-slate-50";
-  return "bg-gradient-to-b from-rose-50 via-slate-50 to-slate-50";
-}
-
-function getItemDateISO(item, kind) {
-  const raw =
-    (kind === "signals" ? (item?.latest_date || item?.date) : item?.date) ||
-    (item?.timestamp ? new Date(item.timestamp * 1000).toISOString() : "");
-  return fmtDateShort(raw) || "";
-}
-
-function compareDatesDesc(a, b) {
-  const ta = Date.parse(a || "") || 0;
-  const tb = Date.parse(b || "") || 0;
-  return tb - ta;
-}
-
-function compareDatesAsc(a, b) {
-  const ta = Date.parse(a || "") || 0;
-  const tb = Date.parse(b || "") || 0;
-  return ta - tb;
-}
-
-function confidenceRank(label) {
-  if (label === "High") return 3;
-  if (label === "Medium") return 2;
-  return 1;
-}
-
-/* ---------------------------- App ---------------------------- */
-
-export default function App() {
-  const [payload, setPayload] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  const [view, setView] = useState("harms");
-
-  const [searchTerm, setSearchTerm] = useState("");
-  const [timeFilter, setTimeFilter] = useState("7d");
-  const [dateFrom, setDateFrom] = useState("");
-  const [dateTo, setDateTo] = useState("");
-  const [sortBy, setSortBy] = useState("relevance");
-  const [minUkScore, setMinUkScore] = useState(0);
-  const [categoryFilter, setCategoryFilter] = useState("All");
-  const [mechanismFilter, setMechanismFilter] = useState("All");
-  const [subtypeFilter, setSubtypeFilter] = useState("All");
-  const [sourceFilter, setSourceFilter] = useState("All");
-  const [ukOnly, setUkOnly] = useState(false);
-  const [showAiSummaries, setShowAiSummaries] = useState(false);
-  const [showN, setShowN] = useState(36);
-  const [filtersOpen, setFiltersOpen] = useState(false);
-
-  const [harmsFocusCat, setHarmsFocusCat] = useState("All");
-  const [openBuckets, setOpenBuckets] = useState({});
-
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem("aihm_ui_prefs_v7");
-      if (!raw) return;
-      const p = JSON.parse(raw);
-      const allowed = new Set(["harms", "signals", "forums", "releases"]);
-      if (p?.view && allowed.has(p.view)) setView(p.view);
