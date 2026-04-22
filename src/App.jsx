@@ -1,6 +1,7 @@
-import React, { useEffect, useMemo, useState } from "react"; return "border-indigo-200 bg-indigo-50 text-indigo-900";
+import React, { useEffect, useMemo, useState } from "react"; return "border-cyan-200 bg-cyan-50 text-cyan-900";
+  if (key.includes("model misuse") || key.includes("evasion")) return "border-indigo-200 bg-indigo-50 text-indigo-900";
   return "border-slate-200 bg-slate-50 text-slate-700";
-
+}
 
 function subtypeChip(subtype) {
   const key = String(subtype || "").toLowerCase();
@@ -71,7 +72,21 @@ function pageBg(view) {
   return "bg-gradient-to-b from-rose-50 via-slate-50 to-slate-50";
 }
 
-/* ------------------------- small UI bits ------------------------- */
+/* ------------------------- components ------------------------- */
+
+function ExternalLink({ href, className = "", children }) {
+  if (!href) return <>{children}</>;
+  return React.createElement(
+    "a",
+    {
+      href,
+      target: "_blank",
+      rel: "noreferrer",
+      className,
+    },
+    children
+  );
+}
 
 function NavItem({ icon, label, active, onClick, count }) {
   return (
@@ -168,14 +183,12 @@ function ArticleCard({ item, label = "Harm" }) {
         )}
       </div>
 
-      <a
-        href={item?.link || "#"}
-        target="_blank"
-        rel="noreferrer"
+      <ExternalLink
+        href={item?.link}
         className="mt-2 block text-sm font-semibold hover:underline"
       >
         {item?.title || "Untitled"}
-      </a>
+      </ExternalLink>
 
       <ItemMetaBadges item={item} />
 
@@ -195,8 +208,6 @@ function ArticleCard({ item, label = "Harm" }) {
     </article>
   );
 }
-
-/* ------------------------- main views ------------------------- */
 
 function HarmsView({
   categories,
@@ -413,18 +424,16 @@ function SignalsView({ items, showAiSummaries, summaries }) {
                         : "border-slate-200 bg-slate-50 text-slate-700";
 
                     return (
-                      <a
-                        key={`${l.link}-${i}`}
-                        href={l.link || "#"}
-                        target="_blank"
-                        rel="noreferrer"
+                      <ExternalLink
+                        key={`${l.link || l.title || i}-${i}`}
+                        href={l.link}
                         className="block text-sm text-blue-700 hover:underline"
                       >
                         <span className={`mr-2 inline-flex text-[10px] px-2 py-1 rounded-full border ${badge}`}>
                           {st.toUpperCase()}
                         </span>
                         {l.source}: {l.title}
-                      </a>
+                      </ExternalLink>
                     );
                   })}
                 </div>
@@ -498,11 +507,9 @@ function ReleasesView({ items, showAiSummaries, summaries }) {
         ) : (
           <div className="space-y-2">
             {items.map((r, i) => (
-              <a
-                key={`${r.link}-${i}`}
-                href={r.link || "#"}
-                target="_blank"
-                rel="noreferrer"
+              <ExternalLink
+                key={`${r.link || r.title || i}-${i}`}
+                href={r.link}
                 className="block card-hover border border-slate-100 rounded-2xl p-4 bg-white"
               >
                 <div className="flex items-center justify-between gap-3">
@@ -520,7 +527,7 @@ function ReleasesView({ items, showAiSummaries, summaries }) {
 
                 <div className="mt-2 text-sm font-semibold">{r.title}</div>
                 <div className="mt-1 text-xs text-slate-500">{r.source}</div>
-              </a>
+              </ExternalLink>
             ))}
           </div>
         )}
@@ -557,10 +564,8 @@ export default function App() {
 
   useEffect(() => {
     try {
-      const raw = localStorage.getItem("aihm_ui_prefs_v9");
-      if (!raw) return;
-      const p = JSON.parse(raw);
-      const allowed = new Set(["harms", "signals",
+      const raw = localStorage.getItem("aihm_ui_prefs_v10");
+      if (
 import axios from "axios";
 import {
   Shield,
@@ -643,4 +648,3 @@ function mechanismChip(mechanism) {
   if (key.includes("synthetic")) return "border-pink-200 bg-pink-50 text-pink-900";
   if (key.includes("offender")) return "border-amber-200 bg-amber-50 text-amber-900";
   if (key.includes("automation") || key.includes("scale")) return "border-violet-200 bg-violet-50 text-violet-900";
-  if (key.includes("targeting")) return "border-cyan-200 bg-cyan-50 text-cyan-900";
